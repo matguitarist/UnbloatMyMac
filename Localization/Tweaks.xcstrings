@@ -42,6 +42,16 @@
         }
       }
     },
+    "A fast model server built on Apple's MLX, with an OpenAI-compatible API for other apps.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un serveur de modèles rapide basé sur MLX d’Apple, avec une API compatible OpenAI pour les autres apps."
+          }
+        }
+      }
+    },
     "A fast, native terminal app.": {
       "localizations": {
         "fr": {
@@ -132,6 +142,26 @@
         }
       }
     },
+    "A small menu bar model server built on MLX, with chat and an OpenAI-compatible API.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un petit serveur de modèles dans la barre des menus, basé sur MLX, avec une discussion et une API compatible OpenAI."
+          }
+        }
+      }
+    },
+    "AI that runs on your Mac, offline, with nothing sent to a server. Each model is a download of several gigabytes.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une IA qui tourne sur votre Mac, hors ligne, sans rien envoyer à un serveur. Chaque modèle est un téléchargement de plusieurs gigaoctets."
+          }
+        }
+      }
+    },
     "Accent Menu on Held Keys": {
       "localizations": {
         "fr": {
@@ -198,6 +228,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Toujours afficher les barres de défilement"
+          }
+        }
+      }
+    },
+    "An open-source, offline alternative to ChatGPT.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une alternative à ChatGPT, open source et hors ligne."
           }
         }
       }
@@ -298,6 +338,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apple Intelligence désactivée, pas de publicités personnalisées, moins de fenêtres surgissantes. Rien qui vous manquera."
+          }
+        }
+      }
+    },
+    "Apple's tools to run and fine-tune models with MLX from the command line.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les outils d’Apple pour lancer et affiner des modèles avec MLX en ligne de commande."
           }
         }
       }
@@ -422,6 +472,16 @@
         }
       }
     },
+    "Builds image, video, and audio pipelines from nodes. The most flexible image generator.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Construit des chaînes d’image, de vidéo et d’audio à partir de nœuds. Le générateur d’images le plus souple."
+          }
+        }
+      }
+    },
     "CPU, memory, disk, network, and battery in the menu bar.": {
       "localizations": {
         "fr": {
@@ -458,6 +518,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Transcriptions d’appels et d’audio avec résumés dans Notes."
+          }
+        }
+      }
+    },
+    "Chat with your own documents and notes using a local model.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discutez avec vos propres documents et notes grâce à un modèle local."
           }
         }
       }
@@ -862,6 +932,16 @@
         }
       }
     },
+    "Find, download, and chat with local models in a window. Uses MLX on Apple silicon.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trouvez, téléchargez et discutez avec des modèles locaux dans une fenêtre. Utilise MLX sur Apple silicon."
+          }
+        }
+      }
+    },
     "Finder": {
       "localizations": {
         "fr": {
@@ -1232,6 +1312,16 @@
         }
       }
     },
+    "Local AI": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "IA locale"
+          }
+        }
+      }
+    },
     "Logs": {
       "localizations": {
         "fr": {
@@ -1288,6 +1378,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Des fenêtres, un Dock et un Finder instantanés, sans analyse lourde en arrière-plan."
+          }
+        }
+      }
+    },
+    "Makes and edits images with Stable Diffusion and Flux models, fast on Apple silicon.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crée et modifie des images avec les modèles Stable Diffusion et Flux, rapide sur Apple silicon."
           }
         }
       }
@@ -1458,6 +1558,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apps ouvertes uniquement"
+          }
+        }
+      }
+    },
+    "Open-source dictation into any app, transcribed on your Mac with Whisper.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dictée open source dans n’importe quelle app, transcrite sur votre Mac avec Whisper."
           }
         }
       }
@@ -1778,6 +1888,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Réécrire, corriger et résumer dans tous les champs de texte."
+          }
+        }
+      }
+    },
+    "Runs open models like Llama, Gemma, Qwen, and Mistral with one command, and serves them to other apps.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lance des modèles ouverts comme Llama, Gemma, Qwen et Mistral en une commande, et les sert aux autres apps."
           }
         }
       }
@@ -2292,6 +2412,16 @@
         }
       }
     },
+    "Speech to text from the command line, with Whisper models.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De la parole au texte en ligne de commande, avec les modèles Whisper."
+          }
+        }
+      }
+    },
     "Spotlight Indexing": {
       "localizations": {
         "fr": {
@@ -2752,6 +2882,16 @@
         }
       }
     },
+    "The engine behind many local AI apps, as command line tools and a server.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le moteur de nombreuses apps d’IA locale, en outils de ligne de commande et en serveur."
+          }
+        }
+      }
+    },
     "The first word of a sentence is not capitalized for you.": {
       "localizations": {
         "fr": {
@@ -2788,6 +2928,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "La touche lecture n’ouvre plus Musique."
+          }
+        }
+      }
+    },
+    "The simplest way to make images from text, with no settings to learn.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La façon la plus simple de créer des images à partir de texte, sans réglages à apprendre."
           }
         }
       }
@@ -2858,6 +3008,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Notifications Astuces"
+          }
+        }
+      }
+    },
+    "Transcribes recordings, meetings, and videos on your Mac. Free, with paid extras.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcrit enregistrements, réunions et vidéos sur votre Mac. Gratuit, avec des options payantes."
           }
         }
       }

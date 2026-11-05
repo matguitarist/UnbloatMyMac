@@ -188,7 +188,7 @@ enum CLI {
     private static func apps(_ installer: AppInstaller, _ options: Options) -> Int32 {
         let state = installer.state()
         if options.json {
-            let rows: [[String: Any]] = Catalog.apps.map { app in
+            let rows: [[String: Any]] = Catalog.appsHere.map { app in
                 ["id": app.id, "name": app.name, "kind": app.kind.rawValue, "group": app.group.rawValue,
                  "detail": app.detail, "recommended": app.isRecommended(), "replacedBy": app.replacedBy.map { $0 as Any } ?? NSNull(), "homepage": app.homepage,
                  "state": stateName(state.states[app.id]), "inShell": state.inShell.contains(app.id)]
@@ -198,7 +198,7 @@ enum CLI {
         if state.homebrew == nil { print("Homebrew is not installed. Get it at https://brew.sh") }
         for group in AppGroup.allCases {
             print("\n\(group.title)")
-            for app in Catalog.apps where app.group == group {
+            for app in Catalog.appsHere where app.group == group {
                 let flags = [app.isRecommended() ? "recommended" : nil, app.replacedBy.map { "also in \($0)" }, state.inShell.contains(app.id) ? "in ~/.zshrc" : nil].compactMap { $0 }
                 let suffix = flags.isEmpty ? "" : "  (\(flags.joined(separator: ", ")))"
                 print("  \(pad(stateName(state.states[app.id]), 14)) \(pad(app.id, 24)) \(app.detail)\(suffix)")
@@ -212,7 +212,7 @@ enum CLI {
         guard unknown.isEmpty else { return usage("Unknown app: \(unknown.joined(separator: ", ")). See: unbloatmymac apps") }
         let state = installer.state()
         var chosen = options.words.compactMap(Catalog.app)
-        if options.recommended && install { chosen += Catalog.apps.filter { $0.isRecommended() && !chosen.contains($0) } }
+        if options.recommended && install { chosen += Catalog.appsHere.filter { $0.isRecommended() && !chosen.contains($0) } }
         guard !chosen.isEmpty else { return usage("\(install ? "install" : "uninstall") needs app names\(install ? " or --recommended" : ""). See: unbloatmymac apps") }
         if install, state.homebrew == nil { return fail("Homebrew is not installed. Get it at https://brew.sh") }
         let todo = chosen.filter { install ? state.states[$0.id] == .notInstalled : state.states[$0.id] == .installed }

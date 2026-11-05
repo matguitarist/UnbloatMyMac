@@ -82,3 +82,11 @@ func allInOneReplaces() throws {
         if let other = app.replacedBy { #expect(Catalog.app(other) != nil, "\(app.id) names \(other)") }
     }
 }
+
+@Test("Local AI apps are listed, and Apple silicon apps are hidden on Intel")
+func localAI() {
+    let ai = Catalog.apps.filter { $0.group == .ai }
+    #expect(ai.count >= 10)
+    #expect(ai.allSatisfy { !$0.isRecommended() }, "Install Recommended never pulls in AI apps")
+    #expect(Catalog.appsHere.count == Catalog.apps.filter { !$0.appleSiliconOnly || RecommendedApp.isAppleSilicon }.count)
+}

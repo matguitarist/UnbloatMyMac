@@ -5,7 +5,7 @@ import Synchronization
 // UnbloatMyMac never installs Homebrew itself; it shows how.
 
 public enum AppGroup: String, CaseIterable, Sendable, Codable {
-    case allInOne, windows, terminal, tools, privacy
+    case allInOne, windows, terminal, tools, ai, privacy
 
     public var title: String {
         switch self {
@@ -13,6 +13,7 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
         case .windows: L("Windows Habits")
         case .terminal: L("Command Line")
         case .tools: L("Mac Utilities")
+        case .ai: L("Local AI")
         case .privacy: L("Privacy")
         }
     }
@@ -23,6 +24,7 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
         case .windows: L("Apps that bring back what you miss from Windows.")
         case .terminal: L("A nicer prompt and faster replacements for classic commands.")
         case .tools: L("Small free apps that fill gaps in macOS.")
+        case .ai: L("AI that runs on your Mac, offline, with nothing sent to a server. Each model is a download of several gigabytes.")
         case .privacy: L("See and block what apps send.")
         }
     }
@@ -33,6 +35,7 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
         case .windows: "macwindow.on.rectangle"
         case .terminal: "terminal"
         case .tools: "wrench.and.screwdriver"
+        case .ai: "cpu"
         case .privacy: "hand.raised"
         }
     }
@@ -65,6 +68,9 @@ public struct RecommendedApp: Identifiable, Sendable, Hashable {
         if let replacedBy, appleSilicon, Catalog.app(replacedBy)?.appleSiliconOnly == true { return false }
         return recommended
     }
+
+    /// False for an Apple silicon app on an Intel Mac. Such apps are not listed.
+    public var runsHere: Bool { !appleSiliconOnly || Self.isAppleSilicon }
 
     public static var isAppleSilicon: Bool {
         #if arch(arm64)
@@ -185,6 +191,49 @@ extension Catalog {
               "Brightness and volume keys for external displays.",
               bundle: "MonitorControl.app", homepage: "https://github.com/MonitorControl/MonitorControl", replacedBy: "vorssaint"),
 
+        // Local AI
+        .init("ollama-app", "Ollama", .cask, .ai,
+              "Runs open models like Llama, Gemma, Qwen, and Mistral with one command, and serves them to other apps.",
+              bundle: "Ollama.app", homepage: "https://ollama.com"),
+        .init("lm-studio", "LM Studio", .cask, .ai,
+              "Find, download, and chat with local models in a window. Uses MLX on Apple silicon.",
+              bundle: "LM Studio.app", homepage: "https://lmstudio.ai", appleSiliconOnly: true),
+        .init("omlx", "oMLX", .formula, .ai,
+              "A fast model server built on Apple's MLX, with an OpenAI-compatible API for other apps.",
+              homepage: "https://github.com/jundot/omlx", appleSiliconOnly: true),
+        .init("osaurus", "Osaurus", .cask, .ai,
+              "A small menu bar model server built on MLX, with chat and an OpenAI-compatible API.",
+              bundle: "Osaurus.app", homepage: "https://osaurus.ai", appleSiliconOnly: true),
+        .init("jan", "Jan", .cask, .ai,
+              "An open-source, offline alternative to ChatGPT.", bundle: "Jan.app", homepage: "https://jan.ai"),
+        .init("anythingllm", "AnythingLLM", .cask, .ai,
+              "Chat with your own documents and notes using a local model.",
+              bundle: "AnythingLLM.app", homepage: "https://anythingllm.com"),
+        .init("draw-things", "Draw Things", .cask, .ai,
+              "Makes and edits images with Stable Diffusion and Flux models, fast on Apple silicon.",
+              bundle: "Draw Things.app", homepage: "https://drawthings.ai"),
+        .init("comfy", "ComfyUI", .cask, .ai,
+              "Builds image, video, and audio pipelines from nodes. The most flexible image generator.",
+              bundle: "Comfy Desktop.app", homepage: "https://comfy.org", appleSiliconOnly: true),
+        .init("diffusionbee", "DiffusionBee", .cask, .ai,
+              "The simplest way to make images from text, with no settings to learn.",
+              bundle: "DiffusionBee.app", homepage: "https://diffusionbee.com"),
+        .init("voiceink", "VoiceInk", .cask, .ai,
+              "Open-source dictation into any app, transcribed on your Mac with Whisper.",
+              bundle: "VoiceInk.app", homepage: "https://tryvoiceink.com"),
+        .init("macwhisper", "MacWhisper", .cask, .ai,
+              "Transcribes recordings, meetings, and videos on your Mac. Free, with paid extras.",
+              bundle: "MacWhisper.app", homepage: "https://goodsnooze.gumroad.com/l/macwhisper"),
+        .init("llama.cpp", "llama.cpp", .formula, .ai,
+              "The engine behind many local AI apps, as command line tools and a server.",
+              homepage: "https://github.com/ggml-org/llama.cpp"),
+        .init("mlx-lm", "MLX LM", .formula, .ai,
+              "Apple's tools to run and fine-tune models with MLX from the command line.",
+              homepage: "https://github.com/ml-explore/mlx-lm", appleSiliconOnly: true),
+        .init("whisper.cpp", "whisper.cpp", .formula, .ai,
+              "Speech to text from the command line, with Whisper models.",
+              homepage: "https://github.com/ggml-org/whisper.cpp"),
+
         // Privacy
         .init("lulu", "LuLu", .cask, .privacy,
               "A free firewall that asks before an app connects to the internet for the first time.",
@@ -192,6 +241,9 @@ extension Catalog {
     ]
 
     public static func app(_ id: String) -> RecommendedApp? { apps.first { $0.id == id } }
+
+    /// The apps this Mac can run.
+    public static var appsHere: [RecommendedApp] { apps.filter(\.runsHere) }
 }
 
 /// Homebrew and the shell file, behind a protocol so tests use a pretend one.

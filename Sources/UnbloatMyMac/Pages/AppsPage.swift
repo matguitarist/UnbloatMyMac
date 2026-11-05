@@ -20,7 +20,7 @@ struct AppsPage: View {
                     .disabled(model.apps.homebrew == nil || missing.isEmpty || !model.appsWorking.isEmpty)
                     .help(missing.map(\.name).joined(separator: ", "))
                     Spacer()
-                    Text("\(installedCount) of \(Catalog.apps.count) installed")
+                    Text("\(installedCount) of \(Catalog.appsHere.count) installed")
                         .font(.callout).foregroundStyle(.secondary).monospacedDigit()
                 }
             }
@@ -44,7 +44,7 @@ struct AppsPage: View {
             }
             ForEach(AppGroup.allCases, id: \.self) { group in
                 Section {
-                    ForEach(Catalog.apps.filter { $0.group == group }) { app in AppRow(app: app) }
+                    ForEach(Catalog.appsHere.filter { $0.group == group }) { app in AppRow(app: app) }
                 } header: {
                     Text(group.title)
                 } footer: {
@@ -58,7 +58,7 @@ struct AppsPage: View {
     }
 
     private var installedCount: Int {
-        Catalog.apps.filter { model.appState($0) != .notInstalled }.count
+        Catalog.appsHere.filter { model.appState($0) != .notInstalled }.count
     }
 }
 

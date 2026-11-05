@@ -56,9 +56,31 @@ enum SettingsTab: String, CaseIterable, Identifiable {
 
 struct GeneralSettings: View {
     @Environment(AppModel.self) private var model
+    @State private var language = AppLanguage.current
 
     var body: some View {
         @Bindable var model = model
+        Section("Language") {
+            Picker("Language", selection: $language) {
+                Text("System (\(AppLanguage.systemName))").tag(AppLanguage.system)
+                // Every language the app is translated into, each named in itself.
+                ForEach(AppLanguage.available, id: \.self) { language in
+                    Text(verbatim: language.name).tag(language)
+                }
+            }
+            .onChange(of: language) { _, new in new.apply() }
+            if language != AppLanguage.atLaunch {
+                HStack {
+                    Text("The new language applies after a restart.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Restart Now") { AppLanguage.relaunch() }
+                        .disabled(model.isBusy)
+                        .help(model.isBusy ? String(localized: "Wait for the changes to finish") : "")
+                }
+            }
+        }
         Section("Tweaks") {
             Toggle(isOn: $model.showAdvanced) {
                 Text("Show advanced tweaks")
@@ -76,6 +98,68 @@ struct GeneralSettings: View {
             Text("The value of every setting before UnbloatMyMac changed it is kept here, so Undo Everything can put it back.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
+        }
+    }
+}
+
+/// The app's own language, independent of macOS's. Stored as the app's
+/// AppleLanguages default, which macOS reads at launch. The choices come
+/// from the bundle, so adding a translation adds it here.
+struct AppLanguage: Hashable {
+    /// A localization code ("fr", "pt-BR"), or nil to follow macOS.
+    let code: String?
+
+    static let system = AppLanguage(code: nil)
+    private static let key = "AppleLanguages"
+
+    /// The app's translations, sorted by their own names.
+    static let available: [AppLanguage] = Set(Bundle.main.localizations)  // can list one twice
+        .subtracting(["Base"])
+        .map { AppLanguage(code: $0) }
+        .sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+
+    /// "Français", "English".
+    var name: String {
+        guard let code else { return "" }
+        let name = Locale(identifier: code).localizedString(forIdentifier: code) ?? code
+        return name.prefix(1).uppercased() + name.dropFirst()
+    }
+
+    static var current: AppLanguage {
+        let domain = UserDefaults.standard.persistentDomain(forName: Bundle.main.bundleIdentifier ?? "")
+        guard let stored = (domain?[key] as? [String])?.first else { return .system }
+        // "fr-CA" set elsewhere still selects "fr".
+        let codes = available.compactMap(\.code)
+        guard let match = Bundle.preferredLocalizations(from: codes, forPreferences: [stored]).first,
+              codes.contains(match) else { return .system }
+        return AppLanguage(code: match)
+    }
+
+    /// What this run of the app uses (the setting can change after launch).
+    static let atLaunch = current
+
+    /// The language macOS would pick for the app, by name ("Français").
+    static var systemName: String {
+        let global = UserDefaults.standard.persistentDomain(forName: UserDefaults.globalDomain)?[key] as? [String] ?? Locale.preferredLanguages
+        let code = Bundle.preferredLocalizations(from: available.compactMap(\.code), forPreferences: global).first ?? "en"
+        return AppLanguage(code: code).name
+    }
+
+    /// Test and snapshot runs never change the real setting.
+    func apply() {
+        guard !Store.isOverridden else { return }
+        if let code {
+            UserDefaults.standard.set([code], forKey: Self.key)
+        } else {
+            UserDefaults.standard.removeObject(forKey: Self.key)
+        }
+    }
+
+    static func relaunch() {
+        let configuration = NSWorkspace.OpenConfiguration()
+        configuration.createsNewApplicationInstance = true
+        NSWorkspace.shared.openApplication(at: Bundle.main.bundleURL, configuration: configuration) { _, _ in
+            DispatchQueue.main.async { NSApp.terminate(nil) }
         }
     }
 }

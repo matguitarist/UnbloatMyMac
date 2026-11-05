@@ -4,7 +4,7 @@ import UnbloatMyMacKit
 
 // UnbloatMyMac
 //   UnbloatMyMac                      the app, changing this Mac
-//   APP_STORE=<file> UnbloatMyMac     a pretend Mac (MockBackend) with its journal in <file>; never touches the system
+//   APP_STORE=<file> UnbloatMyMac     a pretend Mac (MockBackend) with its journal in <file> and its log next to it; never touches the system
 //   APP_SNAPSHOT=<dir> UnbloatMyMac   save a PNG of every sidebar page and Settings tab in light and dark mode, then quit
 //   APP_SEED=1 UnbloatMyMac           with APP_STORE: a pretend Mac with some tweaks on and some staged (tools/snap.sh)
 //   UnbloatMyMac --selftest           run the self-test on a pretend Mac and quit with 0 or 1 (tools/selftest.sh)
@@ -40,7 +40,22 @@ struct UnbloatMyMacApp: App {
                     .keyboardShortcut("e", modifiers: [.command, .shift])
                 Button("Import Tweaks…") { model.importWithPanel() }
                     .keyboardShortcut("i", modifiers: [.command, .shift])
+                Divider()
+                Button("Export Activity Log…") { model.exportLogWithPanel() }
+                    .keyboardShortcut("e", modifiers: [.command, .option])
+                    .disabled(model.logEntries.isEmpty)
+                Button("Clear Activity Log…") { model.sidebar = .log; model.confirmClearLog = true }
+                    .keyboardShortcut("k", modifiers: [.command, .option])
+                    .disabled(model.logEntries.isEmpty)
             }
+            CommandGroup(after: .sidebar) {
+                Button(model.showLogInspector ? "Hide Log Inspector" : "Show Log Inspector") {
+                    model.sidebar = .log
+                    model.showLogInspector.toggle()
+                }
+                .keyboardShortcut("i", modifiers: [.command, .control])
+            }
+            CommandGroup(replacing: .help) { HelpCommands(model: model) }
             CommandMenu("Changes") {
                 Button("Review Changes…") { model.review() }
                     .keyboardShortcut(.return, modifiers: .command)
@@ -66,6 +81,14 @@ struct UnbloatMyMacApp: App {
                     .disabled(model.applied.isEmpty && model.launchItemsDisabledByApp.isEmpty)
             }
         }
+
+        Window("UnbloatMyMac Help", id: HelpView.windowID) {
+            HelpView()
+                .themed()
+                .frame(minWidth: 640, minHeight: 420)
+        }
+        .defaultSize(width: 900, height: 640)
+        .commandsRemoved()  // opened from the Help menu, not listed under Window
 
         Settings {
             SettingsView()
@@ -113,19 +136,28 @@ enum Store {
         return folder.appending(path: "journal.json")
     }
 
+    /// The Activity Log: activity.log next to the journal (next to APP_STORE on a pretend Mac).
+    static var logURL: URL {
+        url.deletingLastPathComponent().appending(path: url.deletingPathExtension().lastPathComponent == "journal"
+            ? "activity.log" : url.deletingPathExtension().lastPathComponent + ".log")
+    }
+
+    /// One log for the app and the command line tool; each line says which wrote it.
+    static let log = ActivityLog(url: logURL, origin: CLI.shouldRun(CommandLine.arguments) ? .commandLine : .app)
+
     static func makeInstaller() -> AppInstaller {
         if isOverridden {
             let env = ProcessInfo.processInfo.environment
-            return AppInstaller(packages: MockPackageManager(seeded: env["APP_SEED"] == "1", homebrew: env["APP_NO_BREW"] != "1"))
+            return AppInstaller(packages: MockPackageManager(seeded: env["APP_SEED"] == "1", homebrew: env["APP_NO_BREW"] != "1"), log: log)
         }
-        return AppInstaller(packages: Homebrew())
+        return AppInstaller(packages: Homebrew(), log: log)
     }
 
     static func makeEngine() -> Engine {
         if isOverridden {
             let seeded = ProcessInfo.processInfo.environment["APP_SEED"] == "1"
-            return Engine(backend: MockBackend(seeded: seeded), journalURL: url)
+            return Engine(backend: MockBackend(seeded: seeded), journalURL: url, log: log)
         }
-        return Engine(backend: MacBackend(supportFolder: folder), journalURL: url)
+        return Engine(backend: MacBackend(supportFolder: folder), journalURL: url, log: log)
     }
 }

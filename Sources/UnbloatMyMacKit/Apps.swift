@@ -362,9 +362,11 @@ public enum ShellBlock {
 /// Installs and removes recommended apps, and their shell lines.
 public final class AppInstaller: Sendable {
     public let packages: PackageManager
+    public let log: ActivityLog?
 
-    public init(packages: PackageManager) {
+    public init(packages: PackageManager, log: ActivityLog? = nil) {
         self.packages = packages
+        self.log = log
     }
 
     public func state() -> AppsState {
@@ -389,7 +391,14 @@ public final class AppInstaller: Sendable {
     public func install(_ app: RecommendedApp, shell: Bool = true) throws {
         guard app.installsWithHomebrew else { throw BackendError(L("This app is not in Homebrew. Download it from its website.")) }
         guard packages.homebrew() != nil else { throw BackendError(L("Install Homebrew first.")) }
-        try packages.install(app)
+        let command = "brew install \(app.kind == .cask ? "--cask " : "")\(app.id)"
+        do {
+            try packages.install(app)
+            log?.add(.info, .apps, "Installed \(app.name)", detail: command)
+        } catch {
+            log?.add(.error, .apps, "Could not install \(app.name)", detail: command + "\n" + error.localizedDescription)
+            throw error
+        }
         if shell, app.shellLine != nil { try setShell(app, on: true) }
     }
 
@@ -397,13 +406,25 @@ public final class AppInstaller: Sendable {
     public func uninstall(_ app: RecommendedApp) throws {
         guard app.installsWithHomebrew else { throw BackendError(L("Homebrew did not install this app. Move it to the Trash to remove it.")) }
         if app.shellLine != nil { try setShell(app, on: false) }
-        try packages.uninstall(app)
+        let command = "brew uninstall \(app.kind == .cask ? "--cask " : "")\(app.id)"
+        do {
+            try packages.uninstall(app)
+            log?.add(.info, .apps, "Uninstalled \(app.name)", detail: command)
+        } catch {
+            log?.add(.error, .apps, "Could not uninstall \(app.name)", detail: command + "\n" + error.localizedDescription)
+            throw error
+        }
     }
 
     public func setShell(_ app: RecommendedApp, on: Bool) throws {
         let text = packages.readShellFile()
         let new = ShellBlock.setting(app, on: on, in: text)
-        if new != text, !packages.writeShellFile(new) { throw BackendError(L("Could not change ~/.zshrc.")) }
+        guard new != text else { return }
+        guard packages.writeShellFile(new) else {
+            log?.add(.error, .apps, "Could not change ~/.zshrc for \(app.name)")
+            throw BackendError(L("Could not change ~/.zshrc."))
+        }
+        log?.add(.info, .apps, on ? "Added \(app.name) to ~/.zshrc" : "Removed \(app.name) from ~/.zshrc", detail: app.shellLine)
     }
 }
 

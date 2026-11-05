@@ -9,6 +9,6 @@ shots=/tmp/UnbloatMyMac-shots
 # A crashed run leaves saved window state, and the next launch would wait on a "reopen windows?" alert.
 rm -rf ~/Library/Saved\ Application\ State/com.mathieuares.unbloatmymac.savedState
 # Seed data only fills an empty store, so start from nothing.
-rm -f $store
+rm -f $store ${store:r}.log
 rm -rf $shots
 APP_STORE=$store APP_SEED=1 APP_SNAPSHOT=$shots $app

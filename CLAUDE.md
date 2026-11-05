@@ -8,6 +8,7 @@ typing, and a Windows Mode, plus Background Items, Storage cleanup, and History.
 
 - Tweaks live in `Sources/UnbloatMyMacKit/Catalog.swift`. An action is a `defaults` value, a launch agent to disable, a profile restriction (Apple Intelligence), a command with its revert and check, or a file.
 - `Engine` applies through a `SystemBackend`. Before changing a value it saves the original in `journal.json` (~/Library/Application Support/UnbloatMyMac), and undo restores exactly that.
+- Every change also goes to the Activity Log (`activity.log` next to the journal) through `LoggingBackend` in `ActivityLog.swift`; log lines stay in English.
 - Admin commands run together under one password prompt. Apple Intelligence restrictions go into one configuration profile that the person approves in System Settings.
 - Two tweaks must never write the same key (a unit test checks this).
 - Switches follow System Settings: a tweak whose title names a macOS feature (`Catalog.featureTitled`) shows the feature, so off applies the tweak.

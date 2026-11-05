@@ -6,10 +6,13 @@ import UnbloatMyMacKit
 enum SidebarItem: Hashable, Identifiable {
     case overview
     case category(TweakCategory)
-    case background, storage, apps, history
+    case background, storage, apps, history, log
+
+    /// The Tools section of the sidebar, in order.
+    static let tools: [SidebarItem] = [.background, .storage, .apps, .history, .log]
 
     static var allCases: [SidebarItem] {
-        [.overview] + TweakCategory.allCases.map { .category($0) } + [.background, .storage, .apps, .history]
+        [.overview] + TweakCategory.allCases.map { .category($0) } + tools
     }
 
     var id: String { rawValue }
@@ -22,6 +25,7 @@ enum SidebarItem: Hashable, Identifiable {
         case .storage: "storage"
         case .apps: "apps"
         case .history: "history"
+        case .log: "log"
         }
     }
 
@@ -33,6 +37,7 @@ enum SidebarItem: Hashable, Identifiable {
         case .storage: String(localized: "Storage")
         case .apps: String(localized: "Recommended Apps")
         case .history: String(localized: "History")
+        case .log: String(localized: "Activity Log")
         }
     }
 
@@ -44,6 +49,7 @@ enum SidebarItem: Hashable, Identifiable {
         case .storage: "internaldrive"
         case .apps: "shippingbox"
         case .history: "clock.arrow.circlepath"
+        case .log: "list.bullet.rectangle"
         }
     }
 }
@@ -77,6 +83,11 @@ final class AppModel {
     var isScanning = false
     /// An error or notice for an alert.
     var notice: String?
+    /// The Activity Log, oldest first. Read again on every refresh.
+    private(set) var logEntries: [LogEntry] = []
+    var logFilter = LogFilter()
+    var showLogInspector = true
+    var confirmClearLog = false
 
     var showAdvanced: Bool = UserDefaults.standard.bool(forKey: "showAdvanced") {
         didSet { UserDefaults.standard.set(showAdvanced, forKey: "showAdvanced") }
@@ -179,6 +190,7 @@ final class AppModel {
         reverted = s.reverted
         macOSUpdated = s.macOSUpdated
         launchItems = i
+        await reloadLog()
         // Drop staged changes that already match the Mac.
         staged = staged.filter { id, on in (statuses[id]?.isOn ?? false) != on }
         hasLoaded = true
@@ -262,7 +274,9 @@ final class AppModel {
         do {
             let data = try await Task.detached { try engine.exportSet() }.value
             try data.write(to: url, options: .atomic)
+            log?.add(.info, .tweaks, "Exported tweaks to \(url.lastPathComponent)", detail: url.path)
         } catch {
+            log?.add(.error, .tweaks, "Could not export tweaks: \(error.localizedDescription)", detail: url.path)
             notice = error.localizedDescription
         }
     }
@@ -273,6 +287,8 @@ final class AppModel {
         do {
             let set = try TweakSet.read(Data(contentsOf: url))
             let changes = await Task.detached { engine.changes(for: set) }.value
+            log?.add(.info, .tweaks, "Imported \(url.lastPathComponent): \(changes.count) of \(set.tweaks.count) tweaks to review",
+                     detail: set.tweaks.joined(separator: "\n"))
             if changes.isEmpty {
                 notice = String(localized: "Every tweak in this file is already applied.")
                 return
@@ -301,6 +317,47 @@ final class AppModel {
         Task { await importSet(from: url) }
     }
 
+    // MARK: Activity Log
+
+    var log: ActivityLog? { engine.log }
+
+    func reloadLog() async {
+        guard let log else { return }
+        logEntries = await Task.detached { log.entries() }.value
+    }
+
+    func clearLog() {
+        log?.clear()
+        logEntries = []
+    }
+
+    /// The lines as plain text, with a header that says which app and Mac wrote them.
+    func logText(_ entries: [LogEntry]) -> String {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
+        let os = ProcessInfo.processInfo.operatingSystemVersionString
+        return (["UnbloatMyMac \(version), macOS \(os)", ""] + entries.map(\.line)).joined(separator: "\n")
+    }
+
+    func copyLog(_ entries: [LogEntry]) {
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(logText(entries), forType: .string)
+    }
+
+    func exportLogWithPanel() {
+        let panel = NSSavePanel()
+        panel.nameFieldStringValue = "UnbloatMyMac Activity \(Date.now.formatted(.iso8601.year().month().day())).txt"
+        panel.allowedContentTypes = [.plainText]
+        panel.message = String(localized: "Save the activity log as text, to attach to a bug report.")
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        do { try logText(logEntries).write(to: url, atomically: true, encoding: .utf8) }
+        catch { notice = error.localizedDescription }
+    }
+
+    func showLogInFinder() {
+        guard let log else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([log.url])
+    }
+
     // MARK: Command line tool
 
     /// Links /usr/local/bin/unbloatmymac to this app's binary. Asks for the admin password.
@@ -322,6 +379,7 @@ final class AppModel {
         let installer = installer
         apps = await Task.detached { installer.state() }.value
         appsLoaded = true
+        await reloadLog()
     }
 
     func appState(_ app: RecommendedApp) -> AppInstallState { apps.states[app.id] ?? .notInstalled }

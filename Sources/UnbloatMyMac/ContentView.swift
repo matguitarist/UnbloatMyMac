@@ -5,6 +5,7 @@ import UnbloatMyMacKit
 struct ContentView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.openSettings) private var openSettings
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         @Bindable var model = model
@@ -29,6 +30,11 @@ struct ContentView: View {
         } message: {
             Text("Every setting goes back to the value it had before, stopped services start again, and the Apple Intelligence profile is removed. You may be asked for your password.")
         }
+        .confirmationDialog("Clear the activity log?", isPresented: $model.confirmClearLog) {
+            Button("Clear Log", role: .destructive) { model.clearLog() }
+        } message: {
+            Text("Every line is deleted. Your changes and their undo history are kept.")
+        }
         // The command line tool may have changed the Mac while the app was in the background.
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             if model.hasLoaded, !model.isBusy { Task { await model.refresh(); await model.refreshApps() } }
@@ -37,8 +43,9 @@ struct ContentView: View {
             await model.refresh()
             await model.refreshApps()
             SeedData.stageIfRequested(model: model)
+            await model.reloadLog()
             SelfTest.runIfRequested(model: model)
-            Snapshot.runIfRequested(model: model, openSettings: openSettings)
+            Snapshot.runIfRequested(model: model, openSettings: openSettings, openWindow: openWindow)
         }
     }
 
@@ -56,7 +63,7 @@ struct ContentView: View {
                 }
             }
             Section("Tools") {
-                ForEach([SidebarItem.background, .storage, .apps, .history]) { item in
+                ForEach(SidebarItem.tools) { item in
                     Label(item.title, systemImage: item.symbol)
                         .tag(item)
                 }
@@ -74,6 +81,7 @@ struct ContentView: View {
         case .storage: StoragePage()
         case .apps: AppsPage()
         case .history: HistoryPage()
+        case .log: LogPage()
         }
     }
 
@@ -108,5 +116,28 @@ enum SeedData {
         guard ProcessInfo.processInfo.environment["APP_SEED"] == "1", Store.isOverridden else { return }
         model.staged = ["ai.writingTools": true, "ai.chatgpt": true, "perf.windowAnimations": true,
                         "privacy.analytics": true, "win.scrolling": true]
+        seedLog(model.log)
+    }
+
+    /// A morning of activity for the Activity Log snapshots.
+    private static func seedLog(_ log: ActivityLog?) {
+        guard let log, log.entries().count < 5 else { return }
+        log.add(.debug, .tweaks, "Applying 3 changes", detail: "on  finder.extensions\non  dock.recents\non  ai.genmoji")
+        log.add(.info, .settings, "Set NSGlobalDomain AppleShowAllExtensions to true", detail: "defaults write NSGlobalDomain \"AppleShowAllExtensions\" -bool true")
+        log.add(.info, .settings, "Set com.apple.dock show-recents to false", detail: "defaults write com.apple.dock \"show-recents\" -bool false")
+        log.add(.info, .profile, "Handed the Apple Intelligence profile to System Settings for approval", detail: "allowGenmoji\nallowImagePlayground")
+        log.add(.info, .tweaks, "Applied finder.extensions", detail: "Show all file extensions")
+        log.add(.info, .tweaks, "Applied dock.recents", detail: "Hide recent apps in the Dock")
+        log.add(.info, .tweaks, "Applied ai.genmoji", detail: "Genmoji")
+        log.add(.warning, .profile, "Waiting for approval in System Settings > General > Device Management")
+        log.add(.debug, .app, "Restarted Dock, Finder")
+        log.add(.info, .services, "Stopped com.apple.Siri.agent", detail: "launchctl disable gui/<uid>/com.apple.Siri.agent")
+        log.add(.error, .settings, "macOS refused to change com.apple.universalaccess reduceMotion", detail: "defaults write com.apple.universalaccess \"reduceMotion\" -bool true")
+        log.add(.error, .tweaks, "Could not apply perf.reduceMotion", detail: "UnbloatMyMac needs Full Disk Access to change this setting.")
+        log.add(.warning, .settings, "Some settings need Full Disk Access for UnbloatMyMac")
+        log.add(.info, .background, "Stopped background item com.google.keystone.agent", detail: "~/Library/LaunchAgents/com.google.keystone.agent.plist")
+        log.add(.info, .storage, "Cleaned caches")
+        log.add(.info, .apps, "Installed Stats", detail: "brew install --cask stats")
+        log.add(.info, .apps, "Added zoxide to ~/.zshrc", detail: "eval \"$(zoxide init zsh)\"")
     }
 }

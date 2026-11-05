@@ -85,11 +85,14 @@ public final class Engine: Sendable {
 
     public let backend: any SystemBackend
     public let tweaks: [Tweak]
+    /// Where changes are written down for the Activity Log, when there is one.
+    public let log: ActivityLog?
     private let journalURL: URL
     private let journal: Mutex<Journal>
 
-    public init(backend: any SystemBackend, journalURL: URL, tweaks: [Tweak] = Catalog.tweaks) {
-        self.backend = backend
+    public init(backend: any SystemBackend, journalURL: URL, tweaks: [Tweak] = Catalog.tweaks, log: ActivityLog? = nil) {
+        self.log = log
+        self.backend = log.map { LoggingBackend(backend, log: $0) } ?? backend
         self.tweaks = tweaks
         self.journalURL = journalURL
         journal = Mutex(Journal())
@@ -187,6 +190,10 @@ public final class Engine: Sendable {
         var bindingTweaks: [Tweak] = []
         var restarts: Set<Restart> = []
         let selected = tweaks.filter { changes[$0.id] != nil }
+        if !selected.isEmpty {
+            log?.add(.debug, .tweaks, "Applying \(selected.count) change\(selected.count == 1 ? "" : "s")",
+                     detail: selected.map { "\(changes[$0.id] == true ? "on " : "off") \($0.id)" }.joined(separator: "\n"))
+        }
 
         func fail(_ tweak: Tweak, _ message: String) {
             if report.failures[tweak.id] == nil { report.failures[tweak.id] = message }
@@ -300,9 +307,17 @@ public final class Engine: Sendable {
             if on, error == nil { j.applied.insert(tweak.id) }
             if !on { j.applied.remove(tweak.id) }
             j.history.append(HistoryEntry(title: tweak.title, turnedOn: on, error: error))
+            if let error {
+                log?.add(.error, .tweaks, "\(on ? "Could not apply" : "Could not undo") \(tweak.id)", detail: error)
+            } else {
+                log?.add(.info, .tweaks, "\(on ? "Applied" : "Undid") \(tweak.id)", detail: tweak.title)
+            }
         }
         if !selected.isEmpty { j.osBuild = backend.osBuild() }
         report.needsLogout = restarts.contains(.logout)
+        if report.profileHandedOff { log?.add(.warning, .profile, "Waiting for approval in System Settings > General > Device Management") }
+        if report.needsFullDiskAccess { log?.add(.warning, .settings, "Some settings need Full Disk Access for UnbloatMyMac") }
+        if report.needsLogout { log?.add(.warning, .tweaks, "Some changes take effect after logging out") }
         if restartApps {
             let now = restarts.subtracting([.logout])
             backend.restart(now)
@@ -316,6 +331,7 @@ public final class Engine: Sendable {
 
     /// Undoes every tweak the app turned on and every background item it stopped.
     public func undoEverything() -> ApplyReport {
+        log?.add(.info, .tweaks, "Undo Everything")
         let current = state()
         var changes: [String: Bool] = [:]
         for tweak in tweaks where current.applied.contains(tweak.id) || (current.statuses[tweak.id]?.isOn == true && touched(tweak)) {

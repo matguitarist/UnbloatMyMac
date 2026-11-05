@@ -3,5 +3,5 @@
 set -u
 rm -rf ~/Library/Saved\ Application\ State/com.mathieuares.unbloatmymac.savedState
 store=/tmp/UnbloatMyMac-self.json
-rm -f $store
+rm -f $store ${store:r}.log
 APP_STORE=$store ~/Applications/UnbloatMyMac.app/Contents/MacOS/UnbloatMyMac --selftest

@@ -17,7 +17,7 @@ enum SelfTest {
         guard requested else { return }
         // Print each line at once, so a crash keeps the lines before it.
         setvbuf(stdout, nil, _IOLBF, 0)
-        guard Store.isOverridden, model.engine.backend is MockBackend else {
+        guard Store.isOverridden, ((model.engine.backend as? LoggingBackend)?.base ?? model.engine.backend) is MockBackend else {
             print("SELFTEST refused: set APP_STORE to a file in /tmp so the test runs on a pretend Mac")
             finish(code: 1)
             return
@@ -46,6 +46,11 @@ enum SelfTest {
             check("applied tweaks show as applied", model.isApplied(extensions) && model.isApplied(recents))
             check("staged changes are cleared", model.staged.isEmpty)
             check("history has both changes", model.history.count >= 2)
+            check("the activity log lists both tweaks",
+                  model.logEntries.contains { $0.source == .tweaks && $0.message == "Applied finder.extensions" }
+                  && model.logEntries.contains { $0.source == .tweaks && $0.message == "Applied dock.recents" })
+            check("the activity log shows the defaults command",
+                  model.logEntries.contains { $0.source == .settings && ($0.detail ?? "").hasPrefix("defaults write com.apple.dock") })
 
             if let preset = Catalog.presets.first(where: { $0.id == "windows" }) {
                 model.stage(preset)
@@ -66,6 +71,10 @@ enum SelfTest {
                 model.setApplied(motion, true)
                 let protected = await model.applyStaged()
                 check("a protected setting asks for Full Disk Access", protected.needsFullDiskAccess)
+                let errors = model.logEntries.filter { $0.level == .error }
+                check("a refused setting is an error in the activity log", errors.contains { $0.message == "Could not apply perf.reduceMotion" })
+                check("the Errors filter shows only errors",
+                      !errors.isEmpty && model.logEntries.filter(LogFilter(levels: [.error]).matches) == errors)
             }
 
             await model.loadLoginItems()
@@ -95,6 +104,11 @@ enum SelfTest {
                 await model.uninstall(posh)
                 check("uninstalling removes the app", model.appState(posh) == .notInstalled)
             }
+
+            check("installs are in the activity log", model.logEntries.contains { $0.source == .apps && $0.message.hasPrefix("Installed ") })
+            check("the exported log has every line", model.logText(model.logEntries).components(separatedBy: "\n").count >= model.logEntries.count)
+            model.clearLog()
+            check("Clear Log empties the activity log", model.logEntries.isEmpty)
 
             print(failures == 0 ? "SELFTEST PASS \(count) checks" : "SELFTEST FAIL \(failures) of \(count) checks")
             finish(code: failures == 0 ? 0 : 1)

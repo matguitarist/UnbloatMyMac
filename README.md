@@ -27,9 +27,9 @@ Every tweak is optional, shown to you before it applies, and can be undone.
 
 **Export and Import Tweaks** in the File menu save the tweaks that are on to a file, so you can apply the same set on another Mac.
 
-The app is in English and French.
+The app is in English and French; pick its language in **Settings > General**.
 
-The **Background Items** page stops third-party updaters and helpers. **Storage** clears caches, Xcode data, old installers, and Time Machine local snapshots. **History** has **Undo Everything**.
+The **Background Items** page stops third-party updaters and helpers. **Storage** clears caches, Xcode data, old installers, and Time Machine local snapshots. **History** has **Undo Everything**. The **Activity Log** lists every setting, service, command, file, and app the app or the command line tool changed, with the exact command, and exports it for a bug report. **Help > UnbloatMyMac Help** (⌘?) explains every page.
 
 Presets: **Recommended**, **Maximum Privacy**, **Performance Boost**, and **Windows Mode**.
 

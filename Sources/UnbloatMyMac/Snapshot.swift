@@ -7,10 +7,10 @@ import SwiftUI
 /// writes <page>-light.png and <page>-dark.png for every sidebar page, and
 /// settings-<tab>-light.png and settings-<tab>-dark.png for every Settings tab, then quits.
 /// Each PNG gets a <page>-<mode>-layout.json with the grid probes (tools/check-layout.swift).
-/// APP_SNAPSHOT_PAGES=all,starred limits the pages. Add "settings" to include Settings.
+/// APP_SNAPSHOT_PAGES=all,starred limits the pages. Add "settings" to include Settings, "help" for the Help window.
 /// Add APP_ACCENT=<id> to see the pages in another accent.
 enum Snapshot {
-    static func runIfRequested(model: AppModel, openSettings: OpenSettingsAction) {
+    static func runIfRequested(model: AppModel, openSettings: OpenSettingsAction, openWindow: OpenWindowAction) {
         let env = ProcessInfo.processInfo.environment
         guard let dir = env["APP_SNAPSHOT"], !dir.isEmpty else { return }
         // Snapshots never run against the real database.
@@ -49,6 +49,19 @@ enum Snapshot {
                     model.showReview = false
                     try? await Task.sleep(for: .seconds(0.6))
                 }
+            }
+            if only == nil || only?.contains("help") == true {
+                let main = NSApp.windows.first { $0.canBecomeMain && !$0.isSheet }
+                openWindow(id: HelpView.windowID)
+                try? await Task.sleep(for: .seconds(1))
+                let help = NSApp.windows.first { $0.isVisible && $0 !== main && !$0.isSheet && $0.identifier?.rawValue.contains(HelpView.windowID) == true }
+                for mode in ["light", "dark"] {
+                    NSApp.appearance = NSAppearance(named: mode == "light" ? .aqua : .darkAqua)
+                    try? await Task.sleep(for: .seconds(0.8))
+                    capture(to: "\(dir)/help-\(mode).png", window: help)
+                }
+                help?.close()
+                try? await Task.sleep(for: .seconds(0.4))
             }
             if only == nil || only?.contains("settings") == true {
                 let main = NSApp.windows.first { $0.canBecomeMain && !$0.isSheet }

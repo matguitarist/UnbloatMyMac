@@ -1,3 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-  <rect x="262" y="372" width="500" height="380" rx="72" fill="#FFFFFF"/>
+  <!-- A feather: the Mac, lighter. Drawn upright, then tilted. -->
+  <g transform="rotate(38 512 512)" fill="#FFFFFF">
+    <path d="M512 130
+             C 640 200 690 320 676 420
+             L 604 452
+             L 668 480
+             C 650 580 610 650 548 712
+             L 512 742
+             L 476 712
+             C 420 660 382 600 366 540
+             L 432 516
+             L 360 486
+             C 344 340 390 210 512 130 Z"/>
+    <rect x="490" y="700" width="44" height="210" rx="22"/>
+  </g>
 </svg>

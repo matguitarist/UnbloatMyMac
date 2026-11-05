@@ -1,3 +1,5 @@
+<img src="docs/screenshots/icon.png" width="420" alt="UnbloatMyMac icon in its default, dark, tinted, and clear looks">
+
 # UnbloatMyMac
 
 A native Mac app that turns off what you don't use: Apple Intelligence, telemetry, slow animations, pop-ups, and background updaters. It can also make your Mac behave more like a Windows PC.
@@ -18,6 +20,12 @@ Every tweak is optional, shown to you before it applies, and can be undone.
 | **Dock & Windows** | Recent apps, bouncing icons, only open apps, scale effect, Spaces order, tiling without gaps |
 | **Typing** | Autocorrect, automatic capitals, smart quotes and dashes, accent menu, fast key repeat |
 | **Windows Mode** | Windows scroll direction, standard F-keys, Home and End keys, double-click to maximize, snap to edges, scroll bars always visible, Dock as a taskbar, drives on the desktop |
+
+**Command line:** `unbloatmymac list | status | apply | undo | preset | revert | export | import`. Install it from the app menu with **Install Command Line Tool…**. It shares the undo journal with the app.
+
+**Export and Import Tweaks** in the File menu save the tweaks that are on to a file, so you can apply the same set on another Mac.
+
+The app is in English and French.
 
 The **Background Items** page stops third-party updaters and helpers. **Storage** clears caches, Xcode data, old installers, and Time Machine local snapshots. **History** has **Undo Everything**.
 

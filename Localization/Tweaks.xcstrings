@@ -182,6 +182,16 @@
         }
       }
     },
+    "All in One": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout-en-un"
+          }
+        }
+      }
+    },
     "Always Show Scroll Bars": {
       "localizations": {
         "fr": {
@@ -1418,6 +1428,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Transcriptions et résumés dans Notes"
+          }
+        }
+      }
+    },
+    "One menu bar app for a window switcher with previews, snapping, clipboard history, mouse and scroll settings, a system monitor, display brightness, a per-app volume mixer, and an uninstaller.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une seule app dans la barre des menus pour passer d’une fenêtre à l’autre avec aperçus, ancrer les fenêtres, l’historique du presse-papiers, les réglages de souris et de défilement, un moniteur système, la luminosité des écrans, un mixeur de volume par app et un désinstalleur."
+          }
+        }
+      }
+    },
+    "One menu bar app instead of many small ones.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une seule app dans la barre des menus au lieu de plusieurs petites."
           }
         }
       }

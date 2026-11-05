@@ -5,10 +5,11 @@ import Synchronization
 // UnbloatMyMac never installs Homebrew itself; it shows how.
 
 public enum AppGroup: String, CaseIterable, Sendable, Codable {
-    case windows, terminal, tools, privacy
+    case allInOne, windows, terminal, tools, privacy
 
     public var title: String {
         switch self {
+        case .allInOne: L("All in One")
         case .windows: L("Windows Habits")
         case .terminal: L("Command Line")
         case .tools: L("Mac Utilities")
@@ -18,6 +19,7 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
 
     public var summary: String {
         switch self {
+        case .allInOne: L("One menu bar app instead of many small ones.")
         case .windows: L("Apps that bring back what you miss from Windows.")
         case .terminal: L("A nicer prompt and faster replacements for classic commands.")
         case .tools: L("Small free apps that fill gaps in macOS.")
@@ -27,6 +29,7 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
 
     public var symbol: String {
         switch self {
+        case .allInOne: "square.grid.2x2"
         case .windows: "macwindow.on.rectangle"
         case .terminal: "terminal"
         case .tools: "wrench.and.screwdriver"
@@ -48,12 +51,32 @@ public struct RecommendedApp: Identifiable, Sendable, Hashable {
     public let bundle: String?
     /// A line for ~/.zshrc that turns the tool on in new Terminal windows.
     public let shellLine: String?
-    /// Part of Install Recommended.
+    /// Starred in the list, unless an all-in-one app covers it on this Mac.
     public let recommended: Bool
     public let homepage: String
+    /// An all-in-one app that does the same job, like vorssaint.
+    public let replacedBy: String?
+    /// Runs only on Apple silicon.
+    public let appleSiliconOnly: Bool
+
+    /// Part of Install Recommended on this Mac.
+    public func isRecommended(appleSilicon: Bool = RecommendedApp.isAppleSilicon) -> Bool {
+        if appleSiliconOnly && !appleSilicon { return false }
+        if let replacedBy, appleSilicon, Catalog.app(replacedBy)?.appleSiliconOnly == true { return false }
+        return recommended
+    }
+
+    public static var isAppleSilicon: Bool {
+        #if arch(arm64)
+        true
+        #else
+        false
+        #endif
+    }
 
     public init(_ id: String, _ name: String, _ kind: Kind, _ group: AppGroup, _ detail: String,
-                bundle: String? = nil, shell: String? = nil, recommended: Bool = false, homepage: String) {
+                bundle: String? = nil, shell: String? = nil, recommended: Bool = false, homepage: String,
+                replacedBy: String? = nil, appleSiliconOnly: Bool = false) {
         self.id = id
         self.name = name
         self.kind = kind
@@ -63,6 +86,8 @@ public struct RecommendedApp: Identifiable, Sendable, Hashable {
         self.shellLine = shell
         self.recommended = recommended
         self.homepage = homepage
+        self.replacedBy = replacedBy
+        self.appleSiliconOnly = appleSiliconOnly
     }
 }
 
@@ -87,19 +112,25 @@ public struct AppsState: Sendable {
 
 extension Catalog {
     public static let apps: [RecommendedApp] = [
+        // All in one
+        .init("vorssaint", "Vorssaint", .cask, .allInOne,
+              "One menu bar app for a window switcher with previews, snapping, clipboard history, mouse and scroll settings, a system monitor, display brightness, a per-app volume mixer, and an uninstaller.",
+              bundle: "Vorssaint.app", recommended: true, homepage: "https://github.com/vorssaint/vorssaint-utils",
+              appleSiliconOnly: true),
+
         // Windows habits
         .init("alt-tab", "AltTab", .cask, .windows,
               "Switch between windows, not just apps, with previews, like Alt-Tab on Windows.",
-              bundle: "AltTab.app", recommended: true, homepage: "https://alt-tab-macos.netlify.app"),
+              bundle: "AltTab.app", recommended: true, homepage: "https://alt-tab-macos.netlify.app", replacedBy: "vorssaint"),
         .init("rectangle", "Rectangle", .cask, .windows,
               "Snap windows to halves, thirds, and corners with keyboard shortcuts, like Windows-Arrow.",
-              bundle: "Rectangle.app", recommended: true, homepage: "https://rectangleapp.com"),
+              bundle: "Rectangle.app", recommended: true, homepage: "https://rectangleapp.com", replacedBy: "vorssaint"),
         .init("maccy", "Maccy", .cask, .windows,
               "Clipboard history in the menu bar, like Windows-V.",
-              bundle: "Maccy.app", recommended: true, homepage: "https://maccy.app"),
+              bundle: "Maccy.app", recommended: true, homepage: "https://maccy.app", replacedBy: "vorssaint"),
         .init("linearmouse", "LinearMouse", .cask, .windows,
               "A separate scroll direction for the mouse and the trackpad, and no mouse acceleration.",
-              bundle: "LinearMouse.app", homepage: "https://linearmouse.app"),
+              bundle: "LinearMouse.app", homepage: "https://linearmouse.app", replacedBy: "vorssaint"),
 
         // Command line
         .init("oh-my-posh", "Oh My Posh", .formula, .terminal,
@@ -140,10 +171,10 @@ extension Catalog {
         // Mac utilities
         .init("appcleaner", "AppCleaner", .cask, .tools,
               "Removes an app with the settings and caches it leaves behind.",
-              bundle: "AppCleaner.app", recommended: true, homepage: "https://freemacsoft.net/appcleaner/"),
+              bundle: "AppCleaner.app", recommended: true, homepage: "https://freemacsoft.net/appcleaner/", replacedBy: "vorssaint"),
         .init("stats", "Stats", .cask, .tools,
               "CPU, memory, disk, network, and battery in the menu bar.",
-              bundle: "Stats.app", recommended: true, homepage: "https://github.com/exelban/stats"),
+              bundle: "Stats.app", recommended: true, homepage: "https://github.com/exelban/stats", replacedBy: "vorssaint"),
         .init("jordanbaird-ice", "Ice", .cask, .tools,
               "Hides menu bar icons you don't need.", bundle: "Ice.app", homepage: "https://icemenubar.app"),
         .init("keka", "Keka", .cask, .tools,
@@ -152,7 +183,7 @@ extension Catalog {
               "Plays almost any video file.", bundle: "IINA.app", homepage: "https://iina.io"),
         .init("monitorcontrol", "MonitorControl", .cask, .tools,
               "Brightness and volume keys for external displays.",
-              bundle: "MonitorControl.app", homepage: "https://github.com/MonitorControl/MonitorControl"),
+              bundle: "MonitorControl.app", homepage: "https://github.com/MonitorControl/MonitorControl", replacedBy: "vorssaint"),
 
         // Privacy
         .init("lulu", "LuLu", .cask, .privacy,

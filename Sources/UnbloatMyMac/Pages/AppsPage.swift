@@ -74,7 +74,7 @@ private struct AppRow: View {
             VStack(alignment: .leading, spacing: Space.xs) {
                 HStack(spacing: Space.sm) {
                     Text(verbatim: app.name)
-                    if app.recommended {
+                    if app.isRecommended() {
                         Tag(text: String(localized: "Recommended"), symbol: "star")
                     }
                 }
@@ -82,6 +82,11 @@ private struct AppRow: View {
                     .font(.callout)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                if let other = app.replacedBy.flatMap(Catalog.app), RecommendedApp.isAppleSilicon {
+                    Label("\(other.name) does this too", systemImage: "square.grid.2x2")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
                 if app.shellLine != nil, state == .installed {
                     Toggle("Turn on in new Terminal windows", isOn: Binding(
                         get: { model.apps.inShell.contains(app.id) },
@@ -151,7 +156,7 @@ private struct AppRow: View {
                 .frame(width: 32, height: 32)
                 .accessibilityHidden(true)
         } else {
-            IconTile(symbol: app.kind == .formula ? "terminal" : app.group == .terminal ? "textformat" : app.group.symbol)
+            IconTile(symbol: app.group == .allInOne ? app.group.symbol : app.kind == .formula ? "terminal" : app.group == .terminal ? "textformat" : app.group.symbol)
         }
     }
 

@@ -12,6 +12,16 @@
         }
       }
     },
+    "%@ does this too": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ le fait aussi"
+          }
+        }
+      }
+    },
     "%@ restart, so the screen may flicker.": {
       "localizations": {
         "fr": {

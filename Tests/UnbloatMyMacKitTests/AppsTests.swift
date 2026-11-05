@@ -69,3 +69,16 @@ func failedInstall() throws {
     #expect(throws: BackendError.self) { try installer.install(#require(Catalog.app("oh-my-posh"))) }
     #expect(installer.state().inShell.isEmpty)
 }
+
+@Test("On Apple silicon Vorssaint replaces the apps it covers; on Intel they stay recommended")
+func allInOneReplaces() throws {
+    let vorssaint = try #require(Catalog.app("vorssaint"))
+    let altTab = try #require(Catalog.app("alt-tab"))
+    #expect(vorssaint.isRecommended(appleSilicon: true))
+    #expect(!altTab.isRecommended(appleSilicon: true))
+    #expect(!vorssaint.isRecommended(appleSilicon: false))
+    #expect(altTab.isRecommended(appleSilicon: false))
+    for app in Catalog.apps {
+        if let other = app.replacedBy { #expect(Catalog.app(other) != nil, "\(app.id) names \(other)") }
+    }
+}

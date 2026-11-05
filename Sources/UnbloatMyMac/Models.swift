@@ -328,7 +328,7 @@ final class AppModel {
 
     /// Recommended apps not installed yet.
     var missingRecommended: [RecommendedApp] {
-        Catalog.apps.filter { $0.recommended && appState($0) == .notInstalled }
+        Catalog.apps.filter { $0.isRecommended() && appState($0) == .notInstalled }
     }
 
     func install(_ apps: [RecommendedApp]) async {

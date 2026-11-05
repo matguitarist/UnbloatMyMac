@@ -13,6 +13,14 @@ typing, and a Windows Mode, plus Background Items, Storage cleanup, and History.
 - Switches follow System Settings: a tweak whose title names a macOS feature (`Catalog.featureTitled`) shows the feature, so off applies the tweak.
 - `APP_STORE` set = `MockBackend`, a pretend Mac. Tests, snapshots, and the self-test never touch the real system. Never run the app against the real Mac from a test.
 
+## Adding a recommended app
+
+- Add it to `Catalog.apps` in `Sources/UnbloatMyMacKit/Apps.swift`. The id is the Homebrew token; check it with `brew info --json=v2 <token>`. Use `.cask` with `bundle:`, `.formula` with no bundle, or `.download` with `bundle:` for an app that is only on its website (the row shows Download, and Install Recommended skips it).
+- A new group needs a case in `AppGroup`, with a title, summary, and SF Symbol.
+- `recommended: true` stars the pick. Use `replacedBy: "vorssaint"` when Vorssaint covers the app, and `appleSiliconOnly:` when it needs Apple silicon.
+- Add a French string for every detail, title, and summary in `Localization/Tweaks.xcstrings`; the test "Every library string has a French translation" fails until you do. UI text goes in `Localizable.xcstrings`.
+- Add a test in `AppsTests.swift`, a story in `docs/STORIES.md`, the names in the README's Recommended Apps paragraph, and a task in Thimble under the current version heading.
+
 ## Layout
 
 - `Sources/UnbloatMyMac/` the app. `App.swift` has the window, menus, and the database location.

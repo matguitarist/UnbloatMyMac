@@ -1,0 +1,41 @@
+# UnbloatMyMac stories
+
+The backlog. Each story has checkable acceptance criteria. The Thimble project
+"UnbloatMyMac Roadmap" mirrors the open ones; this file is the source.
+
+## Done (0.1.0 code)
+
+- [x] **S-001 Tweak engine with exact undo.** Every change saves the value from before in `journal.json`; undo restores it. *Check:* `EngineTests` "restores the value from before", "journal survives a relaunch".
+- [x] **S-002 Apple Intelligence off, feature by feature.** Writing Tools, Genmoji, Image Playground, Image Wand, ChatGPT, summaries, inline predictions, Siri, and the AI background services. *Check:* profile flow test.
+- [x] **S-003 Privacy, Performance, Annoyances, Finder, Dock, Typing tweaks.** 88 tweaks total, no two write the same key. *Check:* `noSharedKeys` test.
+- [x] **S-004 Windows Mode.** Scroll direction, F-keys, Home/End, maximize, snap, scroll bars, taskbar Dock, drives on desktop, plus a full preset.
+- [x] **S-005 Review before apply.** Changes are staged, listed in a sheet with what happens (password, profile, restarts, log out), then applied. One password prompt for all admin changes. *Check:* `onePrompt` test, review snapshot.
+- [x] **S-006 Presets.** Recommended, Maximum Privacy, Performance Boost, Windows Mode. *Check:* self-test "a preset stages only what is not applied".
+- [x] **S-007 Background Items.** Stop and allow third-party launch agents and daemons.
+- [x] **S-008 Storage cleanup.** Caches, logs, Xcode data, simulators, installers, device updates, local snapshots; files go to the Trash.
+- [x] **S-009 History and Undo Everything.** *Check:* `undoEverything` test, self-test.
+
+## 0.1.0 — first public release
+
+- [ ] **S-010 Check every tweak on a real Mac (macOS 27).** Apply and undo each category on a real Mac; each switch shows the right state after Refresh, and undo leaves `defaults read` as before. *Owner.*
+- [ ] **S-011 Check the Apple Intelligence profile on macOS 27.** The profile installs from System Settings, the features disappear, removing it brings them back. Note any restriction key macOS ignores. *Owner.*
+- [ ] **S-012 Check the password prompt and cancel.** One prompt for several admin tweaks; Cancel reports "You canceled" and changes nothing. *Owner.*
+- [ ] **S-013 Full Disk Access guidance.** When a protected setting fails, the result offers a button that opens Privacy & Security > Full Disk Access. *Check:* self-test reaches the button on the pretend Mac.
+- [ ] **S-014 App icon.** A Liquid Glass icon made with Icon Composer, reviewed in light, dark, and tinted looks.
+- [x] **S-015 README, license, and screenshots.** README explains what changes, how undo works, and the risks.
+- [x] **S-016 CI.** GitHub Actions runs the unit tests on every push.
+- [x] **S-017 Release script.** `tools/release.sh <version>` signs with Developer ID and the hardened runtime, notarizes, staples, zips, and drafts a GitHub release.
+- [ ] **S-018 Notary credentials.** `xcrun notarytool store-credentials UnbloatMyMac` with an app-specific password, so the release script can notarize. *Owner.*
+- [ ] **S-019 Publish 0.1.0.** Repo public on GitHub, release with the notarized zip, downloads open without a Gatekeeper warning. *Owner.* Waits on S-010, S-014, S-018.
+
+## 0.2.0 — next
+
+- [ ] **S-030 Command-line tool.** `unbloatmymac status | apply <ids> | undo <ids> | preset <id> | revert`, sent to the running app (agent-cli skill). *Check:* `tools/test-cli.sh`.
+- [ ] **S-031 Export and import a tweak set.** Save the applied tweaks to a file and apply it on another Mac.
+- [ ] **S-032 Remove Apple Intelligence models.** Find the model assets on disk, show their size, remove them, and keep them from downloading again. Needs research first.
+- [ ] **S-033 Login Items list.** Show login items and app background items from the Background Task Manager, not only launch agents.
+- [ ] **S-034 Re-apply after macOS updates.** Detect a new macOS build that reset tweaks and offer to apply them again.
+- [ ] **S-035 Automatic updates.** Sparkle feed from GitHub releases.
+- [ ] **S-036 French localization.** Every string in a String Catalog, translated to French.
+- [ ] **S-037 Safari privacy tweaks.** Search suggestions, preloading, and privacy-preserving ad measurement, written in Safari's container (needs Full Disk Access).
+- [ ] **S-038 Windows-style Control shortcuts.** Optional key bindings so Control-C, V, X, Z, A work in text like on Windows.

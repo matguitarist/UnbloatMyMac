@@ -21,6 +21,11 @@ check "export writes a tweak set" sh -c "$bin export /tmp/UnbloatMyMac-cli-set.j
 check "import reads it back" sh -c "$bin import /tmp/UnbloatMyMac-cli-set.json --dry-run"
 check "revert --yes exits 0" sh -c "$bin revert --yes"
 check "status --json works" sh -c "$bin status --json | python3 -c 'import json,sys; assert \"applied\" in json.load(sys.stdin)'"
+check "apps --json lists the recommended apps" sh -c "$bin apps --json | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d[\"homebrew\"] and any(a[\"id\"]==\"oh-my-posh\" for a in d[\"apps\"])'"
+check "install --recommended dry run lists them" sh -c "$bin install --recommended --dry-run | grep -q alt-tab"
+check "unknown app exits 2" sh -c "$bin install nope; [ \$? -eq 2 ]"
+check "install --yes exits 0" sh -c "$bin install bat --yes"
+check "without Homebrew install exits 1" sh -c "APP_NO_BREW=1 $bin install bat --yes; [ \$? -eq 1 ]"
 
 [[ $fails -eq 0 ]] && echo "CLI PASS" || echo "CLI FAIL $fails"
 exit $fails

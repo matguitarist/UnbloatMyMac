@@ -236,6 +236,9 @@ func libraryStringsTranslated() throws {
     for c in TweakCategory.allCases { all += [c.title, c.summary] }
     for p in Catalog.presets { all += [p.title, p.summary] }
     for c in Catalog.cleanup { all += [c.title, c.detail] }
+    for a in Catalog.apps { all.append(a.detail) }
+    for g in AppGroup.allCases { all += [g.title, g.summary] }
+    all += ["Install Homebrew first.", "Could not change ~/.zshrc.", "Homebrew could not finish."]
     let missing = Set(all).subtracting(keys)
     #expect(missing.isEmpty, "untranslated: \(missing.sorted())")
 }

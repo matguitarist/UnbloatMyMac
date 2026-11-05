@@ -39,3 +39,6 @@ The backlog. Each story has checkable acceptance criteria. The Thimble project
 - [x] **S-036 French localization.** Every string in a String Catalog, translated to French.
 - [x] **S-037 Safari privacy tweaks.** Search suggestions, preloading, and privacy-preserving ad measurement, written in Safari's container (needs Full Disk Access).
 - [x] **S-038 Windows-style Control shortcuts.** Optional key bindings so Control-C, V, X, Z, A work in text like on Windows.
+- [x] **S-039 Recommended apps with Homebrew.** A Recommended Apps page lists free apps and tools by group (Windows habits, command line, Mac utilities, privacy), installs one or all recommended with Homebrew, and shows how to get Homebrew when it is missing. *Check:* self-test "Install Recommended installs every starred app", `AppsTests`.
+- [x] **S-040 Shell setup for terminal tools.** Oh My Posh, eza, zoxide, and fzf can add one line each to `~/.zshrc` in a marked block; turning one off or uninstalling removes only its line. *Check:* `AppsTests` "Adding and removing shell lines leaves the rest of ~/.zshrc as it was".
+- [x] **S-041 Apps from the command line.** `unbloatmymac apps | install <app>… | install --recommended | uninstall <app>…`. *Check:* `tools/test-cli.sh`.

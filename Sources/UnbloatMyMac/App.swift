@@ -14,7 +14,7 @@ import UnbloatMyMacKit
 /// The app. Main (CLI.swift) starts it unless the command line tool runs.
 struct UnbloatMyMacApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
-    @State private var model = AppModel(engine: Store.makeEngine())
+    @State private var model = AppModel(engine: Store.makeEngine(), installer: Store.makeInstaller())
 
     var body: some Scene {
         Window("UnbloatMyMac", id: "main") {
@@ -56,8 +56,11 @@ struct UnbloatMyMacApp: App {
                     }
                 }
                 Divider()
-                Button("Refresh") { Task { await model.refresh() } }
+                Button("Refresh") { Task { await model.refresh(); await model.refreshApps() } }
                     .keyboardShortcut("r")
+                Button("Install Recommended Apps") { model.sidebar = .apps; Task { await model.install(model.missingRecommended) } }
+                    .keyboardShortcut("i", modifiers: [.command, .option])
+                    .disabled(model.apps.homebrew == nil || model.missingRecommended.isEmpty || !model.appsWorking.isEmpty)
                 Button("Undo Everything…") { model.sidebar = .history; model.confirmUndoAll = true }
                     .keyboardShortcut("z", modifiers: [.command, .option])
                     .disabled(model.applied.isEmpty && model.launchItemsDisabledByApp.isEmpty)
@@ -108,6 +111,14 @@ enum Store {
             return URL(fileURLWithPath: path)
         }
         return folder.appending(path: "journal.json")
+    }
+
+    static func makeInstaller() -> AppInstaller {
+        if isOverridden {
+            let env = ProcessInfo.processInfo.environment
+            return AppInstaller(packages: MockPackageManager(seeded: env["APP_SEED"] == "1", homebrew: env["APP_NO_BREW"] != "1"))
+        }
+        return AppInstaller(packages: Homebrew())
     }
 
     static func makeEngine() -> Engine {

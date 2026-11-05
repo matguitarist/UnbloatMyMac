@@ -72,6 +72,16 @@
         }
       }
     },
+    "%lld of %lld installed": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld sur %lld installés"
+          }
+        }
+      }
+    },
     "%lld tweaks you applied are back to how macOS had them. Apply them again?": {
       "localizations": {
         "fr": {
@@ -118,6 +128,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 restant"
+          }
+        }
+      }
+    },
+    "About Homebrew": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À propos de Homebrew"
           }
         }
       }
@@ -178,6 +198,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ajouter aux modifications"
+          }
+        }
+      }
+    },
+    "Adds one line to ~/.zshrc, inside a block UnbloatMyMac marks. Turn off to take it out.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute une ligne à ~/.zshrc, dans un bloc marqué par UnbloatMyMac. Désactivez pour la retirer."
           }
         }
       }
@@ -462,6 +492,26 @@
         }
       }
     },
+    "Copy Homebrew Command": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier la commande Homebrew"
+          }
+        }
+      }
+    },
+    "Copy Install Command and Open Terminal": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier la commande d’installation et ouvrir Terminal"
+          }
+        }
+      }
+    },
     "Discard": {
       "localizations": {
         "fr": {
@@ -582,6 +632,16 @@
         }
       }
     },
+    "Free, open apps and tools that fill gaps in macOS, installed with Homebrew. Nothing installs until you click.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des apps et outils gratuits et ouverts qui comblent les manques de macOS, installés avec Homebrew. Rien ne s’installe sans votre clic."
+          }
+        }
+      }
+    },
     "General": {
       "localizations": {
         "fr": {
@@ -598,6 +658,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Historique"
+          }
+        }
+      }
+    },
+    "Homebrew is not installed": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Homebrew n’est pas installé"
+          }
+        }
+      }
+    },
+    "Homebrew is the free package manager most Mac developers use. UnbloatMyMac installs apps with it. Its installer runs in Terminal and asks for your password.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Homebrew est le gestionnaire de paquets gratuit qu’utilisent la plupart des développeurs Mac. UnbloatMyMac s’en sert pour installer les apps. Son installeur s’exécute dans Terminal et demande votre mot de passe."
           }
         }
       }
@@ -622,6 +702,26 @@
         }
       }
     },
+    "Install": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer"
+          }
+        }
+      }
+    },
+    "Install %lld Recommended": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer %lld recommandées"
+          }
+        }
+      }
+    },
     "Install Command Line Tool…": {
       "localizations": {
         "fr": {
@@ -632,12 +732,62 @@
         }
       }
     },
+    "Install Recommended Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer les apps recommandées"
+          }
+        }
+      }
+    },
+    "Installed": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installée"
+          }
+        }
+      }
+    },
+    "Installed without Homebrew. Update and remove it the way you installed it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installée sans Homebrew. Mettez-la à jour et supprimez-la comme vous l’avez installée."
+          }
+        }
+      }
+    },
+    "Installed. Open a new Terminal window to use it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installé. Ouvrez une nouvelle fenêtre de Terminal pour l’utiliser."
+          }
+        }
+      }
+    },
     "Installed. Try “unbloatmymac list” in Terminal.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Installé. Essayez « unbloatmymac list » dans Terminal."
+          }
+        }
+      }
+    },
+    "Installing…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installation…"
           }
         }
       }
@@ -688,6 +838,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "La lecture des éléments d’ouverture et en arrière-plan demande votre mot de passe."
+          }
+        }
+      }
+    },
+    "More for %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plus pour %@"
           }
         }
       }
@@ -782,6 +942,16 @@
         }
       }
     },
+    "Open": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrir"
+          }
+        }
+      }
+    },
     "Open %@": {
       "localizations": {
         "fr": {
@@ -828,6 +998,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ouvrir les réglages"
+          }
+        }
+      }
+    },
+    "Open Website": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrir le site web"
           }
         }
       }
@@ -922,12 +1102,52 @@
         }
       }
     },
+    "Recommended": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommandée"
+          }
+        }
+      }
+    },
+    "Recommended Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps recommandées"
+          }
+        }
+      }
+    },
+    "Recommended Apps Installed": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps recommandées installées"
+          }
+        }
+      }
+    },
     "Refresh": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Actualiser"
+          }
+        }
+      }
+    },
+    "Removing…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suppression…"
           }
         }
       }
@@ -1212,6 +1432,16 @@
         }
       }
     },
+    "The install command is on the clipboard. Paste it into Terminal, press Return, then come back and refresh.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La commande d’installation est dans le presse-papiers. Collez-la dans Terminal, appuyez sur Retour, puis revenez et actualisez."
+          }
+        }
+      }
+    },
     "The value of every setting before UnbloatMyMac changed it is kept here, so Undo Everything can put it back.": {
       "localizations": {
         "fr": {
@@ -1288,6 +1518,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Activer tous les réglages de cette page. Rien ne change avant que vous vérifiiez et appliquiez."
+          }
+        }
+      }
+    },
+    "Turn on in new Terminal windows": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activer dans les nouvelles fenêtres de Terminal"
           }
         }
       }
@@ -1458,6 +1698,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Annulé"
+          }
+        }
+      }
+    },
+    "Uninstall": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désinstaller"
           }
         }
       }

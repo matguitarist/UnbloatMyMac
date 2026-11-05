@@ -12,6 +12,56 @@
         }
       }
     },
+    "A cat with syntax colors and line numbers.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un cat avec coloration syntaxique et numéros de ligne."
+          }
+        }
+      }
+    },
+    "A cd that remembers: type z and part of a folder name to jump there.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un cd qui se souvient : tapez z et une partie du nom d’un dossier pour y aller."
+          }
+        }
+      }
+    },
+    "A clearer ls with colors, Git status, and folders first.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un ls plus clair, avec couleurs, état Git et dossiers en premier."
+          }
+        }
+      }
+    },
+    "A fast, native terminal app.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une app de terminal rapide et native."
+          }
+        }
+      }
+    },
+    "A free firewall that asks before an app connects to the internet for the first time.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un pare-feu gratuit qui demande avant qu’une app se connecte à Internet pour la première fois."
+          }
+        }
+      }
+    },
     "A hidden Dock shows the moment the pointer reaches it.": {
       "localizations": {
         "fr": {
@@ -32,12 +82,52 @@
         }
       }
     },
+    "A nicer prompt and faster replacements for classic commands.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une invite plus agréable et des remplaçants plus rapides des commandes classiques."
+          }
+        }
+      }
+    },
+    "A prompt that shows the folder, Git branch, and how long a command took. Needs a Nerd Font.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une invite qui montre le dossier, la branche Git et la durée d’une commande. Demande une police Nerd Font."
+          }
+        }
+      }
+    },
     "A quieter, faster Dock and window manager.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Un Dock et un gestionnaire de fenêtres plus calmes et plus rapides."
+          }
+        }
+      }
+    },
+    "A separate scroll direction for the mouse and the trackpad, and no mouse acceleration.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un sens de défilement distinct pour la souris et le trackpad, et pas d’accélération de la souris."
+          }
+        }
+      }
+    },
+    "A simple, fast find.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un find simple et rapide."
           }
         }
       }
@@ -222,6 +312,16 @@
         }
       }
     },
+    "Apps that bring back what you miss from Windows.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des apps qui ramènent ce qui vous manque de Windows."
+          }
+        }
+      }
+    },
     "Apps that quit unexpectedly no longer show a report window.": {
       "localizations": {
         "fr": {
@@ -292,12 +392,42 @@
         }
       }
     },
+    "Brightness and volume keys for external displays.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touches de luminosité et de volume pour les écrans externes."
+          }
+        }
+      }
+    },
     "Build products and indexes. Xcode rebuilds them.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Produits de compilation et index. Xcode les recrée."
+          }
+        }
+      }
+    },
+    "CPU, memory, disk, network, and battery in the menu bar.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processeur, mémoire, disque, réseau et batterie dans la barre des menus."
+          }
+        }
+      }
+    },
+    "CPU, memory, disks, and processes in the terminal, like Task Manager.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Processeur, mémoire, disques et processus dans le terminal, comme le Gestionnaire des tâches."
           }
         }
       }
@@ -362,6 +492,26 @@
         }
       }
     },
+    "Clipboard history in the menu bar, like Windows-V.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’historique du presse-papiers dans la barre des menus, comme Windows-V."
+          }
+        }
+      }
+    },
+    "Command Line": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ligne de commande"
+          }
+        }
+      }
+    },
     "Control Shortcuts in Text": {
       "localizations": {
         "fr": {
@@ -388,6 +538,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Corrections"
+          }
+        }
+      }
+    },
+    "Could not change ~/.zshrc.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de modifier ~/.zshrc."
           }
         }
       }
@@ -772,6 +932,16 @@
         }
       }
     },
+    "Fuzzy search for anything. Control-R finds a past command, Control-T a file.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recherche approximative de tout. Contrôle-R retrouve une commande passée, Contrôle-T un fichier."
+          }
+        }
+      }
+    },
     "Game Center": {
       "localizations": {
         "fr": {
@@ -822,6 +992,26 @@
         }
       }
     },
+    "Hides menu bar icons you don't need.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masque les icônes de la barre des menus dont vous n’avez pas besoin."
+          }
+        }
+      }
+    },
+    "Hides menu bar icons you don’t need.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masque les icônes de la barre des menus dont vous n’avez pas besoin."
+          }
+        }
+      }
+    },
     "Hides widgets on the desktop and in Stage Manager.": {
       "localizations": {
         "fr": {
@@ -858,6 +1048,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Début et Fin vont au début et à la fin de la ligne ; avec Contrôle, au début et à la fin du document."
+          }
+        }
+      }
+    },
+    "Homebrew could not finish.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Homebrew n’a pas pu terminer."
           }
         }
       }
@@ -918,6 +1118,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Prédictions en ligne"
+          }
+        }
+      }
+    },
+    "Install Homebrew first.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installez d’abord Homebrew."
           }
         }
       }
@@ -1028,6 +1238,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Suggestions de Recherche"
+          }
+        }
+      }
+    },
+    "Mac Utilities": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilitaires Mac"
           }
         }
       }
@@ -1212,6 +1432,16 @@
         }
       }
     },
+    "Opens and makes 7z, RAR, and other archives.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre et crée des archives 7z, RAR et autres."
+          }
+        }
+      }
+    },
     "Page summaries in Safari Reader.": {
       "localizations": {
         "fr": {
@@ -1328,6 +1558,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les touches lecture, pause et piste suivante cessent de marcher dans toutes les apps."
+          }
+        }
+      }
+    },
+    "Plays almost any video file.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lit presque tous les fichiers vidéo."
           }
         }
       }
@@ -1468,6 +1708,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Supprimez les fenêtres surgissantes, les demandes et les comportements qui gênent."
+          }
+        }
+      }
+    },
+    "Removes an app with the settings and caches it leaves behind.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprime une app avec les réglages et caches qu’elle laisse derrière elle."
           }
         }
       }
@@ -1682,12 +1932,32 @@
         }
       }
     },
+    "Searches text in files many times faster than grep. Run it as rg.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cherche du texte dans les fichiers bien plus vite que grep. Lancez-le avec rg."
+          }
+        }
+      }
+    },
     "Searching starts in the current folder, not the whole Mac.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "La recherche commence dans le dossier actuel, pas dans tout le Mac."
+          }
+        }
+      }
+    },
+    "See and block what apps send.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voyez et bloquez ce que les apps envoient."
           }
         }
       }
@@ -1718,6 +1988,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Partager l’analyse du Mac"
+          }
+        }
+      }
+    },
+    "Short examples for a command instead of its whole manual. Run it as tldr.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De courts exemples d’une commande au lieu de tout son manuel. Lancez-le avec tldr."
           }
         }
       }
@@ -1892,6 +2172,16 @@
         }
       }
     },
+    "Small free apps that fill gaps in macOS.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De petites apps gratuites qui comblent les manques de macOS."
+          }
+        }
+      }
+    },
     "Smart Dashes": {
       "localizations": {
         "fr": {
@@ -1918,6 +2208,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ancrer les fenêtres aux bords"
+          }
+        }
+      }
+    },
+    "Snap windows to halves, thirds, and corners with keyboard shortcuts, like Windows-Arrow.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Placez les fenêtres en moitiés, tiers et coins avec des raccourcis clavier, comme Windows-Flèche."
           }
         }
       }
@@ -2282,6 +2582,16 @@
         }
       }
     },
+    "Switch between windows, not just apps, with previews, like Alt-Tab on Windows.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passez d’une fenêtre à l’autre, pas seulement d’une app à l’autre, avec des aperçus, comme Alt-Tab sous Windows."
+          }
+        }
+      }
+    },
     "System Daemons": {
       "localizations": {
         "fr": {
@@ -2418,6 +2728,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le premier mot d’une phrase n’est plus mis en majuscule pour vous."
+          }
+        }
+      }
+    },
+    "The font with the icons Oh My Posh and eza draw. Choose it in Terminal > Settings > Profiles > Text.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La police avec les icônes qu’affichent Oh My Posh et eza. Choisissez-la dans Terminal > Réglages > Profils > Texte."
           }
         }
       }
@@ -2628,6 +2948,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fenêtres"
+          }
+        }
+      }
+    },
+    "Windows Habits": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Habitudes Windows"
           }
         }
       }

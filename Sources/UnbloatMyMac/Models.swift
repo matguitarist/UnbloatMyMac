@@ -6,10 +6,10 @@ import UnbloatMyMacKit
 enum SidebarItem: Hashable, Identifiable {
     case overview
     case category(TweakCategory)
-    case background, storage, history
+    case background, storage, apps, history
 
     static var allCases: [SidebarItem] {
-        [.overview] + TweakCategory.allCases.map { .category($0) } + [.background, .storage, .history]
+        [.overview] + TweakCategory.allCases.map { .category($0) } + [.background, .storage, .apps, .history]
     }
 
     var id: String { rawValue }
@@ -20,6 +20,7 @@ enum SidebarItem: Hashable, Identifiable {
         case .category(let category): category.rawValue
         case .background: "background"
         case .storage: "storage"
+        case .apps: "apps"
         case .history: "history"
         }
     }
@@ -30,6 +31,7 @@ enum SidebarItem: Hashable, Identifiable {
         case .category(let category): category.title
         case .background: String(localized: "Background Items")
         case .storage: String(localized: "Storage")
+        case .apps: String(localized: "Recommended Apps")
         case .history: String(localized: "History")
         }
     }
@@ -40,6 +42,7 @@ enum SidebarItem: Hashable, Identifiable {
         case .category(let category): category.symbol
         case .background: "gearshape.2"
         case .storage: "internaldrive"
+        case .apps: "shippingbox"
         case .history: "clock.arrow.circlepath"
         }
     }
@@ -49,6 +52,7 @@ enum SidebarItem: Hashable, Identifiable {
 @Observable
 final class AppModel {
     let engine: Engine
+    let installer: AppInstaller
     var sidebar: SidebarItem? = .overview
 
     /// What the Mac looks like now, by tweak id.
@@ -85,8 +89,15 @@ final class AppModel {
         didSet { if !Store.isOverridden { UserDefaults.standard.set(settingsTab.rawValue, forKey: "settings.tab") } }
     }
 
-    init(engine: Engine) {
+    /// Recommended apps: Homebrew, what is installed, and what is in ~/.zshrc.
+    private(set) var apps = AppsState()
+    private(set) var appsLoaded = false
+    /// Apps Homebrew is installing or removing now.
+    private(set) var appsWorking: Set<String> = []
+
+    init(engine: Engine, installer: AppInstaller) {
         self.engine = engine
+        self.installer = installer
     }
 
     // MARK: Tweaks
@@ -303,6 +314,64 @@ final class AppModel {
         } catch {
             notice = error.localizedDescription
         }
+    }
+
+    // MARK: Recommended apps
+
+    func refreshApps() async {
+        let installer = installer
+        apps = await Task.detached { installer.state() }.value
+        appsLoaded = true
+    }
+
+    func appState(_ app: RecommendedApp) -> AppInstallState { apps.states[app.id] ?? .notInstalled }
+
+    /// Recommended apps not installed yet.
+    var missingRecommended: [RecommendedApp] {
+        Catalog.apps.filter { $0.recommended && appState($0) == .notInstalled }
+    }
+
+    func install(_ apps: [RecommendedApp]) async {
+        let installer = installer
+        var errors: [String] = []
+        for app in apps where appState(app) == .notInstalled && !appsWorking.contains(app.id) {
+            appsWorking.insert(app.id)
+            do { try await Task.detached { try installer.install(app) }.value }
+            catch { errors.append("\(app.name): \(error.localizedDescription)") }
+            appsWorking.remove(app.id)
+            await refreshApps()
+        }
+        if !errors.isEmpty { notice = errors.joined(separator: "\n") }
+        else if apps.contains(where: { $0.shellLine != nil }) {
+            notice = String(localized: "Installed. Open a new Terminal window to use it.")
+        }
+    }
+
+    func uninstall(_ app: RecommendedApp) async {
+        let installer = installer
+        appsWorking.insert(app.id)
+        do { try await Task.detached { try installer.uninstall(app) }.value }
+        catch { notice = "\(app.name): \(error.localizedDescription)" }
+        appsWorking.remove(app.id)
+        await refreshApps()
+    }
+
+    func setShell(_ app: RecommendedApp, on: Bool) async {
+        let installer = installer
+        do { try await Task.detached { try installer.setShell(app, on: on) }.value }
+        catch { notice = error.localizedDescription }
+        await refreshApps()
+    }
+
+    static let homebrewCommand = #"/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)""#
+
+    func copyHomebrewCommand() {
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(Self.homebrewCommand, forType: .string)
+        if let terminal = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Terminal") {
+            NSWorkspace.shared.openApplication(at: terminal, configuration: .init())
+        }
+        notice = String(localized: "The install command is on the clipboard. Paste it into Terminal, press Return, then come back and refresh.")
     }
 
     // MARK: Login items

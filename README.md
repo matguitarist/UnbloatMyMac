@@ -21,7 +21,9 @@ Every tweak is optional, shown to you before it applies, and can be undone.
 | **Typing** | Autocorrect, automatic capitals, smart quotes and dashes, accent menu, fast key repeat |
 | **Windows Mode** | Windows scroll direction, standard F-keys, Home and End keys, double-click to maximize, snap to edges, scroll bars always visible, Dock as a taskbar, drives on the desktop |
 
-**Command line:** `unbloatmymac list | status | apply | undo | preset | revert | export | import`. Install it from the app menu with **Install Command Line Tool…**. It shares the undo journal with the app.
+**Recommended Apps** suggests free apps and tools and installs them with [Homebrew](https://brew.sh) in one click: AltTab, Rectangle, and Maccy for Windows habits; Oh My Posh, eza, zoxide, fzf, bat, ripgrep, and btop for the terminal; AppCleaner, Stats, Ice, Keka, IINA, and MonitorControl; and the LuLu firewall. Tools like Oh My Posh can add their line to `~/.zshrc`, inside a block UnbloatMyMac marks and removes again. Nothing installs until you click.
+
+**Command line:** `unbloatmymac list | status | apply | undo | preset | revert | export | import | apps | install | uninstall`. Install it from the app menu with **Install Command Line Tool…**. It shares the undo journal with the app.
 
 **Export and Import Tweaks** in the File menu save the tweaks that are on to a file, so you can apply the same set on another Mac.
 

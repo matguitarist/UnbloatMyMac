@@ -81,6 +81,21 @@ enum SelfTest {
             await model.scanStorage()
             check("storage scan measures every target", model.sizes.count == Catalog.cleanup.count)
 
+            await model.refreshApps()
+            check("Homebrew is found on the pretend Mac", model.apps.homebrew != nil)
+            let recommended = model.missingRecommended
+            await model.install(recommended)
+            check("Install Recommended installs every starred app", model.missingRecommended.isEmpty && !recommended.isEmpty)
+            check("tools with a shell line are turned on in ~/.zshrc",
+                  recommended.filter { $0.shellLine != nil }.allSatisfy { model.apps.inShell.contains($0.id) })
+            model.notice = nil
+            if let posh = Catalog.app("oh-my-posh") {
+                await model.setShell(posh, on: false)
+                check("a shell line can be turned off alone", !model.apps.inShell.contains("oh-my-posh") && model.apps.inShell.contains("zoxide"))
+                await model.uninstall(posh)
+                check("uninstalling removes the app", model.appState(posh) == .notInstalled)
+            }
+
             print(failures == 0 ? "SELFTEST PASS \(count) checks" : "SELFTEST FAIL \(failures) of \(count) checks")
             finish(code: failures == 0 ? 0 : 1)
         }

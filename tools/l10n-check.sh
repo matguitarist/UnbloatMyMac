@@ -5,12 +5,18 @@
 set -u
 here=${0:A:h:h}
 tmp=$(mktemp -d)
+# An up-to-date build compiles nothing and emits no strings, so start clean.
+rm -rf "$HOME/Library/Developer/UnbloatMyMac/l10n-build"
 swift build --package-path "$here" --scratch-path "$HOME/Library/Developer/UnbloatMyMac/l10n-build" \
   -Xswiftc -emit-localized-strings -Xswiftc -emit-localized-strings-path -Xswiftc "$tmp" >/dev/null 2>&1
-rm -f "$tmp"/{Backend,Catalog,Engine,MacBackend,Model,CLI}.stringsdata
-echo '{"sourceLanguage":"en","strings":{},"version":"1.0"}' > "$tmp/x.xcstrings"
-xcrun xcstringstool sync "$tmp/x.xcstrings" --stringsdata "$tmp"/*.stringsdata
-python3 -I - "$tmp/x.xcstrings" "$here/Localization/Localizable.xcstrings" <<'PY'
+expected=$(ls "$here"/Sources/UnbloatMyMac/**/*.swift | wc -l)
+found=$(ls "$tmp"/*.stringsdata 2>/dev/null | wc -l)
+if (( found < expected )); then echo "L10N FAIL the build emitted $found of $expected string files"; exit 1; fi
+# Library files use the Tweaks table (checked by EngineTests); the CLI stays English.
+rm -f "$tmp"/{Apps,Backend,Catalog,Engine,MacBackend,Model,CLI}.stringsdata
+echo '{"sourceLanguage":"en","strings":{},"version":"1.0"}' > "$tmp/Localizable.xcstrings"
+xcrun xcstringstool sync "$tmp/Localizable.xcstrings" --stringsdata "$tmp"/*.stringsdata
+python3 -I - "$tmp/Localizable.xcstrings" "$here/Localization/Localizable.xcstrings" <<'PY'
 import json, sys
 found = set(json.load(open(sys.argv[1]))["strings"])
 have = {k for k, v in json.load(open(sys.argv[2]))["strings"].items() if "fr" in v.get("localizations", {})}

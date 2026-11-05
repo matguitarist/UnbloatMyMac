@@ -11,11 +11,14 @@ import UnbloatMyMacKit
 ///   unbloatmymac revert [--yes] [--json]          undo everything
 ///   unbloatmymac export <file>
 ///   unbloatmymac import <file> [--yes] [--dry-run] [--json]
+///   unbloatmymac apps [--json]                    recommended apps and tools
+///   unbloatmymac install <app>... | --recommended [--no-shell] [--yes] [--dry-run]
+///   unbloatmymac uninstall <app>... [--yes]
 /// Changes ask "Apply? [y/N]" in a terminal; scripts pass --yes. Exit codes:
 /// 0 ok, 1 some changes failed, 2 bad usage, 3 declined.
 enum CLI {
     static let commands: Set<String> = ["list", "status", "apply", "undo", "preset", "presets", "revert",
-                                        "export", "import", "help", "--help", "-h", "--version"]
+                                        "export", "import", "apps", "install", "uninstall", "help", "--help", "-h", "--version"]
 
     static func shouldRun(_ arguments: [String]) -> Bool {
         arguments.count > 1 && commands.contains(arguments[1])
@@ -25,6 +28,8 @@ enum CLI {
         var json = false
         var yes = false
         var dryRun = false
+        var recommended = false
+        var shell = true
         var words: [String] = []
     }
 
@@ -35,8 +40,15 @@ enum CLI {
             case "--json": options.json = true
             case "--yes", "-y": options.yes = true
             case "--dry-run", "-n": options.dryRun = true
+            case "--recommended": options.recommended = true
+            case "--no-shell": options.shell = false
             default: options.words.append(word)
             }
+        }
+        switch arguments[1] {
+        case "apps": return apps(Store.makeInstaller(), options)
+        case "install", "uninstall": return installApps(Store.makeInstaller(), install: arguments[1] == "install", options)
+        default: break
         }
         let engine = Store.makeEngine()
         switch arguments[1] {
@@ -173,6 +185,66 @@ enum CLI {
         return report.failures.isEmpty ? 0 : 1
     }
 
+    private static func apps(_ installer: AppInstaller, _ options: Options) -> Int32 {
+        let state = installer.state()
+        if options.json {
+            let rows: [[String: Any]] = Catalog.apps.map { app in
+                ["id": app.id, "name": app.name, "kind": app.kind.rawValue, "group": app.group.rawValue,
+                 "detail": app.detail, "recommended": app.recommended, "homepage": app.homepage,
+                 "state": stateName(state.states[app.id]), "inShell": state.inShell.contains(app.id)]
+            }
+            return printJSON(["homebrew": state.homebrew.map { $0 as Any } ?? NSNull(), "apps": rows])
+        }
+        if state.homebrew == nil { print("Homebrew is not installed. Get it at https://brew.sh") }
+        for group in AppGroup.allCases {
+            print("\n\(group.title)")
+            for app in Catalog.apps where app.group == group {
+                let flags = [app.recommended ? "recommended" : nil, state.inShell.contains(app.id) ? "in ~/.zshrc" : nil].compactMap { $0 }
+                let suffix = flags.isEmpty ? "" : "  (\(flags.joined(separator: ", ")))"
+                print("  \(pad(stateName(state.states[app.id]), 14)) \(pad(app.id, 24)) \(app.detail)\(suffix)")
+            }
+        }
+        return 0
+    }
+
+    private static func installApps(_ installer: AppInstaller, install: Bool, _ options: Options) -> Int32 {
+        let unknown = options.words.filter { Catalog.app($0) == nil }
+        guard unknown.isEmpty else { return usage("Unknown app: \(unknown.joined(separator: ", ")). See: unbloatmymac apps") }
+        let state = installer.state()
+        var chosen = options.words.compactMap(Catalog.app)
+        if options.recommended && install { chosen += Catalog.apps.filter { $0.recommended && !chosen.contains($0) } }
+        guard !chosen.isEmpty else { return usage("\(install ? "install" : "uninstall") needs app names\(install ? " or --recommended" : ""). See: unbloatmymac apps") }
+        if install, state.homebrew == nil { return fail("Homebrew is not installed. Get it at https://brew.sh") }
+        let todo = chosen.filter { install ? state.states[$0.id] == .notInstalled : state.states[$0.id] == .installed }
+        guard !todo.isEmpty else {
+            print(install ? "Already installed." : "Nothing to uninstall. Apps installed without Homebrew stay.")
+            return 0
+        }
+        for app in todo { print("  \(install ? "install  " : "uninstall") \(pad(app.id, 24)) \(app.name)") }
+        if options.dryRun { return 0 }
+        guard confirm(install ? "Install \(todo.count) with Homebrew" : "Uninstall \(todo.count)", options) else { return 3 }
+        var failed = 0
+        for app in todo {
+            print("\(install ? "Installing" : "Removing") \(app.name)…")
+            do {
+                if install { try installer.install(app, shell: options.shell) } else { try installer.uninstall(app) }
+            } catch {
+                failed += 1
+                print("  failed: \(error.localizedDescription)")
+            }
+        }
+        if install, options.shell, todo.contains(where: { $0.shellLine != nil }) { print("Open a new Terminal window to use the new tools.") }
+        return failed == 0 ? 0 : 1
+    }
+
+    private static func stateName(_ state: AppInstallState?) -> String {
+        switch state {
+        case .installed: "installed"
+        case .installedElsewhere: "installed-other"
+        case .notInstalled, nil: "not-installed"
+        }
+    }
+
     // MARK: Helpers
 
     private static func confirm(_ question: String, _ options: Options) -> Bool {
@@ -235,6 +307,10 @@ enum CLI {
       revert                        undo everything UnbloatMyMac changed
       export <file>                 save the applied tweaks to a file
       import <file>                 apply the tweaks saved in a file
+      apps [--json]                 recommended apps and tools, and what is installed
+      install <app>...              install with Homebrew (--recommended for the starred ones,
+                                    --no-shell to leave ~/.zshrc alone)
+      uninstall <app>...            uninstall with Homebrew and remove its ~/.zshrc line
 
     Options: --yes (don't ask), --dry-run (show what would change), --json.
     Changes in the app and here share one undo journal.

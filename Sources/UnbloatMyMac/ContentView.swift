@@ -31,10 +31,11 @@ struct ContentView: View {
         }
         // The command line tool may have changed the Mac while the app was in the background.
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
-            if model.hasLoaded, !model.isBusy { Task { await model.refresh() } }
+            if model.hasLoaded, !model.isBusy { Task { await model.refresh(); await model.refreshApps() } }
         }
         .task {
             await model.refresh()
+            await model.refreshApps()
             SeedData.stageIfRequested(model: model)
             SelfTest.runIfRequested(model: model)
             Snapshot.runIfRequested(model: model, openSettings: openSettings)
@@ -55,7 +56,7 @@ struct ContentView: View {
                 }
             }
             Section("Tools") {
-                ForEach([SidebarItem.background, .storage, .history]) { item in
+                ForEach([SidebarItem.background, .storage, .apps, .history]) { item in
                     Label(item.title, systemImage: item.symbol)
                         .tag(item)
                 }
@@ -71,6 +72,7 @@ struct ContentView: View {
         case .category(let category): TweakPage(category: category)
         case .background: BackgroundPage()
         case .storage: StoragePage()
+        case .apps: AppsPage()
         case .history: HistoryPage()
         }
     }
@@ -94,7 +96,7 @@ struct ContentView: View {
             }
         }
         ToolbarItem {
-            Button("Refresh", systemImage: "arrow.clockwise") { Task { await model.refresh() } }
+            Button("Refresh", systemImage: "arrow.clockwise") { Task { await model.refresh(); await model.refreshApps() } }
                 .help("Read the current settings again (Command-R)")
         }
     }

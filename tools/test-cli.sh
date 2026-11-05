@@ -1,0 +1,26 @@
+#!/bin/zsh
+# Checks the command line tool on a pretend Mac (APP_STORE in /tmp). Exit 0 when every check passes.
+set -u
+bin=~/Applications/UnbloatMyMac.app/Contents/MacOS/UnbloatMyMac
+export APP_STORE=/tmp/UnbloatMyMac-cli.json
+rm -f $APP_STORE /tmp/UnbloatMyMac-cli-set.json
+fails=0
+check() { local name=$1; shift; if "$@" >/dev/null 2>&1; then echo "PASS $name"; else echo "FAIL $name"; fails=$((fails+1)); fi }
+json() { $bin "$@" --json; }
+
+check "help prints the commands" sh -c "$bin help | grep -q 'apply <id>'"
+check "list --json has every tweak" sh -c "$bin list --json | python3 -c 'import json,sys; assert len(json.load(sys.stdin)[\"tweaks\"]) > 80'"
+check "unknown tweak exits 2" sh -c "$bin apply nope.nope; [ \$? -eq 2 ]"
+check "apply without --yes from a script is declined" sh -c "$bin apply dock.recents < /dev/null; [ \$? -eq 3 ]"
+check "dry run changes nothing" sh -c "$bin apply dock.recents --dry-run | grep -q dock.recents"
+check "apply --yes reports one change" sh -c "$bin apply dock.recents --yes --json | python3 -c 'import json,sys; assert json.load(sys.stdin)[\"changed\"] == 1'"
+check "a protected setting fails with exit 1" sh -c "$bin apply perf.reduceMotion --yes; [ \$? -eq 1 ]"
+check "presets lists windows" sh -c "$bin presets | grep -q windows"
+check "preset dry run lists its tweaks" sh -c "$bin preset windows --dry-run | grep -q win.scrolling"
+check "export writes a tweak set" sh -c "$bin export /tmp/UnbloatMyMac-cli-set.json && grep -q '\"tweaks\"' /tmp/UnbloatMyMac-cli-set.json"
+check "import reads it back" sh -c "$bin import /tmp/UnbloatMyMac-cli-set.json --dry-run"
+check "revert --yes exits 0" sh -c "$bin revert --yes"
+check "status --json works" sh -c "$bin status --json | python3 -c 'import json,sys; assert \"applied\" in json.load(sys.stdin)'"
+
+[[ $fails -eq 0 ]] && echo "CLI PASS" || echo "CLI FAIL $fails"
+exit $fails

@@ -3,6 +3,7 @@ import Synchronization
 
 /// What the engine remembers between launches, in journal.json: the value of
 /// every setting before the app changed it, so undo restores it exactly.
+/// Fields added after 0.1.0 are optional, so older journals still load.
 struct Journal: Codable {
     struct Original: Codable { var value: PrefValue? }
     struct OriginalFile: Codable { var contents: String? }
@@ -18,6 +19,10 @@ struct Journal: Codable {
     /// Restrictions in a profile handed to System Settings and not approved yet.
     var pendingProfile: Set<String>?
     var history: [HistoryEntry] = []
+    /// The key bindings file from before the first key binding tweak.
+    var keyBindingsOriginal: OriginalFile?
+    /// The macOS build the last change was applied on.
+    var osBuild: String?
 }
 
 public struct EngineState: Sendable {
@@ -26,6 +31,10 @@ public struct EngineState: Sendable {
     /// Tweaks the app turned on and can undo.
     public var applied: Set<String>
     public var launchItemsDisabledByApp: Set<String>
+    /// Tweaks the app applied that something put back, most often a macOS update.
+    public var reverted: [String]
+    /// True when macOS changed build since the last apply.
+    public var macOSUpdated: Bool
 }
 
 public struct ApplyReport: Sendable {
@@ -33,6 +42,8 @@ public struct ApplyReport: Sendable {
     public var failures: [String: String] = [:]
     /// A profile is waiting for approval in System Settings.
     public var profileHandedOff = false
+    /// A setting failed because the app lacks Full Disk Access.
+    public var needsFullDiskAccess = false
     public var restarted: Set<Restart> = []
     public var needsLogout = false
     public var changed = 0
@@ -40,9 +51,38 @@ public struct ApplyReport: Sendable {
     public init() {}
 }
 
+/// A list of tweaks saved to a file, to apply on another Mac.
+public struct TweakSet: Codable, Sendable {
+    public var format = 1
+    public var app = "UnbloatMyMac"
+    public var created = Date.now
+    public var tweaks: [String]
+
+    public init(tweaks: [String]) { self.tweaks = tweaks }
+
+    public func data() throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.dateEncodingStrategy = .iso8601
+        return try encoder.encode(self)
+    }
+
+    public static func read(_ data: Data) throws -> TweakSet {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let set = try decoder.decode(TweakSet.self, from: data)
+        guard set.app == "UnbloatMyMac" else { throw BackendError(L("This file was not made by UnbloatMyMac.")) }
+        return set
+    }
+}
+
 /// Applies and undoes tweaks through a `SystemBackend`, keeping the journal.
-/// One operation at a time; call it off the main thread, since admin prompts block.
+/// The journal is read again before every operation, so the app and the
+/// command line tool can both change the Mac. Call it off the main thread,
+/// since admin prompts block.
 public final class Engine: Sendable {
+    public static let keyBindingsPath = "~/Library/KeyBindings/DefaultKeyBinding.dict"
+
     public let backend: any SystemBackend
     public let tweaks: [Tweak]
     private let journalURL: URL
@@ -52,15 +92,22 @@ public final class Engine: Sendable {
         self.backend = backend
         self.tweaks = tweaks
         self.journalURL = journalURL
+        journal = Mutex(Journal())
+        load()
+    }
+
+    private func load() {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        let saved = (try? Data(contentsOf: journalURL)).flatMap { try? decoder.decode(Journal.self, from: $0) }
-        journal = Mutex(saved ?? Journal())
+        guard let data = try? Data(contentsOf: journalURL),
+              let saved = try? decoder.decode(Journal.self, from: data) else { return }
+        journal.withLock { $0 = saved }
     }
 
     // MARK: Reading the Mac
 
     public func state() -> EngineState {
+        load()
         let known = backend.knownAgents()
         let disabled = backend.disabledAgents()
         let managed = backend.managedRestrictions()
@@ -76,18 +123,24 @@ public final class Engine: Sendable {
             statuses[tweak.id] = status(of: tweak, known: known, disabled: disabled,
                                         managed: managed, pending: j.pendingProfile ?? [])
         }
+        let reverted = tweaks.filter { tweak in
+            j.applied.contains(tweak.id) && (statuses[tweak.id] == .off || statuses[tweak.id] == .partial)
+        }.map(\.id)
+        let build = backend.osBuild()
         return EngineState(statuses: statuses, history: j.history.reversed(), applied: j.applied,
-                           launchItemsDisabledByApp: Set(j.launchItems.keys))
+                           launchItemsDisabledByApp: Set(j.launchItems.keys), reverted: reverted,
+                           macOSUpdated: j.osBuild != nil && j.osBuild != build)
     }
 
     func status(of tweak: Tweak, known: Set<String>, disabled: Set<String>,
                 managed: Set<String>, pending: Set<String>) -> TweakStatus {
         let labels = tweak.agents
         if !labels.isEmpty, labels.allSatisfy({ !known.contains($0) && !disabled.contains($0) }) {
-            return .unavailable("Not on this version of macOS")
+            return .unavailable(L("Not on this version of macOS"))
         }
         var done: [Bool] = []
         var waiting = false
+        var bindingsFile: String?
         for action in tweak.actions {
             switch action {
             case .pref(let key, let value):
@@ -108,6 +161,9 @@ public final class Engine: Sendable {
                 done.append(backend.check(command.check))
             case .file(let path, let contents):
                 done.append(backend.readFile(path) == contents)
+            case .keyBindings(let bindings):
+                if bindingsFile == nil { bindingsFile = backend.readFile(Self.keyBindingsPath) ?? "" }
+                done.append(bindings.allSatisfy { bindingsFile!.contains(KeyBindings.line($0.key, $0.value)) })
             }
         }
         if done.allSatisfy({ $0 }) { return waiting ? .waiting : .on }
@@ -118,6 +174,7 @@ public final class Engine: Sendable {
 
     /// Turns tweaks on (true) or off (false). Off restores what was there before.
     public func apply(_ changes: [String: Bool], restartApps: Bool = true) -> ApplyReport {
+        load()
         var report = ApplyReport()
         var j = journal.withLock { $0 }
         let disabledBefore = backend.disabledAgents()
@@ -127,6 +184,7 @@ public final class Engine: Sendable {
         var restrictionsOn: Set<String> = []
         var restrictionsOff: Set<String> = []
         var profileTweaks: [Tweak] = []
+        var bindingTweaks: [Tweak] = []
         var restarts: Set<Restart> = []
         let selected = tweaks.filter { changes[$0.id] != nil }
 
@@ -141,23 +199,29 @@ public final class Engine: Sendable {
                 case .pref(let key, let value):
                     if on {
                         if j.prefs[key.id] == nil { j.prefs[key.id] = .init(value: backend.read(key)) }
-                        if !backend.write(key, value) { fail(tweak, Self.refused(key)) }
+                        if !backend.write(key, value) {
+                            fail(tweak, Self.refused(key))
+                            if Self.isProtected(key) { report.needsFullDiskAccess = true }
+                        }
                     } else {
                         // Put back the value from before. If it already equaled
                         // the tweak's value, go back to the macOS default instead.
                         let original = j.prefs[key.id]?.value
                         let restore = original.map { value.matches($0) } == true ? nil : original
-                        if backend.write(key, restore) { j.prefs[key.id] = nil } else { fail(tweak, Self.refused(key)) }
+                        if backend.write(key, restore) { j.prefs[key.id] = nil } else {
+                            fail(tweak, Self.refused(key))
+                            if Self.isProtected(key) { report.needsFullDiskAccess = true }
+                        }
                     }
                 case .agent(let label):
                     let exists = known.contains(label) || disabledBefore.contains(label)
                     guard exists else { continue }
                     if on {
                         if j.agents[label] == nil { j.agents[label] = disabledBefore.contains(label) }
-                        if !backend.setAgent(label, disabled: true) { fail(tweak, "macOS would not stop \(label).") }
+                        if !backend.setAgent(label, disabled: true) { fail(tweak, String(format: L("macOS would not stop %@."), label)) }
                     } else {
                         if backend.setAgent(label, disabled: false) { j.agents[label] = nil } else {
-                            fail(tweak, "macOS would not start \(label) again.")
+                            fail(tweak, String(format: L("macOS would not start %@ again."), label))
                         }
                     }
                 case .restriction(let key):
@@ -169,16 +233,40 @@ public final class Engine: Sendable {
                 case .file(let path, let contents):
                     if on {
                         if j.files[path] == nil { j.files[path] = .init(contents: backend.readFile(path)) }
-                        if !backend.writeFile(path, contents) { fail(tweak, "Could not write \(path).") }
+                        if !backend.writeFile(path, contents) { fail(tweak, String(format: L("Could not write %@."), path)) }
                     } else {
                         let original = j.files[path]?.contents
                         if backend.writeFile(path, original == contents ? nil : original) { j.files[path] = nil } else {
-                            fail(tweak, "Could not restore \(path).")
+                            fail(tweak, String(format: L("Could not restore %@."), path))
                         }
                     }
+                case .keyBindings:
+                    if !bindingTweaks.contains(tweak) { bindingTweaks.append(tweak) }
                 }
             }
             restarts.formUnion(tweak.restarts)
+        }
+
+        // Key bindings from every tweak that stays on share one file.
+        if !bindingTweaks.isEmpty {
+            let path = Self.keyBindingsPath
+            let active = tweaks.filter { tweak in
+                guard tweak.actions.contains(where: { if case .keyBindings = $0 { true } else { false } }) else { return false }
+                return changes[tweak.id] ?? j.applied.contains(tweak.id)
+            }
+            let ok: Bool
+            if active.isEmpty {
+                ok = backend.writeFile(path, j.keyBindingsOriginal?.contents)
+                if ok { j.keyBindingsOriginal = nil }
+            } else {
+                if j.keyBindingsOriginal == nil { j.keyBindingsOriginal = .init(contents: backend.readFile(path)) }
+                var merged: [String: String] = [:]
+                for tweak in active {
+                    for case .keyBindings(let bindings) in tweak.actions { merged.merge(bindings) { a, _ in a } }
+                }
+                ok = backend.writeFile(path, KeyBindings.file(merged))
+            }
+            if !ok { for tweak in bindingTweaks { fail(tweak, String(format: L("Could not write %@."), path)) } }
         }
 
         for (tweak, script) in userScripts {
@@ -213,6 +301,7 @@ public final class Engine: Sendable {
             if !on { j.applied.remove(tweak.id) }
             j.history.append(HistoryEntry(title: tweak.title, turnedOn: on, error: error))
         }
+        if !selected.isEmpty { j.osBuild = backend.osBuild() }
         report.needsLogout = restarts.contains(.logout)
         if restartApps {
             let now = restarts.subtracting([.logout])
@@ -247,17 +336,45 @@ public final class Engine: Sendable {
             case .pref(let key, _): j.prefs[key.id] != nil
             case .agent(let label): j.agents[label] != nil
             case .file(let path, _): j.files[path] != nil
+            case .keyBindings: j.keyBindingsOriginal != nil
             case .restriction, .command: false
             }
         }
     }
 
-    // MARK: Background items and storage
+    /// Accepts the current state: tweaks something else put back stop counting as applied.
+    public func forgetReverted() {
+        let ids = state().reverted
+        journal.withLock { j in for id in ids { j.applied.remove(id) } ; j.osBuild = backend.osBuild() }
+        save()
+    }
+
+    // MARK: Export and import
+
+    /// The tweaks that are on now, as a file.
+    public func exportSet() throws -> Data {
+        let current = state()
+        return try TweakSet(tweaks: tweaks.filter { current.statuses[$0.id]?.isOn == true }.map(\.id)).data()
+    }
+
+    /// The changes that would apply a saved set: ids this app knows and that are not on yet.
+    public func changes(for set: TweakSet) -> [String: Bool] {
+        let current = state()
+        var changes: [String: Bool] = [:]
+        for id in set.tweaks {
+            guard let status = current.statuses[id], status.isAvailable, !status.isOn else { continue }
+            changes[id] = true
+        }
+        return changes
+    }
+
+    // MARK: Background items, login items, and storage
 
     public func launchItems() -> [LaunchItem] { backend.launchItems() }
 
     /// Returns an error message, or nil when it worked.
     public func setLaunchItem(_ item: LaunchItem, disabled: Bool) -> String? {
+        load()
         var message: String?
         do { try backend.setLaunchItem(item, disabled: disabled) } catch { message = error.localizedDescription }
         journal.withLock { j in
@@ -270,23 +387,30 @@ public final class Engine: Sendable {
         return message
     }
 
+    public func loginItems() throws -> [LoginItem] { try backend.loginItems() }
+
     public func measure(_ target: CleanupTarget) -> CleanupSize { backend.measure(target) }
 
     public func clean(_ target: CleanupTarget) -> String? {
+        load()
         var message: String?
         do { try backend.clean(target) } catch { message = error.localizedDescription }
-        journal.withLock { $0.history.append(HistoryEntry(title: "Cleaned \(target.title)", turnedOn: true, error: message)) }
+        journal.withLock { $0.history.append(HistoryEntry(title: String(format: L("Cleaned %@"), target.title), turnedOn: true, error: message)) }
         save()
         return message
     }
 
     // MARK: Helpers
 
+    static func isProtected(_ key: PrefKey) -> Bool {
+        ["com.apple.universalaccess", "com.apple.Safari"].contains(key.domain)
+    }
+
     static func refused(_ key: PrefKey) -> String {
-        if key.domain == "com.apple.universalaccess" {
-            return "macOS protects this setting. Give UnbloatMyMac Full Disk Access in System Settings > Privacy & Security, then try again."
+        if isProtected(key) {
+            return L("macOS protects this setting. Give UnbloatMyMac Full Disk Access in System Settings > Privacy & Security, then try again.")
         }
-        return "macOS did not accept \(key)."
+        return String(format: L("macOS did not accept %@."), key.description)
     }
 
     private func save() {
@@ -300,4 +424,19 @@ public final class Engine: Sendable {
         try? FileManager.default.createDirectory(at: journalURL.deletingLastPathComponent(), withIntermediateDirectories: true)
         try? data.write(to: journalURL, options: .atomic)
     }
+}
+
+/// The text of ~/Library/KeyBindings/DefaultKeyBinding.dict.
+public enum KeyBindings {
+    static func line(_ key: String, _ selector: String) -> String { "    \"\(key)\" = \"\(selector)\";" }
+
+    static func file(_ bindings: [String: String]) -> String {
+        "{\n" + bindings.keys.sorted().map { line($0, bindings[$0]!) }.joined(separator: "\n") + "\n}\n"
+    }
+}
+
+/// Localized text for the library. The app's Tweaks.strings tables hold the
+/// translations; tests and the command line tool fall back to English.
+public func L(_ english: String) -> String {
+    Bundle.main.localizedString(forKey: english, value: english, table: "Tweaks")
 }

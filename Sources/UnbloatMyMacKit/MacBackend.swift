@@ -125,24 +125,42 @@ public final class MacBackend: SystemBackend {
 
     public func check(_ script: String) -> Bool { shell(script).status == 0 }
 
+    public func osBuild() -> String {
+        var size = 0
+        sysctlbyname("kern.osversion", nil, &size, nil, 0)
+        var buffer = [CChar](repeating: 0, count: max(size, 1))
+        sysctlbyname("kern.osversion", &buffer, &size, nil, 0)
+        return String(decoding: buffer.prefix { $0 != 0 }.map { UInt8(bitPattern: $0) }, as: UTF8.self)
+    }
+
+    public func loginItems() throws -> [LoginItem] {
+        let output = try runAdmin("sfltool dumpbtm")
+        return LoginItemParser.parse(output, uid: Int(uid))
+    }
+
+    /// Runs one script as root under the password prompt and returns what it printed.
+    private func runAdmin(_ script: String) throws -> String {
+        let result = execute("/usr/bin/osascript", ["-e", "on run argv", "-e",
+                                                   "do shell script (item 1 of argv) with administrator privileges",
+                                                   "-e", "end run", script])
+        if result.status != 0 {
+            if result.output.contains("-128") { throw BackendError(L("You canceled the password prompt, so nothing that needs it changed.")) }
+            throw BackendError(result.output.isEmpty ? L("The admin command failed.") : result.output)
+        }
+        return result.output
+    }
+
     public func run(_ scripts: [String], admin: Bool) throws {
         guard !scripts.isEmpty else { return }
         if !admin {
             for script in scripts {
                 let result = shell(script)
-                if result.status != 0 { throw BackendError(result.output.isEmpty ? "The command failed." : result.output) }
+                if result.status != 0 { throw BackendError(result.output.isEmpty ? L("The command failed.") : result.output) }
             }
             return
         }
         // One prompt for every admin change. The script travels as an argument, so nothing needs escaping.
-        let joined = scripts.joined(separator: " && ")
-        let result = execute("/usr/bin/osascript", ["-e", "on run argv", "-e",
-                                                   "do shell script (item 1 of argv) with administrator privileges",
-                                                   "-e", "end run", joined])
-        if result.status != 0 {
-            if result.output.contains("-128") { throw BackendError("You canceled the password prompt, so nothing that needs it changed.") }
-            throw BackendError(result.output.isEmpty ? "The admin command failed." : result.output)
-        }
+        _ = try runAdmin(scripts.joined(separator: " && "))
     }
 
     private func expand(_ path: String) -> String { (path as NSString).expandingTildeInPath }
@@ -254,7 +272,7 @@ public final class MacBackend: SystemBackend {
         for url in urls {
             do { try FileManager.default.trashItem(at: url, resultingItemURL: nil) } catch { failed += 1 }
         }
-        if failed > 0 { throw BackendError("\(failed) of \(urls.count) items are in use or protected and stayed where they were.") }
+        if failed > 0 { throw BackendError(String(format: L("%lld of %lld items are in use or protected and stayed where they were."), failed, urls.count)) }
     }
 
     private func children(of folder: String) -> [URL] {
@@ -342,9 +360,65 @@ public extension Catalog {
         CleanupTarget(id: "iosUpdates", title: "iPhone and iPad Updates", detail: "Software update files Finder downloaded for your devices.",
                       symbol: "arrow.triangle.2.circlepath",
                       kind: .contents(["~/Library/iTunes/iPhone Software Updates", "~/Library/iTunes/iPad Software Updates"])),
+        CleanupTarget(id: "aiModels", title: "Apple Intelligence Models",
+                      detail: "Language, image, and photo models in /System/Library/AssetsV2. System Integrity Protection keeps any app from deleting them; turning off Apple Intelligence in System Settings makes macOS remove them.",
+                      symbol: "apple.intelligence",
+                      kind: .contents(Catalog.modelFolders), settingsPane: "com.apple.Siri-Settings.extension"),
         CleanupTarget(id: "snapshots", title: "Time Machine Local Snapshots", detail: "Hourly snapshots kept on this disk. Deleted at once; your backups are not touched.",
                       symbol: "clock.arrow.circlepath",
                       kind: .command(count: "tmutil listlocalsnapshots / 2>/dev/null | grep -c com.apple; true",
                                      run: "tmutil deletelocalsnapshots /", admin: true)),
     ]
+}
+
+public extension Catalog {
+    /// Where macOS keeps Apple Intelligence models. Protected by SIP: measured, never deleted.
+    static let modelFolders: [String] = [
+        "com_apple_MobileAsset_UAF_FM_GenerativeModels", "com_apple_MobileAsset_UAF_FM_Visual",
+        "com_apple_MobileAsset_UAF_FM_CodeLM", "com_apple_MobileAsset_UAF_FM_Overrides",
+        "com_apple_MobileAsset_UAF_Photos_MagicCleanup", "com_apple_MobileAsset_UAF_Photos_SpatialPhotosRelive",
+        "com_apple_MobileAsset_UAF_Handwriting_Synthesis", "com_apple_MobileAsset_UAF_IF_Planner",
+        "com_apple_MobileAsset_UAF_Shortcuts_Generator", "com_apple_MobileAsset_UAF_Siri_AnswerSynthesis",
+    ].map { "/System/Library/AssetsV2/" + $0 }
+}
+
+/// Reads the output of `sfltool dumpbtm`.
+public enum LoginItemParser {
+    public static func parse(_ text: String, uid: Int) -> [LoginItem] {
+        var items: [LoginItem] = []
+        var inUser = false
+        var fields: [String: String] = [:]
+
+        func flush() {
+            defer { fields = [:] }
+            guard inUser, let name = fields["Name"], let type = fields["Type"] else { return }
+            let kind = type.components(separatedBy: " (").first ?? type
+            // Developer records group items; they are not items themselves.
+            guard kind != "developer", kind != "unknown" else { return }
+            let disposition = fields["Disposition"] ?? ""
+            items.append(LoginItem(name: name, developer: fields["Developer Name"] ?? "", kind: kind,
+                                   isEnabled: disposition.contains("enabled") && !disposition.contains("disabled"),
+                                   url: fields["URL"] ?? "", identifier: fields["Identifier"] ?? name))
+        }
+
+        for raw in text.split(separator: "\n", omittingEmptySubsequences: false) {
+            let line = raw.trimmingCharacters(in: .whitespaces)
+            if line.hasPrefix("Records for UID") {
+                flush()
+                let number = line.dropFirst("Records for UID".count).trimmingCharacters(in: .whitespaces)
+                    .split(separator: " ").first.flatMap { Int($0) }
+                inUser = number == uid
+                continue
+            }
+            if line.hasPrefix("#"), line.hasSuffix(":") { flush(); continue }
+            guard let colon = line.firstIndex(of: ":") else { continue }
+            let key = String(line[..<colon]).trimmingCharacters(in: .whitespaces)
+            let value = String(line[line.index(after: colon)...]).trimmingCharacters(in: .whitespaces)
+            if fields[key] == nil { fields[key] = value }
+        }
+        flush()
+        // The same app can be listed once per parent; keep one row each.
+        var seen: Set<String> = []
+        return items.filter { seen.insert($0.id).inserted }.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
+    }
 }

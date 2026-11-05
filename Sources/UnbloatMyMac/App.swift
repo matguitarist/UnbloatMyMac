@@ -11,7 +11,7 @@ import UnbloatMyMacKit
 //   APP_ACCENT=<id> UnbloatMyMac      run with another accent from Theme.all (UI/Theme.swift)
 //   APP_GRID=1 UnbloatMyMac           draw the 8 pt grid and the layout probes over the window
 
-@main
+/// The app. Main (CLI.swift) starts it unless the command line tool runs.
 struct UnbloatMyMacApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     @State private var model = AppModel(engine: Store.makeEngine())
@@ -30,6 +30,17 @@ struct UnbloatMyMacApp: App {
             SidebarCommands()
             ToolbarCommands()
             CommandGroup(replacing: .newItem) {}
+            CommandGroup(after: .appInfo) {
+                Button("Check for Updates…") { Updater.shared.checkForUpdates() }
+                    .disabled(!Updater.shared.isAvailable)
+                Button("Install Command Line Tool…") { Task { await model.installCommandLineTool() } }
+            }
+            CommandGroup(replacing: .importExport) {
+                Button("Export Tweaks…") { model.exportWithPanel() }
+                    .keyboardShortcut("e", modifiers: [.command, .shift])
+                Button("Import Tweaks…") { model.importWithPanel() }
+                    .keyboardShortcut("i", modifiers: [.command, .shift])
+            }
             CommandMenu("Changes") {
                 Button("Review Changes…") { model.review() }
                     .keyboardShortcut(.return, modifiers: .command)
@@ -67,6 +78,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         // Started from a terminal, the process is not a foreground app yet.
         NSApp.setActivationPolicy(.regular)
         NSApp.activate()
+        _ = Updater.shared
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }

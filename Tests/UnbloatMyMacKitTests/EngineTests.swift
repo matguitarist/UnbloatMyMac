@@ -146,3 +146,82 @@ func profileData() throws {
     let content = (plist?["PayloadContent"] as? [[String: Any]])?.first
     #expect(content?["allowGenmoji"] as? Bool == false)
 }
+
+@Test("Key binding tweaks share one file and the original comes back")
+func sharedKeyBindings() {
+    let (engine, backend) = makeEngine()
+    let path = Engine.keyBindingsPath
+    _ = backend.writeFile(path, "{ mine }")
+    _ = engine.apply(["win.homeEnd": true, "win.controlShortcuts": true])
+    let file = backend.readFile(path) ?? ""
+    #expect(file.contains("moveToBeginningOfLine:") && file.contains("copy:"))
+    #expect(engine.state().statuses["win.controlShortcuts"] == .on)
+    _ = engine.apply(["win.homeEnd": false])
+    #expect(engine.state().statuses["win.homeEnd"] == .off)
+    #expect(engine.state().statuses["win.controlShortcuts"] == .on)
+    _ = engine.apply(["win.controlShortcuts": false])
+    #expect(backend.readFile(path) == "{ mine }")
+}
+
+@Test("Safari settings report that Full Disk Access is needed")
+func safariNeedsAccess() {
+    let (engine, _) = makeEngine()
+    let report = engine.apply(["privacy.safariPreload": true])
+    #expect(report.needsFullDiskAccess)
+}
+
+@Test("A macOS update that resets a tweak is noticed")
+func revertedByUpdate() {
+    let (engine, backend) = makeEngine()
+    _ = engine.apply(["dock.recents": true, "dock.bounce": true])
+    #expect(engine.state().reverted.isEmpty)
+    backend.simulateUpdate(resetting: PrefKey("com.apple.dock", "show-recents"))
+    let state = engine.state()
+    #expect(state.macOSUpdated)
+    #expect(state.reverted == ["dock.recents"])
+    engine.forgetReverted()
+    #expect(engine.state().reverted.isEmpty && !engine.state().macOSUpdated)
+}
+
+@Test("A saved tweak set brings the same tweaks to another Mac")
+func exportImport() throws {
+    let (engine, _) = makeEngine()
+    _ = engine.apply(["dock.recents": true, "finder.pathBar": true])
+    let set = try TweakSet.read(engine.exportSet())
+    #expect(Set(set.tweaks) == ["dock.recents", "finder.pathBar"])
+    let (other, _) = makeEngine()
+    #expect(other.changes(for: set) == ["dock.recents": true, "finder.pathBar": true])
+    #expect(throws: (any Error).self) { try TweakSet.read(Data("{}".utf8)) }
+}
+
+@Test("Login items are read from sfltool output for this user only")
+func parsesLoginItems() {
+    let text = """
+    ========================
+     Records for UID 0 : 00000000
+    ========================
+     #1:
+                     Name: Root Thing
+                     Type: daemon (0x10)
+              Disposition: [enabled, allowed, visible, notified] (11)
+               Identifier: 16.com.root.thing
+    ========================
+     Records for UID 501 : 1234
+    ========================
+     #1:
+                     Name: Docker Inc
+                     Type: developer (0x20)
+              Disposition: [enabled, allowed, visible, notified] (11)
+               Identifier: Docker Inc
+     #2:
+                     Name: Docker
+           Developer Name: Docker Inc
+                     Type: app (0x2)
+              Disposition: [disabled, allowed, visible, notified] (10)
+               Identifier: 2.com.docker.docker
+                      URL: file:///Applications/Docker.app/
+    """
+    let items = LoginItemParser.parse(text, uid: 501)
+    #expect(items.count == 1)
+    #expect(items.first?.name == "Docker" && items.first?.kind == "app" && items.first?.isEnabled == false)
+}

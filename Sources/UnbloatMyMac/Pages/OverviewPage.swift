@@ -10,6 +10,10 @@ struct OverviewPage: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Space.section) {
+                if !model.reverted.isEmpty {
+                    RevertedBanner()
+                        .gridProbe("reverted", area: "overview")
+                }
                 hero
                     .gridProbe("hero", area: "overview")
                 VStack(alignment: .leading, spacing: Space.md) {
@@ -154,5 +158,33 @@ private struct CategoryCard: View {
         }
         .buttonStyle(.plain)
         .help("Open \(category.title)")
+    }
+}
+
+/// Shown when tweaks the app applied were put back, most often by a macOS update.
+private struct RevertedBanner: View {
+    @Environment(AppModel.self) private var model
+
+    var body: some View {
+        let count = model.reverted.count
+        Card {
+            HStack(alignment: .top, spacing: Space.md) {
+                Image(systemName: "arrow.triangle.2.circlepath")
+                    .font(.title2)
+                    .foregroundStyle(Palette.accentText)
+                    .accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: Space.xs) {
+                    Text(model.macOSUpdated ? "macOS Was Updated" : "Some Tweaks Were Put Back").font(.headline)
+                    Text("\(count) tweaks you applied are back to how macOS had them. Apply them again?")
+                        .foregroundStyle(.secondary)
+                    HStack(spacing: Space.sm) {
+                        Button("Review and Apply Again") { model.stageReverted() }
+                            .buttonStyle(.borderedProminent)
+                        Button("Keep as Is") { Task { await model.forgetReverted() } }
+                    }
+                    .padding(.top, Space.xs)
+                }
+            }
+        }
     }
 }

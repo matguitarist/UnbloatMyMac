@@ -58,6 +58,11 @@ final class AppModel {
     private(set) var launchItems: [LaunchItem] = []
     private(set) var launchItemsDisabledByApp: Set<String> = []
     private(set) var sizes: [String: CleanupSize] = [:]
+    /// Tweaks the app applied that were put back, most often by a macOS update.
+    private(set) var reverted: [String] = []
+    private(set) var macOSUpdated = false
+    /// Login items, loaded on request because reading them needs the admin password.
+    private(set) var loginItems: [LoginItem]?
     private(set) var hasLoaded = false
 
     /// Changes waiting for Review: tweak id -> apply (true) or undo (false).
@@ -160,6 +165,8 @@ final class AppModel {
         applied = s.applied
         history = s.history
         launchItemsDisabledByApp = s.launchItemsDisabledByApp
+        reverted = s.reverted
+        macOSUpdated = s.macOSUpdated
         launchItems = i
         // Drop staged changes that already match the Mac.
         staged = staged.filter { id, on in (statuses[id]?.isOn ?? false) != on }
@@ -219,7 +226,97 @@ final class AppModel {
         if let error { notice = error }
     }
 
-    var reclaimableBytes: Int64 { sizes.values.compactMap(\.bytes).reduce(0, +) }
+    var reclaimableBytes: Int64 {
+        Catalog.cleanup.filter { $0.settingsPane == nil }.compactMap { sizes[$0.id]?.bytes }.reduce(0, +)
+    }
+
+    // MARK: Reverted by macOS
+
+    /// Stages the reverted tweaks again, for Review.
+    func stageReverted() {
+        for id in reverted { staged[id] = true }
+        review()
+    }
+
+    func forgetReverted() async {
+        let engine = engine
+        await Task.detached { engine.forgetReverted() }.value
+        await refresh()
+    }
+
+    // MARK: Export and import
+
+    func exportSet(to url: URL) async {
+        let engine = engine
+        do {
+            let data = try await Task.detached { try engine.exportSet() }.value
+            try data.write(to: url, options: .atomic)
+        } catch {
+            notice = error.localizedDescription
+        }
+    }
+
+    /// Stages the tweaks in a saved set that are not on yet, then opens Review.
+    func importSet(from url: URL) async {
+        let engine = engine
+        do {
+            let set = try TweakSet.read(Data(contentsOf: url))
+            let changes = await Task.detached { engine.changes(for: set) }.value
+            if changes.isEmpty {
+                notice = String(localized: "Every tweak in this file is already applied.")
+                return
+            }
+            staged.merge(changes) { _, new in new }
+            review()
+        } catch {
+            notice = error.localizedDescription
+        }
+    }
+
+    func exportWithPanel() {
+        let panel = NSSavePanel()
+        panel.nameFieldStringValue = "My Mac Tweaks.unbloat.json"
+        panel.allowedContentTypes = [.json]
+        panel.message = String(localized: "Save the tweaks that are on, to apply them on another Mac.")
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        Task { await exportSet(to: url) }
+    }
+
+    func importWithPanel() {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [.json]
+        panel.message = String(localized: "Choose a tweaks file saved by UnbloatMyMac.")
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        Task { await importSet(from: url) }
+    }
+
+    // MARK: Command line tool
+
+    /// Links /usr/local/bin/unbloatmymac to this app's binary. Asks for the admin password.
+    func installCommandLineTool() async {
+        guard !Store.isOverridden, let binary = Bundle.main.executablePath else { return }
+        let backend = engine.backend
+        let script = "mkdir -p /usr/local/bin && ln -sf '\(binary)' /usr/local/bin/unbloatmymac"
+        do {
+            try await Task.detached { try backend.run([script], admin: true) }.value
+            notice = String(localized: "Installed. Try “unbloatmymac list” in Terminal.")
+        } catch {
+            notice = error.localizedDescription
+        }
+    }
+
+    // MARK: Login items
+
+    func loadLoginItems() async {
+        let engine = engine
+        isBusy = true
+        do {
+            loginItems = try await Task.detached { try engine.loginItems() }.value
+        } catch {
+            notice = error.localizedDescription
+        }
+        isBusy = false
+    }
 
     func openSystemSettings(_ pane: String) {
         if let url = URL(string: "x-apple.systempreferences:\(pane)") { NSWorkspace.shared.open(url) }

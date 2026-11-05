@@ -129,12 +129,21 @@ struct ReviewSheet: View {
                 Label("Approve “UnbloatMyMac: Apple Intelligence” in System Settings > General > Device Management.", systemImage: "checkmark.shield")
                     .fixedSize(horizontal: false, vertical: true)
             }
+            if report.needsFullDiskAccess {
+                Label("Some settings are protected. Give UnbloatMyMac Full Disk Access, then apply them again.", systemImage: "lock.shield")
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             if report.needsLogout {
                 Label("Log out and back in to finish every change.", systemImage: "person.crop.circle.badge.clock")
             }
             HStack {
                 if report.profileHandedOff {
                     Button("Open Device Management") { model.openSystemSettings("com.apple.Profiles-Settings.extension") }
+                }
+                if report.needsFullDiskAccess {
+                    Button("Open Full Disk Access Settings") {
+                        model.openSystemSettings("com.apple.preference.security?Privacy_AllFiles")
+                    }
                 }
                 Spacer()
                 Button("Done") { dismiss() }

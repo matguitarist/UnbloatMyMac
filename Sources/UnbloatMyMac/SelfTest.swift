@@ -62,6 +62,22 @@ enum SelfTest {
             check("undo everything clears what the app applied", model.applied.isEmpty)
             check("feature switches are back on", model.switchIsOn(recents))
 
+            if let motion = Catalog.tweak("perf.reduceMotion") {
+                model.setApplied(motion, true)
+                let protected = await model.applyStaged()
+                check("a protected setting asks for Full Disk Access", protected.needsFullDiskAccess)
+            }
+
+            await model.loadLoginItems()
+            check("login items load", (model.loginItems?.count ?? 0) > 0)
+
+            let file = URL(fileURLWithPath: "/tmp/UnbloatMyMac-self-set.json")
+            try? TweakSet(tweaks: ["finder.pathBar", "dock.bounce"]).data().write(to: file)
+            await model.importSet(from: file)
+            check("importing a tweak set stages it for review", model.staged == ["finder.pathBar": true, "dock.bounce": true] && model.showReview)
+            model.showReview = false
+            model.discard()
+
             await model.scanStorage()
             check("storage scan measures every target", model.sizes.count == Catalog.cleanup.count)
 

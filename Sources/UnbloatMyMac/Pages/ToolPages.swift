@@ -23,6 +23,27 @@ struct BackgroundPage: View {
                                            description: Text("No other app installed a launch agent or daemon."))
                 }
             }
+            Section {
+                if let items = model.loginItems {
+                    if items.isEmpty {
+                        Text("No login items.").foregroundStyle(.secondary)
+                    }
+                    ForEach(items) { item in LoginItemRow(item: item) }
+                } else {
+                    HStack {
+                        Text("Login items and app background items need your password to read.")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button("Show Login Items…") { Task { await model.loadLoginItems() } }
+                            .disabled(model.isBusy)
+                    }
+                }
+            } header: {
+                Text("Login Items and App Background Items")
+            } footer: {
+                Text("Turn these on or off in System Settings > General > Login Items & Extensions.")
+                    .font(.caption).foregroundStyle(.secondary)
+            }
             ForEach(LaunchItem.Scope.allCases, id: \.self) { scope in
                 let items = model.launchItems.filter { $0.scope == scope }
                 if !items.isEmpty {
@@ -159,9 +180,14 @@ struct StoragePage: View {
             .font(.callout)
             .foregroundStyle(.secondary)
             .monospacedDigit()
-            Button("Clean…") { confirm = target }
-                .disabled(size?.isEmpty ?? true || model.isBusy)
-                .help("Clean \(target.title)")
+            if let pane = target.settingsPane {
+                Button("Open Settings") { model.openSystemSettings(pane) }
+                    .help("macOS removes these when you turn off Apple Intelligence")
+            } else {
+                Button("Clean…") { confirm = target }
+                    .disabled(size?.isEmpty ?? true || model.isBusy)
+                    .help("Clean \(target.title)")
+            }
         }
     }
 }
@@ -206,5 +232,39 @@ struct HistoryPage: View {
                     .help("Put back every setting UnbloatMyMac changed (Option-Command-Z)")
             }
         }
+    }
+}
+
+private struct LoginItemRow: View {
+    @Environment(AppModel.self) private var model
+    let item: LoginItem
+
+    var body: some View {
+        HStack(spacing: Space.md) {
+            Image(nsImage: icon)
+                .resizable()
+                .frame(width: 32, height: 32)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(item.name)
+                Text([item.developer, item.kind.capitalized].filter { !$0.isEmpty }.joined(separator: " · "))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer(minLength: Space.lg)
+            Text(item.isEnabled ? "On" : "Off")
+                .font(.callout)
+                .foregroundStyle(item.isEnabled ? AnyShapeStyle(Palette.accentText) : AnyShapeStyle(.secondary))
+            Button("Open Settings") { model.openSystemSettings("com.apple.LoginItems-Settings.extension") }
+                .help("Change this item in System Settings")
+        }
+    }
+
+    private var icon: NSImage {
+        if let url = URL(string: item.url), url.isFileURL, url.path.hasSuffix(".app/") || url.path.hasSuffix(".app"),
+           FileManager.default.fileExists(atPath: url.path) {
+            return NSWorkspace.shared.icon(forFile: url.path)
+        }
+        return NSImage(systemSymbolName: "gearshape", accessibilityDescription: nil) ?? NSImage()
     }
 }

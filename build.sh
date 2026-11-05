@@ -47,7 +47,14 @@ if [[ -d "$here/Icon/AppIcon.icon" ]]; then
   fi
   cp -X "$car" "$here/Resources/AppIcon.icns" "$app/Contents/Resources/"
 fi
+# Sparkle, for automatic updates.
+framework="$scratch/$config/Sparkle.framework"
+if [[ -d "$framework" ]]; then
+  mkdir -p "$app/Contents/Frameworks"
+  ditto "$framework" "$app/Contents/Frameworks/Sparkle.framework"
+fi
 xattr -cr "$app"
+[[ -d "$app/Contents/Frameworks/Sparkle.framework" ]] && codesign --force --deep --sign "$identity" "$app/Contents/Frameworks/Sparkle.framework" 2>&1 | grep -v "replacing existing signature" || true
 codesign --force --sign "$identity" "$app" 2>&1 | grep -v "replacing existing signature" || true
 echo "installed $app (signed: ${identity})"
 

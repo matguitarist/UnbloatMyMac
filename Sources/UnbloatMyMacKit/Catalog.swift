@@ -99,6 +99,18 @@ public enum Catalog {
               in: .privacy, section: "Search", risk: .advanced, restarts: [.logout],
               caveat: "Found in Mail contacts and event suggestions stop.",
               [.agent("com.apple.suggestd"), .agent("com.apple.knowledge-agent")]),
+        Tweak("privacy.safariSuggestions", "Safari Search Suggestions", "Stops sending what you type in the address bar to Apple and your search engine.",
+              in: .privacy, section: "Safari", caveat: "Needs Full Disk Access for UnbloatMyMac.",
+              [.set("com.apple.Safari", "UniversalSearchEnabled", false), .set("com.apple.Safari", "SuppressSearchSuggestions", true)]),
+        Tweak("privacy.safariPreload", "Preload Top Hit", "Safari stops loading the top search result before you pick it.",
+              in: .privacy, section: "Safari", caveat: "Needs Full Disk Access for UnbloatMyMac.",
+              [.set("com.apple.Safari", "PreloadTopHit", false)]),
+        Tweak("privacy.safariAdMeasurement", "Privacy-Preserving Ad Measurement", "Stops Safari from reporting ad clicks to advertisers, even anonymously.",
+              in: .privacy, section: "Safari", caveat: "Needs Full Disk Access for UnbloatMyMac.",
+              [.set("com.apple.Safari", "WebKitPreferences.privateClickMeasurementEnabled", false)]),
+        Tweak("privacy.safariFullURL", "Show Full Website Address", "The address bar shows the whole address, so you can see where you really are.",
+              in: .privacy, section: "Safari", caveat: "Needs Full Disk Access for UnbloatMyMac.",
+              [.set("com.apple.Safari", "ShowFullURLInSmartSearchField", true)]),
         Tweak("privacy.gameCenter", "Game Center", "Stops the Game Center service and its sign-in pop-ups.",
               in: .privacy, section: "Services", risk: .moderate, restarts: [.logout],
               [.agent("com.apple.gamed")]),
@@ -294,20 +306,18 @@ public enum Catalog {
     // MARK: Windows Mode
 
     /// Home and End move within the line, like on Windows.
-    static let keyBindings = #"""
-    {
-        "\UF729" = "moveToBeginningOfLine:";
-        "\UF72B" = "moveToEndOfLine:";
-        "$\UF729" = "moveToBeginningOfLineAndModifySelection:";
-        "$\UF72B" = "moveToEndOfLineAndModifySelection:";
-        "^\UF729" = "moveToBeginningOfDocument:";
-        "^\UF72B" = "moveToEndOfDocument:";
-        "^$\UF729" = "moveToBeginningOfDocumentAndModifySelection:";
-        "^$\UF72B" = "moveToEndOfDocumentAndModifySelection:";
-        "\UF72C" = "pageUp:";
-        "\UF72D" = "pageDown:";
-    }
-    """#
+    static let homeEndBindings: [String: String] = [
+        "\\UF729": "moveToBeginningOfLine:", "\\UF72B": "moveToEndOfLine:",
+        "$\\UF729": "moveToBeginningOfLineAndModifySelection:", "$\\UF72B": "moveToEndOfLineAndModifySelection:",
+        "^\\UF729": "moveToBeginningOfDocument:", "^\\UF72B": "moveToEndOfDocument:",
+        "^$\\UF729": "moveToBeginningOfDocumentAndModifySelection:", "^$\\UF72B": "moveToEndOfDocumentAndModifySelection:",
+        "\\UF72C": "pageUp:", "\\UF72D": "pageDown:",
+    ]
+
+    /// Control-C, V, X, Z, Y, A in text, like on Windows.
+    static let controlBindings: [String: String] = [
+        "^c": "copy:", "^v": "paste:", "^x": "cut:", "^z": "undo:", "^y": "redo:", "^a": "selectAll:",
+    ]
 
     static let windows: [Tweak] = [
         Tweak("win.scrolling", "Windows Scroll Direction", "Scrolling down moves the page down, like a mouse wheel on Windows.",
@@ -323,8 +333,12 @@ public enum Catalog {
               [.set("NSGlobalDomain", "com.apple.keyboard.fnState", true)]),
         Tweak("win.homeEnd", "Home and End Keys", "Home and End go to the start and end of the line; Control goes to the document.",
               in: .windows, section: "Mouse and Keyboard", restarts: [.logout],
-              caveat: "Replaces ~/Library/KeyBindings/DefaultKeyBinding.dict while on. Your own file comes back when you turn it off.",
-              [.file(path: "~/Library/KeyBindings/DefaultKeyBinding.dict", contents: keyBindings)]),
+              caveat: "Writes ~/Library/KeyBindings/DefaultKeyBinding.dict. Your own file comes back when you turn off every key tweak.",
+              [.keyBindings(homeEndBindings)]),
+        Tweak("win.controlShortcuts", "Control Shortcuts in Text", "Control-C, V, X, Z, Y, and A copy, paste, cut, undo, redo, and select all in text fields.",
+              in: .windows, section: "Mouse and Keyboard", risk: .moderate, restarts: [.logout],
+              caveat: "Works in Mac text fields, not in Terminal or every app. Control-A no longer jumps to the start of the line.",
+              [.keyBindings(controlBindings)]),
         Tweak("win.tabNavigation", "Tab Moves Between All Controls", "Tab reaches every button and menu, not only text fields.",
               in: .windows, section: "Mouse and Keyboard", restarts: [.logout],
               [.set("NSGlobalDomain", "AppleKeyboardUIMode", 2)]),
@@ -390,7 +404,7 @@ public enum Catalog {
 public extension Catalog {
     /// Tweaks whose title names a macOS feature. Their switch shows whether
     /// that feature is on, like System Settings: switching it off applies the tweak.
-    static let featureTitled: Set<String> = Set(intelligence.map(\.id) + privacy.map(\.id)).union([
+    static let featureTitled: Set<String> = Set(intelligence.map(\.id) + privacy.map(\.id)).subtracting(["privacy.safariFullURL"]).union([
         "perf.windowAnimations", "perf.quickLook", "perf.finderAnimations", "perf.launchAnimation", "perf.photoAnalysis",
         "perf.appNap", "perf.powerNap", "perf.spotlight",
         "ui.clickWallpaper", "ui.widgets", "ui.crashDialog", "ui.timeMachine", "ui.photosHotplug", "ui.tips",

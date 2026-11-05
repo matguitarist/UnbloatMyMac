@@ -74,6 +74,9 @@ public enum Action: Hashable, Sendable {
     case command(Command)
     /// Writes a file (path may start with ~); undo restores the file from before.
     case file(path: String, contents: String)
+    /// Adds key bindings (key -> selector) to ~/Library/KeyBindings/DefaultKeyBinding.dict.
+    /// Bindings from every applied tweak share the file; the original comes back when none is left.
+    case keyBindings([String: String])
 
     public static func set(_ domain: String, _ key: String, _ value: PrefValue, currentHost: Bool = false) -> Action {
         .pref(PrefKey(domain, key, currentHost: currentHost), value)
@@ -83,7 +86,9 @@ public enum Action: Hashable, Sendable {
 public enum TweakCategory: String, CaseIterable, Codable, Sendable {
     case intelligence, privacy, performance, interface, finder, dock, typing, windows
 
-    public var title: String {
+    public var title: String { L(englishTitle) }
+
+    var englishTitle: String {
         switch self {
         case .intelligence: "Apple Intelligence"
         case .privacy: "Privacy"
@@ -109,7 +114,9 @@ public enum TweakCategory: String, CaseIterable, Codable, Sendable {
         }
     }
 
-    public var summary: String {
+    public var summary: String { L(englishSummary) }
+
+    var englishSummary: String {
         switch self {
         case .intelligence: "Turn off Writing Tools, Genmoji, Image Playground, ChatGPT, summaries, Siri, and the background services behind them."
         case .privacy: "Stop analytics, personalized ads, and the services that send usage data to Apple."
@@ -159,13 +166,13 @@ public struct Tweak: Identifiable, Hashable, Sendable {
     public init(_ id: String, _ title: String, _ detail: String, in category: TweakCategory, section: String,
                 risk: Risk = .safe, restarts: [Restart] = [], caveat: String? = nil, _ actions: [Action]) {
         self.id = id
-        self.title = title
-        self.detail = detail
+        self.title = L(title)
+        self.detail = L(detail)
         self.category = category
-        self.section = section
+        self.section = L(section)
         self.risk = risk
         self.restarts = restarts
-        self.caveat = caveat
+        self.caveat = caveat.map(L)
         self.actions = actions
     }
 
@@ -188,6 +195,14 @@ public struct Preset: Identifiable, Hashable, Sendable {
     public var symbol: String
     public var summary: String
     public var tweakIDs: [String]
+
+    public init(id: String, title: String, symbol: String, summary: String, tweakIDs: [String]) {
+        self.id = id
+        self.title = L(title)
+        self.symbol = symbol
+        self.summary = L(summary)
+        self.tweakIDs = tweakIDs
+    }
 }
 
 public enum TweakStatus: Hashable, Sendable {
@@ -212,9 +227,9 @@ public struct LaunchItem: Identifiable, Hashable, Sendable, Codable {
 
         public var title: String {
             switch self {
-            case .userAgent: "Your Agents"
-            case .globalAgent: "Agents for All Users"
-            case .daemon: "System Daemons"
+            case .userAgent: L("Your Agents")
+            case .globalAgent: L("Agents for All Users")
+            case .daemon: L("System Daemons")
             }
         }
 
@@ -222,7 +237,7 @@ public struct LaunchItem: Identifiable, Hashable, Sendable, Codable {
             switch self {
             case .userAgent: "~/Library/LaunchAgents"
             case .globalAgent: "/Library/LaunchAgents"
-            case .daemon: "/Library/LaunchDaemons · needs your password"
+            case .daemon: "/Library/LaunchDaemons · " + L("needs your password")
             }
         }
     }
@@ -268,6 +283,17 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
     public var detail: String
     public var symbol: String
     public var kind: Kind
+    /// Shown with an Open Settings button instead of Clean.
+    public var settingsPane: String?
+
+    public init(id: String, title: String, detail: String, symbol: String, kind: Kind, settingsPane: String? = nil) {
+        self.id = id
+        self.title = L(title)
+        self.detail = L(detail)
+        self.symbol = symbol
+        self.kind = kind
+        self.settingsPane = settingsPane
+    }
 }
 
 public struct CleanupSize: Hashable, Sendable {
@@ -296,4 +322,25 @@ public struct HistoryEntry: Codable, Identifiable, Hashable, Sendable {
         self.turnedOn = turnedOn
         self.error = error
     }
+}
+
+/// A login item or app background item from the Background Task Manager.
+public struct LoginItem: Identifiable, Hashable, Sendable {
+    public var name: String
+    public var developer: String
+    public var kind: String
+    public var isEnabled: Bool
+    public var url: String
+    public var identifier: String
+
+    public init(name: String, developer: String, kind: String, isEnabled: Bool, url: String, identifier: String) {
+        self.name = name
+        self.developer = developer
+        self.kind = kind
+        self.isEnabled = isEnabled
+        self.url = url
+        self.identifier = identifier
+    }
+
+    public var id: String { identifier + url }
 }

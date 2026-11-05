@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import UnbloatMyMacKit
 
@@ -27,6 +28,10 @@ struct ContentView: View {
             Button("Undo Everything", role: .destructive) { Task { await model.undoEverything() } }
         } message: {
             Text("Every setting goes back to the value it had before, stopped services start again, and the Apple Intelligence profile is removed. You may be asked for your password.")
+        }
+        // The command line tool may have changed the Mac while the app was in the background.
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            if model.hasLoaded, !model.isBusy { Task { await model.refresh() } }
         }
         .task {
             await model.refresh()

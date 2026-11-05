@@ -35,6 +35,11 @@ public protocol SystemBackend: Sendable {
 
     func measure(_ target: CleanupTarget) -> CleanupSize
     func clean(_ target: CleanupTarget) throws
+
+    /// The macOS build, like 27C52.
+    func osBuild() -> String
+    /// Login items and app background items. Asks for the admin password.
+    func loginItems() throws -> [LoginItem]
 }
 
 public struct BackendError: LocalizedError, Sendable {
@@ -58,6 +63,7 @@ public final class MockBackend: SystemBackend {
         var restarted: Set<Restart> = []
         var adminPrompts = 0
         var refuse: Set<String> = []
+        var build = "27C52"
     }
 
     private let state = Mutex(State())
@@ -66,7 +72,7 @@ public final class MockBackend: SystemBackend {
         state.withLock { s in
             s.known = Set(Catalog.tweaks.flatMap(\.agents))
             s.known.remove("com.apple.callintelligenced") // shows how a missing agent looks
-            s.refuse = ["com.apple.universalaccess"]
+            s.refuse = ["com.apple.universalaccess", "com.apple.Safari"]
             s.items = [
                 LaunchItem(label: "com.google.keystone.agent", path: "~/Library/LaunchAgents/com.google.keystone.agent.plist",
                            program: "~/Library/Application Support/Google/GoogleUpdater/Current/GoogleUpdater.app",
@@ -93,6 +99,7 @@ public final class MockBackend: SystemBackend {
                 "installers": CleanupSize(bytes: 0, items: 0),
                 "iosUpdates": CleanupSize(bytes: 6_900_000_000, items: 1),
                 "snapshots": CleanupSize(bytes: nil, items: 2),
+                "aiModels": CleanupSize(bytes: 4_800_000_000, items: 6),
             ]
             if seeded {
                 s.prefs[PrefKey("NSGlobalDomain", "AppleShowAllExtensions").id] = true
@@ -196,5 +203,26 @@ public final class MockBackend: SystemBackend {
 
     public func clean(_ target: CleanupTarget) throws {
         state.withLock { $0.sizes[target.id] = CleanupSize(bytes: 0, items: 0) }
+    }
+
+    public func osBuild() -> String { state.withLock { $0.build } }
+    /// Test hook: pretend macOS was updated and reset one setting.
+    public func simulateUpdate(resetting key: PrefKey) {
+        state.withLock { s in
+            s.build = "27Z999"
+            s.prefs[key.id] = nil
+        }
+    }
+
+    public func loginItems() throws -> [LoginItem] {
+        state.withLock { $0.adminPrompts += 1 }
+        return [
+            LoginItem(name: "Docker", developer: "Docker Inc", kind: "app", isEnabled: true,
+                      url: "file:///Applications/Docker.app/", identifier: "com.docker.docker"),
+            LoginItem(name: "Rectangle", developer: "Ryan Hanson", kind: "login item", isEnabled: true,
+                      url: "file:///Applications/Rectangle.app/", identifier: "com.knollsoft.Rectangle"),
+            LoginItem(name: "Google Updater", developer: "Google LLC", kind: "agent", isEnabled: false,
+                      url: "file:///Library/Google/GoogleUpdater/", identifier: "com.google.GoogleUpdater"),
+        ]
     }
 }

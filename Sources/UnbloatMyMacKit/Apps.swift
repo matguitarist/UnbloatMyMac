@@ -5,11 +5,12 @@ import Synchronization
 // UnbloatMyMac never installs Homebrew itself; it shows how.
 
 public enum AppGroup: String, CaseIterable, Sendable, Codable {
-    case allInOne, windows, terminal, tools, ai, privacy
+    case allInOne, updates, windows, terminal, tools, ai, privacy
 
     public var title: String {
         switch self {
         case .allInOne: L("All in One")
+        case .updates: L("App Updates")
         case .windows: L("Windows Habits")
         case .terminal: L("Command Line")
         case .tools: L("Mac Utilities")
@@ -21,6 +22,7 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
     public var summary: String {
         switch self {
         case .allInOne: L("One menu bar app instead of many small ones.")
+        case .updates: L("See which apps are out of date and update them in one place. macOS updates only App Store apps by itself.")
         case .windows: L("Apps that bring back what you miss from Windows.")
         case .terminal: L("A nicer prompt and faster replacements for classic commands.")
         case .tools: L("Small free apps that fill gaps in macOS.")
@@ -32,6 +34,7 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
     public var symbol: String {
         switch self {
         case .allInOne: "square.grid.2x2"
+        case .updates: "arrow.triangle.2.circlepath"
         case .windows: "macwindow.on.rectangle"
         case .terminal: "terminal"
         case .tools: "wrench.and.screwdriver"
@@ -42,7 +45,8 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
 }
 
 public struct RecommendedApp: Identifiable, Sendable, Hashable {
-    public enum Kind: String, Sendable { case formula, cask }
+    /// A Homebrew formula or cask, or an app that is only a download from its website.
+    public enum Kind: String, Sendable { case formula, cask, download }
 
     /// The Homebrew name, like alt-tab.
     public let id: String
@@ -67,6 +71,14 @@ public struct RecommendedApp: Identifiable, Sendable, Hashable {
         if appleSiliconOnly && !appleSilicon { return false }
         if let replacedBy, appleSilicon, Catalog.app(replacedBy)?.appleSiliconOnly == true { return false }
         return recommended
+    }
+
+    /// Homebrew can install it. A download opens its website instead.
+    public var installsWithHomebrew: Bool { kind != .download }
+
+    /// The Homebrew command that installs it, or nil for a download.
+    public var brewCommand: String? {
+        installsWithHomebrew ? "brew install \(kind == .cask ? "--cask " : "")\(id)" : nil
     }
 
     /// False for an Apple silicon app on an Intel Mac. Such apps are not listed.
@@ -123,6 +135,26 @@ extension Catalog {
               "One menu bar app for a window switcher with previews, snapping, clipboard history, mouse and scroll settings, a system monitor, display brightness, a per-app volume mixer, and an uninstaller.",
               bundle: "Vorssaint.app", recommended: true, homepage: "https://github.com/vorssaint/vorssaint-utils",
               appleSiliconOnly: true),
+
+        // App updates
+        .init("maccurrent", "macCurrent", .download, .updates,
+              "Finds updates for App Store, Homebrew, Sparkle, and directly downloaded apps, checks each one before it installs, and backs up the old version. Free while in beta.",
+              bundle: "macCurrent.app", recommended: true, homepage: "https://maccurrent.com"),
+        .init("updatest", "Updatest", .cask, .updates,
+              "Lists updates for App Store, Homebrew, Sparkle, and Electron apps, and installs them in one click.",
+              bundle: "Updatest.app", homepage: "https://updatest.app"),
+        .init("latest", "Latest", .cask, .updates,
+              "A small open-source window that shows which App Store and Sparkle apps have updates.",
+              bundle: "Latest.app", homepage: "https://max.codes/latest"),
+        .init("applite", "Applite", .cask, .updates,
+              "Install, update, and remove Homebrew apps in a window instead of Terminal.",
+              bundle: "Applite.app", homepage: "https://applite.app"),
+        .init("topgrade", "topgrade", .formula, .updates,
+              "Updates everything with one command: Homebrew, App Store apps, npm, pip, Rust, and more.",
+              homepage: "https://github.com/topgrade-rs/topgrade"),
+        .init("mas", "mas", .formula, .updates,
+              "Lists and updates App Store apps from the command line.",
+              homepage: "https://github.com/mas-cli/mas"),
 
         // Windows habits
         .init("alt-tab", "AltTab", .cask, .windows,
@@ -329,6 +361,7 @@ public final class AppInstaller: Sendable {
 
     /// Installs, then adds the shell line when the tool has one and `shell` is true.
     public func install(_ app: RecommendedApp, shell: Bool = true) throws {
+        guard app.installsWithHomebrew else { throw BackendError(L("This app is not in Homebrew. Download it from its website.")) }
         guard packages.homebrew() != nil else { throw BackendError(L("Install Homebrew first.")) }
         try packages.install(app)
         if shell, app.shellLine != nil { try setShell(app, on: true) }
@@ -336,6 +369,7 @@ public final class AppInstaller: Sendable {
 
     /// Uninstalls with Homebrew and takes the shell line out.
     public func uninstall(_ app: RecommendedApp) throws {
+        guard app.installsWithHomebrew else { throw BackendError(L("Homebrew did not install this app. Move it to the Trash to remove it.")) }
         if app.shellLine != nil { try setShell(app, on: false) }
         try packages.uninstall(app)
     }

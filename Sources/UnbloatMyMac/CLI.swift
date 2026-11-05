@@ -190,7 +190,7 @@ enum CLI {
         if options.json {
             let rows: [[String: Any]] = Catalog.appsHere.map { app in
                 ["id": app.id, "name": app.name, "kind": app.kind.rawValue, "group": app.group.rawValue,
-                 "detail": app.detail, "recommended": app.isRecommended(), "replacedBy": app.replacedBy.map { $0 as Any } ?? NSNull(), "homepage": app.homepage,
+                 "detail": app.detail, "homebrew": app.installsWithHomebrew, "recommended": app.isRecommended(), "replacedBy": app.replacedBy.map { $0 as Any } ?? NSNull(), "homepage": app.homepage,
                  "state": stateName(state.states[app.id]), "inShell": state.inShell.contains(app.id)]
             }
             return printJSON(["homebrew": state.homebrew.map { $0 as Any } ?? NSNull(), "apps": rows])
@@ -211,8 +211,16 @@ enum CLI {
         let unknown = options.words.filter { Catalog.app($0) == nil }
         guard unknown.isEmpty else { return usage("Unknown app: \(unknown.joined(separator: ", ")). See: unbloatmymac apps") }
         let state = installer.state()
-        var chosen = options.words.compactMap(Catalog.app)
-        if options.recommended && install { chosen += Catalog.appsHere.filter { $0.isRecommended() && !chosen.contains($0) } }
+        let named = options.words.compactMap(Catalog.app)
+        // Apps that are only a download: say where to get them, and leave them to the person.
+        for app in named where !app.installsWithHomebrew {
+            print(state.states[app.id] == .notInstalled
+                  ? "\(app.name) is not in Homebrew. Download it from \(app.homepage)"
+                  : "\(app.name) was not installed with Homebrew. Move it to the Trash to remove it.")
+        }
+        var chosen = named.filter(\.installsWithHomebrew)
+        if options.recommended && install { chosen += Catalog.appsHere.filter { $0.isRecommended() && $0.installsWithHomebrew && !chosen.contains($0) } }
+        if chosen.isEmpty, !named.isEmpty { return 0 }
         guard !chosen.isEmpty else { return usage("\(install ? "install" : "uninstall") needs app names\(install ? " or --recommended" : ""). See: unbloatmymac apps") }
         if install, state.homebrew == nil { return fail("Homebrew is not installed. Get it at https://brew.sh") }
         let todo = chosen.filter { install ? state.states[$0.id] == .notInstalled : state.states[$0.id] == .installed }

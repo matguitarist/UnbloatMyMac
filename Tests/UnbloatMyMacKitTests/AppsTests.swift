@@ -90,3 +90,14 @@ func localAI() {
     #expect(ai.allSatisfy { !$0.isRecommended() }, "Install Recommended never pulls in AI apps")
     #expect(Catalog.appsHere.count == Catalog.apps.filter { !$0.appleSiliconOnly || RecommendedApp.isAppleSilicon }.count)
 }
+
+@Test("App updaters are listed, and macCurrent opens its website instead of Homebrew")
+func appUpdaters() throws {
+    let updaters = Catalog.apps.filter { $0.group == .updates }
+    #expect(updaters.count >= 5)
+    let current = try #require(Catalog.app("maccurrent"))
+    #expect(current.isRecommended() && !current.installsWithHomebrew && current.brewCommand == nil && current.bundle != nil)
+    for app in Catalog.apps where !app.installsWithHomebrew { #expect(app.bundle != nil, "\(app.id) needs a bundle to show it is installed") }
+    #expect(Catalog.app("topgrade")?.brewCommand == "brew install topgrade")
+    #expect(Catalog.app("latest")?.brewCommand == "brew install --cask latest")
+}

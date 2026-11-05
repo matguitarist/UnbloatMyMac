@@ -552,6 +552,16 @@
         }
       }
     },
+    "Download": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Télécharger"
+          }
+        }
+      }
+    },
     "Every change is saved with the value from before, so you can undo it.": {
       "localizations": {
         "fr": {
@@ -772,6 +782,16 @@
         }
       }
     },
+    "Installed. It updates itself; move it to the Trash to remove it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installée. Elle se met à jour toute seule ; placez-la dans la corbeille pour la supprimer."
+          }
+        }
+      }
+    },
     "Installed. Open a new Terminal window to use it.": {
       "localizations": {
         "fr": {
@@ -898,6 +918,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aucune autre app n’a installé d’agent ou de démon."
+          }
+        }
+      }
+    },
+    "Not in Homebrew. Opens %@ to download it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas dans Homebrew. Ouvre %@ pour la télécharger."
           }
         }
       }

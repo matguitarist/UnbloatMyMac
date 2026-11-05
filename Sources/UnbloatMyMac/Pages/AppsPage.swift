@@ -102,9 +102,11 @@ private struct AppRow: View {
         .padding(.vertical, 2)
         .contextMenu {
             Link("Open Website", destination: URL(string: app.homepage)!)
-            Button("Copy Homebrew Command") {
-                NSPasteboard.general.clearContents()
-                NSPasteboard.general.setString("brew install \(app.kind == .cask ? "--cask " : "")\(app.id)", forType: .string)
+            if let command = app.brewCommand {
+                Button("Copy Homebrew Command") {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(command, forType: .string)
+                }
             }
         }
     }
@@ -117,9 +119,17 @@ private struct AppRow: View {
         } else {
             switch state {
             case .notInstalled:
-                Button("Install") { Task { await model.install([app]) } }
-                    .disabled(model.apps.homebrew == nil)
-                    .help(Text(verbatim: "brew install \(app.kind == .cask ? "--cask " : "")\(app.id)"))
+                if let command = app.brewCommand {
+                    Button("Install") { Task { await model.install([app]) } }
+                        .disabled(model.apps.homebrew == nil)
+                        .help(Text(verbatim: command))
+                } else {
+                    Link(destination: URL(string: app.homepage)!) {
+                        Label("Download", systemImage: "arrow.up.right")
+                    }
+                    .buttonStyle(.bordered)
+                    .help("Not in Homebrew. Opens \(app.homepage) to download it.")
+                }
             case .installed:
                 HStack(spacing: Space.sm) {
                     Label("Installed", systemImage: "checkmark.circle.fill")
@@ -143,7 +153,9 @@ private struct AppRow: View {
                 Label("Installed", systemImage: "checkmark.circle")
                     .font(.callout)
                     .foregroundStyle(.secondary)
-                    .help("Installed without Homebrew. Update and remove it the way you installed it.")
+                    .help(app.installsWithHomebrew
+                          ? "Installed without Homebrew. Update and remove it the way you installed it."
+                          : "Installed. It updates itself; move it to the Trash to remove it.")
             }
         }
     }

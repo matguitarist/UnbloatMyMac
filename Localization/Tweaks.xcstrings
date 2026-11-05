@@ -152,6 +152,16 @@
         }
       }
     },
+    "A small open-source window that shows which App Store and Sparkle apps have updates.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une petite fenêtre open source qui montre quelles apps de l’App Store et Sparkle ont des mises à jour."
+          }
+        }
+      }
+    },
     "AI that runs on your Mac, offline, with nothing sent to a server. Each model is a download of several gigabytes.": {
       "localizations": {
         "fr": {
@@ -308,6 +318,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "App Nap"
+          }
+        }
+      }
+    },
+    "App Updates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mises à jour des apps"
           }
         }
       }
@@ -982,6 +1002,16 @@
         }
       }
     },
+    "Finds updates for App Store, Homebrew, Sparkle, and directly downloaded apps, checks each one before it installs, and backs up the old version. Free while in beta.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trouve les mises à jour des apps de l’App Store, de Homebrew, de Sparkle et téléchargées directement, vérifie chacune avant de l’installer et garde une copie de l’ancienne version. Gratuit pendant la bêta."
+          }
+        }
+      }
+    },
     "Folders First": {
       "localizations": {
         "fr": {
@@ -1152,6 +1182,16 @@
         }
       }
     },
+    "Homebrew did not install this app. Move it to the Trash to remove it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Homebrew n’a pas installé cette app. Placez-la dans la corbeille pour la supprimer."
+          }
+        }
+      }
+    },
     "Hourly snapshots kept on this disk. Deleted at once; your backups are not touched.": {
       "localizations": {
         "fr": {
@@ -1232,6 +1272,16 @@
         }
       }
     },
+    "Install, update, and remove Homebrew apps in a window instead of Terminal.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installez, mettez à jour et supprimez les apps Homebrew dans une fenêtre plutôt que dans le Terminal."
+          }
+        }
+      }
+    },
     "Instant Dock Reveal": {
       "localizations": {
         "fr": {
@@ -1308,6 +1358,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Présentation en liste par défaut"
+          }
+        }
+      }
+    },
+    "Lists and updates App Store apps from the command line.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liste et met à jour les apps de l’App Store en ligne de commande."
+          }
+        }
+      }
+    },
+    "Lists updates for App Store, Homebrew, Sparkle, and Electron apps, and installs them in one click.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liste les mises à jour des apps de l’App Store, de Homebrew, de Sparkle et Electron, et les installe en un clic."
           }
         }
       }
@@ -2108,6 +2178,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Voyez et bloquez ce que les apps envoient."
+          }
+        }
+      }
+    },
+    "See which apps are out of date and update them in one place. macOS updates only App Store apps by itself.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voyez quelles apps sont à mettre à jour et mettez-les à jour au même endroit. macOS ne met à jour tout seul que les apps de l’App Store."
           }
         }
       }
@@ -2952,6 +3032,16 @@
         }
       }
     },
+    "This app is not in Homebrew. Download it from its website.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette app n’est pas dans Homebrew. Téléchargez-la depuis son site."
+          }
+        }
+      }
+    },
     "This file was not made by UnbloatMyMac.": {
       "localizations": {
         "fr": {
@@ -3088,6 +3178,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Simulateurs indisponibles"
+          }
+        }
+      }
+    },
+    "Updates everything with one command: Homebrew, App Store apps, npm, pip, Rust, and more.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Met tout à jour en une commande : Homebrew, les apps de l’App Store, npm, pip, Rust et plus."
           }
         }
       }

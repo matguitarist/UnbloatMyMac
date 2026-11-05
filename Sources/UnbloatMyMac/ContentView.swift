@@ -20,6 +20,12 @@ struct ContentView: View {
                 .environment(model)
                 .themed()
         }
+        .sheet(item: Binding(get: { model.confirmInstall.map(InstallList.init) },
+                             set: { model.confirmInstall = $0?.apps })) { list in
+            InstallRecommendedSheet(apps: list.apps)
+                .environment(model)
+                .themed()
+        }
         .alert("UnbloatMyMac", isPresented: Binding(get: { model.notice != nil }, set: { if !$0 { model.notice = nil } })) {
             Button("OK") { model.notice = nil }
         } message: {

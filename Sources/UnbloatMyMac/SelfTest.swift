@@ -93,6 +93,9 @@ enum SelfTest {
             await model.refreshApps()
             check("Homebrew is found on the pretend Mac", model.apps.homebrew != nil)
             let recommended = model.missingRecommended
+            model.reviewInstallRecommended()
+            check("Install Recommended first lists every missing starred app", model.confirmInstall?.map(\.id) == recommended.map(\.id))
+            model.confirmInstall = nil
             await model.install(recommended)
             check("Install Recommended installs every starred app", model.missingRecommended.isEmpty && !recommended.isEmpty)
             check("tools with a shell line are turned on in ~/.zshrc",

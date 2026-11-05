@@ -13,8 +13,8 @@ struct AppsPage: View {
                            summary: String(localized: "Free, open apps and tools that fill gaps in macOS, installed with Homebrew. Nothing installs until you click.")) {
                     let missing = model.missingRecommended
                     Button(missing.isEmpty ? String(localized: "Recommended Apps Installed")
-                                           : String(localized: "Install \(missing.count) Recommended")) {
-                        Task { await model.install(missing) }
+                                           : String(localized: "Install \(missing.count) Recommended…")) {
+                        model.reviewInstallRecommended()
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(model.apps.homebrew == nil || missing.isEmpty || !model.appsWorking.isEmpty)

@@ -33,7 +33,11 @@ struct UnbloatMyMacApp: App {
             CommandGroup(after: .appInfo) {
                 Button("Check for Updates…") { Updater.shared.checkForUpdates() }
                     .disabled(!Updater.shared.isAvailable)
-                Button("Install Command Line Tool…") { Task { await model.installCommandLineTool() } }
+                if model.commandLineToolInstalled {
+                    Button("Uninstall Command Line Tool…") { Task { await model.uninstallCommandLineTool() } }
+                } else {
+                    Button("Install Command Line Tool…") { Task { await model.installCommandLineTool() } }
+                }
             }
             CommandGroup(replacing: .importExport) {
                 Button("Export Tweaks…") { model.exportWithPanel() }
@@ -73,7 +77,7 @@ struct UnbloatMyMacApp: App {
                 Divider()
                 Button("Refresh") { Task { await model.refresh(); await model.refreshApps() } }
                     .keyboardShortcut("r")
-                Button("Install Recommended Apps") { model.sidebar = .apps; Task { await model.install(model.missingRecommended) } }
+                Button("Install Recommended Apps…") { model.reviewInstallRecommended() }
                     .keyboardShortcut("i", modifiers: [.command, .option])
                     .disabled(model.apps.homebrew == nil || model.missingRecommended.isEmpty || !model.appsWorking.isEmpty)
                 Button("Undo Everything…") { model.sidebar = .history; model.confirmUndoAll = true }

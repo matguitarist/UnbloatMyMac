@@ -79,6 +79,10 @@ final class AppModel {
     var staged: [String: Bool] = [:]
     var showReview = false
     var confirmUndoAll = false
+    /// Apps the Install Recommended sheet lists, or nil when it is closed.
+    var confirmInstall: [RecommendedApp]?
+    /// Whether /usr/local/bin/unbloatmymac points at this copy of the app.
+    private(set) var commandLineToolInstalled = AppModel.commandLineToolIsInstalled()
     var isBusy = false
     var isScanning = false
     /// An error or notice for an alert.
@@ -361,16 +365,39 @@ final class AppModel {
     // MARK: Command line tool
 
     /// Links /usr/local/bin/unbloatmymac to this app's binary. Asks for the admin password.
+    static let commandLineToolPath = "/usr/local/bin/unbloatmymac"
+
+    /// True when the link exists and points at this app's binary. A link to another copy offers Install again.
+    static func commandLineToolIsInstalled() -> Bool {
+        guard !Store.isOverridden, let binary = Bundle.main.executablePath,
+              let target = try? FileManager.default.destinationOfSymbolicLink(atPath: commandLineToolPath) else { return false }
+        return URL(fileURLWithPath: target).resolvingSymlinksInPath().path == URL(fileURLWithPath: binary).resolvingSymlinksInPath().path
+    }
+
     func installCommandLineTool() async {
         guard !Store.isOverridden, let binary = Bundle.main.executablePath else { return }
         let backend = engine.backend
-        let script = "mkdir -p /usr/local/bin && ln -sf '\(binary)' /usr/local/bin/unbloatmymac"
+        let script = "mkdir -p /usr/local/bin && ln -sf '\(binary)' \(Self.commandLineToolPath)"
         do {
             try await Task.detached { try backend.run([script], admin: true) }.value
             notice = String(localized: "Installed. Try “unbloatmymac list” in Terminal.")
         } catch {
             notice = error.localizedDescription
         }
+        commandLineToolInstalled = Self.commandLineToolIsInstalled()
+    }
+
+    func uninstallCommandLineTool() async {
+        guard !Store.isOverridden else { return }
+        let backend = engine.backend
+        let script = "rm -f \(Self.commandLineToolPath)"
+        do {
+            try await Task.detached { try backend.run([script], admin: true) }.value
+            notice = String(localized: "The command line tool is removed.")
+        } catch {
+            notice = error.localizedDescription
+        }
+        commandLineToolInstalled = Self.commandLineToolIsInstalled()
     }
 
     // MARK: Recommended apps
@@ -379,6 +406,7 @@ final class AppModel {
         let installer = installer
         apps = await Task.detached { installer.state() }.value
         appsLoaded = true
+        commandLineToolInstalled = Self.commandLineToolIsInstalled()
         await reloadLog()
     }
 
@@ -387,6 +415,14 @@ final class AppModel {
     /// Recommended apps not installed yet.
     var missingRecommended: [RecommendedApp] {
         Catalog.appsHere.filter { $0.isRecommended() && $0.installsWithHomebrew && appState($0) == .notInstalled }
+    }
+
+    /// Opens the sheet that lists what Install Recommended will install.
+    func reviewInstallRecommended() {
+        let missing = missingRecommended
+        guard !missing.isEmpty else { return }
+        sidebar = .apps
+        confirmInstall = missing
     }
 
     func install(_ apps: [RecommendedApp]) async {

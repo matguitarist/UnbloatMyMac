@@ -15,7 +15,7 @@
 <key>NSHighResolutionCapable</key><true/>
 <key>NSPrincipalClass</key><string>NSApplication</string>
 <key>SUFeedURL</key><string>https://github.com/matguitarist/UnbloatMyMac/releases/latest/download/appcast.xml</string>
-<key>SUPublicEDKey</key><string>__SPARKLE_PUBLIC_KEY__</string>
+<key>SUPublicEDKey</key><string>COoy6gu7mnCl45xGMbQq7lG80mNVkNMUHdzXcwJ2pEU=</string>
 <key>SUEnableInstallerLauncherService</key><false/>
 <key>CFBundleDevelopmentRegion</key><string>en</string>
 <key>CFBundleLocalizations</key><array><string>en</string><string>fr</string></array>

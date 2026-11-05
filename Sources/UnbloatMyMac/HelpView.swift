@@ -154,7 +154,7 @@ struct HelpView: View {
             HelpText("Free apps and tools that do a job better than macOS does, grouped by need. A star marks the pick in each group.")
             HelpBullets([
                 "**Install** uses Homebrew. If Homebrew is missing, the page shows how to install it.",
-                "**Install Recommended Apps** (⌥⌘I) installs every starred app at once.",
+                "**Install Recommended Apps** (⌥⌘I) shows every starred app that is missing, each checked; uncheck any you do not want, then click Install.",
                 "Apps that are only on their website show **Download** and open it.",
                 "Terminal tools like Oh My Posh or zoxide can add their line to ~/.zshrc, inside a block UnbloatMyMac marks and removes again.",
             ])
@@ -217,7 +217,7 @@ struct HelpView: View {
                 ("⌥⌘Delete", "Discard Changes"),
                 ("⌥⌘1 – ⌥⌘4", "Add a preset"),
                 ("⌘R", "Refresh"),
-                ("⌥⌘I", "Install Recommended Apps"),
+                ("⌥⌘I", "Install Recommended Apps…"),
                 ("⌥⌘Z", "Undo Everything"),
                 ("⇧⌘E", "Export Tweaks"),
                 ("⇧⌘I", "Import Tweaks"),

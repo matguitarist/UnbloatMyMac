@@ -732,16 +732,6 @@
         }
       }
     },
-    "Install %lld Recommended": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installer %lld recommandées"
-          }
-        }
-      }
-    },
     "Install Command Line Tool…": {
       "localizations": {
         "fr": {
@@ -2982,16 +2972,6 @@
         }
       }
     },
-    "**Install Recommended Apps** (⌥⌘I) installs every starred app at once.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Installer les apps recommandées** (⌥⌘I) installe d’un coup toutes les apps étoilées."
-          }
-        }
-      }
-    },
     "Apps that are only on their website show **Download** and open it.": {
       "localizations": {
         "fr": {
@@ -3398,6 +3378,116 @@
           "stringUnit": {
             "state": "translated",
             "value": "Réglages"
+          }
+        }
+      }
+    },
+    "**Install Recommended Apps** (⌥⌘I) shows every starred app that is missing, each checked; uncheck any you do not want, then click Install.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Installer les apps recommandées** (⌥⌘I) affiche chaque app étoilée manquante, toutes cochées ; décochez celles que vous ne voulez pas, puis cliquez sur Installer."
+          }
+        }
+      }
+    },
+    "Apple Intelligence": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence"
+          }
+        }
+      }
+    },
+    "Check All": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout cocher"
+          }
+        }
+      }
+    },
+    "Homebrew installs the checked apps. Nothing installs until you click Install. You may be asked for your password.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Homebrew installe les apps cochées. Rien ne s’installe avant que vous cliquiez sur Installer. Votre mot de passe peut vous être demandé."
+          }
+        }
+      }
+    },
+    "Install %lld Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer %lld apps"
+          }
+        }
+      }
+    },
+    "Install %lld Recommended…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer %lld recommandées…"
+          }
+        }
+      }
+    },
+    "Install 1 App": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer 1 app"
+          }
+        }
+      }
+    },
+    "Install Recommended Apps…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer les apps recommandées…"
+          }
+        }
+      }
+    },
+    "The command line tool is removed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’outil en ligne de commande est supprimé."
+          }
+        }
+      }
+    },
+    "Uncheck All": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout décocher"
+          }
+        }
+      }
+    },
+    "Uninstall Command Line Tool…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désinstaller l’outil en ligne de commande…"
           }
         }
       }

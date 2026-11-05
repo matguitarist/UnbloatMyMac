@@ -7,7 +7,7 @@ import SwiftUI
 /// writes <page>-light.png and <page>-dark.png for every sidebar page, and
 /// settings-<tab>-light.png and settings-<tab>-dark.png for every Settings tab, then quits.
 /// Each PNG gets a <page>-<mode>-layout.json with the grid probes (tools/check-layout.swift).
-/// APP_SNAPSHOT_PAGES=all,starred limits the pages. Add "settings" to include Settings, "help" for the Help window.
+/// APP_SNAPSHOT_PAGES=all,starred limits the pages. Add "settings" to include Settings, "help" for the Help window, "install" for the Install Recommended sheet.
 /// Add APP_ACCENT=<id> to see the pages in another accent.
 enum Snapshot {
     static func runIfRequested(model: AppModel, openSettings: OpenSettingsAction, openWindow: OpenWindowAction) {
@@ -47,6 +47,17 @@ enum Snapshot {
                     let main = NSApp.windows.first { $0.canBecomeMain && !$0.isSheet }
                     capture(to: "\(dir)/review-\(mode).png", window: main?.attachedSheet)
                     model.showReview = false
+                    try? await Task.sleep(for: .seconds(0.6))
+                }
+            }
+            if only == nil || only?.contains("install") == true {
+                for mode in ["light", "dark"] {
+                    NSApp.appearance = NSAppearance(named: mode == "light" ? .aqua : .darkAqua)
+                    model.reviewInstallRecommended()
+                    try? await Task.sleep(for: .seconds(1))
+                    let main = NSApp.windows.first { $0.canBecomeMain && !$0.isSheet }
+                    capture(to: "\(dir)/install-\(mode).png", window: main?.attachedSheet)
+                    model.confirmInstall = nil
                     try? await Task.sleep(for: .seconds(0.6))
                 }
             }

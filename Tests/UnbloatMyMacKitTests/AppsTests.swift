@@ -101,3 +101,11 @@ func appUpdaters() throws {
     #expect(Catalog.app("topgrade")?.brewCommand == "brew install topgrade")
     #expect(Catalog.app("latest")?.brewCommand == "brew install --cask latest")
 }
+
+@Test("Cleaners are listed with Mole starred, and AppCleaner moved there")
+func cleaners() throws {
+    let cleaners = Catalog.apps.filter { $0.group == .cleaners }
+    #expect(cleaners.count >= 6)
+    #expect(Catalog.app("mole")?.isRecommended() == true)
+    #expect(Catalog.app("appcleaner")?.group == .cleaners)
+}

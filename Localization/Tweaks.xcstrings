@@ -242,6 +242,16 @@
         }
       }
     },
+    "An open-source uninstaller that also finds files left behind by apps you already deleted.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un désinstalleur open source qui trouve aussi les fichiers laissés par les apps déjà supprimées."
+          }
+        }
+      }
+    },
     "An open-source, offline alternative to ChatGPT.": {
       "localizations": {
         "fr": {
@@ -572,6 +582,26 @@
         }
       }
     },
+    "Cleaners": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nettoyage"
+          }
+        }
+      }
+    },
+    "Cleans caches, logs, and leftovers, removes apps completely, and shows what fills your disk, all from one command: mo.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nettoie les caches, les journaux et les restes, supprime complètement les apps et montre ce qui remplit votre disque, le tout avec une seule commande : mo."
+          }
+        }
+      }
+    },
     "Click Wallpaper to Show Desktop": {
       "localizations": {
         "fr": {
@@ -822,6 +852,16 @@
         }
       }
     },
+    "Draws your disk as a map of blocks, one per file, so the big ones stand out.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dessine votre disque comme une carte de blocs, un par fichier, pour repérer les gros."
+          }
+        }
+      }
+    },
     "Drives on the Desktop": {
       "localizations": {
         "fr": {
@@ -952,6 +992,16 @@
         }
       }
     },
+    "Find what fills your disk and remove apps with everything they leave behind. Storage here clears caches; these go further.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trouvez ce qui remplit votre disque et supprimez les apps avec tout ce qu’elles laissent derrière elles. Stockage vide les caches ; ces outils vont plus loin."
+          }
+        }
+      }
+    },
     "Find, download, and chat with local models in a window. Uses MLX on Apple silicon.": {
       "localizations": {
         "fr": {
@@ -998,6 +1048,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les fenêtres du Finder et Lire les informations s’ouvrent sans animation."
+          }
+        }
+      }
+    },
+    "Finds duplicate files, similar photos, big files, and empty folders.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trouve les fichiers en double, les photos similaires, les gros fichiers et les dossiers vides."
           }
         }
       }
@@ -1368,6 +1428,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Liste et met à jour les apps de l’App Store en ligne de commande."
+          }
+        }
+      }
+    },
+    "Lists folders from largest to smallest, so you can delete what you no longer need.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Liste les dossiers du plus gros au plus petit, pour supprimer ce dont vous n’avez plus besoin."
           }
         }
       }
@@ -1962,6 +2032,16 @@
         }
       }
     },
+    "Runs macOS maintenance scripts, rebuilds caches and indexes, and shows hidden settings.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lance les scripts de maintenance de macOS, reconstruit les caches et les index, et montre des réglages cachés."
+          }
+        }
+      }
+    },
     "Runs open models like Llama, Gemma, Qwen, and Mistral with one command, and serves them to other apps.": {
       "localizations": {
         "fr": {
@@ -2338,6 +2418,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Montre l’emplacement du dossier en bas de chaque fenêtre."
+          }
+        }
+      }
+    },
+    "Shows which folders take the most space, as a tree in the terminal.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Montre quels dossiers prennent le plus de place, sous forme d’arbre dans le Terminal."
           }
         }
       }

@@ -5,12 +5,13 @@ import Synchronization
 // UnbloatMyMac never installs Homebrew itself; it shows how.
 
 public enum AppGroup: String, CaseIterable, Sendable, Codable {
-    case allInOne, updates, windows, terminal, tools, ai, privacy
+    case allInOne, updates, cleaners, windows, terminal, tools, ai, privacy
 
     public var title: String {
         switch self {
         case .allInOne: L("All in One")
         case .updates: L("App Updates")
+        case .cleaners: L("Cleaners")
         case .windows: L("Windows Habits")
         case .terminal: L("Command Line")
         case .tools: L("Mac Utilities")
@@ -22,6 +23,7 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
     public var summary: String {
         switch self {
         case .allInOne: L("One menu bar app instead of many small ones.")
+        case .cleaners: L("Find what fills your disk and remove apps with everything they leave behind. Storage here clears caches; these go further.")
         case .updates: L("See which apps are out of date and update them in one place. macOS updates only App Store apps by itself.")
         case .windows: L("Apps that bring back what you miss from Windows.")
         case .terminal: L("A nicer prompt and faster replacements for classic commands.")
@@ -35,6 +37,7 @@ public enum AppGroup: String, CaseIterable, Sendable, Codable {
         switch self {
         case .allInOne: "square.grid.2x2"
         case .updates: "arrow.triangle.2.circlepath"
+        case .cleaners: "trash"
         case .windows: "macwindow.on.rectangle"
         case .terminal: "terminal"
         case .tools: "wrench.and.screwdriver"
@@ -156,6 +159,32 @@ extension Catalog {
               "Lists and updates App Store apps from the command line.",
               homepage: "https://github.com/mas-cli/mas"),
 
+        // Cleaners
+        .init("mole", "Mole", .formula, .cleaners,
+              "Cleans caches, logs, and leftovers, removes apps completely, and shows what fills your disk, all from one command: mo.",
+              recommended: true, homepage: "https://mole.fit"),
+        .init("appcleaner", "AppCleaner", .cask, .cleaners,
+              "Removes an app with the settings and caches it leaves behind.",
+              bundle: "AppCleaner.app", recommended: true, homepage: "https://freemacsoft.net/appcleaner/", replacedBy: "vorssaint"),
+        .init("pearcleaner", "Pearcleaner", .cask, .cleaners,
+              "An open-source uninstaller that also finds files left behind by apps you already deleted.",
+              bundle: "Pearcleaner.app", homepage: "https://itsalin.com/appInfo/?id=pearcleaner", replacedBy: "vorssaint"),
+        .init("onyx", "OnyX", .cask, .cleaners,
+              "Runs macOS maintenance scripts, rebuilds caches and indexes, and shows hidden settings.",
+              bundle: "OnyX.app", homepage: "https://www.titanium-software.fr/en/onyx.html"),
+        .init("grandperspective", "GrandPerspective", .cask, .cleaners,
+              "Draws your disk as a map of blocks, one per file, so the big ones stand out.",
+              bundle: "GrandPerspective.app", homepage: "https://grandperspectiv.sourceforge.net"),
+        .init("omnidisksweeper", "OmniDiskSweeper", .cask, .cleaners,
+              "Lists folders from largest to smallest, so you can delete what you no longer need.",
+              bundle: "OmniDiskSweeper.app", homepage: "https://www.omnigroup.com/more"),
+        .init("czkawka", "Czkawka", .formula, .cleaners,
+              "Finds duplicate files, similar photos, big files, and empty folders.",
+              homepage: "https://github.com/qarmin/czkawka"),
+        .init("dust", "dust", .formula, .cleaners,
+              "Shows which folders take the most space, as a tree in the terminal.",
+              homepage: "https://github.com/bootandy/dust"),
+
         // Windows habits
         .init("alt-tab", "AltTab", .cask, .windows,
               "Switch between windows, not just apps, with previews, like Alt-Tab on Windows.",
@@ -207,9 +236,6 @@ extension Catalog {
               "A fast, native terminal app.", bundle: "Ghostty.app", homepage: "https://ghostty.org"),
 
         // Mac utilities
-        .init("appcleaner", "AppCleaner", .cask, .tools,
-              "Removes an app with the settings and caches it leaves behind.",
-              bundle: "AppCleaner.app", recommended: true, homepage: "https://freemacsoft.net/appcleaner/", replacedBy: "vorssaint"),
         .init("stats", "Stats", .cask, .tools,
               "CPU, memory, disk, network, and battery in the menu bar.",
               bundle: "Stats.app", recommended: true, homepage: "https://github.com/exelban/stats", replacedBy: "vorssaint"),

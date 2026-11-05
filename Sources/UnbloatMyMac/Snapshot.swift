@@ -38,6 +38,18 @@ enum Snapshot {
                     capture(to: "\(dir)/\(page.rawValue)-\(mode).png")
                 }
             }
+            if (only == nil || only?.contains("review") == true), !model.staged.isEmpty {
+                model.sidebar = .overview
+                for mode in ["light", "dark"] {
+                    NSApp.appearance = NSAppearance(named: mode == "light" ? .aqua : .darkAqua)
+                    model.showReview = true
+                    try? await Task.sleep(for: .seconds(1))
+                    let main = NSApp.windows.first { $0.canBecomeMain && !$0.isSheet }
+                    capture(to: "\(dir)/review-\(mode).png", window: main?.attachedSheet)
+                    model.showReview = false
+                    try? await Task.sleep(for: .seconds(0.6))
+                }
+            }
             if only == nil || only?.contains("settings") == true {
                 let main = NSApp.windows.first { $0.canBecomeMain && !$0.isSheet }
                 openSettings()

@@ -139,3 +139,9 @@ struct GridOverlay: View {
         .allowsHitTesting(false)
     }
 }
+
+/// Corner radii for custom cards and icon tiles.
+enum Radius {
+    static let card: CGFloat = 12
+    static let tile: CGFloat = 8
+}

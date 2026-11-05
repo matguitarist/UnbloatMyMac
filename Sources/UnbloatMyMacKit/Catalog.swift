@@ -1,0 +1,406 @@
+import Foundation
+
+/// Every tweak the app offers, and the presets. Each tweak is optional and
+/// can be undone: the engine saves the value from before the change.
+public enum Catalog {
+    public static let profileIdentifier = "com.mathieuares.unbloatmymac.intelligence"
+
+    public static func tweak(_ id: String) -> Tweak? { tweaks.first { $0.id == id } }
+
+    public static let tweaks: [Tweak] = intelligence + privacy + performance + interface + finder + dock + typing + windows
+
+    // MARK: Apple Intelligence
+
+    static let intelligence: [Tweak] = [
+        Tweak("ai.writingTools", "Writing Tools", "Rewrite, proofread, and summarize in every text field.",
+              in: .intelligence, section: "Features", [.restriction("allowWritingTools")]),
+        Tweak("ai.genmoji", "Genmoji", "Generated emoji in the emoji picker and Messages.",
+              in: .intelligence, section: "Features", [.restriction("allowGenmoji")]),
+        Tweak("ai.imagePlayground", "Image Playground", "The Image Playground app and image generation in other apps.",
+              in: .intelligence, section: "Features", [.restriction("allowImagePlayground")]),
+        Tweak("ai.imageWand", "Image Wand", "Turns sketches in Notes into generated images.",
+              in: .intelligence, section: "Features", [.restriction("allowImageWand")]),
+        Tweak("ai.chatgpt", "ChatGPT and Other Models", "Sending requests to ChatGPT and other outside models.",
+              in: .intelligence, section: "Features",
+              [.restriction("allowExternalIntelligenceIntegrations"), .restriction("allowExternalIntelligenceIntegrationsSignIn")]),
+        Tweak("ai.mailSummary", "Mail Summaries", "Summaries and smart replies in Mail.",
+              in: .intelligence, section: "Summaries", [.restriction("allowMailSummary"), .restriction("allowMailSmartReplies")]),
+        Tweak("ai.notesSummary", "Notes Transcripts and Summaries", "Call and audio transcripts with summaries in Notes.",
+              in: .intelligence, section: "Summaries",
+              [.restriction("allowNotesTranscription"), .restriction("allowNotesTranscriptionSummary")]),
+        Tweak("ai.safariSummary", "Safari Summaries", "Page summaries in Safari Reader.",
+              in: .intelligence, section: "Summaries", [.restriction("allowSafariSummary")]),
+        Tweak("ai.inlinePredictions", "Inline Predictions", "The gray text that finishes your words as you type.",
+              in: .intelligence, section: "Summaries", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSAutomaticInlinePredictionEnabled", false)]),
+        Tweak("ai.siri", "Siri", "Siri, “Hey Siri”, and the Siri menu bar icon.",
+              in: .intelligence, section: "Siri", restarts: [.systemUIServer],
+              [.set("com.apple.assistant.support", "Assistant Enabled", false),
+               .set("com.apple.Siri", "StatusMenuVisible", false),
+               .set("com.apple.Siri", "VoiceTriggerUserEnabled", false),
+               .agent("com.apple.Siri.agent")]),
+        Tweak("ai.siriServices", "Siri Background Services", "Stops the Siri knowledge, actions, and voice services.",
+              in: .intelligence, section: "Siri", risk: .advanced, restarts: [.logout],
+              caveat: "Shortcuts suggestions and dictation can stop working.",
+              [.agent("com.apple.siriknowledged"), .agent("com.apple.siriactionsd"),
+               .agent("com.apple.siriinferenced"), .agent("com.apple.sirittsd")]),
+        Tweak("ai.generativeServices", "Generative Model Services", "Stops the services that run Apple Intelligence models.",
+              in: .intelligence, section: "Background Services", risk: .advanced, restarts: [.logout],
+              caveat: "Every Apple Intelligence feature stops until you turn this off.",
+              [.agent("com.apple.generativeexperiencesd"), .agent("com.apple.intelligenceflowd"),
+               .agent("com.apple.intelligencecontextd"), .agent("com.apple.intelligencetasksd"),
+               .agent("com.apple.imageplaygroundd")]),
+        Tweak("ai.knowledgeServices", "Personal Context Indexing", "Stops the services that index your mail, messages, and photos for Apple Intelligence.",
+              in: .intelligence, section: "Background Services", risk: .advanced, restarts: [.logout],
+              caveat: "Siri and Spotlight know less about your data.",
+              [.agent("com.apple.intelligenceplatformd"), .agent("com.apple.knowledgeconstructiond"),
+               .agent("com.apple.spotlightknowledged")]),
+        Tweak("ai.visualIntelligence", "Visual Intelligence", "Stops the service that looks up what is on screen.",
+              in: .intelligence, section: "Background Services", risk: .advanced, restarts: [.logout],
+              [.agent("com.apple.visualintelligenced")]),
+        Tweak("ai.callIntelligence", "Call Intelligence", "Stops call screening, live translation, and call summaries.",
+              in: .intelligence, section: "Background Services", risk: .advanced, restarts: [.logout],
+              [.agent("com.apple.callintelligenced")]),
+    ]
+
+    // MARK: Privacy
+
+    static let privacy: [Tweak] = [
+        Tweak("privacy.analytics", "Share Mac Analytics", "Stops sending diagnostics and usage data to Apple and app developers.",
+              in: .privacy, section: "Analytics",
+              [.command(Command(
+                apply: #"defaults write "/Library/Application Support/CrashReporter/DiagnosticMessagesHistory" AutoSubmit -bool false && defaults write "/Library/Application Support/CrashReporter/DiagnosticMessagesHistory" ThirdPartyDataSubmit -bool false"#,
+                revert: #"defaults write "/Library/Application Support/CrashReporter/DiagnosticMessagesHistory" AutoSubmit -bool true && defaults write "/Library/Application Support/CrashReporter/DiagnosticMessagesHistory" ThirdPartyDataSubmit -bool true"#,
+                check: #"[ "$(defaults read "/Library/Application Support/CrashReporter/DiagnosticMessagesHistory" AutoSubmit 2>/dev/null)" = 0 ]"#,
+                admin: true))]),
+        Tweak("privacy.siriImprove", "Improve Siri and Dictation", "Stops sharing Siri and dictation recordings with Apple.",
+              in: .privacy, section: "Analytics", [.set("com.apple.assistant.support", "Siri Data Sharing Opt-In Status", 2)]),
+        Tweak("privacy.analyticsAgents", "Analytics Agents", "Stops the agents that collect input, location, and app analytics.",
+              in: .privacy, section: "Analytics", risk: .advanced, restarts: [.logout],
+              [.agent("com.apple.analyticsagent"), .agent("com.apple.geoanalyticsd"), .agent("com.apple.inputanalyticsd")]),
+        Tweak("privacy.feedback", "Feedback Prompts", "Stops the agent that asks for feedback and collects logs for Apple.",
+              in: .privacy, section: "Analytics", risk: .advanced, restarts: [.logout],
+              [.agent("com.apple.feedbackd")]),
+        Tweak("privacy.ads", "Personalized Ads", "Turns off personalized ads in the App Store, Apple News, and Stocks.",
+              in: .privacy, section: "Advertising",
+              [.set("com.apple.AdLib", "allowApplePersonalizedAdvertising", false),
+               .set("com.apple.AdLib", "allowIdentifierForAdvertising", false),
+               .set("com.apple.AdLib", "forceLimitAdTracking", true)]),
+        Tweak("privacy.adServices", "Ad Services", "Stops the ad attribution and promoted content services.",
+              in: .privacy, section: "Advertising", risk: .moderate, restarts: [.logout],
+              [.agent("com.apple.ap.adprivacyd"), .agent("com.apple.ap.promotedcontentd")]),
+        Tweak("privacy.lookup", "Look Up Suggestions", "Stops Look Up from sending the words you select to Apple.",
+              in: .privacy, section: "Search", [.set("com.apple.lookup.shared", "LookupSuggestionsDisabled", true)]),
+        Tweak("privacy.spotlightWeb", "Spotlight Internet Results", "Stops Spotlight from sending what you type to Apple for web suggestions.",
+              in: .privacy, section: "Search", risk: .moderate, restarts: [.logout],
+              caveat: "Spotlight shows only results from this Mac.",
+              [.agent("com.apple.parsecd")]),
+        Tweak("privacy.suggestions", "Siri Suggestions in Apps", "Stops the service that reads mail and messages to suggest contacts and events.",
+              in: .privacy, section: "Search", risk: .advanced, restarts: [.logout],
+              caveat: "Found in Mail contacts and event suggestions stop.",
+              [.agent("com.apple.suggestd"), .agent("com.apple.knowledge-agent")]),
+        Tweak("privacy.gameCenter", "Game Center", "Stops the Game Center service and its sign-in pop-ups.",
+              in: .privacy, section: "Services", risk: .moderate, restarts: [.logout],
+              [.agent("com.apple.gamed")]),
+        Tweak("privacy.screenTime", "Screen Time Usage Tracking", "Stops recording which apps and websites you use.",
+              in: .privacy, section: "Services", risk: .advanced, restarts: [.logout],
+              caveat: "Screen Time reports stay empty.",
+              [.agent("com.apple.UsageTrackingAgent")]),
+    ]
+
+    // MARK: Performance
+
+    static let performance: [Tweak] = [
+        Tweak("perf.windowAnimations", "Window Animations", "Windows and sheets open instantly instead of zooming in.",
+              in: .performance, section: "Animations", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSAutomaticWindowAnimationsEnabled", false)]),
+        Tweak("perf.resize", "Instant Window Resize", "Windows resize in one step when you zoom them.",
+              in: .performance, section: "Animations", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSWindowResizeTime", 0.001)]),
+        Tweak("perf.quickLook", "Quick Look Animation", "Quick Look opens instantly, without zooming in.",
+              in: .performance, section: "Animations", restarts: [.logout],
+              [.set("NSGlobalDomain", "QLPanelAnimationDuration", 0.0)]),
+        Tweak("perf.finderAnimations", "Finder Animations", "Finder windows and Get Info open without animations.",
+              in: .performance, section: "Animations", restarts: [.finder],
+              [.set("com.apple.finder", "DisableAllAnimations", true)]),
+        Tweak("perf.dockAutohide", "Instant Dock Reveal", "A hidden Dock shows the moment the pointer reaches it.",
+              in: .performance, section: "Dock", restarts: [.dock],
+              [.set("com.apple.dock", "autohide-delay", 0.0), .set("com.apple.dock", "autohide-time-modifier", 0.15)]),
+        Tweak("perf.missionControl", "Faster Mission Control", "Mission Control opens and closes in a third of the time.",
+              in: .performance, section: "Dock", restarts: [.dock],
+              [.set("com.apple.dock", "expose-animation-duration", 0.12)]),
+        Tweak("perf.launchAnimation", "App Launch Animation", "Stops the Dock icon from pulsing while an app opens.",
+              in: .performance, section: "Dock", restarts: [.dock],
+              [.set("com.apple.dock", "launchanim", false)]),
+        Tweak("perf.reduceMotion", "Reduce Motion", "Spaces and full screen fade instead of slide.",
+              in: .performance, section: "Accessibility Effects", restarts: [.logout],
+              caveat: "May need Full Disk Access for UnbloatMyMac.",
+              [.set("com.apple.universalaccess", "reduceMotion", true)]),
+        Tweak("perf.reduceTransparency", "Reduce Transparency", "Solid backgrounds instead of glass, which saves GPU work on older Macs.",
+              in: .performance, section: "Accessibility Effects", restarts: [.logout],
+              caveat: "May need Full Disk Access for UnbloatMyMac.",
+              [.set("com.apple.universalaccess", "reduceTransparency", true)]),
+        Tweak("perf.photoAnalysis", "Photo and Media Analysis", "Stops scanning your photo library for faces, scenes, and text.",
+              in: .performance, section: "Background Work", risk: .moderate, restarts: [.logout],
+              caveat: "Photos search and People stop updating.",
+              [.agent("com.apple.photoanalysisd"), .agent("com.apple.mediaanalysisd")]),
+        Tweak("perf.appNap", "App Nap", "Apps in the background keep full speed.",
+              in: .performance, section: "Background Work", risk: .moderate, restarts: [.logout],
+              caveat: "Uses more battery.",
+              [.set("NSGlobalDomain", "NSAppSleepDisabled", true)]),
+        Tweak("perf.powerNap", "Power Nap", "The Mac stays fully asleep instead of checking mail and backing up.",
+              in: .performance, section: "Background Work",
+              [.command(Command(apply: "pmset -a powernap 0", revert: "pmset -a powernap 1",
+                                check: "pmset -g | grep -Eq '^ *powernap +0'", admin: true))]),
+        Tweak("perf.spotlight", "Spotlight Indexing", "Stops indexing every disk. Saves CPU and disk writes.",
+              in: .performance, section: "Background Work", risk: .advanced,
+              caveat: "Spotlight and Finder search stop finding files.",
+              [.command(Command(apply: "mdutil -a -i off", revert: "mdutil -a -i on",
+                                check: "mdutil -s / 2>/dev/null | grep -q disabled", admin: true))]),
+    ]
+
+    // MARK: Annoyances
+
+    static let interface: [Tweak] = [
+        Tweak("ui.clickWallpaper", "Click Wallpaper to Show Desktop", "Clicking the wallpaper no longer hides every window.",
+              in: .interface, section: "Desktop", restarts: [.windowManager],
+              [.set("com.apple.WindowManager", "EnableStandardClickToShowDesktop", false)]),
+        Tweak("ui.widgets", "Desktop Widgets", "Hides widgets on the desktop and in Stage Manager.",
+              in: .interface, section: "Desktop", restarts: [.windowManager],
+              [.set("com.apple.WindowManager", "StandardHideWidgets", true),
+               .set("com.apple.WindowManager", "StageManagerHideWidgets", true)]),
+        Tweak("ui.crashDialog", "Crash Report Pop-ups", "Apps that quit unexpectedly no longer show a report window.",
+              in: .interface, section: "Pop-ups", [.set("com.apple.CrashReporter", "DialogType", "none")]),
+        Tweak("ui.timeMachine", "Time Machine Disk Prompt", "Plugging in a disk no longer asks to use it for backups.",
+              in: .interface, section: "Pop-ups", [.set("com.apple.TimeMachine", "DoNotOfferNewDisksForBackup", true)]),
+        Tweak("ui.photosHotplug", "Photos Opens for iPhone", "Photos no longer opens when you connect a phone or camera.",
+              in: .interface, section: "Pop-ups", [.set("com.apple.ImageCapture", "disableHotPlug", true)]),
+        Tweak("ui.tips", "Tips Notifications", "Stops the Tips app from sending notifications.",
+              in: .interface, section: "Pop-ups", risk: .moderate, restarts: [.logout],
+              [.agent("com.apple.tipsd")]),
+        Tweak("ui.mediaKeys", "Media Keys Open Music", "The play key no longer opens Music.",
+              in: .interface, section: "Pop-ups", risk: .moderate, restarts: [.logout],
+              caveat: "Play, pause, and skip keys stop working in every app.",
+              [.agent("com.apple.rcd")]),
+        Tweak("ui.screenshotShadow", "Screenshot Window Shadows", "Window screenshots without the large shadow around them.",
+              in: .interface, section: "Screenshots", restarts: [.systemUIServer],
+              [.set("com.apple.screencapture", "disable-shadow", true)]),
+        Tweak("ui.screenshotThumbnail", "Screenshot Preview", "Screenshots save at once, without the floating thumbnail.",
+              in: .interface, section: "Screenshots", restarts: [.systemUIServer],
+              [.set("com.apple.screencapture", "show-thumbnail", false)]),
+        Tweak("ui.expandPanels", "Expanded Save and Print Panels", "Save and Print open with every option showing.",
+              in: .interface, section: "Panels", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSNavPanelExpandedStateForSaveMode", true),
+               .set("NSGlobalDomain", "NSNavPanelExpandedStateForSaveMode2", true),
+               .set("NSGlobalDomain", "PMPrintingExpandedStateForPrint", true),
+               .set("NSGlobalDomain", "PMPrintingExpandedStateForPrint2", true)]),
+        Tweak("ui.saveToDisk", "Save to This Mac", "New documents save to your Mac instead of iCloud Drive.",
+              in: .interface, section: "Panels", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSDocumentSaveNewDocumentsToCloud", false)]),
+    ]
+
+    // MARK: Finder
+
+    static let finder: [Tweak] = [
+        Tweak("finder.extensions", "Show File Extensions", "Every file name ends in its extension, like report.pdf.",
+              in: .finder, section: "Show More", restarts: [.finder],
+              [.set("NSGlobalDomain", "AppleShowAllExtensions", true)]),
+        Tweak("finder.hidden", "Show Hidden Files", "Shows files whose names start with a dot.",
+              in: .finder, section: "Show More", risk: .moderate, restarts: [.finder],
+              [.set("com.apple.finder", "AppleShowAllFiles", true)]),
+        Tweak("finder.pathBar", "Path Bar", "Shows where the folder is at the bottom of each window.",
+              in: .finder, section: "Show More", restarts: [.finder], [.set("com.apple.finder", "ShowPathbar", true)]),
+        Tweak("finder.statusBar", "Status Bar", "Shows the item count and free space.",
+              in: .finder, section: "Show More", restarts: [.finder], [.set("com.apple.finder", "ShowStatusBar", true)]),
+        Tweak("finder.posixTitle", "Full Path in Title", "The window title shows the full folder path.",
+              in: .finder, section: "Show More", restarts: [.finder], [.set("com.apple.finder", "_FXShowPosixPathInTitle", true)]),
+        Tweak("finder.library", "Show Library Folder", "Shows the Library folder in your home folder.",
+              in: .finder, section: "Show More",
+              [.command(Command(apply: #"chflags nohidden "$HOME/Library""#, revert: #"chflags hidden "$HOME/Library""#,
+                                check: #"! ls -lOd "$HOME/Library" | grep -q hidden"#, admin: false))]),
+        Tweak("finder.foldersFirst", "Folders First", "Folders sort above files, in windows and on the desktop.",
+              in: .finder, section: "Behavior", restarts: [.finder],
+              [.set("com.apple.finder", "_FXSortFoldersFirst", true), .set("com.apple.finder", "_FXSortFoldersFirstOnDesktop", true)]),
+        Tweak("finder.searchHere", "Search This Folder", "Searching starts in the current folder, not the whole Mac.",
+              in: .finder, section: "Behavior", restarts: [.finder], [.set("com.apple.finder", "FXDefaultSearchScope", "SCcf")]),
+        Tweak("finder.extensionWarning", "Extension Change Warning", "Renaming a file’s extension no longer asks first.",
+              in: .finder, section: "Behavior", restarts: [.finder],
+              [.set("com.apple.finder", "FXEnableExtensionChangeWarning", false)]),
+        Tweak("finder.trash", "Empty Trash After 30 Days", "Items in the Trash are removed after 30 days.",
+              in: .finder, section: "Behavior", restarts: [.finder], [.set("com.apple.finder", "FXRemoveOldTrashItems", true)]),
+        Tweak("finder.dsStore", "No .DS_Store on Network and USB Drives", "Finder stops leaving hidden files on shared and removable drives.",
+              in: .finder, section: "Behavior", restarts: [.logout],
+              [.set("com.apple.desktopservices", "DSDontWriteNetworkStores", true),
+               .set("com.apple.desktopservices", "DSDontWriteUSBStores", true)]),
+        Tweak("finder.listView", "List View by Default", "New windows open in list view with columns.",
+              in: .finder, section: "Behavior", restarts: [.finder], [.set("com.apple.finder", "FXPreferredViewStyle", "Nlsv")]),
+        Tweak("finder.newWindowHome", "New Windows Open Home", "New Finder windows open your home folder instead of Recents.",
+              in: .finder, section: "Behavior", restarts: [.finder],
+              [.set("com.apple.finder", "NewWindowTarget", "PfHm"),
+               .set("com.apple.finder", "NewWindowTargetPath", .string("file://\(NSHomeDirectory())/"))]),
+    ]
+
+    // MARK: Dock & Windows
+
+    static let dock: [Tweak] = [
+        Tweak("dock.recents", "Recent Apps in Dock", "Removes the section of recently used apps.",
+              in: .dock, section: "Dock", restarts: [.dock], [.set("com.apple.dock", "show-recents", false)]),
+        Tweak("dock.bounce", "Bouncing Icons", "Apps no longer bounce in the Dock to get your attention.",
+              in: .dock, section: "Dock", restarts: [.dock], [.set("com.apple.dock", "no-bouncing", true)]),
+        Tweak("dock.hiddenApps", "Dim Hidden Apps", "Icons of hidden apps look dimmed.",
+              in: .dock, section: "Dock", restarts: [.dock], [.set("com.apple.dock", "showhidden", true)]),
+        Tweak("dock.openOnly", "Only Open Apps", "The Dock shows only the apps that are running.",
+              in: .dock, section: "Dock", risk: .moderate, restarts: [.dock],
+              caveat: "Your pinned apps are kept and come back when you turn this off.",
+              [.set("com.apple.dock", "static-only", true)]),
+        Tweak("dock.autohide", "Hide the Dock", "The Dock hides until you move the pointer to it.",
+              in: .dock, section: "Dock", risk: .moderate, restarts: [.dock], [.set("com.apple.dock", "autohide", true)]),
+        Tweak("dock.scale", "Scale Minimize Effect", "Windows shrink instead of the slower Genie effect.",
+              in: .dock, section: "Windows", restarts: [.dock], [.set("com.apple.dock", "mineffect", "scale")]),
+        Tweak("dock.spaces", "Keep Spaces in Order", "Spaces stay where you put them instead of reordering by use.",
+              in: .dock, section: "Windows", restarts: [.dock], [.set("com.apple.dock", "mru-spaces", false)]),
+        Tweak("dock.tilingMargins", "Tiled Windows Without Gaps", "Tiled windows fill the screen edge to edge.",
+              in: .dock, section: "Windows", restarts: [.windowManager],
+              [.set("com.apple.WindowManager", "EnableTiledWindowMargins", false)]),
+    ]
+
+    // MARK: Typing
+
+    static let typing: [Tweak] = [
+        Tweak("typing.autocorrect", "Autocorrect", "Words stay the way you typed them.",
+              in: .typing, section: "Corrections", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSAutomaticSpellingCorrectionEnabled", false),
+               .set("NSGlobalDomain", "WebAutomaticSpellingCorrectionEnabled", false)]),
+        Tweak("typing.capitals", "Automatic Capitals", "The first word of a sentence is not capitalized for you.",
+              in: .typing, section: "Corrections", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSAutomaticCapitalizationEnabled", false)]),
+        Tweak("typing.period", "Double-Space Period", "Two spaces stay two spaces.",
+              in: .typing, section: "Corrections", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSAutomaticPeriodSubstitutionEnabled", false)]),
+        Tweak("typing.quotes", "Smart Quotes", "Straight quotes stay straight, which matters for code.",
+              in: .typing, section: "Corrections", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSAutomaticQuoteSubstitutionEnabled", false)]),
+        Tweak("typing.dashes", "Smart Dashes", "Two hyphens stay two hyphens.",
+              in: .typing, section: "Corrections", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSAutomaticDashSubstitutionEnabled", false)]),
+        Tweak("typing.pressAndHold", "Accent Menu on Held Keys", "Holding a key repeats it instead of showing accents.",
+              in: .typing, section: "Keys", restarts: [.logout],
+              [.set("NSGlobalDomain", "ApplePressAndHoldEnabled", false)]),
+        Tweak("typing.fastRepeat", "Fast Key Repeat", "Keys repeat sooner and faster than System Settings allows.",
+              in: .typing, section: "Keys", restarts: [.logout],
+              [.set("NSGlobalDomain", "KeyRepeat", 2), .set("NSGlobalDomain", "InitialKeyRepeat", 15)]),
+    ]
+
+    // MARK: Windows Mode
+
+    /// Home and End move within the line, like on Windows.
+    static let keyBindings = #"""
+    {
+        "\UF729" = "moveToBeginningOfLine:";
+        "\UF72B" = "moveToEndOfLine:";
+        "$\UF729" = "moveToBeginningOfLineAndModifySelection:";
+        "$\UF72B" = "moveToEndOfLineAndModifySelection:";
+        "^\UF729" = "moveToBeginningOfDocument:";
+        "^\UF72B" = "moveToEndOfDocument:";
+        "^$\UF729" = "moveToBeginningOfDocumentAndModifySelection:";
+        "^$\UF72B" = "moveToEndOfDocumentAndModifySelection:";
+        "\UF72C" = "pageUp:";
+        "\UF72D" = "pageDown:";
+    }
+    """#
+
+    static let windows: [Tweak] = [
+        Tweak("win.scrolling", "Windows Scroll Direction", "Scrolling down moves the page down, like a mouse wheel on Windows.",
+              in: .windows, section: "Mouse and Keyboard",
+              [.set("NSGlobalDomain", "com.apple.swipescrolldirection", false)]),
+        Tweak("win.tapToClick", "Tap to Click", "A light tap on the trackpad clicks, like most Windows laptops.",
+              in: .windows, section: "Mouse and Keyboard", restarts: [.logout],
+              [.set("com.apple.AppleMultitouchTrackpad", "Clicking", true),
+               .set("com.apple.driver.AppleBluetoothMultitouch.trackpad", "Clicking", true),
+               .set("NSGlobalDomain", "com.apple.mouse.tapBehavior", 1, currentHost: true)]),
+        Tweak("win.fnKeys", "Standard Function Keys", "F1 to F12 work as function keys. Hold Fn for brightness and volume.",
+              in: .windows, section: "Mouse and Keyboard", restarts: [.logout],
+              [.set("NSGlobalDomain", "com.apple.keyboard.fnState", true)]),
+        Tweak("win.homeEnd", "Home and End Keys", "Home and End go to the start and end of the line; Control goes to the document.",
+              in: .windows, section: "Mouse and Keyboard", restarts: [.logout],
+              caveat: "Replaces ~/Library/KeyBindings/DefaultKeyBinding.dict while on. Your own file comes back when you turn it off.",
+              [.file(path: "~/Library/KeyBindings/DefaultKeyBinding.dict", contents: keyBindings)]),
+        Tweak("win.tabNavigation", "Tab Moves Between All Controls", "Tab reaches every button and menu, not only text fields.",
+              in: .windows, section: "Mouse and Keyboard", restarts: [.logout],
+              [.set("NSGlobalDomain", "AppleKeyboardUIMode", 2)]),
+        Tweak("win.maximize", "Double-Click Title Bar to Maximize", "Double-clicking a title bar fills the screen.",
+              in: .windows, section: "Windows", restarts: [.logout],
+              [.set("NSGlobalDomain", "AppleActionOnDoubleClick", "Fill")]),
+        Tweak("win.snap", "Snap Windows to Edges", "Drag a window to a screen edge or the top to tile or maximize it.",
+              in: .windows, section: "Windows", restarts: [.windowManager],
+              [.set("com.apple.WindowManager", "EnableTilingByEdgeDrag", true),
+               .set("com.apple.WindowManager", "EnableTopTilingByEdgeDrag", true)]),
+        Tweak("win.closeOnQuit", "Don’t Reopen Windows", "Quitting an app closes its windows, so they don’t come back next time.",
+              in: .windows, section: "Windows", restarts: [.logout],
+              [.set("NSGlobalDomain", "NSQuitAlwaysKeepsWindows", false)]),
+        Tweak("win.scrollBars", "Always Show Scroll Bars", "Scroll bars stay visible, like on Windows.",
+              in: .windows, section: "Windows", restarts: [.logout],
+              [.set("NSGlobalDomain", "AppleShowScrollBars", "Always")]),
+        Tweak("win.taskbar", "Dock as a Taskbar", "The Dock stays at the bottom, always visible, without magnification.",
+              in: .windows, section: "Taskbar", restarts: [.dock],
+              [.set("com.apple.dock", "orientation", "bottom"),
+               .set("com.apple.dock", "magnification", false),
+               .set("com.apple.dock", "show-process-indicators", true),
+               .set("com.apple.dock", "minimize-to-application", true)]),
+        Tweak("win.drives", "Drives on the Desktop", "Disks, USB drives, and servers show on the desktop, like This PC.",
+              in: .windows, section: "Taskbar", restarts: [.finder],
+              [.set("com.apple.finder", "ShowHardDrivesOnDesktop", true),
+               .set("com.apple.finder", "ShowExternalHardDrivesOnDesktop", true),
+               .set("com.apple.finder", "ShowRemovableMediaOnDesktop", true),
+               .set("com.apple.finder", "ShowMountedServersOnDesktop", true)]),
+    ]
+
+    // MARK: Presets
+
+    public static let presets: [Preset] = [
+        Preset(id: "recommended", title: "Recommended", symbol: "checkmark.seal",
+               summary: "Apple Intelligence off, no personalized ads, fewer pop-ups. Nothing you would miss.",
+               tweakIDs: ["ai.writingTools", "ai.genmoji", "ai.imagePlayground", "ai.imageWand", "ai.chatgpt",
+                          "ai.mailSummary", "ai.notesSummary", "ai.safariSummary", "ai.inlinePredictions",
+                          "privacy.siriImprove", "privacy.ads", "privacy.lookup", "ui.clickWallpaper",
+                          "ui.widgets", "ui.timeMachine", "ui.expandPanels", "finder.extensions",
+                          "finder.pathBar", "finder.dsStore", "dock.recents"]),
+        Preset(id: "privacy", title: "Maximum Privacy", symbol: "hand.raised.fill",
+               summary: "Everything in Recommended, plus Siri, analytics, ad services, and Game Center off.",
+               tweakIDs: ["ai.writingTools", "ai.genmoji", "ai.imagePlayground", "ai.imageWand", "ai.chatgpt",
+                          "ai.mailSummary", "ai.notesSummary", "ai.safariSummary", "ai.inlinePredictions", "ai.siri",
+                          "privacy.analytics", "privacy.siriImprove", "privacy.ads", "privacy.adServices",
+                          "privacy.lookup", "privacy.spotlightWeb", "privacy.gameCenter", "ui.crashDialog",
+                          "ui.tips", "finder.dsStore"]),
+        Preset(id: "performance", title: "Performance Boost", symbol: "bolt.fill",
+               summary: "No animations, an instant Dock, and no photo analysis in the background.",
+               tweakIDs: ["perf.windowAnimations", "perf.resize", "perf.quickLook", "perf.finderAnimations",
+                          "perf.dockAutohide", "perf.missionControl", "perf.launchAnimation", "perf.photoAnalysis",
+                          "perf.powerNap", "dock.scale", "dock.bounce", "ui.screenshotThumbnail"]),
+        Preset(id: "windows", title: "Windows Mode", symbol: "pc",
+               summary: "Scrolling, keys, windows, Finder, and the Dock behave the way they do on a Windows PC.",
+               tweakIDs: windows.map(\.id) + ["finder.extensions", "finder.pathBar", "finder.statusBar",
+                                              "finder.foldersFirst", "finder.searchHere", "finder.listView",
+                                              "finder.newWindowHome", "typing.pressAndHold", "ui.saveToDisk",
+                                              "ui.expandPanels", "ui.clickWallpaper", "dock.tilingMargins",
+                                              "dock.scale"]),
+    ]
+}
+
+public extension Catalog {
+    /// Tweaks whose title names a macOS feature. Their switch shows whether
+    /// that feature is on, like System Settings: switching it off applies the tweak.
+    static let featureTitled: Set<String> = Set(intelligence.map(\.id) + privacy.map(\.id)).union([
+        "perf.windowAnimations", "perf.quickLook", "perf.finderAnimations", "perf.launchAnimation", "perf.photoAnalysis",
+        "perf.appNap", "perf.powerNap", "perf.spotlight",
+        "ui.clickWallpaper", "ui.widgets", "ui.crashDialog", "ui.timeMachine", "ui.photosHotplug", "ui.tips",
+        "ui.mediaKeys", "ui.screenshotShadow", "ui.screenshotThumbnail",
+        "finder.extensionWarning", "dock.recents", "dock.bounce",
+        "typing.autocorrect", "typing.capitals", "typing.period", "typing.quotes", "typing.dashes", "typing.pressAndHold",
+    ])
+}
+
+public extension Tweak {
+    /// True when the switch shows the macOS feature, so on means the tweak is not applied.
+    var namesFeature: Bool { Catalog.featureTitled.contains(id) }
+}

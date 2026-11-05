@@ -1,20 +1,20 @@
 import AppKit
-import SwiftData
 import SwiftUI
+import UnbloatMyMacKit
 
 // UnbloatMyMac
-//   UnbloatMyMac                      the app
-//   APP_STORE=<file> UnbloatMyMac     use another database (tests, experiments)
+//   UnbloatMyMac                      the app, changing this Mac
+//   APP_STORE=<file> UnbloatMyMac     a pretend Mac (MockBackend) with its journal in <file>; never touches the system
 //   APP_SNAPSHOT=<dir> UnbloatMyMac   save a PNG of every sidebar page and Settings tab in light and dark mode, then quit
-//   APP_SEED=1 UnbloatMyMac           fill an empty /tmp store with sample items (tools/snap.sh)
-//   UnbloatMyMac --selftest           run the self-test on a /tmp store and quit with 0 or 1 (tools/selftest.sh)
+//   APP_SEED=1 UnbloatMyMac           with APP_STORE: a pretend Mac with some tweaks on and some staged (tools/snap.sh)
+//   UnbloatMyMac --selftest           run the self-test on a pretend Mac and quit with 0 or 1 (tools/selftest.sh)
 //   APP_ACCENT=<id> UnbloatMyMac      run with another accent from Theme.all (UI/Theme.swift)
 //   APP_GRID=1 UnbloatMyMac           draw the 8 pt grid and the layout probes over the window
 
 @main
 struct UnbloatMyMacApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
-    @State private var model = AppModel(container: Store.makeContainer())
+    @State private var model = AppModel(engine: Store.makeEngine())
 
     var body: some Scene {
         Window("UnbloatMyMac", id: "main") {
@@ -22,17 +22,34 @@ struct UnbloatMyMacApp: App {
                 .environment(model)
                 .themed()
                 .overlay { if GridOverlay.enabled { GridOverlay() } }
-                .frame(minWidth: 760, minHeight: 480)
+                .frame(minWidth: 860, minHeight: 560)
         }
-        .modelContainer(model.container)
-        .defaultSize(width: 1100, height: 720)
+        .defaultSize(width: 1080, height: 760)
         .windowToolbarStyle(.unified)
         .commands {
             SidebarCommands()
             ToolbarCommands()
-            CommandGroup(replacing: .newItem) {
-                Button("New Item") { model.addItem() }
-                    .keyboardShortcut("n")
+            CommandGroup(replacing: .newItem) {}
+            CommandMenu("Changes") {
+                Button("Review Changes…") { model.review() }
+                    .keyboardShortcut(.return, modifiers: .command)
+                    .disabled(model.staged.isEmpty || model.isBusy)
+                Button("Discard Changes") { model.discard() }
+                    .keyboardShortcut(.delete, modifiers: [.command, .option])
+                    .disabled(model.staged.isEmpty)
+                Divider()
+                Menu("Add Preset") {
+                    ForEach(Array(Catalog.presets.enumerated()), id: \.element.id) { index, preset in
+                        Button(preset.title) { model.stage(preset) }
+                            .keyboardShortcut(KeyEquivalent(Character(String(index + 1))), modifiers: [.command, .option])
+                    }
+                }
+                Divider()
+                Button("Refresh") { Task { await model.refresh() } }
+                    .keyboardShortcut("r")
+                Button("Undo Everything…") { model.sidebar = .history; model.confirmUndoAll = true }
+                    .keyboardShortcut("z", modifiers: [.command, .option])
+                    .disabled(model.applied.isEmpty && model.launchItemsDisabledByApp.isEmpty)
             }
         }
 
@@ -60,27 +77,32 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
-/// Where the data lives: ~/Library/Application Support/UnbloatMyMac/UnbloatMyMac.store
+/// Where the undo journal lives: ~/Library/Application Support/UnbloatMyMac/journal.json.
+/// With APP_STORE set, the app runs on a pretend Mac and never changes the system.
 enum Store {
-    /// True when APP_STORE points somewhere else (tests, snapshots, seed data).
+    /// True when APP_STORE points somewhere else (tests, snapshots, self-test).
     static var isOverridden: Bool {
         !(ProcessInfo.processInfo.environment["APP_STORE"] ?? "").isEmpty
+    }
+
+    static var folder: URL {
+        let dir = URL.applicationSupportDirectory.appending(path: "UnbloatMyMac", directoryHint: .isDirectory)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir
     }
 
     static var url: URL {
         if let path = ProcessInfo.processInfo.environment["APP_STORE"], !path.isEmpty {
             return URL(fileURLWithPath: path)
         }
-        let dir = URL.applicationSupportDirectory.appending(path: "UnbloatMyMac", directoryHint: .isDirectory)
-        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
-        return dir.appending(path: "UnbloatMyMac.store")
+        return folder.appending(path: "journal.json")
     }
 
-    static func makeContainer() -> ModelContainer {
-        do {
-            return try ModelContainer(for: Item.self, configurations: ModelConfiguration(url: url))
-        } catch {
-            fatalError("Could not open the database at \(url.path): \(error)")
+    static func makeEngine() -> Engine {
+        if isOverridden {
+            let seeded = ProcessInfo.processInfo.environment["APP_SEED"] == "1"
+            return Engine(backend: MockBackend(seeded: seeded), journalURL: url)
         }
+        return Engine(backend: MacBackend(supportFolder: folder), journalURL: url)
     }
 }

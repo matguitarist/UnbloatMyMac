@@ -1,7 +1,17 @@
 # UnbloatMyMac
 
-A native macOS app in SwiftUI. It runs on this Mac only, with a local
-SwiftData database and no server.
+A native macOS app in SwiftUI that debloats macOS: optional, reversible tweaks
+for Apple Intelligence, privacy, performance, annoyances, Finder, the Dock,
+typing, and a Windows Mode, plus Background Items, Storage cleanup, and History.
+
+## How changes work (read before adding a tweak)
+
+- Tweaks live in `Sources/UnbloatMyMacKit/Catalog.swift`. An action is a `defaults` value, a launch agent to disable, a profile restriction (Apple Intelligence), a command with its revert and check, or a file.
+- `Engine` applies through a `SystemBackend`. Before changing a value it saves the original in `journal.json` (~/Library/Application Support/UnbloatMyMac), and undo restores exactly that.
+- Admin commands run together under one password prompt. Apple Intelligence restrictions go into one configuration profile that the person approves in System Settings.
+- Two tweaks must never write the same key (a unit test checks this).
+- Switches follow System Settings: a tweak whose title names a macOS feature (`Catalog.featureTitled`) shows the feature, so off applies the tweak.
+- `APP_STORE` set = `MockBackend`, a pretend Mac. Tests, snapshots, and the self-test never touch the real system. Never run the app against the real Mac from a test.
 
 ## Layout
 
@@ -21,7 +31,7 @@ SwiftData database and no server.
   It writes `/tmp/UnbloatMyMac-shots/<page>-light.png` and `-dark.png` for every sidebar page, and `settings-<tab>-light.png` and `-dark.png` for every Settings tab, then quits. `APP_SNAPSHOT_PAGES=all,settings tools/snap.sh` limits the pages.
   For a panel, sheet, or popover, add a capture to `Snapshot.swift` like the Settings loop.
 - Snapshots, seed data, and the self-test refuse to run without `APP_STORE` in /tmp.
-- Never test against the real database in `~/Library/Application Support/UnbloatMyMac/`.
+- Never test against the real journal in `~/Library/Application Support/UnbloatMyMac/` or the real Mac.
 - Then check the grid: `tools/grid-lint.sh` and `swift tools/check-layout.swift /tmp/UnbloatMyMac-shots/*-layout.json`. Both print PASS.
 - A change is done when the build has no errors, the grid checks pass, and you looked at the light and dark snapshots.
 

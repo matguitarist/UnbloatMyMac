@@ -17,7 +17,8 @@ config=release
 # Settings > Accounts). Otherwise sign ad hoc, which is fine for your own Mac.
 identity="${SIGN_IDENTITY:-}"
 if [[ -z "$identity" ]]; then
-  identity=$(security find-identity -v -p codesigning 2>/dev/null | grep -m1 -o '"Apple Development: [^"]*"' | tr -d '"' || true)
+  # The certificate's hash, not its name: two certificates can share a name.
+  identity=$(security find-identity -v -p codesigning 2>/dev/null | grep -m1 '"Apple Development: ' | awk '{print $2}' || true)
 fi
 [[ -n "$identity" ]] || identity=-
 

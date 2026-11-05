@@ -1,21 +1,36 @@
-import SwiftData
 import SwiftUI
+import UnbloatMyMacKit
 
 struct ContentView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.openSettings) private var openSettings
 
     var body: some View {
+        @Bindable var model = model
         NavigationSplitView {
             sidebar
-        } content: {
-            ItemList(page: model.sidebar ?? .all)
-                .navigationSplitViewColumnWidth(min: 260, ideal: 320)
         } detail: {
-            ItemDetail()
+            page(model.sidebar ?? .overview)
+                .toolbar { toolbar }
+        }
+        .sheet(isPresented: $model.showReview) {
+            ReviewSheet()
+                .environment(model)
+                .themed()
+        }
+        .alert("UnbloatMyMac", isPresented: Binding(get: { model.notice != nil }, set: { if !$0 { model.notice = nil } })) {
+            Button("OK") { model.notice = nil }
+        } message: {
+            Text(model.notice ?? "")
+        }
+        .confirmationDialog("Undo everything UnbloatMyMac changed?", isPresented: $model.confirmUndoAll) {
+            Button("Undo Everything", role: .destructive) { Task { await model.undoEverything() } }
+        } message: {
+            Text("Every setting goes back to the value it had before, stopped services start again, and the Apple Intelligence profile is removed. You may be asked for your password.")
         }
         .task {
-            SeedData.insertIfRequested(into: model)
+            await model.refresh()
+            SeedData.stageIfRequested(model: model)
             SelfTest.runIfRequested(model: model)
             Snapshot.runIfRequested(model: model, openSettings: openSettings)
         }
@@ -23,69 +38,68 @@ struct ContentView: View {
 
     private var sidebar: some View {
         @Bindable var model = model
-        return List(SidebarItem.allCases, selection: $model.sidebar) { page in
-            Label(page.title, systemImage: page.symbol)
-                .tag(page)
-        }
-        .navigationSplitViewColumnWidth(min: 180, ideal: 212)
-    }
-}
-
-struct ItemList: View {
-    @Environment(AppModel.self) private var model
-    @Environment(\.modelContext) private var context
-    @Query(sort: \Item.createdAt, order: .reverse) private var items: [Item]
-    let page: SidebarItem
-
-    private var visible: [Item] {
-        page == .starred ? items.filter(\.isStarred) : items
-    }
-
-    var body: some View {
-        @Bindable var model = model
-        List(visible, selection: $model.selection) { item in
-            Label(item.title, systemImage: item.isStarred ? "star.fill" : "circle")
-                .tag(item.id)
-                .contextMenu {
-                    Button("Delete", role: .destructive) { context.delete(item) }
+        return List(selection: $model.sidebar) {
+            Label(SidebarItem.overview.title, systemImage: SidebarItem.overview.symbol)
+                .tag(SidebarItem.overview)
+            Section("Tweaks") {
+                ForEach(TweakCategory.allCases, id: \.self) { category in
+                    let item = SidebarItem.category(category)
+                    Label(item.title, systemImage: item.symbol)
+                        .badge(model.pendingCount(in: category))
+                        .tag(item)
                 }
-        }
-        .overlay {
-            if visible.isEmpty {
-                ContentUnavailableView(
-                    "No Items",
-                    systemImage: page.symbol,
-                    description: Text("Press Command-N to add one.")
-                )
+            }
+            Section("Tools") {
+                ForEach([SidebarItem.background, .storage, .history]) { item in
+                    Label(item.title, systemImage: item.symbol)
+                        .tag(item)
+                }
             }
         }
-        .navigationTitle(page.title)
-        .toolbar {
+        .navigationSplitViewColumnWidth(min: 200, ideal: 220)
+    }
+
+    @ViewBuilder
+    private func page(_ item: SidebarItem) -> some View {
+        switch item {
+        case .overview: OverviewPage()
+        case .category(let category): TweakPage(category: category)
+        case .background: BackgroundPage()
+        case .storage: StoragePage()
+        case .history: HistoryPage()
+        }
+    }
+
+    @ToolbarContentBuilder
+    private var toolbar: some ToolbarContent {
+        if !model.staged.isEmpty {
             ToolbarItem {
-                Button("New Item", systemImage: "plus") { model.addItem() }
-                    .help("Add an item (Command-N)")
+                Button("Discard", systemImage: "arrow.uturn.backward") { model.discard() }
+                    .help("Forget the changes you have not applied (Option-Command-Delete)")
             }
+            ToolbarItem {
+                Button {
+                    model.review()
+                } label: {
+                    Text("Review \(model.staged.count) \(model.staged.count == 1 ? "Change" : "Changes")")
+                }
+                .buttonStyle(.borderedProminent)
+                .help("See and apply your changes (Command-Return)")
+                .disabled(model.isBusy)
+            }
+        }
+        ToolbarItem {
+            Button("Refresh", systemImage: "arrow.clockwise") { Task { await model.refresh() } }
+                .help("Read the current settings again (Command-R)")
         }
     }
 }
 
-struct ItemDetail: View {
-    @Environment(AppModel.self) private var model
-    @Query private var items: [Item]
-
-    var body: some View {
-        if let item = items.first(where: { $0.id == model.selection }) {
-            @Bindable var item = item
-            Form {
-                TextField("Title", text: $item.title)
-                Toggle("Starred", isOn: $item.isStarred)
-                TextField("Notes", text: $item.notes, axis: .vertical)
-                    .lineLimit(4...)
-            }
-            .formStyle(.grouped)
-            } else {
-            ContentUnavailableView("No Selection", systemImage: "sidebar.right")
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
+/// Seed mode for snapshots: stage a few changes so the toolbar and review sheet show.
+enum SeedData {
+    static func stageIfRequested(model: AppModel) {
+        guard ProcessInfo.processInfo.environment["APP_SEED"] == "1", Store.isOverridden else { return }
+        model.staged = ["ai.writingTools": true, "ai.chatgpt": true, "perf.windowAnimations": true,
+                        "privacy.analytics": true, "win.scrolling": true]
     }
 }

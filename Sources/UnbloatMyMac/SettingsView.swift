@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 /// The Settings window (Command-Comma). One tab per topic, at most about
@@ -54,11 +55,27 @@ enum SettingsTab: String, CaseIterable, Identifiable {
 }
 
 struct GeneralSettings: View {
-    @AppStorage("confirmDelete") private var confirmDelete = true
+    @Environment(AppModel.self) private var model
 
     var body: some View {
-        Section("Items") {
-            Toggle("Ask before deleting items", isOn: $confirmDelete)
+        @Bindable var model = model
+        Section("Tweaks") {
+            Toggle(isOn: $model.showAdvanced) {
+                Text("Show advanced tweaks")
+                Text("Tweaks that stop system services. Some features stop working until you undo them.")
+            }
+            Toggle(isOn: $model.restartApps) {
+                Text("Restart the Dock, Finder, and menu bar after applying")
+                Text("Changes show at once. Turn off to see them after you log out.")
+            }
+        }
+        Section("Undo History") {
+            LabeledContent("Saved in") {
+                Button("Show in Finder") { NSWorkspace.shared.activateFileViewerSelecting([Store.url]) }
+            }
+            Text("The value of every setting before UnbloatMyMac changed it is kept here, so Undo Everything can put it back.")
+                .font(.callout)
+                .foregroundStyle(.secondary)
         }
     }
 }

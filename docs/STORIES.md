@@ -25,8 +25,8 @@ The backlog. Each story has checkable acceptance criteria. The Thimble project
 - [x] **S-015 README, license, and screenshots.** README explains what changes, how undo works, and the risks.
 - [x] **S-016 CI.** GitHub Actions runs the unit tests on every push.
 - [x] **S-017 Release script.** `tools/release.sh <version>` signs with Developer ID and the hardened runtime, notarizes, staples, zips, and drafts a GitHub release.
-- [ ] **S-018 Notary credentials.** `xcrun notarytool store-credentials UnbloatMyMac` with an app-specific password, so the release script can notarize. *Owner.*
-- [ ] **S-019 Publish 0.1.0.** Repo public on GitHub, release with the notarized zip, downloads open without a Gatekeeper warning. *Owner.* Waits on S-010, S-014, S-018.
+- [x] **S-018 Notary credentials.** `xcrun notarytool store-credentials UnbloatMyMac` with an app-specific password, so the release script can notarize. *Owner.*
+- [ ] **S-019 Publish 0.1.0.** Repo public on GitHub, release with the notarized zip, downloads open without a Gatekeeper warning. *Owner.* Waits on S-010.
 
 ## 0.2.0 — next
 

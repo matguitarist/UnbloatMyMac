@@ -37,7 +37,7 @@ struct TweakPage: View {
             if hidden > 0 {
                 Section {
                     HStack {
-                        Label("\(hidden) advanced \(hidden == 1 ? "tweak stops a system service and is" : "tweaks stop system services and are") hidden.",
+                        Label(hidden == 1 ? "1 advanced tweak stops a system service and is hidden." : "\(hidden) advanced tweaks stop system services and are hidden.",
                               systemImage: "exclamationmark.shield")
                             .foregroundStyle(.secondary)
                         Spacer()

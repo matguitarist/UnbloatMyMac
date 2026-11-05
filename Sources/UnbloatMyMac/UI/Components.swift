@@ -113,23 +113,23 @@ struct TweakRow: View {
         var list: [Tag] = []
         switch status {
         case .unavailable(let reason): list.append(Tag(text: reason, symbol: "nosign"))
-        case .waiting: list.append(Tag(text: "Approve in System Settings", symbol: "hourglass", style: .orange))
-        case .partial: list.append(Tag(text: "Partly applied", symbol: "circle.lefthalf.filled"))
+        case .waiting: list.append(Tag(text: String(localized: "Approve in System Settings"), symbol: "hourglass", style: .orange))
+        case .partial: list.append(Tag(text: String(localized: "Partly applied"), symbol: "circle.lefthalf.filled"))
         default: break
         }
-        if tweak.risk == .advanced { list.append(Tag(text: "Advanced", symbol: "exclamationmark.shield", style: .orange)) }
-        if tweak.needsAdmin { list.append(Tag(text: "Password", symbol: "lock")) }
-        if tweak.usesProfile { list.append(Tag(text: "Profile", symbol: "checkmark.shield")) }
-        if !tweak.agents.isEmpty { list.append(Tag(text: "Stops a service", symbol: "stop.circle")) }
+        if tweak.risk == .advanced { list.append(Tag(text: String(localized: "Advanced"), symbol: "exclamationmark.shield", style: .orange)) }
+        if tweak.needsAdmin { list.append(Tag(text: String(localized: "Password"), symbol: "lock")) }
+        if tweak.usesProfile { list.append(Tag(text: String(localized: "Profile"), symbol: "checkmark.shield")) }
+        if !tweak.agents.isEmpty { list.append(Tag(text: String(localized: "Stops a service"), symbol: "stop.circle")) }
         let restarts = tweak.restarts.filter { $0 != .logout }.map(\.rawValue)
-        if !restarts.isEmpty { list.append(Tag(text: "Restarts \(restarts.joined(separator: ", "))", symbol: "arrow.clockwise")) }
-        if tweak.restarts.contains(.logout) { list.append(Tag(text: "After log out", symbol: "person.crop.circle.badge.clock")) }
+        if !restarts.isEmpty { list.append(Tag(text: String(localized: "Restarts \(restarts.joined(separator: ", "))"), symbol: "arrow.clockwise")) }
+        if tweak.restarts.contains(.logout) { list.append(Tag(text: String(localized: "After log out"), symbol: "person.crop.circle.badge.clock")) }
         return list
     }
 
     private func help(_ status: TweakStatus) -> String {
         if case .unavailable(let reason) = status { return reason }
-        return tweak.namesFeature ? "Turn \(tweak.title) on or off" : "Turn on to apply, off to undo"
+        return tweak.namesFeature ? String(localized: "Turn \(tweak.title) on or off") : String(localized: "Turn on to apply, off to undo")
     }
 }
 

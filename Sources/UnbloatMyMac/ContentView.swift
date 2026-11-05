@@ -86,7 +86,7 @@ struct ContentView: View {
                 Button {
                     model.review()
                 } label: {
-                    Text("Review \(model.staged.count) \(model.staged.count == 1 ? "Change" : "Changes")")
+                    model.staged.count == 1 ? Text("Review 1 Change") : Text("Review \(model.staged.count) Changes")
                 }
                 .buttonStyle(.borderedProminent)
                 .help("See and apply your changes (Command-Return)")

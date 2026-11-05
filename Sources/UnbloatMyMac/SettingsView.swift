@@ -41,8 +41,8 @@ enum SettingsTab: String, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .general: "General"
-        case .appearance: "Appearance"
+        case .general: String(localized: "General")
+        case .appearance: String(localized: "Appearance")
         }
     }
 

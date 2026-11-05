@@ -1,0 +1,2846 @@
+{
+  "sourceLanguage": "en",
+  "version": "1.0",
+  "strings": {
+    "%lld of %lld items are in use or protected and stayed where they were.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld éléments sur %lld sont utilisés ou protégés et sont restés en place."
+          }
+        }
+      }
+    },
+    "A hidden Dock shows the moment the pointer reaches it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un Dock masqué apparaît dès que le pointeur l’atteint."
+          }
+        }
+      }
+    },
+    "A light tap on the trackpad clicks, like most Windows laptops.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un léger toucher sur le trackpad clique, comme sur la plupart des PC portables Windows."
+          }
+        }
+      }
+    },
+    "A quieter, faster Dock and window manager.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un Dock et un gestionnaire de fenêtres plus calmes et plus rapides."
+          }
+        }
+      }
+    },
+    "Accent Menu on Held Keys": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Menu des accents sur touche maintenue"
+          }
+        }
+      }
+    },
+    "Accessibility Effects": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effets d’accessibilité"
+          }
+        }
+      }
+    },
+    "Ad Services": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Services publicitaires"
+          }
+        }
+      }
+    },
+    "Advertising": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publicité"
+          }
+        }
+      }
+    },
+    "Agents for All Users": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agents pour tous les utilisateurs"
+          }
+        }
+      }
+    },
+    "Always Show Scroll Bars": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toujours afficher les barres de défilement"
+          }
+        }
+      }
+    },
+    "Analytics": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyse"
+          }
+        }
+      }
+    },
+    "Analytics Agents": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agents d’analyse"
+          }
+        }
+      }
+    },
+    "Animations": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animations"
+          }
+        }
+      }
+    },
+    "Annoyances": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désagréments"
+          }
+        }
+      }
+    },
+    "App Caches": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caches des apps"
+          }
+        }
+      }
+    },
+    "App Launch Animation": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animation d’ouverture des apps"
+          }
+        }
+      }
+    },
+    "App Nap": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Nap"
+          }
+        }
+      }
+    },
+    "Apple Intelligence": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence"
+          }
+        }
+      }
+    },
+    "Apple Intelligence Models": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modèles Apple Intelligence"
+          }
+        }
+      }
+    },
+    "Apple Intelligence off, no personalized ads, fewer pop-ups. Nothing you would miss.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence désactivée, pas de publicités personnalisées, moins de fenêtres surgissantes. Rien qui vous manquera."
+          }
+        }
+      }
+    },
+    "Apps in the background keep full speed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les apps en arrière-plan gardent toute leur vitesse."
+          }
+        }
+      }
+    },
+    "Apps no longer bounce in the Dock to get your attention.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les apps ne rebondissent plus dans le Dock pour attirer votre attention."
+          }
+        }
+      }
+    },
+    "Apps that quit unexpectedly no longer show a report window.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les apps qui quittent inopinément n’affichent plus de rapport."
+          }
+        }
+      }
+    },
+    "Autocorrect": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correction automatique"
+          }
+        }
+      }
+    },
+    "Automatic Capitals": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Majuscules automatiques"
+          }
+        }
+      }
+    },
+    "Background Services": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Services d’arrière-plan"
+          }
+        }
+      }
+    },
+    "Background Work": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tâches de fond"
+          }
+        }
+      }
+    },
+    "Behavior": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comportement"
+          }
+        }
+      }
+    },
+    "Bouncing Icons": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icônes qui rebondissent"
+          }
+        }
+      }
+    },
+    "Build products and indexes. Xcode rebuilds them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Produits de compilation et index. Xcode les recrée."
+          }
+        }
+      }
+    },
+    "Call Intelligence": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intelligence des appels"
+          }
+        }
+      }
+    },
+    "Call and audio transcripts with summaries in Notes.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcriptions d’appels et d’audio avec résumés dans Notes."
+          }
+        }
+      }
+    },
+    "ChatGPT and Other Models": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT et autres modèles"
+          }
+        }
+      }
+    },
+    "Cleaned %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ nettoyé"
+          }
+        }
+      }
+    },
+    "Click Wallpaper to Show Desktop": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cliquer sur le fond d’écran pour afficher le bureau"
+          }
+        }
+      }
+    },
+    "Clicking the wallpaper no longer hides every window.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cliquer sur le fond d’écran ne masque plus toutes les fenêtres."
+          }
+        }
+      }
+    },
+    "Control Shortcuts in Text": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raccourcis Contrôle dans le texte"
+          }
+        }
+      }
+    },
+    "Control-C, V, X, Z, Y, and A copy, paste, cut, undo, redo, and select all in text fields.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Contrôle-C, V, X, Z, Y et A copient, collent, coupent, annulent, rétablissent et sélectionnent tout dans les champs de texte."
+          }
+        }
+      }
+    },
+    "Corrections": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corrections"
+          }
+        }
+      }
+    },
+    "Could not restore %@.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de restaurer %@."
+          }
+        }
+      }
+    },
+    "Could not write %@.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d’écrire %@."
+          }
+        }
+      }
+    },
+    "Crash Report Pop-ups": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fenêtres de rapport de plantage"
+          }
+        }
+      }
+    },
+    "Debug symbols for every iPhone, iPad, and Watch version you connected.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Symboles de débogage pour chaque version d’iPhone, d’iPad et de Watch connectée."
+          }
+        }
+      }
+    },
+    "Desktop": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bureau"
+          }
+        }
+      }
+    },
+    "Desktop Widgets": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets du bureau"
+          }
+        }
+      }
+    },
+    "Diagnostic logs written by apps.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Journaux de diagnostic écrits par les apps."
+          }
+        }
+      }
+    },
+    "Dim Hidden Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estomper les apps masquées"
+          }
+        }
+      }
+    },
+    "Disks, USB drives, and servers show on the desktop, like This PC.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disques, clés USB et serveurs apparaissent sur le bureau, comme Ce PC."
+          }
+        }
+      }
+    },
+    "Dock": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dock"
+          }
+        }
+      }
+    },
+    "Dock & Windows": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dock et fenêtres"
+          }
+        }
+      }
+    },
+    "Dock as a Taskbar": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dock façon barre des tâches"
+          }
+        }
+      }
+    },
+    "Don’t Reopen Windows": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ne pas rouvrir les fenêtres"
+          }
+        }
+      }
+    },
+    "Double-Click Title Bar to Maximize": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Double-clic sur la barre de titre pour agrandir"
+          }
+        }
+      }
+    },
+    "Double-Space Period": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point avec double espace"
+          }
+        }
+      }
+    },
+    "Double-clicking a title bar fills the screen.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un double-clic sur une barre de titre remplit l’écran."
+          }
+        }
+      }
+    },
+    "Drag a window to a screen edge or the top to tile or maximize it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faites glisser une fenêtre vers un bord ou le haut de l’écran pour la mettre en mosaïque ou l’agrandir."
+          }
+        }
+      }
+    },
+    "Drives on the Desktop": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disques sur le bureau"
+          }
+        }
+      }
+    },
+    "Empty Trash After 30 Days": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vider la corbeille après 30 jours"
+          }
+        }
+      }
+    },
+    "Every Apple Intelligence feature stops until you turn this off.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toutes les fonctions Apple Intelligence s’arrêtent tant que ceci est actif."
+          }
+        }
+      }
+    },
+    "Every file name ends in its extension, like report.pdf.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque nom de fichier se termine par son extension, comme rapport.pdf."
+          }
+        }
+      }
+    },
+    "Everything in Recommended, plus Siri, analytics, ad services, and Game Center off.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout le préréglage Recommandé, plus Siri, l’analyse, les services publicitaires et Game Center désactivés."
+          }
+        }
+      }
+    },
+    "Expanded Save and Print Panels": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zones Enregistrer et Imprimer développées"
+          }
+        }
+      }
+    },
+    "Extension Change Warning": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alerte de changement d’extension"
+          }
+        }
+      }
+    },
+    "F1 to F12 work as function keys. Hold Fn for brightness and volume.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "F1 à F12 servent de touches de fonction. Maintenez Fn pour la luminosité et le volume."
+          }
+        }
+      }
+    },
+    "Fast Key Repeat": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Répétition rapide des touches"
+          }
+        }
+      }
+    },
+    "Faster Mission Control": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mission Control plus rapide"
+          }
+        }
+      }
+    },
+    "Features": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fonctions"
+          }
+        }
+      }
+    },
+    "Feedback Prompts": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Demandes de retours"
+          }
+        }
+      }
+    },
+    "Files apps keep to load faster. They rebuild them as needed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fichiers que les apps gardent pour se charger plus vite. Elles les recréent au besoin."
+          }
+        }
+      }
+    },
+    "Finder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Finder"
+          }
+        }
+      }
+    },
+    "Finder Animations": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animations du Finder"
+          }
+        }
+      }
+    },
+    "Finder stops leaving hidden files on shared and removable drives.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Finder ne laisse plus de fichiers cachés sur les disques partagés et amovibles."
+          }
+        }
+      }
+    },
+    "Finder windows and Get Info open without animations.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fenêtres du Finder et Lire les informations s’ouvrent sans animation."
+          }
+        }
+      }
+    },
+    "Folders First": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dossiers en premier"
+          }
+        }
+      }
+    },
+    "Folders sort above files, in windows and on the desktop.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les dossiers sont triés avant les fichiers, dans les fenêtres et sur le bureau."
+          }
+        }
+      }
+    },
+    "Found in Mail contacts and event suggestions stop.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les suggestions de contacts et d’événements trouvés dans Mail s’arrêtent."
+          }
+        }
+      }
+    },
+    "Full Path in Title": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chemin complet dans le titre"
+          }
+        }
+      }
+    },
+    "Game Center": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Game Center"
+          }
+        }
+      }
+    },
+    "Generated emoji in the emoji picker and Messages.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Emoji générés dans le sélecteur d’emoji et dans Messages."
+          }
+        }
+      }
+    },
+    "Generative Model Services": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Services de modèles génératifs"
+          }
+        }
+      }
+    },
+    "Genmoji": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genmoji"
+          }
+        }
+      }
+    },
+    "Hide the Dock": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masquer le Dock"
+          }
+        }
+      }
+    },
+    "Hides widgets on the desktop and in Stage Manager.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masque les widgets sur le bureau et dans Stage Manager."
+          }
+        }
+      }
+    },
+    "Holding a key repeats it instead of showing accents.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maintenir une touche la répète au lieu d’afficher les accents."
+          }
+        }
+      }
+    },
+    "Home and End Keys": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touches Début et Fin"
+          }
+        }
+      }
+    },
+    "Home and End go to the start and end of the line; Control goes to the document.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Début et Fin vont au début et à la fin de la ligne ; avec Contrôle, au début et à la fin du document."
+          }
+        }
+      }
+    },
+    "Hourly snapshots kept on this disk. Deleted at once; your backups are not touched.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instantanés horaires conservés sur ce disque. Supprimés immédiatement ; vos sauvegardes ne sont pas touchées."
+          }
+        }
+      }
+    },
+    "Icons of hidden apps look dimmed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les icônes des apps masquées apparaissent estompées."
+          }
+        }
+      }
+    },
+    "Image Playground": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image Playground"
+          }
+        }
+      }
+    },
+    "Image Wand": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Baguette Image"
+          }
+        }
+      }
+    },
+    "Improve Siri and Dictation": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Améliorer Siri et Dictée"
+          }
+        }
+      }
+    },
+    "Inline Predictions": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prédictions en ligne"
+          }
+        }
+      }
+    },
+    "Install macOS apps left in Applications.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps Installer macOS restées dans Applications."
+          }
+        }
+      }
+    },
+    "Instant Dock Reveal": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dock instantané"
+          }
+        }
+      }
+    },
+    "Instant Window Resize": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redimensionnement instantané"
+          }
+        }
+      }
+    },
+    "Items in the Trash are removed after 30 days.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les éléments de la corbeille sont supprimés après 30 jours."
+          }
+        }
+      }
+    },
+    "Keep Spaces in Order": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Garder l’ordre des Spaces"
+          }
+        }
+      }
+    },
+    "Keys": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touches"
+          }
+        }
+      }
+    },
+    "Keys repeat sooner and faster than System Settings allows.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les touches se répètent plus tôt et plus vite que ce que permet Réglages Système."
+          }
+        }
+      }
+    },
+    "Language, image, and photo models in /System/Library/AssetsV2. System Integrity Protection keeps any app from deleting them; turning off Apple Intelligence in System Settings makes macOS remove them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modèles de langage, d’image et de photo dans /System/Library/AssetsV2. La protection de l’intégrité du système empêche toute app de les supprimer ; désactiver Apple Intelligence dans Réglages Système les fait supprimer par macOS."
+          }
+        }
+      }
+    },
+    "List View by Default": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Présentation en liste par défaut"
+          }
+        }
+      }
+    },
+    "Logs": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Journaux"
+          }
+        }
+      }
+    },
+    "Look Up Suggestions": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggestions de Recherche"
+          }
+        }
+      }
+    },
+    "Mail Summaries": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Résumés dans Mail"
+          }
+        }
+      }
+    },
+    "Make the Mac behave like a Windows PC: scrolling, function keys, Home and End, maximize, and drives on the desktop.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faites fonctionner le Mac comme un PC Windows : défilement, touches de fonction, Début et Fin, agrandissement et disques sur le bureau."
+          }
+        }
+      }
+    },
+    "Make windows, the Dock, and Finder feel instant, and stop heavy background analysis.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des fenêtres, un Dock et un Finder instantanés, sans analyse lourde en arrière-plan."
+          }
+        }
+      }
+    },
+    "Maximum Privacy": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confidentialité maximale"
+          }
+        }
+      }
+    },
+    "May need Full Disk Access for UnbloatMyMac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Peut nécessiter l’accès complet au disque pour UnbloatMyMac."
+          }
+        }
+      }
+    },
+    "Media Keys Open Music": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les touches multimédia ouvrent Musique"
+          }
+        }
+      }
+    },
+    "Mission Control opens and closes in a third of the time.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mission Control s’ouvre et se ferme trois fois plus vite."
+          }
+        }
+      }
+    },
+    "Mouse and Keyboard": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Souris et clavier"
+          }
+        }
+      }
+    },
+    "Needs Full Disk Access for UnbloatMyMac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nécessite l’accès complet au disque pour UnbloatMyMac."
+          }
+        }
+      }
+    },
+    "New Finder windows open your home folder instead of Recents.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les nouvelles fenêtres du Finder ouvrent votre dossier personnel au lieu de Récents."
+          }
+        }
+      }
+    },
+    "New Windows Open Home": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouvelles fenêtres sur le dossier personnel"
+          }
+        }
+      }
+    },
+    "New documents save to your Mac instead of iCloud Drive.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les nouveaux documents s’enregistrent sur votre Mac au lieu d’iCloud Drive."
+          }
+        }
+      }
+    },
+    "New windows open in list view with columns.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les nouvelles fenêtres s’ouvrent en liste avec colonnes."
+          }
+        }
+      }
+    },
+    "No .DS_Store on Network and USB Drives": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas de .DS_Store sur les disques réseau et USB"
+          }
+        }
+      }
+    },
+    "No animations, an instant Dock, and no photo analysis in the background.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas d’animations, un Dock instantané et pas d’analyse de photos en arrière-plan."
+          }
+        }
+      }
+    },
+    "Not on this version of macOS": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Absent de cette version de macOS"
+          }
+        }
+      }
+    },
+    "Notes Transcripts and Summaries": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transcriptions et résumés dans Notes"
+          }
+        }
+      }
+    },
+    "Only Open Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps ouvertes uniquement"
+          }
+        }
+      }
+    },
+    "Page summaries in Safari Reader.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Résumés de pages dans le Lecteur de Safari."
+          }
+        }
+      }
+    },
+    "Panels": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zones de dialogue"
+          }
+        }
+      }
+    },
+    "Path Bar": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barre du chemin d’accès"
+          }
+        }
+      }
+    },
+    "Performance": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Performances"
+          }
+        }
+      }
+    },
+    "Performance Boost": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Performances accrues"
+          }
+        }
+      }
+    },
+    "Personal Context Indexing": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indexation du contexte personnel"
+          }
+        }
+      }
+    },
+    "Personalized Ads": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Publicités personnalisées"
+          }
+        }
+      }
+    },
+    "Photo and Media Analysis": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyse des photos et des médias"
+          }
+        }
+      }
+    },
+    "Photos Opens for iPhone": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos s’ouvre pour l’iPhone"
+          }
+        }
+      }
+    },
+    "Photos no longer opens when you connect a phone or camera.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos ne s’ouvre plus quand vous branchez un téléphone ou un appareil photo."
+          }
+        }
+      }
+    },
+    "Photos search and People stop updating.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La recherche et les Personnes de Photos ne se mettent plus à jour."
+          }
+        }
+      }
+    },
+    "Play, pause, and skip keys stop working in every app.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les touches lecture, pause et piste suivante cessent de marcher dans toutes les apps."
+          }
+        }
+      }
+    },
+    "Plugging in a disk no longer asks to use it for backups.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Brancher un disque ne propose plus de l’utiliser pour les sauvegardes."
+          }
+        }
+      }
+    },
+    "Pop-ups": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fenêtres surgissantes"
+          }
+        }
+      }
+    },
+    "Power Nap": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Power Nap"
+          }
+        }
+      }
+    },
+    "Preload Top Hit": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Précharger le meilleur résultat"
+          }
+        }
+      }
+    },
+    "Privacy": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Confidentialité"
+          }
+        }
+      }
+    },
+    "Privacy-Preserving Ad Measurement": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mesure publicitaire respectueuse de la vie privée"
+          }
+        }
+      }
+    },
+    "Quick Look Animation": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animation de Coup d’œil"
+          }
+        }
+      }
+    },
+    "Quick Look opens instantly, without zooming in.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coup d’œil s’ouvre instantanément, sans zoom."
+          }
+        }
+      }
+    },
+    "Quitting an app closes its windows, so they don’t come back next time.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitter une app ferme ses fenêtres, qui ne reviennent pas à la prochaine ouverture."
+          }
+        }
+      }
+    },
+    "Recent Apps in Dock": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps récentes dans le Dock"
+          }
+        }
+      }
+    },
+    "Recommended": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommandé"
+          }
+        }
+      }
+    },
+    "Reduce Motion": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réduire les animations"
+          }
+        }
+      }
+    },
+    "Reduce Transparency": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réduire la transparence"
+          }
+        }
+      }
+    },
+    "Remove pop-ups, prompts, and behaviors that get in the way.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimez les fenêtres surgissantes, les demandes et les comportements qui gênent."
+          }
+        }
+      }
+    },
+    "Removes the section of recently used apps.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retire la section des apps utilisées récemment."
+          }
+        }
+      }
+    },
+    "Renaming a file’s extension no longer asks first.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Renommer l’extension d’un fichier ne demande plus de confirmation."
+          }
+        }
+      }
+    },
+    "Rewrite, proofread, and summarize in every text field.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réécrire, corriger et résumer dans tous les champs de texte."
+          }
+        }
+      }
+    },
+    "Safari": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safari"
+          }
+        }
+      }
+    },
+    "Safari Search Suggestions": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggestions de recherche Safari"
+          }
+        }
+      }
+    },
+    "Safari Summaries": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Résumés dans Safari"
+          }
+        }
+      }
+    },
+    "Safari stops loading the top search result before you pick it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safari ne charge plus le premier résultat avant que vous le choisissiez."
+          }
+        }
+      }
+    },
+    "Save and Print open with every option showing.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrer et Imprimer s’ouvrent avec toutes les options visibles."
+          }
+        }
+      }
+    },
+    "Save to This Mac": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrer sur ce Mac"
+          }
+        }
+      }
+    },
+    "Scale Minimize Effect": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effet de réduction Échelle"
+          }
+        }
+      }
+    },
+    "Screen Time Usage Tracking": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suivi de Temps d’écran"
+          }
+        }
+      }
+    },
+    "Screen Time reports stay empty.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les rapports de Temps d’écran restent vides."
+          }
+        }
+      }
+    },
+    "Screenshot Preview": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aperçu des captures"
+          }
+        }
+      }
+    },
+    "Screenshot Window Shadows": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ombres des captures de fenêtre"
+          }
+        }
+      }
+    },
+    "Screenshots": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Captures d’écran"
+          }
+        }
+      }
+    },
+    "Screenshots save at once, without the floating thumbnail.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les captures s’enregistrent tout de suite, sans vignette flottante."
+          }
+        }
+      }
+    },
+    "Scroll bars stay visible, like on Windows.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les barres de défilement restent visibles, comme sous Windows."
+          }
+        }
+      }
+    },
+    "Scrolling down moves the page down, like a mouse wheel on Windows.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faire défiler vers le bas descend dans la page, comme une molette sous Windows."
+          }
+        }
+      }
+    },
+    "Scrolling, keys, windows, Finder, and the Dock behave the way they do on a Windows PC.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Défilement, touches, fenêtres, Finder et Dock se comportent comme sur un PC Windows."
+          }
+        }
+      }
+    },
+    "Search": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recherche"
+          }
+        }
+      }
+    },
+    "Search This Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher dans ce dossier"
+          }
+        }
+      }
+    },
+    "Searching starts in the current folder, not the whole Mac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La recherche commence dans le dossier actuel, pas dans tout le Mac."
+          }
+        }
+      }
+    },
+    "Sending requests to ChatGPT and other outside models.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’envoi de requêtes à ChatGPT et à d’autres modèles externes."
+          }
+        }
+      }
+    },
+    "Services": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Services"
+          }
+        }
+      }
+    },
+    "Share Mac Analytics": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager l’analyse du Mac"
+          }
+        }
+      }
+    },
+    "Shortcuts suggestions and dictation can stop working.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les suggestions de Raccourcis et la dictée peuvent cesser de fonctionner."
+          }
+        }
+      }
+    },
+    "Show File Extensions": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher les extensions"
+          }
+        }
+      }
+    },
+    "Show Full Website Address": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher l’adresse complète du site"
+          }
+        }
+      }
+    },
+    "Show Hidden Files": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher les fichiers cachés"
+          }
+        }
+      }
+    },
+    "Show Library Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher le dossier Bibliothèque"
+          }
+        }
+      }
+    },
+    "Show More": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher plus"
+          }
+        }
+      }
+    },
+    "Show what is really on your disk and keep folders tidy.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Montrez ce qu’il y a vraiment sur votre disque et gardez des dossiers en ordre."
+          }
+        }
+      }
+    },
+    "Shows files whose names start with a dot.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Affiche les fichiers dont le nom commence par un point."
+          }
+        }
+      }
+    },
+    "Shows the Library folder in your home folder.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Affiche le dossier Bibliothèque dans votre dossier personnel."
+          }
+        }
+      }
+    },
+    "Shows the item count and free space.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Montre le nombre d’éléments et l’espace libre."
+          }
+        }
+      }
+    },
+    "Shows where the folder is at the bottom of each window.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Montre l’emplacement du dossier en bas de chaque fenêtre."
+          }
+        }
+      }
+    },
+    "Simulators for runtimes that are no longer installed. Deleted at once.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simulateurs de runtimes qui ne sont plus installés. Supprimés immédiatement."
+          }
+        }
+      }
+    },
+    "Siri": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri"
+          }
+        }
+      }
+    },
+    "Siri Background Services": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Services d’arrière-plan de Siri"
+          }
+        }
+      }
+    },
+    "Siri Suggestions in Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggestions de Siri dans les apps"
+          }
+        }
+      }
+    },
+    "Siri and Spotlight know less about your data.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri et Spotlight en savent moins sur vos données."
+          }
+        }
+      }
+    },
+    "Siri, “Hey Siri”, and the Siri menu bar icon.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri, « Dis Siri » et l’icône Siri dans la barre des menus."
+          }
+        }
+      }
+    },
+    "Smart Dashes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tirets intelligents"
+          }
+        }
+      }
+    },
+    "Smart Quotes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guillemets intelligents"
+          }
+        }
+      }
+    },
+    "Snap Windows to Edges": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ancrer les fenêtres aux bords"
+          }
+        }
+      }
+    },
+    "Software update files Finder downloaded for your devices.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fichiers de mise à jour téléchargés par le Finder pour vos appareils."
+          }
+        }
+      }
+    },
+    "Solid backgrounds instead of glass, which saves GPU work on older Macs.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des fonds opaques au lieu du verre, ce qui allège le GPU des Mac plus anciens."
+          }
+        }
+      }
+    },
+    "Spaces and full screen fade instead of slide.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les Spaces et le plein écran apparaissent en fondu au lieu de glisser."
+          }
+        }
+      }
+    },
+    "Spaces stay where you put them instead of reordering by use.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les Spaces restent où vous les placez au lieu d’être réordonnés selon l’usage."
+          }
+        }
+      }
+    },
+    "Spotlight Indexing": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indexation Spotlight"
+          }
+        }
+      }
+    },
+    "Spotlight Internet Results": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Résultats Internet dans Spotlight"
+          }
+        }
+      }
+    },
+    "Spotlight and Finder search stop finding files.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotlight et la recherche du Finder ne trouvent plus les fichiers."
+          }
+        }
+      }
+    },
+    "Spotlight shows only results from this Mac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotlight n’affiche que les résultats de ce Mac."
+          }
+        }
+      }
+    },
+    "Standard Function Keys": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Touches de fonction standard"
+          }
+        }
+      }
+    },
+    "Status Bar": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barre d’état"
+          }
+        }
+      }
+    },
+    "Stop analytics, personalized ads, and the services that send usage data to Apple.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrêtez l’analyse, les publicités personnalisées et les services qui envoient des données d’utilisation à Apple."
+          }
+        }
+      }
+    },
+    "Stop macOS from changing what you type.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empêchez macOS de modifier ce que vous tapez."
+          }
+        }
+      }
+    },
+    "Stops Look Up from sending the words you select to Apple.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empêche Recherche d’envoyer à Apple les mots que vous sélectionnez."
+          }
+        }
+      }
+    },
+    "Stops Safari from reporting ad clicks to advertisers, even anonymously.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empêche Safari de signaler les clics publicitaires aux annonceurs, même de façon anonyme."
+          }
+        }
+      }
+    },
+    "Stops Spotlight from sending what you type to Apple for web suggestions.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empêche Spotlight d’envoyer ce que vous tapez à Apple pour des suggestions web."
+          }
+        }
+      }
+    },
+    "Stops call screening, live translation, and call summaries.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête le filtrage des appels, la traduction en direct et les résumés d’appels."
+          }
+        }
+      }
+    },
+    "Stops indexing every disk. Saves CPU and disk writes.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête l’indexation de tous les disques. Économise processeur et écritures."
+          }
+        }
+      }
+    },
+    "Stops recording which apps and websites you use.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête l’enregistrement des apps et sites que vous utilisez."
+          }
+        }
+      }
+    },
+    "Stops scanning your photo library for faces, scenes, and text.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête l’analyse de votre photothèque à la recherche de visages, de scènes et de texte."
+          }
+        }
+      }
+    },
+    "Stops sending diagnostics and usage data to Apple and app developers.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête l’envoi de diagnostics et de données d’utilisation à Apple et aux développeurs."
+          }
+        }
+      }
+    },
+    "Stops sending what you type in the address bar to Apple and your search engine.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête l’envoi de ce que vous tapez dans la barre d’adresse à Apple et à votre moteur de recherche."
+          }
+        }
+      }
+    },
+    "Stops sharing Siri and dictation recordings with Apple.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête le partage des enregistrements de Siri et de Dictée avec Apple."
+          }
+        }
+      }
+    },
+    "Stops the Dock icon from pulsing while an app opens.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’icône du Dock ne pulse plus pendant l’ouverture d’une app."
+          }
+        }
+      }
+    },
+    "Stops the Game Center service and its sign-in pop-ups.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête le service Game Center et ses fenêtres de connexion."
+          }
+        }
+      }
+    },
+    "Stops the Siri knowledge, actions, and voice services.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête les services de connaissance, d’actions et de voix de Siri."
+          }
+        }
+      }
+    },
+    "Stops the Tips app from sending notifications.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empêche l’app Astuces d’envoyer des notifications."
+          }
+        }
+      }
+    },
+    "Stops the ad attribution and promoted content services.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête les services d’attribution publicitaire et de contenu sponsorisé."
+          }
+        }
+      }
+    },
+    "Stops the agent that asks for feedback and collects logs for Apple.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête l’agent qui demande des retours et collecte des journaux pour Apple."
+          }
+        }
+      }
+    },
+    "Stops the agents that collect input, location, and app analytics.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête les agents qui collectent des données de saisie, de localisation et d’apps."
+          }
+        }
+      }
+    },
+    "Stops the service that looks up what is on screen.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête le service qui analyse ce qui est à l’écran."
+          }
+        }
+      }
+    },
+    "Stops the service that reads mail and messages to suggest contacts and events.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête le service qui lit e-mails et messages pour suggérer contacts et événements."
+          }
+        }
+      }
+    },
+    "Stops the services that index your mail, messages, and photos for Apple Intelligence.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête les services qui indexent vos e-mails, messages et photos pour Apple Intelligence."
+          }
+        }
+      }
+    },
+    "Stops the services that run Apple Intelligence models.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête les services qui exécutent les modèles d’Apple Intelligence."
+          }
+        }
+      }
+    },
+    "Straight quotes stay straight, which matters for code.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les guillemets droits restent droits, ce qui compte pour le code."
+          }
+        }
+      }
+    },
+    "Summaries": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Résumés"
+          }
+        }
+      }
+    },
+    "Summaries and smart replies in Mail.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Résumés et réponses intelligentes dans Mail."
+          }
+        }
+      }
+    },
+    "System Daemons": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Démons système"
+          }
+        }
+      }
+    },
+    "Tab Moves Between All Controls": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tab parcourt toutes les commandes"
+          }
+        }
+      }
+    },
+    "Tab reaches every button and menu, not only text fields.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tab atteint chaque bouton et menu, pas seulement les champs de texte."
+          }
+        }
+      }
+    },
+    "Tap to Click": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toucher pour cliquer"
+          }
+        }
+      }
+    },
+    "Taskbar": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Barre des tâches"
+          }
+        }
+      }
+    },
+    "The Dock hides until you move the pointer to it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Dock se masque jusqu’à ce que vous y ameniez le pointeur."
+          }
+        }
+      }
+    },
+    "The Dock shows only the apps that are running.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Dock n’affiche que les apps en cours d’exécution."
+          }
+        }
+      }
+    },
+    "The Dock stays at the bottom, always visible, without magnification.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Dock reste en bas, toujours visible, sans agrandissement."
+          }
+        }
+      }
+    },
+    "The Image Playground app and image generation in other apps.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’app Image Playground et la génération d’images dans les autres apps."
+          }
+        }
+      }
+    },
+    "The Mac stays fully asleep instead of checking mail and backing up.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Mac reste vraiment en veille au lieu de relever le courrier et de sauvegarder."
+          }
+        }
+      }
+    },
+    "The address bar shows the whole address, so you can see where you really are.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La barre d’adresse affiche l’adresse entière, pour savoir où vous êtes vraiment."
+          }
+        }
+      }
+    },
+    "The admin command failed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La commande administrateur a échoué."
+          }
+        }
+      }
+    },
+    "The command failed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La commande a échoué."
+          }
+        }
+      }
+    },
+    "The first word of a sentence is not capitalized for you.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le premier mot d’une phrase n’est plus mis en majuscule pour vous."
+          }
+        }
+      }
+    },
+    "The gray text that finishes your words as you type.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le texte gris qui termine vos mots pendant la saisie."
+          }
+        }
+      }
+    },
+    "The play key no longer opens Music.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La touche lecture n’ouvre plus Musique."
+          }
+        }
+      }
+    },
+    "The window title shows the full folder path.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le titre de la fenêtre montre le chemin complet du dossier."
+          }
+        }
+      }
+    },
+    "This file was not made by UnbloatMyMac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce fichier n’a pas été créé par UnbloatMyMac."
+          }
+        }
+      }
+    },
+    "Tiled Windows Without Gaps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fenêtres en mosaïque sans marges"
+          }
+        }
+      }
+    },
+    "Tiled windows fill the screen edge to edge.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fenêtres en mosaïque remplissent l’écran bord à bord."
+          }
+        }
+      }
+    },
+    "Time Machine Disk Prompt": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Proposition de disque Time Machine"
+          }
+        }
+      }
+    },
+    "Time Machine Local Snapshots": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instantanés locaux Time Machine"
+          }
+        }
+      }
+    },
+    "Tips Notifications": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications Astuces"
+          }
+        }
+      }
+    },
+    "Turn off Writing Tools, Genmoji, Image Playground, ChatGPT, summaries, Siri, and the background services behind them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désactivez Outils d’écriture, Genmoji, Image Playground, ChatGPT, les résumés, Siri et les services qui les font tourner."
+          }
+        }
+      }
+    },
+    "Turns off personalized ads in the App Store, Apple News, and Stocks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désactive les publicités personnalisées dans l’App Store, Apple News et Bourse."
+          }
+        }
+      }
+    },
+    "Turns sketches in Notes into generated images.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transforme les croquis de Notes en images générées."
+          }
+        }
+      }
+    },
+    "Two hyphens stay two hyphens.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deux traits d’union restent deux traits d’union."
+          }
+        }
+      }
+    },
+    "Two spaces stay two spaces.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deux espaces restent deux espaces."
+          }
+        }
+      }
+    },
+    "Typing": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saisie"
+          }
+        }
+      }
+    },
+    "Unavailable Simulators": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simulateurs indisponibles"
+          }
+        }
+      }
+    },
+    "Uses more battery.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilise davantage la batterie."
+          }
+        }
+      }
+    },
+    "Visual Intelligence": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intelligence visuelle"
+          }
+        }
+      }
+    },
+    "Window Animations": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Animations des fenêtres"
+          }
+        }
+      }
+    },
+    "Window screenshots without the large shadow around them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Captures de fenêtre sans la grande ombre autour."
+          }
+        }
+      }
+    },
+    "Windows": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fenêtres"
+          }
+        }
+      }
+    },
+    "Windows Mode": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode Windows"
+          }
+        }
+      }
+    },
+    "Windows Scroll Direction": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Défilement façon Windows"
+          }
+        }
+      }
+    },
+    "Windows and sheets open instantly instead of zooming in.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fenêtres et feuilles s’ouvrent instantanément au lieu de zoomer."
+          }
+        }
+      }
+    },
+    "Windows resize in one step when you zoom them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fenêtres se redimensionnent en une étape quand vous les agrandissez."
+          }
+        }
+      }
+    },
+    "Windows shrink instead of the slower Genie effect.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fenêtres rétrécissent au lieu de l’effet Génie, plus lent."
+          }
+        }
+      }
+    },
+    "Words stay the way you typed them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les mots restent tels que vous les avez tapés."
+          }
+        }
+      }
+    },
+    "Works in Mac text fields, not in Terminal or every app. Control-A no longer jumps to the start of the line.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fonctionne dans les champs de texte du Mac, pas dans Terminal ni dans toutes les apps. Contrôle-A ne va plus au début de la ligne."
+          }
+        }
+      }
+    },
+    "Writes ~/Library/KeyBindings/DefaultKeyBinding.dict. Your own file comes back when you turn off every key tweak.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écrit ~/Library/KeyBindings/DefaultKeyBinding.dict. Votre propre fichier revient quand vous désactivez tous les réglages de touches."
+          }
+        }
+      }
+    },
+    "Writing Tools": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outils d’écriture"
+          }
+        }
+      }
+    },
+    "Xcode Derived Data": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Données dérivées Xcode"
+          }
+        }
+      }
+    },
+    "Xcode Device Support": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prise en charge des appareils Xcode"
+          }
+        }
+      }
+    },
+    "You canceled the password prompt, so nothing that needs it changed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous avez annulé la demande de mot de passe, rien de ce qui en dépend n’a changé."
+          }
+        }
+      }
+    },
+    "Your Agents": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos agents"
+          }
+        }
+      }
+    },
+    "Your pinned apps are kept and come back when you turn this off.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos apps épinglées sont conservées et reviennent quand vous désactivez ceci."
+          }
+        }
+      }
+    },
+    "iPhone and iPad Updates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mises à jour d’iPhone et d’iPad"
+          }
+        }
+      }
+    },
+    "macOS Installers": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installeurs de macOS"
+          }
+        }
+      }
+    },
+    "macOS did not accept %@.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS n’a pas accepté %@."
+          }
+        }
+      }
+    },
+    "macOS protects this setting. Give UnbloatMyMac Full Disk Access in System Settings > Privacy & Security, then try again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS protège ce réglage. Donnez à UnbloatMyMac l’accès complet au disque dans Réglages Système > Confidentialité et sécurité, puis réessayez."
+          }
+        }
+      }
+    },
+    "macOS would not start %@ again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS n’a pas voulu redémarrer %@."
+          }
+        }
+      }
+    },
+    "macOS would not stop %@.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS n’a pas voulu arrêter %@."
+          }
+        }
+      }
+    },
+    "needs your password": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "demande votre mot de passe"
+          }
+        }
+      }
+    }
+  }
+}

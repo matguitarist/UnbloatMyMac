@@ -65,14 +65,14 @@ struct OverviewPage: View {
                 }
             }
             HStack(spacing: Space.lg) {
-                Stat(value: "\(applied)", total: "of \(tweaks.count)", title: "Tweaks applied", symbol: "checkmark.circle")
-                Stat(value: "\(aiOff)", total: "of \(ai.count)", title: "Apple Intelligence tweaks", symbol: "apple.intelligence")
-                Stat(value: "\(running)", total: "running", title: "Third-party background items", symbol: "gearshape.2")
+                Stat(value: "\(applied)", total: String(localized: "of \(tweaks.count)"), title: String(localized: "Tweaks applied"), symbol: "checkmark.circle")
+                Stat(value: "\(aiOff)", total: String(localized: "of \(ai.count)"), title: String(localized: "Apple Intelligence tweaks"), symbol: "apple.intelligence")
+                Stat(value: "\(running)", total: String(localized: "running"), title: String(localized: "Third-party background items"), symbol: "gearshape.2")
             }
         }
     }
 
-    private func sectionTitle(_ title: String, _ detail: String) -> some View {
+    private func sectionTitle(_ title: LocalizedStringKey, _ detail: LocalizedStringKey) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title).font(.title3.weight(.semibold))
             Text(detail).font(.callout).foregroundStyle(.secondary)
@@ -157,7 +157,7 @@ private struct CategoryCard: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .help("Open \(category.title)")
+        .help(Text("Open \(category.title)"))
     }
 }
 

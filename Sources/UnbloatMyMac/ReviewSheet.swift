@@ -26,7 +26,7 @@ struct ReviewSheet: View {
         let tweaks = model.stagedTweaks
         return VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: Space.xs) {
-                Text("Review \(tweaks.count) \(tweaks.count == 1 ? "Change" : "Changes")").font(.title2.weight(.semibold))
+                (tweaks.count == 1 ? Text("Review 1 Change") : Text("Review \(tweaks.count) Changes")).font(.title2.weight(.semibold))
                 Text("Nothing has changed yet. Each change can be undone later.").foregroundStyle(.secondary)
             }
             .padding(Space.margin)
@@ -84,18 +84,19 @@ struct ReviewSheet: View {
     private func notes(_ tweaks: [Tweak]) -> [(String, String)] {
         var notes: [(String, String)] = []
         if tweaks.contains(where: \.needsAdmin) {
-            notes.append(("macOS asks for your password once.", "lock"))
+            notes.append((String(localized: "macOS asks for your password once."), "lock"))
         }
         if tweaks.contains(where: \.usesProfile) {
-            notes.append(("System Settings opens with a profile. Approve it in General > Device Management to finish the Apple Intelligence changes.", "checkmark.shield"))
+            notes.append((String(localized: "System Settings opens with a profile. Approve it in General > Device Management to finish the Apple Intelligence changes."), "checkmark.shield"))
         }
         let restarts = Set(tweaks.flatMap(\.restarts)).subtracting([.logout]).map(\.rawValue).sorted()
         if !restarts.isEmpty {
-            notes.append((model.restartApps ? "\(restarts.joined(separator: ", ")) restart, so the screen may flicker."
-                          : "Restart \(restarts.joined(separator: ", ")) to see some changes.", "arrow.clockwise"))
+            let names = restarts.joined(separator: ", ")
+            notes.append((model.restartApps ? String(localized: "\(names) restart, so the screen may flicker.")
+                          : String(localized: "Restart \(names) to see some changes."), "arrow.clockwise"))
         }
         if tweaks.contains(where: { $0.restarts.contains(.logout) }) {
-            notes.append(("Some changes show in apps you open from now on, and everywhere after you log out.", "person.crop.circle.badge.clock"))
+            notes.append((String(localized: "Some changes show in apps you open from now on, and everywhere after you log out."), "person.crop.circle.badge.clock"))
         }
         return notes
     }
@@ -111,7 +112,7 @@ struct ReviewSheet: View {
                     .accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(report.failures.isEmpty ? "Done" : "Some Changes Didn’t Apply").font(.title2.weight(.semibold))
-                    Text("\(report.changed) \(report.changed == 1 ? "change" : "changes") applied.").foregroundStyle(.secondary)
+                    (report.changed == 1 ? Text("1 change applied.") : Text("\(report.changed) changes applied.")).foregroundStyle(.secondary)
                 }
             }
             if !report.failures.isEmpty {

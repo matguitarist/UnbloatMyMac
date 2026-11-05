@@ -26,11 +26,11 @@ enum SidebarItem: Hashable, Identifiable {
 
     var title: String {
         switch self {
-        case .overview: "Overview"
+        case .overview: String(localized: "Overview")
         case .category(let category): category.title
-        case .background: "Background Items"
-        case .storage: "Storage"
-        case .history: "History"
+        case .background: String(localized: "Background Items")
+        case .storage: String(localized: "Storage")
+        case .history: String(localized: "History")
         }
     }
 
@@ -193,8 +193,8 @@ final class AppModel {
         await refresh()
         isBusy = false
         notice = report.failures.isEmpty
-            ? "Everything UnbloatMyMac changed is back the way it was." + (report.needsLogout ? " Log out to finish." : "")
-            : "Some changes could not be undone:\n" + report.failures.values.sorted().joined(separator: "\n")
+            ? String(localized: "Everything UnbloatMyMac changed is back the way it was.") + (report.needsLogout ? " " + String(localized: "Log out to finish.") : "")
+            : String(localized: "Some changes could not be undone:") + "\n" + report.failures.values.sorted().joined(separator: "\n")
     }
 
     func setLaunchItem(_ item: LaunchItem, allowed: Bool) async {

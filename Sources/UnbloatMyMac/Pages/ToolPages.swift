@@ -9,8 +9,8 @@ struct BackgroundPage: View {
     var body: some View {
         Form {
             Section {
-                PageHeader(symbol: "gearshape.2", title: "Background Items",
-                           summary: "Updaters and helpers other apps start at login and keep running. Switch one off to stop it; switch it on to bring it back.") {
+                PageHeader(symbol: "gearshape.2", title: String(localized: "Background Items"),
+                           summary: String(localized: "Updaters and helpers other apps start at login and keep running. Switch one off to stop it; switch it on to bring it back.")) {
                     Button("Open Login Items Settings") { model.openSystemSettings("com.apple.LoginItems-Settings.extension") }
                     Spacer()
                     Text("\(model.launchItems.filter { !$0.isDisabled }.count) of \(model.launchItems.count) allowed")
@@ -124,8 +124,8 @@ struct StoragePage: View {
     var body: some View {
         Form {
             Section {
-                PageHeader(symbol: "internaldrive", title: "Storage",
-                           summary: "Caches, leftovers, and developer files that can safely go. Files move to the Trash; empty it to free the space.") {
+                PageHeader(symbol: "internaldrive", title: String(localized: "Storage"),
+                           summary: String(localized: "Caches, leftovers, and developer files that can safely go. Files move to the Trash; empty it to free the space.")) {
                     Button(model.isScanning ? "Scanning…" : "Scan Again") { Task { await model.scanStorage() } }
                         .disabled(model.isScanning)
                     Spacer()
@@ -147,7 +147,7 @@ struct StoragePage: View {
             Button("Clean", role: .destructive) { Task { await model.clean(target) } }
         } message: { target in
             if case .command = target.kind {
-                Text("\(target.detail) This cannot be undone.")
+                Text(target.detail + " " + String(localized: "This cannot be undone."))
             } else {
                 Text("These files move to the Trash. You can put them back until you empty it.")
             }
@@ -171,7 +171,7 @@ struct StoragePage: View {
                     } else if let bytes = size.bytes {
                         Text(bytes.bytesText)
                     } else {
-                        Text("\(size.items) \(size.items == 1 ? "item" : "items")")
+                        size.items == 1 ? Text("1 item") : Text("\(size.items) items")
                     }
                 } else {
                     ProgressView().controlSize(.small)
@@ -210,7 +210,7 @@ struct HistoryPage: View {
                             .imageScale(.large)
                             .accessibilityLabel(entry.error != nil ? "Failed" : entry.turnedOn ? "Applied" : "Undone")
                         VStack(alignment: .leading, spacing: 2) {
-                            Text("\(entry.turnedOn ? "Applied" : "Undid") \(entry.title)")
+                            entry.turnedOn ? Text("Applied \(entry.title)") : Text("Undid \(entry.title)")
                             if let error = entry.error {
                                 Text(error).font(.caption).foregroundStyle(.secondary)
                             }
@@ -247,7 +247,7 @@ private struct LoginItemRow: View {
                 .accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
                 Text(item.name)
-                Text([item.developer, item.kind.capitalized].filter { !$0.isEmpty }.joined(separator: " · "))
+                Text(verbatim: [item.developer, item.kind.capitalized].filter { !$0.isEmpty }.joined(separator: " · "))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }

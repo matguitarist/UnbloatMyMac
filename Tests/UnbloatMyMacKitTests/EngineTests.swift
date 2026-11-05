@@ -225,3 +225,17 @@ func parsesLoginItems() {
     #expect(items.count == 1)
     #expect(items.first?.name == "Docker" && items.first?.kind == "app" && items.first?.isEnabled == false)
 }
+
+@Test("Every library string has a French translation")
+func libraryStringsTranslated() throws {
+    let url = URL(fileURLWithPath: #filePath).deletingLastPathComponent().appending(path: "../../Localization/Tweaks.xcstrings")
+    let catalog = try JSONSerialization.jsonObject(with: Data(contentsOf: url)) as? [String: Any]
+    let keys = Set((catalog?["strings"] as? [String: Any])?.keys.map { $0 } ?? [])
+    var all: [String] = []
+    for t in Catalog.tweaks { all += [t.title, t.detail, t.section] + (t.caveat.map { [$0] } ?? []) }
+    for c in TweakCategory.allCases { all += [c.title, c.summary] }
+    for p in Catalog.presets { all += [p.title, p.summary] }
+    for c in Catalog.cleanup { all += [c.title, c.detail] }
+    let missing = Set(all).subtracting(keys)
+    #expect(missing.isEmpty, "untranslated: \(missing.sorted())")
+}

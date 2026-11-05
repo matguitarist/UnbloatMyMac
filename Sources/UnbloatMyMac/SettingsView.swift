@@ -69,6 +69,8 @@ struct GeneralSettings: View {
                 }
             }
             .onChange(of: language) { _, new in new.apply() }
+            // Restore Settings can change the language while this tab is open.
+            .onChange(of: model.notice) { language = AppLanguage.current }
             if language != AppLanguage.atLaunch {
                 HStack {
                     Text("The new language applies after a restart.")
@@ -89,6 +91,18 @@ struct GeneralSettings: View {
             Toggle(isOn: $model.restartApps) {
                 Text("Restart the Dock, Finder, and menu bar after applying")
                 Text("Changes show at once. Turn off to see them after you log out.")
+            }
+        }
+        Section("Backup") {
+            LabeledContent {
+                HStack(spacing: Space.sm) {
+                    Button("Back Up…") { model.backUpWithPanel() }
+                    Button("Restore…") { model.restoreWithPanel() }
+                        .disabled(model.isBusy)
+                }
+            } label: {
+                Text("Settings and tweaks")
+                Text("Saves these settings, the accent, and the tweaks that are on to one file. Restoring sets them back at once and opens Review for the tweaks.")
             }
         }
         Section("Undo History") {

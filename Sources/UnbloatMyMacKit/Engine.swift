@@ -51,14 +51,40 @@ public struct ApplyReport: Sendable {
     public init() {}
 }
 
-/// A list of tweaks saved to a file, to apply on another Mac.
+/// The app's own settings in a backup. Every field is optional, so a backup
+/// from an older version restores what it has and leaves the rest alone.
+public struct AppPreferences: Codable, Sendable, Equatable {
+    public var showAdvanced: Bool?
+    public var restartApps: Bool?
+    /// An accent id from Theme.all.
+    public var accent: String?
+    /// A localization code, or "system" to follow macOS.
+    public var language: String?
+    public var checksForUpdates: Bool?
+
+    public init(showAdvanced: Bool? = nil, restartApps: Bool? = nil, accent: String? = nil,
+                language: String? = nil, checksForUpdates: Bool? = nil) {
+        self.showAdvanced = showAdvanced
+        self.restartApps = restartApps
+        self.accent = accent
+        self.language = language
+        self.checksForUpdates = checksForUpdates
+    }
+}
+
+/// A list of tweaks saved to a file, to apply on another Mac. A settings
+/// backup is the same file with the app's preferences added.
 public struct TweakSet: Codable, Sendable {
     public var format = 1
     public var app = "UnbloatMyMac"
     public var created = Date.now
     public var tweaks: [String]
+    public var preferences: AppPreferences?
 
-    public init(tweaks: [String]) { self.tweaks = tweaks }
+    public init(tweaks: [String], preferences: AppPreferences? = nil) {
+        self.tweaks = tweaks
+        self.preferences = preferences
+    }
 
     public func data() throws -> Data {
         let encoder = JSONEncoder()
@@ -367,10 +393,11 @@ public final class Engine: Sendable {
 
     // MARK: Export and import
 
-    /// The tweaks that are on now, as a file.
-    public func exportSet() throws -> Data {
+    /// The tweaks that are on now, as a file. With preferences, it is a settings backup.
+    public func exportSet(preferences: AppPreferences? = nil) throws -> Data {
         let current = state()
-        return try TweakSet(tweaks: tweaks.filter { current.statuses[$0.id]?.isOn == true }.map(\.id)).data()
+        return try TweakSet(tweaks: tweaks.filter { current.statuses[$0.id]?.isOn == true }.map(\.id),
+                            preferences: preferences).data()
     }
 
     /// The changes that would apply a saved set: ids this app knows and that are not on yet.

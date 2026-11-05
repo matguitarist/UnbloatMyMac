@@ -87,6 +87,18 @@ enum SelfTest {
             model.showReview = false
             model.discard()
 
+            // Same preferences as now, so nothing outside the pretend Mac changes.
+            let backup = URL(fileURLWithPath: "/tmp/UnbloatMyMac-self-backup.json")
+            await model.backUpSettings(to: backup)
+            let saved = try? TweakSet.read(Data(contentsOf: backup))
+            check("a settings backup holds the app's settings", saved?.preferences == model.preferences)
+            try? TweakSet(tweaks: ["finder.pathBar"], preferences: model.preferences).data().write(to: backup)
+            await model.restoreSettings(from: backup)
+            check("restoring settings opens Review for the backup's tweaks", model.staged == ["finder.pathBar": true] && model.showReview)
+            model.showReview = false
+            model.discard()
+            model.notice = nil
+
             await model.scanStorage()
             check("storage scan measures every target", model.sizes.count == Catalog.cleanup.count)
 

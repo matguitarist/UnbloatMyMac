@@ -110,8 +110,9 @@ struct HelpView: View {
             HelpSection("Presets") {
                 HelpText("**Recommended**, **Maximum Privacy**, **Performance Boost**, and **Windows Mode** stage a set of tweaks at once. They only stage what is not applied yet, and you still review before anything changes. Find them on the **Overview** and in **Changes > Add Preset**.")
             }
-            HelpSection("Use the same tweaks on another Mac") {
+            HelpSection("Back up, or move to another Mac") {
                 HelpText("**File > Export Tweaks…** saves the tweaks that are on to a file. On the other Mac, **File > Import Tweaks…** stages the ones that are not on yet, for review.")
+                HelpText("**File > Back Up Settings…** (⇧⌘B) saves the tweaks that are on and UnbloatMyMac’s own settings: advanced tweaks, restarting apps, the accent, the language, and update checks. **File > Restore Settings…** (⇧⌘R) sets those back at once and opens Review for the tweaks. Both are also in **Settings > General**.")
             }
 
         case .review:
@@ -221,6 +222,8 @@ struct HelpView: View {
                 ("⌥⌘Z", "Undo Everything"),
                 ("⇧⌘E", "Export Tweaks"),
                 ("⇧⌘I", "Import Tweaks"),
+                ("⇧⌘B", "Back Up Settings"),
+                ("⇧⌘R", "Restore Settings"),
                 ("⌘L", "Show Activity Log"),
                 ("⌥⌘E", "Export Activity Log"),
                 ("⌥⌘K", "Clear Activity Log"),

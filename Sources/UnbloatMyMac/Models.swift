@@ -287,21 +287,100 @@ final class AppModel {
 
     /// Stages the tweaks in a saved set that are not on yet, then opens Review.
     func importSet(from url: URL) async {
+        do { await stage(try TweakSet.read(Data(contentsOf: url)), from: url) }
+        catch { notice = error.localizedDescription }
+    }
+
+    /// Stages what a set adds and opens Review. Returns false when every tweak was already on.
+    @discardableResult
+    private func stage(_ set: TweakSet, from url: URL, quiet: Bool = false) async -> Bool {
         let engine = engine
+        let changes = await Task.detached { engine.changes(for: set) }.value
+        log?.add(.info, .tweaks, "Imported \(url.lastPathComponent): \(changes.count) of \(set.tweaks.count) tweaks to review",
+                 detail: set.tweaks.joined(separator: "\n"))
+        if changes.isEmpty {
+            if !quiet { notice = String(localized: "Every tweak in this file is already applied.") }
+            return false
+        }
+        staged.merge(changes) { _, new in new }
+        review()
+        return true
+    }
+
+    // MARK: Settings backup
+
+    /// The app's own settings now.
+    var preferences: AppPreferences {
+        AppPreferences(showAdvanced: showAdvanced, restartApps: restartApps, accent: ThemeStore.shared.themeID,
+                       language: AppLanguage.current.code ?? "system",
+                       checksForUpdates: Updater.shared.isAvailable ? Updater.shared.automaticallyChecks : nil)
+    }
+
+    /// Sets what the backup has and leaves the rest. Returns true when the language changed (it needs a restart).
+    @discardableResult
+    func apply(_ preferences: AppPreferences) -> Bool {
+        if let value = preferences.showAdvanced { showAdvanced = value }
+        if let value = preferences.restartApps { restartApps = value }
+        if let id = preferences.accent, Theme.all.contains(where: { $0.id == id }) { ThemeStore.shared.themeID = id }
+        if let value = preferences.checksForUpdates, Updater.shared.isAvailable { Updater.shared.automaticallyChecks = value }
+        guard let code = preferences.language else { return false }
+        let language = code == "system" ? AppLanguage.system : AppLanguage(code: code)
+        guard language == .system || AppLanguage.available.contains(language), language != AppLanguage.current else { return false }
+        language.apply()
+        return true
+    }
+
+    /// Saves the app's settings and the tweaks that are on to one file.
+    func backUpSettings(to url: URL) async {
+        let engine = engine
+        let preferences = preferences
+        do {
+            let data = try await Task.detached { try engine.exportSet(preferences: preferences) }.value
+            try data.write(to: url, options: .atomic)
+            log?.add(.info, .app, "Backed up settings to \(url.lastPathComponent)", detail: url.path)
+        } catch {
+            log?.add(.error, .app, "Could not back up settings: \(error.localizedDescription)", detail: url.path)
+            notice = error.localizedDescription
+        }
+    }
+
+    /// Applies the app's settings from a backup at once, then opens Review for its tweaks.
+    func restoreSettings(from url: URL) async {
         do {
             let set = try TweakSet.read(Data(contentsOf: url))
-            let changes = await Task.detached { engine.changes(for: set) }.value
-            log?.add(.info, .tweaks, "Imported \(url.lastPathComponent): \(changes.count) of \(set.tweaks.count) tweaks to review",
-                     detail: set.tweaks.joined(separator: "\n"))
-            if changes.isEmpty {
-                notice = String(localized: "Every tweak in this file is already applied.")
-                return
+            var restartNeeded = false
+            if let preferences = set.preferences {
+                restartNeeded = apply(preferences)
+                log?.add(.info, .app, "Restored settings from \(url.lastPathComponent)", detail: url.path)
             }
-            staged.merge(changes) { _, new in new }
-            review()
+            let staged = await stage(set, from: url, quiet: true)
+            if restartNeeded {
+                notice = String(localized: "Settings restored. The new language applies after you restart UnbloatMyMac.")
+            } else if !staged {
+                notice = set.preferences == nil
+                    ? String(localized: "Every tweak in this file is already applied.")
+                    : String(localized: "Settings restored. Every tweak in the backup is already applied.")
+            }
         } catch {
             notice = error.localizedDescription
         }
+    }
+
+    func backUpWithPanel() {
+        let panel = NSSavePanel()
+        panel.nameFieldStringValue = String(localized: "UnbloatMyMac Settings.unbloat.json")
+        panel.allowedContentTypes = [.json]
+        panel.message = String(localized: "Save UnbloatMyMac’s settings and the tweaks that are on, to restore them later or on another Mac.")
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        Task { await backUpSettings(to: url) }
+    }
+
+    func restoreWithPanel() {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [.json]
+        panel.message = String(localized: "Choose a settings backup or tweaks file saved by UnbloatMyMac.")
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        Task { await restoreSettings(from: url) }
     }
 
     func exportWithPanel() {

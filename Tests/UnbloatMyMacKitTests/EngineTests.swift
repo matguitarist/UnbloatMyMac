@@ -194,6 +194,24 @@ func exportImport() throws {
     #expect(throws: (any Error).self) { try TweakSet.read(Data("{}".utf8)) }
 }
 
+@Test("A settings backup keeps the app's preferences, and a tweaks-only file still reads")
+func settingsBackup() throws {
+    let (engine, _) = makeEngine()
+    _ = engine.apply(["dock.recents": true])
+    let preferences = AppPreferences(showAdvanced: true, restartApps: false, accent: "mint", language: "fr", checksForUpdates: true)
+    let backup = try TweakSet.read(engine.exportSet(preferences: preferences))
+    #expect(backup.preferences == preferences)
+    #expect(backup.tweaks == ["dock.recents"])
+    #expect(try TweakSet.read(engine.exportSet()).preferences == nil)
+    // A file from before backups existed, with no preferences key.
+    let old = Data(#"{"app":"UnbloatMyMac","created":"2026-11-01T10:00:00Z","format":1,"tweaks":["finder.pathBar"]}"#.utf8)
+    let read = try TweakSet.read(old)
+    #expect(read.tweaks == ["finder.pathBar"] && read.preferences == nil)
+    // A backup from a later version with only some preferences restores those.
+    let partial = Data(#"{"app":"UnbloatMyMac","created":"2026-11-01T10:00:00Z","format":1,"tweaks":[],"preferences":{"accent":"teal"}}"#.utf8)
+    #expect(try TweakSet.read(partial).preferences == AppPreferences(accent: "teal"))
+}
+
 @Test("Login items are read from sfltool output for this user only")
 func parsesLoginItems() {
     let text = """

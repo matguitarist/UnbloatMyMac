@@ -3491,6 +3491,166 @@
           }
         }
       }
+    },
+    "**File > Back Up Settings…** (⇧⌘B) saves the tweaks that are on and UnbloatMyMac’s own settings: advanced tweaks, restarting apps, the accent, the language, and update checks. **File > Restore Settings…** (⇧⌘R) sets those back at once and opens Review for the tweaks. Both are also in **Settings > General**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Fichier > Sauvegarder les réglages…** (⇧⌘B) enregistre les réglages appliqués et les préférences d’UnbloatMyMac : réglages avancés, redémarrage des apps, couleur d’accentuation, langue et recherche de mises à jour. **Fichier > Restaurer les réglages…** (⇧⌘R) remet aussitôt ces préférences et ouvre la vérification pour les réglages. Les deux sont aussi dans **Réglages > Général**."
+          }
+        }
+      }
+    },
+    "Back Up Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarder les réglages"
+          }
+        }
+      }
+    },
+    "Back Up Settings…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarder les réglages…"
+          }
+        }
+      }
+    },
+    "Back Up…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarder…"
+          }
+        }
+      }
+    },
+    "Back up, or move to another Mac": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarder, ou passer à un autre Mac"
+          }
+        }
+      }
+    },
+    "Backup": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarde"
+          }
+        }
+      }
+    },
+    "Choose a settings backup or tweaks file saved by UnbloatMyMac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez une sauvegarde ou un fichier de réglages enregistré par UnbloatMyMac."
+          }
+        }
+      }
+    },
+    "Restore Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restaurer les réglages"
+          }
+        }
+      }
+    },
+    "Restore Settings…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restaurer les réglages…"
+          }
+        }
+      }
+    },
+    "Restore…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restaurer…"
+          }
+        }
+      }
+    },
+    "Save UnbloatMyMac’s settings and the tweaks that are on, to restore them later or on another Mac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrez les préférences d’UnbloatMyMac et les réglages appliqués, pour les restaurer plus tard ou sur un autre Mac."
+          }
+        }
+      }
+    },
+    "Saves these settings, the accent, and the tweaks that are on to one file. Restoring sets them back at once and opens Review for the tweaks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistre ces préférences, la couleur d’accentuation et les réglages appliqués dans un seul fichier. La restauration les remet aussitôt et ouvre la vérification pour les réglages."
+          }
+        }
+      }
+    },
+    "Settings and tweaks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préférences et réglages"
+          }
+        }
+      }
+    },
+    "Settings restored. Every tweak in the backup is already applied.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préférences restaurées. Tous les réglages de la sauvegarde sont déjà appliqués."
+          }
+        }
+      }
+    },
+    "Settings restored. The new language applies after you restart UnbloatMyMac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préférences restaurées. La nouvelle langue s’applique après le redémarrage d’UnbloatMyMac."
+          }
+        }
+      }
+    },
+    "UnbloatMyMac Settings.unbloat.json": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réglages UnbloatMyMac.unbloat.json"
+          }
+        }
+      }
     }
   }
 }

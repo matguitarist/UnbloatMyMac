@@ -45,6 +45,12 @@ struct UnbloatMyMacApp: App {
                 Button("Import Tweaks…") { model.importWithPanel() }
                     .keyboardShortcut("i", modifiers: [.command, .shift])
                 Divider()
+                Button("Back Up Settings…") { model.backUpWithPanel() }
+                    .keyboardShortcut("b", modifiers: [.command, .shift])
+                Button("Restore Settings…") { model.restoreWithPanel() }
+                    .keyboardShortcut("r", modifiers: [.command, .shift])
+                    .disabled(model.isBusy)
+                Divider()
                 Button("Export Activity Log…") { model.exportLogWithPanel() }
                     .keyboardShortcut("e", modifiers: [.command, .option])
                     .disabled(model.logEntries.isEmpty)

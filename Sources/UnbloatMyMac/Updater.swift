@@ -19,6 +19,9 @@ final class Updater {
 
     func checkForUpdates() { controller?.checkForUpdates(nil) }
 
+    /// When Sparkle last looked for an update, or nil before the first check.
+    var lastCheck: Date? { controller?.updater.lastUpdateCheckDate }
+
     var automaticallyChecks: Bool {
         get { controller?.updater.automaticallyChecksForUpdates ?? false }
         set { controller?.updater.automaticallyChecksForUpdates = newValue }

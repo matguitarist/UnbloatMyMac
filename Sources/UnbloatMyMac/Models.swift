@@ -99,6 +99,14 @@ final class AppModel {
     var restartApps: Bool = UserDefaults.standard.object(forKey: "restartApps") as? Bool ?? true {
         didSet { UserDefaults.standard.set(restartApps, forKey: "restartApps") }
     }
+    /// The app's own language. Changing it takes effect after a restart.
+    var language: AppLanguage = AppLanguage.current {
+        didSet { if language != oldValue { language.apply() } }
+    }
+    /// Sparkle's setting, mirrored so Settings and Restore Settings redraw it.
+    var checksForUpdates: Bool = Updater.shared.automaticallyChecks {
+        didSet { if Updater.shared.isAvailable { Updater.shared.automaticallyChecks = checksForUpdates } }
+    }
     /// Settings reopens on the last tab. Test and snapshot runs leave it alone.
     var settingsTab: SettingsTab = SettingsTab(rawValue: UserDefaults.standard.string(forKey: "settings.tab") ?? "") ?? .general {
         didSet { if !Store.isOverridden { UserDefaults.standard.set(settingsTab.rawValue, forKey: "settings.tab") } }
@@ -312,8 +320,8 @@ final class AppModel {
     /// The app's own settings now.
     var preferences: AppPreferences {
         AppPreferences(showAdvanced: showAdvanced, restartApps: restartApps, accent: ThemeStore.shared.themeID,
-                       language: AppLanguage.current.code ?? "system",
-                       checksForUpdates: Updater.shared.isAvailable ? Updater.shared.automaticallyChecks : nil)
+                       language: language.code ?? "system",
+                       checksForUpdates: Updater.shared.isAvailable ? checksForUpdates : nil)
     }
 
     /// Sets what the backup has and leaves the rest. Returns true when the language changed (it needs a restart).
@@ -322,11 +330,11 @@ final class AppModel {
         if let value = preferences.showAdvanced { showAdvanced = value }
         if let value = preferences.restartApps { restartApps = value }
         if let id = preferences.accent, Theme.all.contains(where: { $0.id == id }) { ThemeStore.shared.themeID = id }
-        if let value = preferences.checksForUpdates, Updater.shared.isAvailable { Updater.shared.automaticallyChecks = value }
+        if let value = preferences.checksForUpdates, Updater.shared.isAvailable { checksForUpdates = value }
         guard let code = preferences.language else { return false }
-        let language = code == "system" ? AppLanguage.system : AppLanguage(code: code)
-        guard language == .system || AppLanguage.available.contains(language), language != AppLanguage.current else { return false }
-        language.apply()
+        let restored = code == "system" ? AppLanguage.system : AppLanguage(code: code)
+        guard restored == .system || AppLanguage.available.contains(restored), restored != language else { return false }
+        language = restored
         return true
     }
 

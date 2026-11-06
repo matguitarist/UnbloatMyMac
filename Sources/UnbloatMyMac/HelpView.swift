@@ -112,7 +112,7 @@ struct HelpView: View {
             }
             HelpSection("Back up, or move to another Mac") {
                 HelpText("**File > Export Tweaks…** saves the tweaks that are on to a file. On the other Mac, **File > Import Tweaks…** stages the ones that are not on yet, for review.")
-                HelpText("**File > Back Up Settings…** (⇧⌘B) saves the tweaks that are on and UnbloatMyMac’s own settings: advanced tweaks, restarting apps, the accent, the language, and update checks. **File > Restore Settings…** (⇧⌘R) sets those back at once and opens Review for the tweaks. Both are also in **Settings > General**.")
+                HelpText("**File > Back Up Settings…** (⇧⌘B) saves the tweaks that are on and UnbloatMyMac’s own settings: advanced tweaks, restarting apps, the accent, the language, and update checks. **File > Restore Settings…** (⇧⌘R) sets those back at once and opens Review for the tweaks. Both are also in **Settings > Backup**.")
             }
 
         case .review:

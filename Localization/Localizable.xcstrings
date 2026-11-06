@@ -3492,16 +3492,6 @@
         }
       }
     },
-    "**File > Back Up Settings…** (⇧⌘B) saves the tweaks that are on and UnbloatMyMac’s own settings: advanced tweaks, restarting apps, the accent, the language, and update checks. **File > Restore Settings…** (⇧⌘R) sets those back at once and opens Review for the tweaks. Both are also in **Settings > General**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Fichier > Sauvegarder les réglages…** (⇧⌘B) enregistre les réglages appliqués et les préférences d’UnbloatMyMac : réglages avancés, redémarrage des apps, couleur d’accentuation, langue et recherche de mises à jour. **Fichier > Restaurer les réglages…** (⇧⌘R) remet aussitôt ces préférences et ouvre la vérification pour les réglages. Les deux sont aussi dans **Réglages > Général**."
-          }
-        }
-      }
-    },
     "Back Up Settings": {
       "localizations": {
         "fr": {
@@ -3602,16 +3592,6 @@
         }
       }
     },
-    "Saves these settings, the accent, and the tweaks that are on to one file. Restoring sets them back at once and opens Review for the tweaks.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enregistre ces préférences, la couleur d’accentuation et les réglages appliqués dans un seul fichier. La restauration les remet aussitôt et ouvre la vérification pour les réglages."
-          }
-        }
-      }
-    },
     "Settings and tweaks": {
       "localizations": {
         "fr": {
@@ -3648,6 +3628,116 @@
           "stringUnit": {
             "state": "translated",
             "value": "Réglages UnbloatMyMac.unbloat.json"
+          }
+        }
+      }
+    },
+    "Saves UnbloatMyMac’s settings, the accent, and the tweaks that are on to one file. Restoring sets them back at once and opens Review for the tweaks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistre les préférences d’UnbloatMyMac, la couleur d’accentuation et les réglages appliqués dans un seul fichier. La restauration les remet aussitôt et ouvre la vérification pour les réglages."
+          }
+        }
+      }
+    },
+    "**File > Back Up Settings…** (⇧⌘B) saves the tweaks that are on and UnbloatMyMac’s own settings: advanced tweaks, restarting apps, the accent, the language, and update checks. **File > Restore Settings…** (⇧⌘R) sets those back at once and opens Review for the tweaks. Both are also in **Settings > Backup**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Fichier > Sauvegarder les réglages…** (⇧⌘B) enregistre les réglages appliqués et les préférences d’UnbloatMyMac : réglages avancés, redémarrage des apps, couleur d’accentuation, langue et recherche de mises à jour. **Fichier > Restaurer les réglages…** (⇧⌘R) remet aussitôt ces préférences et ouvre la vérification pour les réglages. Les deux sont aussi dans **Réglages > Sauvegarde**."
+          }
+        }
+      }
+    },
+    "Updates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mises à jour"
+          }
+        }
+      }
+    },
+    "Automatic Updates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mises à jour automatiques"
+          }
+        }
+      }
+    },
+    "Settings Backup": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarde des réglages"
+          }
+        }
+      }
+    },
+    "Check for updates automatically": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher les mises à jour automatiquement"
+          }
+        }
+      }
+    },
+    "Updates are off in this build.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les mises à jour sont désactivées dans cette version."
+          }
+        }
+      }
+    },
+    "Looks once a day for a new version on GitHub.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cherche une nouvelle version sur GitHub une fois par jour."
+          }
+        }
+      }
+    },
+    "Looks once a day for a new version on GitHub. Last checked %@.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cherche une nouvelle version sur GitHub une fois par jour. Dernière recherche %@."
+          }
+        }
+      }
+    },
+    "Version %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@"
+          }
+        }
+      }
+    },
+    "Check Now": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher maintenant"
           }
         }
       }

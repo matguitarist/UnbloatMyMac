@@ -170,6 +170,19 @@ func safariNeedsAccess() {
     #expect(report.needsFullDiskAccess)
 }
 
+@Test("The login check tells once about tweaks a macOS update put back")
+func revertNoticeOnce() throws {
+    let (engine, backend) = makeEngine()
+    _ = engine.apply(["dock.recents": true])
+    #expect(engine.revertNotice(lastKey: nil) == nil)
+    backend.simulateUpdate(resetting: PrefKey("com.apple.dock", "show-recents"))
+    let notice = try #require(engine.revertNotice(lastKey: nil))
+    #expect(notice.tweaks == ["dock.recents"] && notice.macOSUpdated)
+    #expect(engine.revertNotice(lastKey: notice.key) == nil, "already told")
+    engine.forgetReverted()
+    #expect(engine.revertNotice(lastKey: nil) == nil)
+}
+
 @Test("A macOS update that resets a tweak is noticed")
 func revertedByUpdate() {
     let (engine, backend) = makeEngine()

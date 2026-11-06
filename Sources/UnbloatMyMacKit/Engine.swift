@@ -37,6 +37,22 @@ public struct EngineState: Sendable {
     public var macOSUpdated: Bool
 }
 
+/// What the login check tells the person: tweaks something put back, most often a macOS update.
+public struct RevertNotice: Equatable, Sendable {
+    public var tweaks: [String]
+    public var macOSUpdated: Bool
+    public var osBuild: String
+
+    public init(tweaks: [String], macOSUpdated: Bool, osBuild: String) {
+        self.tweaks = tweaks
+        self.macOSUpdated = macOSUpdated
+        self.osBuild = osBuild
+    }
+
+    /// The same key means the person was already told.
+    public var key: String { osBuild + ":" + tweaks.sorted().joined(separator: ",") }
+}
+
 public struct ApplyReport: Sendable {
     /// Tweak id -> what went wrong, in words for people.
     public var failures: [String: String] = [:]
@@ -389,6 +405,14 @@ public final class Engine: Sendable {
         let ids = state().reverted
         journal.withLock { j in for id in ids { j.applied.remove(id) } ; j.osBuild = backend.osBuild() }
         save()
+    }
+
+    /// Tweaks put back since the notice with `lastKey`, or nil when there is nothing new to say.
+    public func revertNotice(lastKey: String?) -> RevertNotice? {
+        let current = state()
+        guard !current.reverted.isEmpty else { return nil }
+        let notice = RevertNotice(tweaks: current.reverted, macOSUpdated: current.macOSUpdated, osBuild: backend.osBuild())
+        return notice.key == lastKey ? nil : notice
     }
 
     // MARK: Export and import

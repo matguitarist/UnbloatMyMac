@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Registered by Settings > General > Notifications with SMAppService.agent.
+     At each login, checks whether macOS put back tweaks and posts one notification. -->
+<plist version="1.0"><dict>
+<key>Label</key><string>com.mathieuares.unbloatmymac.watch</string>
+<key>BundleProgram</key><string>Contents/MacOS/UnbloatMyMac</string>
+<key>ProgramArguments</key><array><string>Contents/MacOS/UnbloatMyMac</string><string>--login-check</string></array>
+<key>RunAtLoad</key><true/>
+<key>ProcessType</key><string>Background</string>
+</dict></plist>

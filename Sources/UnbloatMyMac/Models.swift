@@ -123,6 +123,16 @@ final class AppModel {
     var checksForUpdates: Bool = Updater.shared.automaticallyChecks {
         didSet { if Updater.shared.isAvailable { Updater.shared.automaticallyChecks = checksForUpdates } }
     }
+    /// The login agent that tells when macOS put back tweaks.
+    private(set) var revertWatch = RevertWatch.status
+
+    func setRevertWatch(_ on: Bool) async {
+        do { try await RevertWatch.set(on) }
+        catch { notice = error.localizedDescription }
+        revertWatch = RevertWatch.status
+        log?.add(.info, .app, on ? "Turned on the login check for put-back tweaks" : "Turned off the login check for put-back tweaks")
+    }
+
     /// Settings reopens on the last tab. Test and snapshot runs leave it alone.
     var settingsTab: SettingsTab = SettingsTab(rawValue: UserDefaults.standard.string(forKey: "settings.tab") ?? "") ?? .general {
         didSet { if !Store.isOverridden { UserDefaults.standard.set(settingsTab.rawValue, forKey: "settings.tab") } }

@@ -87,6 +87,10 @@ enum SelfTest {
             model.showReview = false
             model.discard()
 
+            let told = RevertWatch.message(RevertNotice(tweaks: ["dock.recents", "dock.bounce"], macOSUpdated: true, osBuild: "25A1"))
+            check("the login notification counts the put-back tweaks", told.title.contains("2") && !told.body.isEmpty)
+            check("the login agent is never registered on a pretend Mac", RevertWatch.status == .off)
+
             // Same preferences as now, so nothing outside the pretend Mac changes.
             let backup = URL(fileURLWithPath: "/tmp/UnbloatMyMac-self-backup.json")
             await model.backUpSettings(to: backup)

@@ -52,6 +52,9 @@ for catalog in "$here"/Localization/*.xcstrings(N); do
   xcrun xcstringstool compile "$catalog" --output-directory "$app/Contents/Resources"
 done
 mkdir -p "$app/Contents/Resources/en.lproj"
+# The login agent that tells when a macOS update put back tweaks (RevertWatch.swift).
+mkdir -p "$app/Contents/Library/LaunchAgents"
+cp "$here"/Resources/LaunchAgents/*.plist "$app/Contents/Library/LaunchAgents/"
 # Sparkle, for automatic updates.
 framework="$scratch/$config/Sparkle.framework"
 if [[ -d "$framework" ]]; then

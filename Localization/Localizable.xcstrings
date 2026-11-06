@@ -3742,16 +3742,6 @@
         }
       }
     },
-    "**General**: the app's language, advanced tweaks, and restarting the Dock and Finder after applying.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Général** : la langue de l’app, les réglages avancés et le redémarrage du Dock et du Finder après application."
-          }
-        }
-      }
-    },
     "**Updates**: automatic update checks, the version, and **Check Now**.": {
       "localizations": {
         "fr": {
@@ -3868,6 +3858,106 @@
           "stringUnit": {
             "state": "translated",
             "value": "**unbloatmymac outdated** et **update** (un nom d’app, ou **--all**) : mettre à jour les apps installées par Homebrew."
+          }
+        }
+      }
+    },
+    "%lld tweaks were put back": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld réglages ont été remis"
+          }
+        }
+      }
+    },
+    "A macOS update reset settings UnbloatMyMac changed. Open UnbloatMyMac to apply them again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une mise à jour de macOS a réinitialisé des réglages modifiés par UnbloatMyMac. Ouvrez UnbloatMyMac pour les appliquer à nouveau."
+          }
+        }
+      }
+    },
+    "Allow UnbloatMyMac in Login Items to turn this on.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autorisez UnbloatMyMac dans Ouverture pour activer cette option."
+          }
+        }
+      }
+    },
+    "Checks at each login, even when UnbloatMyMac is closed, and sends one notification after a macOS update resets your tweaks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifie à chaque ouverture de session, même quand UnbloatMyMac est fermé, et envoie une notification quand une mise à jour de macOS réinitialise vos réglages."
+          }
+        }
+      }
+    },
+    "Notifications": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications"
+          }
+        }
+      }
+    },
+    "Open Login Items": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrir Ouverture"
+          }
+        }
+      }
+    },
+    "Something reset settings UnbloatMyMac changed. Open UnbloatMyMac to apply them again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quelque chose a réinitialisé des réglages modifiés par UnbloatMyMac. Ouvrez UnbloatMyMac pour les appliquer à nouveau."
+          }
+        }
+      }
+    },
+    "Tell me when macOS puts back tweaks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Me prévenir quand macOS remet des réglages"
+          }
+        }
+      }
+    },
+    "macOS put back %lld tweaks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS a remis %lld réglages"
+          }
+        }
+      }
+    },
+    "**General**: the app's language, advanced tweaks, restarting the Dock and Finder after applying, and a notification at login when macOS puts back tweaks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Général** : la langue de l’app, les réglages avancés, le redémarrage du Dock et du Finder après application, et une notification à l’ouverture de session quand macOS remet des réglages."
           }
         }
       }

@@ -188,7 +188,7 @@ struct HelpView: View {
         case .settings:
             HelpText("Open **Settings** with ⌘Comma.")
             HelpBullets([
-                "**General**: the app's language, advanced tweaks, and restarting the Dock and Finder after applying.",
+                "**General**: the app's language, advanced tweaks, restarting the Dock and Finder after applying, and a notification at login when macOS puts back tweaks.",
                 "**Appearance**: light or dark mode, and the accent color.",
                 "**Updates**: automatic update checks, the version, and **Check Now**.",
                 "**Backup**: back up and restore settings, and where the undo journal is kept.",

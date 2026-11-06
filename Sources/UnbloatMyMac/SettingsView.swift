@@ -1,4 +1,5 @@
 import AppKit
+import ServiceManagement
 import SwiftUI
 
 /// The Settings window (Command-Comma). One tab per topic, at most about
@@ -93,6 +94,22 @@ struct GeneralSettings: View {
             Toggle(isOn: $model.restartApps) {
                 Text("Restart the Dock, Finder, and menu bar after applying")
                 Text("Changes show at once. Turn off to see them after you log out.")
+            }
+        }
+        Section("Notifications") {
+            Toggle(isOn: Binding(get: { model.revertWatch != .off },
+                                 set: { on in Task { await model.setRevertWatch(on) } })) {
+                Text("Tell me when macOS puts back tweaks")
+                Text("Checks at each login, even when UnbloatMyMac is closed, and sends one notification after a macOS update resets your tweaks.")
+            }
+            if model.revertWatch == .needsApproval {
+                HStack {
+                    Label("Allow UnbloatMyMac in Login Items to turn this on.", systemImage: "exclamationmark.triangle")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Button("Open Login Items") { SMAppService.openSystemSettingsLoginItems() }
+                }
             }
         }
     }

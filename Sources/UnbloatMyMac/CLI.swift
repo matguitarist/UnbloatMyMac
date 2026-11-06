@@ -19,7 +19,7 @@ import UnbloatMyMacKit
 enum CLI {
     static let commands: Set<String> = ["list", "status", "apply", "undo", "preset", "presets", "revert",
                                         "export", "import", "backup", "restore", "apps", "install", "uninstall",
-                                        "outdated", "update", "help", "--help", "-h", "--version"]
+                                        "outdated", "update", "--login-check", "help", "--help", "-h", "--version"]
 
     static func shouldRun(_ arguments: [String]) -> Bool {
         arguments.count > 1 && commands.contains(arguments[1])
@@ -49,6 +49,7 @@ enum CLI {
             }
         }
         switch arguments[1] {
+        case "--login-check": return RevertWatch.runCheck(dryRun: options.dryRun)
         case "apps": return apps(Store.makeInstaller(), options)
         case "install", "uninstall": return installApps(Store.makeInstaller(), install: arguments[1] == "install", options)
         case "outdated": return outdated(Store.makeInstaller(), options)

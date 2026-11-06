@@ -3851,6 +3851,26 @@
           }
         }
       }
+    },
+    "**unbloatmymac backup** and **restore**: the app's settings and the tweaks that are on, like File > Back Up Settings.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**unbloatmymac backup** et **restore** : les préférences de l’app et les réglages appliqués, comme Fichier > Sauvegarder les réglages."
+          }
+        }
+      }
+    },
+    "**unbloatmymac outdated** and **update** (an app name, or **--all**): update apps Homebrew installed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**unbloatmymac outdated** et **update** (un nom d’app, ou **--all**) : mettre à jour les apps installées par Homebrew."
+          }
+        }
+      }
     }
   }
 }

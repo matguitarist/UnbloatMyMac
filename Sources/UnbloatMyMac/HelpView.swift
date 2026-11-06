@@ -179,7 +179,9 @@ struct HelpView: View {
                 "**unbloatmymac apply** or **undo** followed by tweak ids, or **preset recommended**.",
                 "**unbloatmymac revert**: undo everything.",
                 "**unbloatmymac export** and **import**: tweak files, like the File menu.",
+                "**unbloatmymac backup** and **restore**: the app's settings and the tweaks that are on, like File > Back Up Settings.",
                 "**unbloatmymac apps**, **install**, and **uninstall**: recommended apps.",
+                "**unbloatmymac outdated** and **update** (an app name, or **--all**): update apps Homebrew installed.",
             ])
             HelpText("Changes ask for confirmation in a terminal; scripts add **--yes**. **--dry-run** shows what would change, and **--json** prints results for scripts.")
 

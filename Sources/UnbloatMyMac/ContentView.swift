@@ -42,9 +42,7 @@ struct ContentView: View {
             Text("Every line is deleted. Your changes and their undo history are kept.")
         }
         // The command line tool may have changed the Mac while the app was in the background.
-        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
-            if model.hasLoaded, !model.isBusy { Task { await model.refresh(); await model.refreshApps() } }
-        }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in becameActive() }
         .task {
             await model.refresh()
             await model.refreshApps()
@@ -53,6 +51,11 @@ struct ContentView: View {
             SelfTest.runIfRequested(model: model)
             Snapshot.runIfRequested(model: model, openSettings: openSettings, openWindow: openWindow)
         }
+    }
+
+    private func becameActive() {
+        model.reloadPreferences()
+        if model.hasLoaded, !model.isBusy { Task { await model.refresh(); await model.refreshApps() } }
     }
 
     private var sidebar: some View {

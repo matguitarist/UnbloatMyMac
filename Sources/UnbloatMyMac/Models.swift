@@ -338,6 +338,16 @@ final class AppModel {
 
     // MARK: Settings backup
 
+    /// Reads the settings again, in case the command line tool restored a backup.
+    func reloadPreferences() {
+        guard !Store.isOverridden else { return }
+        let saved = PreferenceStore.read()
+        if let v = saved.showAdvanced, v != showAdvanced { showAdvanced = v }
+        if let v = saved.restartApps, v != restartApps { restartApps = v }
+        if let v = saved.accent, v != ThemeStore.shared.themeID { ThemeStore.shared.themeID = v }
+        if AppLanguage.current != language { language = AppLanguage.current }
+    }
+
     /// The app's own settings now.
     var preferences: AppPreferences {
         AppPreferences(showAdvanced: showAdvanced, restartApps: restartApps, accent: ThemeStore.shared.themeID,

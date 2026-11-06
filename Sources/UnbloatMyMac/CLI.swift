@@ -18,7 +18,8 @@ import UnbloatMyMacKit
 /// 0 ok, 1 some changes failed, 2 bad usage, 3 declined.
 enum CLI {
     static let commands: Set<String> = ["list", "status", "apply", "undo", "preset", "presets", "revert",
-                                        "export", "import", "apps", "install", "uninstall", "help", "--help", "-h", "--version"]
+                                        "export", "import", "backup", "restore", "apps", "install", "uninstall",
+                                        "outdated", "update", "help", "--help", "-h", "--version"]
 
     static func shouldRun(_ arguments: [String]) -> Bool {
         arguments.count > 1 && commands.contains(arguments[1])
@@ -30,6 +31,7 @@ enum CLI {
         var dryRun = false
         var recommended = false
         var shell = true
+        var all = false
         var words: [String] = []
     }
 
@@ -42,12 +44,15 @@ enum CLI {
             case "--dry-run", "-n": options.dryRun = true
             case "--recommended": options.recommended = true
             case "--no-shell": options.shell = false
+            case "--all": options.all = true
             default: options.words.append(word)
             }
         }
         switch arguments[1] {
         case "apps": return apps(Store.makeInstaller(), options)
         case "install", "uninstall": return installApps(Store.makeInstaller(), install: arguments[1] == "install", options)
+        case "outdated": return outdated(Store.makeInstaller(), options)
+        case "update": return updateApps(Store.makeInstaller(), options)
         default: break
         }
         let engine = Store.makeEngine()
@@ -93,6 +98,23 @@ enum CLI {
             do {
                 let set = try TweakSet.read(Data(contentsOf: URL(fileURLWithPath: path)))
                 return change(engine, engine.changes(for: set), options)
+            } catch {
+                return fail(error.localizedDescription)
+            }
+        case "backup":
+            guard let path = options.words.first else { return usage("backup needs a file path") }
+            do {
+                try engine.exportSet(preferences: PreferenceStore.read()).write(to: URL(fileURLWithPath: path), options: .atomic)
+                print("Saved settings and tweaks to \(path)")
+                return 0
+            } catch {
+                return fail(error.localizedDescription)
+            }
+        case "restore":
+            guard let path = options.words.first else { return usage("restore needs a file path") }
+            do {
+                let set = try TweakSet.read(Data(contentsOf: URL(fileURLWithPath: path)))
+                return restore(set, engine, options)
             } catch {
                 return fail(error.localizedDescription)
             }
@@ -255,6 +277,69 @@ enum CLI {
 
     // MARK: Helpers
 
+    /// Sets the backup's app settings and applies its tweaks that are not on, after one confirmation.
+    private static func restore(_ set: TweakSet, _ engine: Engine, _ options: Options) -> Int32 {
+        let current = PreferenceStore.read()
+        let wanted = set.preferences.map(PreferenceStore.lines) ?? []
+        let now = Dictionary(PreferenceStore.lines(current), uniquingKeysWith: { a, _ in a })
+        let settings = wanted.filter { now[$0.0] != $0.1 }
+        let changes = engine.changes(for: set)
+        let tweaks = engine.tweaks.filter { changes[$0.id] != nil }
+        if settings.isEmpty && tweaks.isEmpty {
+            if options.json { return printJSON(["settings": 0, "changed": 0, "failures": [String: String]()]) }
+            print("Nothing to restore.")
+            return 0
+        }
+        if options.dryRun || !options.json {
+            for (key, value) in settings { print("  set    \(pad(key, 30)) \(value)") }
+            for tweak in tweaks { print("  apply  \(pad(tweak.id, 30)) \(tweak.title)") }
+            if tweaks.contains(where: \.needsAdmin) { print("  macOS asks for your password once.") }
+        }
+        if options.dryRun { return 0 }
+        guard confirm("Restore \(settings.count) settings and apply \(tweaks.count) tweaks", options) else { return 3 }
+        if let preferences = set.preferences { PreferenceStore.write(preferences) }
+        if !settings.isEmpty { engine.log?.add(.info, .app, "Restored settings from the command line") }
+        if !options.json, !settings.isEmpty { print("Settings restored. A new language applies the next time UnbloatMyMac opens.") }
+        guard !changes.isEmpty else {
+            if options.json { return printJSON(["settings": settings.count, "changed": 0, "failures": [String: String]()]) }
+            return 0
+        }
+        return finish(engine.apply(changes), engine, options)
+    }
+
+    private static func outdated(_ installer: AppInstaller, _ options: Options) -> Int32 {
+        guard installer.state().homebrew != nil else { return fail("Homebrew is not installed. Get it at https://brew.sh") }
+        let ids = installer.outdated(fetch: true)
+        let apps = Catalog.appsHere.filter { ids.contains($0.id) }
+        if options.json { return printJSON(["outdated": apps.map(\.id)]) }
+        if apps.isEmpty { print("Every app installed with Homebrew is up to date.") }
+        for app in apps { print("  \(pad(app.id, 24)) \(app.name)") }
+        return 0
+    }
+
+    private static func updateApps(_ installer: AppInstaller, _ options: Options) -> Int32 {
+        let unknown = options.words.filter { Catalog.app($0) == nil }
+        guard unknown.isEmpty else { return usage("Unknown app: \(unknown.joined(separator: ", ")). See: unbloatmymac apps") }
+        guard options.all || !options.words.isEmpty else { return usage("update needs app names or --all. See: unbloatmymac outdated") }
+        guard installer.state().homebrew != nil else { return fail("Homebrew is not installed. Get it at https://brew.sh") }
+        let outdated = installer.outdated(fetch: true)
+        let named = options.words.compactMap(Catalog.app)
+        let todo = (options.all ? Catalog.appsHere : named).filter { outdated.contains($0.id) }
+        guard !todo.isEmpty else {
+            print("Every app installed with Homebrew is up to date.")
+            return 0
+        }
+        for app in todo { print("  update  \(pad(app.id, 24)) \(app.name)") }
+        if options.dryRun { return 0 }
+        guard confirm("Update \(todo.count) with Homebrew", options) else { return 3 }
+        var failed = 0
+        for app in todo {
+            do { try installer.upgrade(app); print("Updated \(app.name)") }
+            catch { failed += 1; print("  failed \(app.id): \(error.localizedDescription)") }
+        }
+        return failed == 0 ? 0 : 1
+    }
+
     private static func confirm(_ question: String, _ options: Options) -> Bool {
         if options.yes { return true }
         guard isatty(STDIN_FILENO) == 1 else {
@@ -315,10 +400,14 @@ enum CLI {
       revert                        undo everything UnbloatMyMac changed
       export <file>                 save the applied tweaks to a file
       import <file>                 apply the tweaks saved in a file
+      backup <file>                 save the app's settings and the applied tweaks to a file
+      restore <file>                set the settings and apply the tweaks from a backup
       apps [--json]                 recommended apps and tools, and what is installed
       install <app>...              install with Homebrew (--recommended for the starred ones,
                                     --no-shell to leave ~/.zshrc alone)
       uninstall <app>...            uninstall with Homebrew and remove its ~/.zshrc line
+      outdated [--json]             installed apps with a newer version in Homebrew
+      update <app>... | --all       update apps with Homebrew
 
     Options: --yes (don't ask), --dry-run (show what would change), --json.
     Changes in the app and here share one undo journal.

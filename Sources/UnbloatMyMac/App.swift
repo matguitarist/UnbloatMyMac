@@ -22,7 +22,7 @@ struct UnbloatMyMacApp: App {
                 .environment(model)
                 .themed()
                 .overlay { if GridOverlay.enabled { GridOverlay() } }
-                .frame(minWidth: 860, minHeight: 560)
+                .frame(minWidth: 920, minHeight: 560)  // the Activity Log fits with its inspector open
         }
         .defaultSize(width: 1080, height: 760)
         .windowToolbarStyle(.unified)

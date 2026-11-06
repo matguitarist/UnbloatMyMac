@@ -64,8 +64,59 @@ struct LogPage: View {
     }
 
     private var filterBar: some View {
+        // A narrow window (sidebar and inspector open) drops the level names, then turns
+        // the source menu into a filter button, so the bar never pushes the page sideways.
+        ViewThatFits(in: .horizontal) {
+            filterRow(compactChips: false, sourceButton: false)
+            filterRow(compactChips: true, sourceButton: false)
+            filterRow(compactChips: true, sourceButton: true)
+        }
+        .controlSize(.small)
+        .padding(.horizontal, Space.margin)
+        .padding(.vertical, Space.sm)
+        .gridProbe("log.filters", area: "log")
+        .gridArea("log", inset: 0)
+    }
+
+    private func filterRow(compactChips: Bool, sourceButton: Bool) -> some View {
+        HStack(spacing: Space.sm) {
+            levelChips(compact: compactChips)
+            Spacer(minLength: Space.sm)
+            if sourceButton {
+                Menu {
+                    sourcePicker.pickerStyle(.inline)
+                } label: {
+                    Label(model.logFilter.source?.title ?? String(localized: "All Sources"),
+                          systemImage: model.logFilter.source == nil
+                              ? "line.3.horizontal.decrease.circle" : "line.3.horizontal.decrease.circle.fill")
+                        .labelStyle(.iconOnly)
+                }
+                .menuIndicator(.hidden)
+                .fixedSize()
+                .help("Show the lines about one part of the Mac")
+            } else {
+                sourcePicker
+                    .pickerStyle(.menu)
+                    .frame(minWidth: 112, maxWidth: 200)
+                    .help("Show the lines about one part of the Mac")
+            }
+        }
+    }
+
+    private var sourcePicker: some View {
         @Bindable var model = model
-        return HStack(spacing: Space.sm) {
+        return Picker("Source", selection: $model.logFilter.source) {
+            Text("All Sources").tag(LogSource?.none)
+            Divider()
+            ForEach(LogSource.allCases, id: \.self) { source in
+                Label(source.title, systemImage: source.symbol).tag(LogSource?.some(source))
+            }
+        }
+        .labelsHidden()
+    }
+
+    private func levelChips(compact: Bool) -> some View {
+        HStack(spacing: Space.sm) {
             ForEach(LogLevel.allCases, id: \.self) { level in
                 let count = model.logEntries.count { $0.level == level }
                 Toggle(isOn: Binding(
@@ -73,31 +124,20 @@ struct LogPage: View {
                     set: { on in if on { model.logFilter.levels.insert(level) } else { model.logFilter.levels.remove(level) } }
                 )) {
                     // Plain icons: a colored one vanishes on the accent fill of a chip that is on.
-                    Label("\(level.title) \(count)", systemImage: level.symbol)
-                        .monospacedDigit()
+                    if compact {
+                        Label("\(count)", systemImage: level.symbol)
+                            .monospacedDigit()
+                            .accessibilityLabel("\(level.title) \(count)")
+                    } else {
+                        Label("\(level.title) \(count)", systemImage: level.symbol)
+                            .monospacedDigit()
+                    }
                 }
                 .toggleStyle(.button)
                 .fixedSize()
                 .help(level.help)
             }
-            Spacer(minLength: Space.lg)
-            Picker("Source", selection: $model.logFilter.source) {
-                Text("All Sources").tag(LogSource?.none)
-                Divider()
-                ForEach(LogSource.allCases, id: \.self) { source in
-                    Label(source.title, systemImage: source.symbol).tag(LogSource?.some(source))
-                }
-            }
-            .pickerStyle(.menu)
-            .labelsHidden()
-            .frame(minWidth: 120, maxWidth: 200)
-            .help("Show the lines about one part of the Mac")
         }
-        .controlSize(.small)
-        .padding(.horizontal, Space.margin)
-        .padding(.vertical, Space.sm)
-        .gridProbe("log.filters", area: "log")
-        .gridArea("log", inset: 0)
     }
 
     private func table(_ entries: [LogEntry]) -> some View {
@@ -138,7 +178,7 @@ struct LogPage: View {
                 }
                 .help(entry.message)
             }
-            .width(min: 240, ideal: 480)
+            .width(min: 140, ideal: 480)
         }
         .contextMenu(forSelectionType: LogEntry.ID.self) { ids in
             Button("Copy") { model.copyLog(entries.filter { ids.contains($0.id) }.reversed()) }

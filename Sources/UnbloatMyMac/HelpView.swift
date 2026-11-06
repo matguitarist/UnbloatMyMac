@@ -157,6 +157,7 @@ struct HelpView: View {
                 "**Install** uses Homebrew. If Homebrew is missing, the page shows how to install it.",
                 "**Install Recommended Apps** (⌥⌘I) shows every starred app that is missing, each checked; uncheck any you do not want, then click Install.",
                 "Apps that are only on their website show **Download** and open it.",
+                "When Homebrew has a newer version of an app it installed, its row shows **Update**, and **Update N Apps** updates them all. **Changes > Check for App Updates** (⌥⌘U) asks Homebrew for the latest versions first. Apps that update themselves are left to do so.",
                 "Terminal tools like Oh My Posh or zoxide can add their line to ~/.zshrc, inside a block UnbloatMyMac marks and removes again.",
             ])
             HelpText("Nothing installs until you click.")
@@ -185,8 +186,10 @@ struct HelpView: View {
         case .settings:
             HelpText("Open **Settings** with ⌘Comma.")
             HelpBullets([
-                "**General**: the app's language, advanced tweaks, restarting the Dock and Finder after applying, and where the undo journal is kept.",
+                "**General**: the app's language, advanced tweaks, and restarting the Dock and Finder after applying.",
                 "**Appearance**: light or dark mode, and the accent color.",
+                "**Updates**: automatic update checks, the version, and **Check Now**.",
+                "**Backup**: back up and restore settings, and where the undo journal is kept.",
             ])
             HelpSection("Language") {
                 HelpText("UnbloatMyMac is in English and French. It follows your Mac's language unless you pick one in **Settings > General > Language**. The new language applies after **Restart Now**.")
@@ -219,6 +222,8 @@ struct HelpView: View {
                 ("⌥⌘1 – ⌥⌘4", "Add a preset"),
                 ("⌘R", "Refresh"),
                 ("⌥⌘I", "Install Recommended Apps…"),
+                ("⌥⌘U", "Check for App Updates"),
+                ("⇧⌥⌘U", "Update All Apps"),
                 ("⌥⌘Z", "Undo Everything"),
                 ("⇧⌘E", "Export Tweaks"),
                 ("⇧⌘I", "Import Tweaks"),

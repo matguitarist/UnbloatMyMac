@@ -70,6 +70,19 @@ func failedInstall() throws {
     #expect(installer.state().inShell.isEmpty)
 }
 
+@Test("Updates list only catalog apps Homebrew installed, and updating clears them")
+func appUpdates() throws {
+    let packages = MockPackageManager(seeded: true)
+    let installer = AppInstaller(packages: packages)
+    #expect(installer.outdated() == ["bat"])
+    packages.markOutdated("not-in-catalog")
+    #expect(installer.outdated() == ["bat"])
+    try installer.upgrade(#require(Catalog.app("bat")))
+    #expect(installer.outdated().isEmpty)
+    let none = AppInstaller(packages: MockPackageManager(seeded: true, homebrew: false))
+    #expect(none.outdated().isEmpty)
+}
+
 @Test("On Apple silicon Vorssaint replaces the apps it covers; on Intel they stay recommended")
 func allInOneReplaces() throws {
     let vorssaint = try #require(Catalog.app("vorssaint"))

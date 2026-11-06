@@ -313,6 +313,9 @@ public protocol PackageManager: Sendable {
     func bundleExists(_ name: String) -> Bool
     func install(_ app: RecommendedApp) throws
     func uninstall(_ app: RecommendedApp) throws
+    /// Installed formula and cask names with a newer version. `fetch` updates Homebrew's index first (slow, online).
+    func outdated(fetch: Bool) -> Set<String>
+    func upgrade(_ app: RecommendedApp) throws
     func readShellFile() -> String
     func writeShellFile(_ text: String) -> Bool
 }
@@ -402,6 +405,27 @@ public final class AppInstaller: Sendable {
         if shell, app.shellLine != nil { try setShell(app, on: true) }
     }
 
+    /// Catalog apps Homebrew installed that have a newer version. Casks that update themselves are left out by Homebrew.
+    public func outdated(fetch: Bool = false) -> Set<String> {
+        guard packages.homebrew() != nil else { return [] }
+        let ids = Set(Catalog.apps.filter(\.installsWithHomebrew).map(\.id))
+        let found = packages.outdated(fetch: fetch).intersection(ids)
+        log?.add(.debug, .apps, "Found \(found.count) app updates", detail: found.sorted().joined(separator: "\n"))
+        return found
+    }
+
+    public func upgrade(_ app: RecommendedApp) throws {
+        guard app.installsWithHomebrew else { throw BackendError(L("This app is not in Homebrew. Download it from its website.")) }
+        let command = "brew upgrade \(app.kind == .cask ? "--cask " : "")\(app.id)"
+        do {
+            try packages.upgrade(app)
+            log?.add(.info, .apps, "Updated \(app.name)", detail: command)
+        } catch {
+            log?.add(.error, .apps, "Could not update \(app.name)", detail: command + "\n" + error.localizedDescription)
+            throw error
+        }
+    }
+
     /// Uninstalls with Homebrew and takes the shell line out.
     public func uninstall(_ app: RecommendedApp) throws {
         guard app.installsWithHomebrew else { throw BackendError(L("Homebrew did not install this app. Move it to the Trash to remove it.")) }
@@ -456,6 +480,17 @@ public final class Homebrew: PackageManager {
         try perform(["uninstall"] + (app.kind == .cask ? ["--cask"] : []) + [app.id])
     }
 
+    public func outdated(fetch: Bool) -> Set<String> {
+        guard let brew = homebrew() else { return [] }
+        if fetch { _ = brewRun(brew, ["update", "--quiet"]) }
+        let output = brewRun(brew, ["outdated", "--quiet"]).output
+        return Set(output.split(separator: "\n").map { String($0).trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty })
+    }
+
+    public func upgrade(_ app: RecommendedApp) throws {
+        try perform(["upgrade"] + (app.kind == .cask ? ["--cask"] : []) + [app.id])
+    }
+
     private func perform(_ arguments: [String]) throws {
         guard let brew = homebrew() else { throw BackendError(L("Install Homebrew first.")) }
         let result = brewRun(brew, arguments)
@@ -506,6 +541,7 @@ public final class MockPackageManager: PackageManager {
         var bundles: Set<String> = []
         var shell = "export PATH=\"$HOME/bin:$PATH\"\n"
         var failing: Set<String> = []
+        var outdated: Set<String> = []
     }
 
     private let state = Mutex(State())
@@ -515,6 +551,7 @@ public final class MockPackageManager: PackageManager {
             s.hasBrew = homebrew
             if seeded {
                 s.installed = ["rectangle", "bat"]
+                s.outdated = ["bat"]
                 s.bundles = ["IINA.app"]
             }
         }
@@ -532,8 +569,20 @@ public final class MockPackageManager: PackageManager {
     }
 
     public func uninstall(_ app: RecommendedApp) throws {
-        _ = state.withLock { $0.installed.remove(app.id) }
+        state.withLock { s in s.installed.remove(app.id); s.outdated.remove(app.id) }
     }
+
+    public func outdated(fetch: Bool) -> Set<String> { state.withLock { $0.outdated.intersection($0.installed) } }
+
+    public func upgrade(_ app: RecommendedApp) throws {
+        try state.withLock { s in
+            if s.failing.contains(app.id) { throw BackendError("Error: \(app.id): download failed") }
+            s.outdated.remove(app.id)
+        }
+    }
+
+    /// Test hook: a newer version of this id is out.
+    public func markOutdated(_ id: String) { _ = state.withLock { $0.outdated.insert(id) } }
 
     public func readShellFile() -> String { state.withLock { $0.shell } }
     public func writeShellFile(_ text: String) -> Bool { state.withLock { $0.shell = text }; return true }

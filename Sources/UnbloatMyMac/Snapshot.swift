@@ -50,6 +50,16 @@ enum Snapshot {
                     try? await Task.sleep(for: .seconds(0.6))
                 }
             }
+            if only == nil || only?.contains("progress") == true {
+                model.sidebar = .apps
+                model.showProgressForSnapshot(AppProgress(kind: .install, done: 2, total: 8, current: "Mole"))
+                for mode in ["light", "dark"] {
+                    NSApp.appearance = NSAppearance(named: mode == "light" ? .aqua : .darkAqua)
+                    try? await Task.sleep(for: .seconds(0.8))
+                    capture(to: "\(dir)/apps-progress-\(mode).png")
+                }
+                model.showProgressForSnapshot(nil)
+            }
             if only == nil || only?.contains("install") == true {
                 for mode in ["light", "dark"] {
                     NSApp.appearance = NSAppearance(named: mode == "light" ? .aqua : .darkAqua)

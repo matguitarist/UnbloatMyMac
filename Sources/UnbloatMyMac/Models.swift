@@ -54,6 +54,22 @@ enum SidebarItem: Hashable, Identifiable {
     }
 }
 
+/// A batch of Homebrew installs or updates: "Installing 3 of 8: Mole".
+struct AppProgress: Equatable {
+    enum Kind { case install, update }
+    let kind: Kind
+    let done: Int
+    let total: Int
+    let current: String
+
+    var text: String {
+        switch kind {
+        case .install: String(localized: "Installing \(done + 1) of \(total): \(current)…")
+        case .update: String(localized: "Updating \(done + 1) of \(total): \(current)…")
+        }
+    }
+}
+
 /// App-wide state that menus, toolbars, and views share.
 @Observable
 final class AppModel {
@@ -117,6 +133,11 @@ final class AppModel {
     private(set) var appsLoaded = false
     /// Apps Homebrew is installing or removing now.
     private(set) var appsWorking: Set<String> = []
+    /// Installed apps with a newer version in Homebrew.
+    private(set) var appUpdates: Set<String> = []
+    private(set) var checkingAppUpdates = false
+    /// A batch of installs or updates running now, for the progress bar.
+    private(set) var appProgress: AppProgress?
 
     init(engine: Engine, installer: AppInstaller) {
         self.engine = engine
@@ -514,18 +535,56 @@ final class AppModel {
 
     func install(_ apps: [RecommendedApp]) async {
         let installer = installer
+        let queue = apps.filter { appState($0) == .notInstalled && !appsWorking.contains($0.id) }
+        let errors = await run(queue, kind: .install) { app in try installer.install(app) }
+        if !errors.isEmpty { notice = errors.joined(separator: "\n") }
+        else if queue.contains(where: { $0.shellLine != nil }) {
+            notice = String(localized: "Installed. Open a new Terminal window to use it.")
+        }
+    }
+
+    /// Snapshot mode only: shows the progress bar without installing.
+    func showProgressForSnapshot(_ progress: AppProgress?) {
+        guard Store.isOverridden else { return }
+        appProgress = progress
+    }
+
+    /// Installed apps with an update, in catalog order.
+    var updatableApps: [RecommendedApp] { Catalog.appsHere.filter { appUpdates.contains($0.id) } }
+
+    /// Asks Homebrew which apps have a newer version. `fetch` downloads Homebrew's index first.
+    func checkAppUpdates(fetch: Bool = false) async {
+        guard apps.homebrew != nil, !checkingAppUpdates else { return }
+        let installer = installer
+        checkingAppUpdates = true
+        appUpdates = await Task.detached { installer.outdated(fetch: fetch) }.value
+        checkingAppUpdates = false
+        if fetch && appUpdates.isEmpty { notice = String(localized: "Every app installed with Homebrew is up to date.") }
+        await reloadLog()
+    }
+
+    func update(_ apps: [RecommendedApp]) async {
+        let installer = installer
+        let queue = apps.filter { appUpdates.contains($0.id) && !appsWorking.contains($0.id) }
+        let errors = await run(queue, kind: .update) { app in try installer.upgrade(app) }
+        await checkAppUpdates()
+        if !errors.isEmpty { notice = errors.joined(separator: "\n") }
+    }
+
+    /// Runs Homebrew on each app in turn, showing progress. Returns one line per failure.
+    private func run(_ queue: [RecommendedApp], kind: AppProgress.Kind,
+                     _ work: @escaping @Sendable (RecommendedApp) throws -> Void) async -> [String] {
         var errors: [String] = []
-        for app in apps where appState(app) == .notInstalled && !appsWorking.contains(app.id) {
+        for (index, app) in queue.enumerated() {
+            appProgress = queue.count > 1 ? AppProgress(kind: kind, done: index, total: queue.count, current: app.name) : nil
             appsWorking.insert(app.id)
-            do { try await Task.detached { try installer.install(app) }.value }
+            do { try await Task.detached { try work(app) }.value }
             catch { errors.append("\(app.name): \(error.localizedDescription)") }
             appsWorking.remove(app.id)
             await refreshApps()
         }
-        if !errors.isEmpty { notice = errors.joined(separator: "\n") }
-        else if apps.contains(where: { $0.shellLine != nil }) {
-            notice = String(localized: "Installed. Open a new Terminal window to use it.")
-        }
+        appProgress = nil
+        return errors
     }
 
     func uninstall(_ app: RecommendedApp) async {

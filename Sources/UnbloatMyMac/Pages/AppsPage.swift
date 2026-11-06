@@ -19,9 +19,28 @@ struct AppsPage: View {
                     .buttonStyle(.borderedProminent)
                     .disabled(model.apps.homebrew == nil || missing.isEmpty || !model.appsWorking.isEmpty)
                     .help(missing.map(\.name).joined(separator: ", "))
+                    let updates = model.updatableApps
+                    if !updates.isEmpty {
+                        Button(updates.count == 1 ? String(localized: "Update 1 App") : String(localized: "Update \(updates.count) Apps")) {
+                            Task { await model.update(updates) }
+                        }
+                        .disabled(!model.appsWorking.isEmpty)
+                        .help(updates.map(\.name).joined(separator: ", "))
+                    }
                     Spacer()
-                    Text("\(installedCount) of \(Catalog.appsHere.count) installed")
-                        .font(.callout).foregroundStyle(.secondary).monospacedDigit()
+                    if let progress = model.appProgress {
+                        HStack(spacing: Space.sm) {
+                            Text(progress.text)
+                                .font(.callout).foregroundStyle(.secondary).monospacedDigit()
+                                .lineLimit(1)
+                                .fixedSize()
+                            ProgressView(value: Double(progress.done), total: Double(progress.total))
+                                .frame(width: 96)
+                        }
+                    } else {
+                        Text("\(installedCount) of \(Catalog.appsHere.count) installed")
+                            .font(.callout).foregroundStyle(.secondary).monospacedDigit()
+                    }
                 }
             }
             if model.appsLoaded && model.apps.homebrew == nil {
@@ -54,7 +73,10 @@ struct AppsPage: View {
         }
         .formStyle(.grouped)
         .navigationTitle("Recommended Apps")
-        .task { if !model.appsLoaded { await model.refreshApps() } }
+        .task {
+            if !model.appsLoaded { await model.refreshApps() }
+            await model.checkAppUpdates()
+        }
     }
 
     private var installedCount: Int {
@@ -132,9 +154,14 @@ private struct AppRow: View {
                 }
             case .installed:
                 HStack(spacing: Space.sm) {
-                    Label("Installed", systemImage: "checkmark.circle.fill")
-                        .font(.callout)
-                        .foregroundStyle(Palette.accentText)
+                    if model.appUpdates.contains(app.id) {
+                        Button("Update") { Task { await model.update([app]) } }
+                            .help(Text(verbatim: "brew upgrade \(app.kind == .cask ? "--cask " : "")\(app.id)"))
+                    } else {
+                        Label("Installed", systemImage: "checkmark.circle.fill")
+                            .font(.callout)
+                            .foregroundStyle(Palette.accentText)
+                    }
                     Menu {
                         if let bundle = app.bundle {
                             Button("Open") { open(bundle) }

@@ -110,6 +110,13 @@ enum SelfTest {
             model.confirmInstall = nil
             await model.install(recommended)
             check("Install Recommended installs every starred app", model.missingRecommended.isEmpty && !recommended.isEmpty)
+            if let mock = model.installer.packages as? MockPackageManager, let first = recommended.first(where: \.installsWithHomebrew) {
+                mock.markOutdated(first.id)
+                await model.checkAppUpdates()
+                check("an app with a newer version shows Update", model.updatableApps.map(\.id) == [first.id])
+                await model.update(model.updatableApps)
+                check("Update All updates it", model.appUpdates.isEmpty && model.appProgress == nil)
+            }
             check("tools with a shell line are turned on in ~/.zshrc",
                   recommended.filter { $0.shellLine != nil }.allSatisfy { model.apps.inShell.contains($0.id) })
             model.notice = nil

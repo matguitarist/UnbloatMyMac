@@ -86,6 +86,12 @@ struct UnbloatMyMacApp: App {
                 Button("Install Recommended Apps…") { model.reviewInstallRecommended() }
                     .keyboardShortcut("i", modifiers: [.command, .option])
                     .disabled(model.apps.homebrew == nil || model.missingRecommended.isEmpty || !model.appsWorking.isEmpty)
+                Button("Check for App Updates") { model.sidebar = .apps; Task { await model.checkAppUpdates(fetch: true) } }
+                    .keyboardShortcut("u", modifiers: [.command, .option])
+                    .disabled(model.apps.homebrew == nil || model.checkingAppUpdates || !model.appsWorking.isEmpty)
+                Button("Update All Apps") { model.sidebar = .apps; Task { await model.update(model.updatableApps) } }
+                    .keyboardShortcut("u", modifiers: [.command, .option, .shift])
+                    .disabled(model.updatableApps.isEmpty || !model.appsWorking.isEmpty)
                 Button("Undo Everything…") { model.sidebar = .history; model.confirmUndoAll = true }
                     .keyboardShortcut("z", modifiers: [.command, .option])
                     .disabled(model.applied.isEmpty && model.launchItemsDisabledByApp.isEmpty)

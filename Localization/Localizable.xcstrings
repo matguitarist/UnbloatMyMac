@@ -3142,16 +3142,6 @@
         }
       }
     },
-    "**General**: the app's language, advanced tweaks, restarting the Dock and Finder after applying, and where the undo journal is kept.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Général** : la langue de l’app, les réglages avancés, le redémarrage du Dock et du Finder après application, et l’emplacement de l’historique d’annulation."
-          }
-        }
-      }
-    },
     "**Appearance**: light or dark mode, and the accent color.": {
       "localizations": {
         "fr": {
@@ -3738,6 +3728,126 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rechercher maintenant"
+          }
+        }
+      }
+    },
+    "**Backup**: back up and restore settings, and where the undo journal is kept.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Sauvegarde** : sauvegarder et restaurer les réglages, et l’emplacement du journal d’annulation."
+          }
+        }
+      }
+    },
+    "**General**: the app's language, advanced tweaks, and restarting the Dock and Finder after applying.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Général** : la langue de l’app, les réglages avancés et le redémarrage du Dock et du Finder après application."
+          }
+        }
+      }
+    },
+    "**Updates**: automatic update checks, the version, and **Check Now**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Mises à jour** : la recherche automatique, la version et **Rechercher maintenant**."
+          }
+        }
+      }
+    },
+    "Check for App Updates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher les mises à jour des apps"
+          }
+        }
+      }
+    },
+    "Every app installed with Homebrew is up to date.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toutes les apps installées avec Homebrew sont à jour."
+          }
+        }
+      }
+    },
+    "Installing %lld of %lld: %@…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installation %lld sur %lld : %@…"
+          }
+        }
+      }
+    },
+    "Update": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mettre à jour"
+          }
+        }
+      }
+    },
+    "Update %lld Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mettre à jour %lld apps"
+          }
+        }
+      }
+    },
+    "Update 1 App": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mettre à jour 1 app"
+          }
+        }
+      }
+    },
+    "Update All Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mettre à jour toutes les apps"
+          }
+        }
+      }
+    },
+    "Updating %lld of %lld: %@…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mise à jour %lld sur %lld : %@…"
+          }
+        }
+      }
+    },
+    "When Homebrew has a newer version of an app it installed, its row shows **Update**, and **Update N Apps** updates them all. **Changes > Check for App Updates** (⌥⌘U) asks Homebrew for the latest versions first. Apps that update themselves are left to do so.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quand Homebrew a une version plus récente d’une app qu’il a installée, sa ligne affiche **Mettre à jour**, et **Mettre à jour N apps** les met toutes à jour. **Modifications > Rechercher les mises à jour des apps** (⌥⌘U) demande d’abord les dernières versions à Homebrew. Les apps qui se mettent à jour seules s’en chargent."
           }
         }
       }

@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Builds a notarized release zip and drafts a GitHub release.
+# Builds a notarized release zip and the Sparkle appcast, then prints the publish command.
 # Usage: tools/release.sh 0.1.0
 # Needs once: a "Developer ID Application" certificate in the keychain, and
 #   xcrun notarytool store-credentials UnbloatMyMac --apple-id <id> --team-id <team>
@@ -52,7 +52,9 @@ else
 fi
 
 git -C "$here" commit -qam "Release $version" || true
-git -C "$here" tag "v$version"
+git -C "$here" tag -a "v$version" -m "$name $version"
 echo "Built $zip"
 assets=("$zip"); [[ -f "$dist/appcast.xml" ]] && assets+=("$dist/appcast.xml")
-echo "Next: git push --follow-tags && gh release create v$version ${assets[*]} --draft --generate-notes --title '$name $version'"
+# Not a draft: Sparkle reads releases/latest, which skips drafts, and the repo
+# must stay public for the feed and the zip to download.
+echo "Next: git push --follow-tags && gh release create v$version ${assets[*]} --generate-notes --title '$name $version'"

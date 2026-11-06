@@ -3961,6 +3961,86 @@
           }
         }
       }
+    },
+    "Before any change, the value from before is saved in the undo journal.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avant chaque modification, la valeur d’origine est enregistrée dans le journal d’annulation."
+          }
+        }
+      }
+    },
+    "Click **ⓘ** next to a tweak's name to see the exact commands it runs, such as **defaults write**, and how undo puts each one back. **Copy Commands** copies them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cliquez sur **ⓘ** à côté du nom d’un réglage pour voir les commandes exactes qu’il exécute, comme **defaults write**, et comment l’annulation remet chacune en place. **Copier les commandes** les copie."
+          }
+        }
+      }
+    },
+    "Copy Commands": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier les commandes"
+          }
+        }
+      }
+    },
+    "Details for %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Détails de %@"
+          }
+        }
+      }
+    },
+    "How undo puts it back": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comment l’annulation le remet"
+          }
+        }
+      }
+    },
+    "What %@ changes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce que change %@"
+          }
+        }
+      }
+    },
+    "What a tweak changes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce que change un réglage"
+          }
+        }
+      }
+    },
+    "What it changes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce qu’il change"
+          }
+        }
+      }
     }
   }
 }

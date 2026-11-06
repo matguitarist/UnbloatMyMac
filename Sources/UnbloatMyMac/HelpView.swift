@@ -107,6 +107,9 @@ struct HelpView: View {
                 "**Restarts Dock** or **Finder**: the screen may flicker once.",
                 "**Advanced**: stops system services, and some features stop working until you undo it. Hidden unless you turn them on in **Settings > General**.",
             ])
+            HelpSection("What a tweak changes") {
+                HelpText("Click **ⓘ** next to a tweak's name to see the exact commands it runs, such as **defaults write**, and how undo puts each one back. **Copy Commands** copies them.")
+            }
             HelpSection("Presets") {
                 HelpText("**Recommended**, **Maximum Privacy**, **Performance Boost**, and **Windows Mode** stage a set of tweaks at once. They only stage what is not applied yet, and you still review before anything changes. Find them on the **Overview** and in **Changes > Add Preset**.")
             }

@@ -207,6 +207,16 @@ func exportImport() throws {
     #expect(throws: (any Error).self) { try TweakSet.read(Data("{}".utf8)) }
 }
 
+@Test("Every tweak can say what it runs and how undo puts it back")
+func actionLines() throws {
+    for tweak in Catalog.tweaks {
+        #expect(!tweak.actions.isEmpty, "\(tweak.id)")
+        for action in tweak.actions { #expect(!action.applyLine.isEmpty && !action.undoLine.isEmpty, "\(tweak.id)") }
+    }
+    #expect(Action.set("com.apple.dock", "show-recents", false).applyLine == "defaults write com.apple.dock show-recents -bool false")
+    #expect(Action.set("NSGlobalDomain", "x", 2, currentHost: true).applyLine == "defaults -currentHost write NSGlobalDomain x -int 2")
+}
+
 @Test("A settings backup keeps the app's preferences, and a tweaks-only file still reads")
 func settingsBackup() throws {
     let (engine, _) = makeEngine()

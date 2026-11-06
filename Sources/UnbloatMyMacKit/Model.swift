@@ -78,6 +78,42 @@ public enum Action: Hashable, Sendable {
     /// Bindings from every applied tweak share the file; the original comes back when none is left.
     case keyBindings([String: String])
 
+    /// What the action does, as the command to run it or a short technical line. English, like the Activity Log.
+    public var applyLine: String {
+        switch self {
+        case .pref(let key, let value):
+            "defaults \(key.currentHost ? "-currentHost " : "")write \(key.domain) \(key.key) \(Self.typed(value))"
+        case .agent(let label): "launchctl disable gui/$UID/\(label)"
+        case .restriction(let key): "Configuration profile restriction: \(key) = false"
+        case .command(let command): command.admin ? "sudo sh -c '\(command.apply)'" : command.apply
+        case .file(let path, _): "Write \(path)"
+        case .keyBindings(let bindings):
+            "Key bindings in ~/Library/KeyBindings/DefaultKeyBinding.dict: "
+                + bindings.sorted { $0.key < $1.key }.map { "\($0.key) → \($0.value)" }.joined(separator: ", ")
+        }
+    }
+
+    /// How undo puts it back.
+    public var undoLine: String {
+        switch self {
+        case .pref(let key, _): "defaults \(key.currentHost ? "-currentHost " : "")write \(key.domain) \(key.key) <value from before> (or delete)"
+        case .agent(let label): "launchctl enable gui/$UID/\(label)"
+        case .restriction: "Remove the restriction from the profile (the profile goes when it is empty)"
+        case .command(let command): command.admin ? "sudo sh -c '\(command.revert)'" : command.revert
+        case .file(let path, _): "Restore \(path) from before"
+        case .keyBindings: "Restore DefaultKeyBinding.dict from before when no key binding tweak is left"
+        }
+    }
+
+    static func typed(_ value: PrefValue) -> String {
+        switch value {
+        case .bool(let b): "-bool \(b)"
+        case .int(let i): "-int \(i)"
+        case .double(let d): "-float \(d)"
+        case .string(let s): "-string \"\(s)\""
+        }
+    }
+
     public static func set(_ domain: String, _ key: String, _ value: PrefValue, currentHost: Bool = false) -> Action {
         .pref(PrefKey(domain, key, currentHost: currentHost), value)
     }

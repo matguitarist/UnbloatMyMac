@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 import UnbloatMyMacKit
 
@@ -69,6 +70,20 @@ struct TweakRow: View {
             VStack(alignment: .leading, spacing: Space.xs) {
                 HStack(spacing: Space.sm) {
                     Text(tweak.title)
+                    Button {
+                        model.detailsTweak = tweak.id
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .buttonStyle(.borderless)
+                    .foregroundStyle(.secondary)
+                    .help("What \(tweak.title) changes")
+                    .accessibilityLabel("Details for \(tweak.title)")
+                    .popover(isPresented: Binding(get: { model.detailsTweak == tweak.id },
+                                                  set: { if !$0 { model.detailsTweak = nil } }),
+                             arrowEdge: .bottom) {
+                        TweakDetails(tweak: tweak)
+                    }
                     if staged {
                         Text(model.switchIsOn(tweak) ? "Will turn on" : "Will turn off")
                             .font(.caption.weight(.medium))
@@ -130,6 +145,56 @@ struct TweakRow: View {
     private func help(_ status: TweakStatus) -> String {
         if case .unavailable(let reason) = status { return reason }
         return tweak.namesFeature ? String(localized: "Turn \(tweak.title) on or off") : String(localized: "Turn on to apply, off to undo")
+    }
+}
+
+/// What a tweak changes: each command it runs and how undo puts it back.
+struct TweakDetails: View {
+    @Environment(AppModel.self) private var model
+    let tweak: Tweak
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Space.md) {
+            VStack(alignment: .leading, spacing: Space.xs) {
+                Text(tweak.title).font(.headline)
+                Text(tweak.detail)
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            lines(String(localized: "What it changes"), tweak.actions.map(\.applyLine))
+            lines(String(localized: "How undo puts it back"), tweak.actions.map(\.undoLine))
+            Text("Before any change, the value from before is saved in the undo journal.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            HStack {
+                Text(verbatim: tweak.id)
+                    .font(.caption.monospaced())
+                    .foregroundStyle(.secondary)
+                    .textSelection(.enabled)
+                Spacer()
+                Button("Copy Commands") {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(tweak.actions.map(\.applyLine).joined(separator: "\n"), forType: .string)
+                }
+            }
+        }
+        .padding(Space.lg)
+        .frame(width: 480)
+        .noInitialFocus()
+    }
+
+    private func lines(_ title: String, _ lines: [String]) -> some View {
+        VStack(alignment: .leading, spacing: Space.xs) {
+            Text(title).font(.subheadline.weight(.semibold))
+            ForEach(Array(lines.enumerated()), id: \.offset) { _, line in
+                Text(verbatim: line)
+                    .font(.callout.monospaced())
+                    .textSelection(.enabled)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
     }
 }
 

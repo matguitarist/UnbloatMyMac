@@ -1,6 +1,7 @@
 import AppKit
 import IOKit.pwr_mgt
 import SwiftUI
+import UnbloatMyMacKit
 
 /// Screenshot mode for agents.
 ///   APP_STORE=/tmp/test.store APP_SNAPSHOT=/tmp/shots ~/Applications/UnbloatMyMac.app/Contents/MacOS/UnbloatMyMac
@@ -59,6 +60,19 @@ enum Snapshot {
                     capture(to: "\(dir)/apps-progress-\(mode).png")
                 }
                 model.showProgressForSnapshot(nil)
+            }
+            if only == nil || only?.contains("details") == true, let tweak = Catalog.tweaks.first(where: { $0.category == .dock }) {
+                model.sidebar = .category(.dock)
+                try? await Task.sleep(for: .seconds(0.8))
+                for mode in ["light", "dark"] {
+                    NSApp.appearance = NSAppearance(named: mode == "light" ? .aqua : .darkAqua)
+                    model.detailsTweak = tweak.id
+                    try? await Task.sleep(for: .seconds(1))
+                    let popover = NSApp.windows.first { $0.isVisible && $0.className.contains("Popover") }
+                    capture(to: "\(dir)/details-\(mode).png", window: popover)
+                    model.detailsTweak = nil
+                    try? await Task.sleep(for: .seconds(0.6))
+                }
             }
             if only == nil || only?.contains("install") == true {
                 for mode in ["light", "dark"] {

@@ -94,6 +94,8 @@ final class AppModel {
     /// Changes waiting for Review: tweak id -> apply (true) or undo (false).
     var staged: [String: Bool] = [:]
     var showReview = false
+    /// The tweak whose details popover is open.
+    var detailsTweak: String?
     var confirmUndoAll = false
     /// Apps the Install Recommended sheet lists, or nil when it is closed.
     var confirmInstall: [RecommendedApp]?

@@ -6,18 +6,21 @@ let package = Package(
     platforms: [.macOS(.v26)],
     dependencies: [
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0"),
+        // The Activity Log's viewer, shared by my Mac apps.
+        .package(url: "https://github.com/matguitarist/LogKit", from: "0.5.0"),
     ],
     targets: [
         // Rules and data logic with no SwiftUI, so tests run without the app.
-        .target(name: "UnbloatMyMacKit"),
+        .target(name: "UnbloatMyMacKit", dependencies: [.product(name: "LogKit", package: "LogKit")]),
         .executableTarget(
             name: "UnbloatMyMac",
-            dependencies: ["UnbloatMyMacKit", .product(name: "Sparkle", package: "Sparkle")],
+            dependencies: ["UnbloatMyMacKit", .product(name: "Sparkle", package: "Sparkle"),
+                           .product(name: "LogKitUI", package: "LogKit")],
             // App code runs on the main thread unless you say otherwise.
             swiftSettings: [.defaultIsolation(MainActor.self)],
             // Sparkle.framework sits in Contents/Frameworks (build.sh copies it).
             linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]
         ),
-        .testTarget(name: "UnbloatMyMacKitTests", dependencies: ["UnbloatMyMacKit"]),
+        .testTarget(name: "UnbloatMyMacKitTests", dependencies: ["UnbloatMyMacKit", .product(name: "LogKit", package: "LogKit")]),
     ]
 )

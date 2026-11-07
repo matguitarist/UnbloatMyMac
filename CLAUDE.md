@@ -28,6 +28,7 @@ typing, and a Windows Mode, plus Background Items, Storage cleanup, and History.
 - `Sources/UnbloatMyMacKit/` rules and data logic with no SwiftUI. Tests in `Tests/UnbloatMyMacKitTests/`.
 - `Package.swift` a Swift package. There is no Xcode project.
 - `build.sh` builds, signs, and installs `~/Applications/UnbloatMyMac.app`.
+- `tools/release.sh <version>` makes a Developer ID, notarized DMG, the Sparkle zip and a signed appcast, and publishes them as a GitHub release (`--local` builds without publishing, `--check` only checks). The script is the same in every app; what's specific to this one is in `release.conf`. Notes come from `release-notes/<version>.md`, or are drafted from the commits since the last tag. The version lives in `Info.plist.in`.
 - `Icon/AppIcon.icon` the app icon, an Icon Composer file (JSON plus SVG layers). `build.sh` compiles it with `tools/make_icon.sh`; `tools/icon_review.sh` renders every look into one PNG.
 - `docs/` the brief, the screen index, and the user stories, when they exist.
 

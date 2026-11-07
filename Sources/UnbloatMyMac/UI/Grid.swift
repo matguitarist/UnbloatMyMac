@@ -15,7 +15,19 @@ enum Space {
     static let margin: CGFloat = 20
 }
 
+/// Corner radii. Cards on a page use `card`, banners `banner`, small swatches `control`.
+enum Radius {
+    static let control: CGFloat = 8
+    static let banner: CGFloat = 12
+    static let card: CGFloat = 16
+}
+
 extension View {
+    /// The quiet fill behind a card or banner on a page.
+    func cardBackground(_ radius: CGFloat = Radius.card, highlighted: Bool = false) -> some View {
+        background(.quaternary.opacity(highlighted ? 0.6 : 0.25), in: .rect(cornerRadius: radius, style: .continuous))
+    }
+
     /// Marks an area (a page, a card, a sheet). Probes inside it must sit on
     /// the 4 pt grid and at least `inset` from its edges.
     func gridArea(_ name: String, inset: CGFloat = Space.margin) -> some View {
@@ -138,10 +150,4 @@ struct GridOverlay: View {
         }
         .allowsHitTesting(false)
     }
-}
-
-/// Corner radii for custom cards and icon tiles.
-enum Radius {
-    static let card: CGFloat = 12
-    static let tile: CGFloat = 8
 }

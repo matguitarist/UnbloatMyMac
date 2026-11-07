@@ -1,4 +1,5 @@
 import Foundation
+import LogKit
 import Synchronization
 
 /// How much a log line matters, from routine detail to a failure.
@@ -118,7 +119,7 @@ public final class ActivityLog: Sendable {
         return encoder
     }()
 
-    private static let decoder: JSONDecoder = {
+    fileprivate static let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
         return decoder
@@ -277,5 +278,57 @@ public struct LogFilter: Equatable, Sendable {
         guard !words.isEmpty else { return true }
         let text = entry.message + " " + (entry.detail ?? "") + " " + entry.source.rawValue
         return words.allSatisfy { text.localizedStandardContains($0) }
+    }
+}
+
+// MARK: LogKit
+
+/// activity.log for LogKit's viewer: one entry per JSON line, with its command or value as the entry's detail.
+/// A line from the command line tool ends in "(command line)", as in Copy and Export.
+public struct ActivityLogParser: LogKit.LogParser {
+    private let sourceTitle: @Sendable (LogSource) -> String
+    private let now: @Sendable () -> Date
+
+    /// - Parameter sourceTitle: the name the viewer shows for a source ("Preferences" for `.settings`).
+    public init(sourceTitle: @escaping @Sendable (LogSource) -> String = { $0.rawValue },
+                now: @escaping @Sendable () -> Date = { .now }) {
+        self.sourceTitle = sourceTitle
+        self.now = now
+    }
+
+    public func parse(_ text: String) -> LogKit.LogDocument {
+        let today = now()
+        var entries: [LogKit.LogEntry] = []
+        LogKit.LogLines.forEach(in: text) { line in
+            guard !line.isEmpty, let entry = try? ActivityLog.decoder.decode(LogEntry.self, from: Data(line.utf8)) else { return }
+            entries.append(entry.logKitEntry(id: entries.count, title: sourceTitle(entry.source), today: today))
+        }
+        return LogKit.LogDocument(entries: entries)
+    }
+
+    /// "14:05:09" today, "Nov 5, 14:05" on an earlier day (as the Activity Log showed them).
+    static func time(_ date: Date, today: Date) -> String {
+        Calendar.current.isDate(date, inSameDayAs: today)
+            ? date.formatted(.dateTime.hour(.twoDigits(amPM: .omitted)).minute(.twoDigits).second(.twoDigits))
+            : date.formatted(.dateTime.month(.abbreviated).day().hour(.twoDigits(amPM: .omitted)).minute(.twoDigits))
+    }
+}
+
+extension LogEntry {
+    /// The same line as LogKit shows it.
+    public func logKitEntry(id: Int, title: String, today: Date = .now) -> LogKit.LogEntry {
+        LogKit.LogEntry(id: id, time: ActivityLogParser.time(date, today: today), level: level.logKitLevel, source: title,
+                        message: origin == .commandLine ? message + " (command line)" : message, detail: detail)
+    }
+}
+
+extension LogLevel {
+    public var logKitLevel: LogKit.LogLevel {
+        switch self {
+        case .debug: .debug
+        case .info: .info
+        case .warning: .warning
+        case .error: .error
+        }
     }
 }

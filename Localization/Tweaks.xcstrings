@@ -1092,12 +1092,12 @@
         }
       }
     },
-    "Disk images and installer packages over 20 MB left after you installed the app. Ones you made yourself are listed but not picked.": {
+    "Disk images and installer packages over 20 MB left in Downloads or on the Desktop after you installed the app. Ones you made yourself are listed but not picked.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Images disque et paquets d’installation de plus de 20 Mo restés après l’installation de l’app. Ceux que vous avez créés sont listés mais pas choisis."
+            "value": "Images disque et paquets d’installation de plus de 20 Mo restés dans Téléchargements ou sur le Bureau après l’installation de l’app. Ceux que vous avez créés sont listés mais pas choisis."
           }
         }
       }
@@ -1972,16 +1972,6 @@
         }
       }
     },
-    "Installers in Downloads": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installateurs dans Téléchargements"
-          }
-        }
-      }
-    },
     "Instant Dock Reveal": {
       "localizations": {
         "fr": {
@@ -2438,6 +2428,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rien ne change pour les développeurs."
+          }
+        }
+      }
+    },
+    "Old Installers": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anciens installateurs"
           }
         }
       }

@@ -386,7 +386,7 @@ final class AppModel {
         if found.isEmpty {
             notice = target.kind == .buildArtifacts
                 ? String(localized: "No build files found in Developer, Projects, Code, or src.")
-                : String(localized: "No installers found in Downloads. Ones from the last day are left out, since you may still be using them.")
+                : String(localized: "No installers found in Downloads or on the Desktop. Ones from the last day are left out, since you may still be using them.")
         } else {
             filesToReview = ReviewFileList(target: target, items: found)
         }

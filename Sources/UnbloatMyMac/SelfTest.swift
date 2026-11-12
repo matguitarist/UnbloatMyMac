@@ -174,8 +174,8 @@ enum SelfTest {
             await model.reviewFiles("oldInstallers")
             let installers = model.filesToReview?.items ?? []
             model.filesToReview = nil
-            check("Installers in Downloads suggests downloaded ones, not a disk image you made",
-                  installers.count == 3 && installers.filter { !$0.suggested }.map(\.name) == ["Old Photos Backup.dmg"])
+            check("Old Installers suggests downloaded ones in Downloads and on the Desktop, not a disk image you made",
+                  installers.count == 4 && installers.filter { !$0.suggested }.map(\.name) == ["Old Photos Backup.dmg"])
 
             await model.reviewLeftovers()
             let leftovers = model.leftoversToReview ?? []

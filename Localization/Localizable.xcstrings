@@ -2502,12 +2502,12 @@
         }
       }
     },
-    "No installers found in Downloads. Ones from the last day are left out, since you may still be using them.": {
+    "No installers found in Downloads or on the Desktop. Ones from the last day are left out, since you may still be using them.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aucun installateur dans Téléchargements. Ceux du dernier jour sont écartés, vous les utilisez peut-être encore."
+            "value": "Aucun installateur dans Téléchargements ni sur le Bureau. Ceux du dernier jour sont écartés, vous les utilisez peut-être encore."
           }
         }
       }
@@ -3142,22 +3142,22 @@
         }
       }
     },
-    "Review Installers in Downloads…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vérifier les installateurs dans Téléchargements…"
-          }
-        }
-      }
-    },
     "Review Leftovers from Deleted Apps…": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Passer en revue les restes d’apps supprimées…"
+          }
+        }
+      }
+    },
+    "Review Old Installers…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier les anciens installateurs…"
           }
         }
       }

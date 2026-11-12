@@ -321,7 +321,7 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
         case leftovers
         /// Xcode's DeviceSupport versions. Reviewed, with the newest of each device kept by default.
         case deviceSupport
-        /// Disk images and installer packages left in Downloads (`InstallerFinder`). Reviewed.
+        /// Disk images and installer packages left in Downloads or on the Desktop (`InstallerFinder`). Reviewed.
         case installers
         /// What builds left in your projects (`BuildArtifactFinder`). Reviewed.
         case buildArtifacts

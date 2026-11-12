@@ -248,7 +248,7 @@ func protectedPaths() {
     }
 }
 
-@Test("Installers in Downloads: big, a day old, not open, and suggested only when downloaded")
+@Test("Old installers: big, a day old, not open, and suggested only when downloaded")
 func installerRules() {
     let old = Date(timeIntervalSinceNow: -3 * 24 * 3600)
     func item(_ name: String, bytes: Int64 = 100_000_000, modified: Date = old, downloaded: Bool = true, mounted: Set<String> = []) -> ReviewItem? {
@@ -264,6 +264,7 @@ func installerRules() {
     #expect(item("Open.dmg", mounted: ["/Users/me/Downloads/Open.dmg"]) == nil)
     let info = "================================================\nimage-path      : /Users/me/Downloads/Open.dmg\nimage-alias     : /Users/me/Downloads/Open.dmg\n"
     #expect(InstallerFinder.mounted(fromHdiutil: info) == ["/Users/me/Downloads/Open.dmg"])
+    #expect(InstallerFinder.folders == ["~/Downloads", "~/Desktop"])
 }
 
 @Test("Build folders are found only beside their tool's file, and recent projects are not suggested")

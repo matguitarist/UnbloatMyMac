@@ -164,6 +164,8 @@ public final class MockBackend: SystemBackend {
                 ReviewItem(path: downloads + "/Old Photos Backup.dmg", group: downloads, name: "Old Photos Backup.dmg", detail: L("Disk image"),
                            bytes: 2_400_000_000, modified: Date(timeIntervalSinceNow: -400 * day), suggested: false,
                            note: L("Not downloaded from the web, so it may be a disk image you made. Look before you pick it.")),
+                ReviewItem(path: "~/Desktop/Figma.dmg", group: "~/Desktop", name: "Figma.dmg", detail: L("Disk image"),
+                           bytes: 210_000_000, modified: Date(timeIntervalSinceNow: -12 * day), suggested: true),
             ]
             s.reviewItems["buildArtifacts"] = [
                 BuildArtifactFinder.item(path: "/Users/me/Developer/RustTool/target", project: "/Users/me/Developer/RustTool",

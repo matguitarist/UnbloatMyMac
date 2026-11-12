@@ -35,9 +35,9 @@ public struct ReviewItem: Identifiable, Hashable, Sendable {
     }
 }
 
-/// Disk images and installer packages left in Downloads after the app was installed.
+/// Disk images and installer packages left in Downloads or on the Desktop after the app was installed.
 public enum InstallerFinder {
-    public static let folders = ["~/Downloads"]
+    public static let folders = ["~/Downloads", "~/Desktop"]
     static let extensions: Set<String> = ["dmg", "pkg", "mpkg"]
     /// Smaller ones are not worth a row.
     public static let minimumBytes: Int64 = 20_000_000

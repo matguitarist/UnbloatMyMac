@@ -201,7 +201,8 @@ struct StoragePage: View {
                     .help("macOS removes these when you turn off Apple Intelligence")
             } else if target.listsReviewItems {
                 Button("Review…") { Task { await model.reviewFiles(target.id) } }
-                    .disabled((size.map { $0.isEmpty && $0.kept == 0 } ?? true) || model.isBusy)
+                    // Build files opens with nothing found, so folders can be added there.
+                    .disabled(target.kind != .buildArtifacts && (size.map { $0.isEmpty && $0.kept == 0 } ?? true) || model.isBusy)
                     .help(target.kind == .buildArtifacts
                           ? "Pick which build folders move to the Trash (Shift-Option-Command-B)"
                           : "Pick which installers move to the Trash (Shift-Option-Command-I)")

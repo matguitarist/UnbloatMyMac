@@ -174,6 +174,17 @@ enum SelfTest {
                 check("moving build folders to the Trash leaves the recent project's",
                       model.sizes["buildArtifacts"]?.items == 0 && model.sizes["buildArtifacts"]?.kept == 3)
             }
+            let refused = await model.addProjectFolder(NSHomeDirectory() + "/Library/Caches")
+            check("Library can't be added as a project folder", refused != nil && model.projectFolders.isEmpty)
+            await model.addProjectFolder(NSHomeDirectory() + "/Documents/Rust")
+            check("an added project folder is searched and listed in the sheet",
+                  model.projectFolders == ["~/Documents/Rust"] && model.searchedProjectFolders.contains("~/Documents/Rust")
+                  && model.filesToReview?.items.contains { $0.group == "~/Documents/Rust/Parser" } == true)
+            await model.removeProjectFolder("~/Documents/Rust")
+            check("removing it stops the search there",
+                  model.projectFolders.isEmpty && model.filesToReview?.items.contains { $0.group.hasPrefix("~/Documents") } == false)
+            model.filesToReview = nil
+
             await model.reviewFiles("oldInstallers")
             let installers = model.filesToReview?.items ?? []
             model.filesToReview = nil

@@ -2142,6 +2142,16 @@
         }
       }
     },
+    "Library and hidden folders hold what apps and tools keep, not projects.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Library et les dossiers cachés contiennent ce que gardent les apps et les outils, pas des projets."
+          }
+        }
+      }
+    },
     "List View by Default": {
       "localizations": {
         "fr": {
@@ -4722,6 +4732,16 @@
         }
       }
     },
+    "macOS keeps its own files there, not projects.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS y garde ses propres fichiers, pas des projets."
+          }
+        }
+      }
+    },
     "macOS protects this setting. Give UnbloatMyMac Full Disk Access in System Settings > Privacy & Security, then try again.": {
       "localizations": {
         "fr": {
@@ -4772,12 +4792,12 @@
         }
       }
     },
-    "node_modules, target, .build, and other folders builds leave in your projects in Developer, Projects, Code, or src. Projects you changed in the last week are listed but not picked.": {
+    "node_modules, target, .build, and other folders builds leave in your projects in Developer, Projects, Code, src, or folders you add. Projects you changed in the last week are listed but not picked.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "node_modules, target, .build et les autres dossiers que les compilations laissent dans vos projets de Developer, Projects, Code ou src. Les projets modifiés cette semaine sont listés mais pas choisis."
+            "value": "node_modules, target, .build et les autres dossiers que les compilations laissent dans vos projets de Developer, Projects, Code, src ou des dossiers que vous ajoutez. Les projets modifiés cette semaine sont listés mais pas choisis."
           }
         }
       }

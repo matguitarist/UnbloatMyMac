@@ -256,7 +256,7 @@ public final class MacBackend: SystemBackend {
             return CleanupSize(bytes: found.reduce(0) { $0 + $1.bytes }, items: found.count)
         }
         if target.kind == .deviceSupport { return DeviceSupportFinder.size(of: deviceSupport()) }
-        if target.listsReviewItems { return ReviewItem.size(of: reviewItems(target)) }
+        if target.listsReviewItems { return ReviewItem.size(of: reviewItems(target, projectFolders: BuildArtifactFinder.roots)) }
         let urls = items(of: target)
         return CleanupSize(bytes: urls.reduce(0) { $0 + size(of: $1) }, items: urls.count)
     }
@@ -380,7 +380,7 @@ public final class MacBackend: SystemBackend {
 
     // MARK: Installers and build artifacts
 
-    public func reviewItems(_ target: CleanupTarget) -> [ReviewItem] {
+    public func reviewItems(_ target: CleanupTarget, projectFolders: [String]) -> [ReviewItem] {
         switch target.kind {
         case .installers:
             let mounted = InstallerFinder.mounted(fromHdiutil: execute("/usr/bin/hdiutil", ["info"]).output)
@@ -388,7 +388,7 @@ public final class MacBackend: SystemBackend {
                 installerCandidates(in: expand(folder)).compactMap { installer($0, folder: folder, mounted: mounted) }
             }.sorted { $0.bytes > $1.bytes }
         case .buildArtifacts:
-            return BuildArtifactFinder.roots.map(expand).filter(isDirectory).flatMap { root in
+            return projectFolders.map(expand).filter(isDirectory).flatMap { root in
                 BuildArtifactFinder.find(in: root, list: listFolder).flatMap { found -> [ReviewItem] in
                     let changed = lastChange(ofProject: found.project)
                     guard found.rule.folder == "target" else {
@@ -412,10 +412,10 @@ public final class MacBackend: SystemBackend {
         }
     }
 
-    public func trash(_ items: [ReviewItem], from target: CleanupTarget) throws {
+    public func trash(_ items: [ReviewItem], from target: CleanupTarget, projectFolders: [String]) throws {
         // Each item must still be what it was listed as: an installer that is not open, or a folder with its tool's file beside it.
         let mounted = InstallerFinder.mounted(fromHdiutil: execute("/usr/bin/hdiutil", ["info"]).output)
-        let roots = BuildArtifactFinder.roots.map { expand($0) + "/" }
+        let roots = projectFolders.map { ProtectedPaths.clean(expand($0)) + "/" }
         let urls = ReviewItem.outermost(items).map { URL(fileURLWithPath: expand($0.path)).standardizedFileURL }
         let valid = urls.allSatisfy { url in
             let parent = url.deletingLastPathComponent().path
@@ -666,7 +666,7 @@ public extension Catalog {
                       detail: "Debug symbols Xcode copies from each iPhone, iPad, and Watch version you connect. The newest for each device stays unless you pick it.",
                       symbol: "iphone", kind: .deviceSupport, group: .developer),
         CleanupTarget(id: "buildArtifacts", title: "Project Build Files",
-                      detail: "node_modules, target, .build, and other folders builds leave in your projects in Developer, Projects, Code, or src. Projects you changed in the last week are listed but not picked.",
+                      detail: "node_modules, target, .build, and other folders builds leave in your projects in Developer, Projects, Code, src, or folders you add. Projects you changed in the last week are listed but not picked.",
                       symbol: "folder.badge.gearshape", kind: .buildArtifacts, group: .developer),
         CleanupTarget(id: "simulatorCaches", title: "Simulator Caches", detail: "Caches the iOS Simulator rebuilds when it starts.",
                       symbol: "ipad.and.iphone", kind: .contents(["~/Library/Developer/CoreSimulator/Caches"]), group: .developer),

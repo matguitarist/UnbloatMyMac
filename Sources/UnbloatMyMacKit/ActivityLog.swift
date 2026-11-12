@@ -279,16 +279,16 @@ public final class LoggingBackend: SystemBackend {
         }
     }
 
-    public func reviewItems(_ target: CleanupTarget) -> [ReviewItem] {
-        let found = base.reviewItems(target)
+    public func reviewItems(_ target: CleanupTarget, projectFolders: [String]) -> [ReviewItem] {
+        let found = base.reviewItems(target, projectFolders: projectFolders)
         log.add(.debug, .storage, "Found \(found.count) items for \(target.id)", detail: found.map(\.path).joined(separator: "\n"))
         return found
     }
 
-    public func trash(_ items: [ReviewItem], from target: CleanupTarget) throws {
+    public func trash(_ items: [ReviewItem], from target: CleanupTarget, projectFolders: [String]) throws {
         let paths = items.map(\.path).joined(separator: "\n")
         do {
-            try base.trash(items, from: target)
+            try base.trash(items, from: target, projectFolders: projectFolders)
             log.add(.info, .storage, "Moved \(items.count) items of \(target.id) to the Trash", detail: paths)
         } catch {
             log.add(.error, .storage, "Could not move items of \(target.id) to the Trash: \(error.localizedDescription)", detail: paths)

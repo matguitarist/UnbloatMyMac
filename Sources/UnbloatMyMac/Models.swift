@@ -170,6 +170,55 @@ final class AppModel {
     init(engine: Engine, installer: AppInstaller) {
         self.engine = engine
         self.installer = installer
+        engine.projectFolders = projectFolders
+    }
+
+    /// Folders the person added for Project Build Files. Kept in memory only on a pretend Mac.
+    var projectFolders: [String] = Store.isOverridden ? [] : UserDefaults.standard.stringArray(forKey: "projectFolders") ?? [] {
+        didSet {
+            engine.projectFolders = projectFolders
+            if !Store.isOverridden { UserDefaults.standard.set(projectFolders, forKey: "projectFolders") }
+        }
+    }
+
+    /// The folders Project Build Files searches: the usual ones that exist here, and every one the person added.
+    var searchedProjectFolders: [String] {
+        let added = Set(projectFolders)
+        return engine.projectSearchRoots.filter { added.contains($0) || FileManager.default.fileExists(atPath: ($0 as NSString).expandingTildeInPath) }
+    }
+
+    /// Adds a folder to Project Build Files and searches again. Returns why it was refused, if it was.
+    @discardableResult
+    func addProjectFolder(_ path: String) async -> String? {
+        if let refusal = BuildArtifactFinder.refusal(forFolder: path) { return refusal }
+        let folder = BuildArtifactFinder.abbreviate(path)
+        guard !engine.projectSearchRoots.contains(folder) else { return nil }
+        projectFolders.append(folder)
+        log?.add(.info, .storage, "Added \(folder) to the folders Project Build Files searches")
+        await reviewFiles("buildArtifacts")
+        return nil
+    }
+
+    func removeProjectFolder(_ folder: String) async {
+        projectFolders.removeAll { $0 == folder }
+        log?.add(.info, .storage, "Removed \(folder) from the folders Project Build Files searches")
+        await reviewFiles("buildArtifacts")
+    }
+
+    func addProjectFolderWithPanel() {
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.allowsMultipleSelection = true
+        panel.prompt = String(localized: "Add Folder")
+        panel.message = String(localized: "Choose folders that hold your projects. Project Build Files looks in them, five levels deep.")
+        guard panel.runModal() == .OK else { return }
+        let urls = panel.urls
+        Task {
+            for url in urls {
+                if let refusal = await addProjectFolder(url.path) { notice = refusal }
+            }
+        }
     }
 
     // MARK: Tweaks
@@ -383,7 +432,7 @@ final class AppModel {
         let found = await Task.detached { engine.reviewItems(target) }.value
         isBusy = false
         sizes[target.id] = ReviewItem.size(of: found)
-        if found.isEmpty {
+        if found.isEmpty && target.kind != .buildArtifacts {
             notice = target.kind == .buildArtifacts
                 ? String(localized: "No build files found in Developer, Projects, Code, or src.")
                 : String(localized: "No installers found in Downloads or on the Desktop. Ones from the last day are left out, since you may still be using them.")

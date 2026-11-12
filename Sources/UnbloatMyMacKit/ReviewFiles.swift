@@ -86,8 +86,33 @@ public enum InstallerFinder {
 /// What builds left in your projects. A folder is listed only when the file of the tool that makes it
 /// sits beside it, so a folder that merely has the same name is never touched.
 public enum BuildArtifactFinder {
-    /// Folders searched for projects, when they exist.
+    /// Folders searched for projects, when they exist. People add their own (`searchRoots`).
     public static let roots = ["~/Developer", "~/Projects", "~/Code", "~/code", "~/src", "~/GitHub", "~/Repos", "~/repos"]
+
+    /// The usual folders and the ones the person added, each once, written with ~.
+    public static func searchRoots(adding extra: [String], home: String = NSHomeDirectory()) -> [String] {
+        var seen: Set<String> = []
+        return (roots + extra.map { abbreviate($0, home: home) }).filter { seen.insert(ProtectedPaths.clean($0).lowercased()).inserted }
+    }
+
+    /// /Users/me/Documents/Rust -> ~/Documents/Rust.
+    public static func abbreviate(_ path: String, home: String = NSHomeDirectory()) -> String {
+        let clean = ProtectedPaths.clean(path)
+        return clean == home ? "~" : clean.hasPrefix(home + "/") ? "~" + clean.dropFirst(home.count) : clean
+    }
+
+    /// Why a folder can't be added, or nil. Library, the system, and hidden folders hold what apps and tools keep, not projects.
+    public static func refusal(forFolder path: String, home: String = NSHomeDirectory()) -> String? {
+        let clean = ProtectedPaths.clean(path)
+        let parts = clean.split(separator: "/")
+        if parts.contains("Library") || parts.contains(where: { $0.hasPrefix(".") }) {
+            return L("Library and hidden folders hold what apps and tools keep, not projects.")
+        }
+        if ["/System", "/usr", "/bin", "/sbin", "/private"].contains(where: { clean == $0 || clean.hasPrefix($0 + "/") }) || clean == "/" {
+            return L("macOS keeps its own files there, not projects.")
+        }
+        return nil
+    }
     /// How deep to look for projects below a root.
     public static let maxDepth = 5
     /// A project changed in the last week is likely still being worked on.

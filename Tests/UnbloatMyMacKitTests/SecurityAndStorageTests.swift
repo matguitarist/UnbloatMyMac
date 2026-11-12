@@ -336,3 +336,26 @@ func cargoParts() {
     #expect(ReviewItem.outermost([whole, cache, old]).map(\.path) == ["/P/target"])
     #expect(ReviewItem.size(of: [whole, cache, fresh]).bytes == 100)
 }
+
+@Test("Added project folders are searched once each, written with ~, and Library or hidden folders are refused")
+func projectFolders() {
+    let home = "/Users/me"
+    #expect(BuildArtifactFinder.abbreviate("/Users/me/Documents/Rust/", home: home) == "~/Documents/Rust")
+    #expect(BuildArtifactFinder.abbreviate("/Volumes/Work/code", home: home) == "/Volumes/Work/code")
+    let roots = BuildArtifactFinder.searchRoots(adding: ["/Users/me/Documents/Rust", "~/Developer", "/Volumes/Work/code"], home: home)
+    #expect(roots.filter { $0 == "~/Developer" }.count == 1)
+    #expect(roots.suffix(2) == ["~/Documents/Rust", "/Volumes/Work/code"])
+    #expect(BuildArtifactFinder.refusal(forFolder: "/Users/me/Library/Caches", home: home) != nil)
+    #expect(BuildArtifactFinder.refusal(forFolder: "/Users/me/.cargo", home: home) != nil)
+    #expect(BuildArtifactFinder.refusal(forFolder: "/System/Library", home: home) != nil)
+    #expect(BuildArtifactFinder.refusal(forFolder: "/Users/me/Documents/Rust", home: home) == nil)
+}
+
+@Test("A project in an added folder is found only once that folder is searched")
+func addedProjectFolder() {
+    let engine = Engine(backend: MockBackend(seeded: true), journalURL: FileManager.default.temporaryDirectory.appending(path: "journal-\(UUID().uuidString).json"))
+    let target = Catalog.cleanup.first { $0.id == "buildArtifacts" }!
+    #expect(!engine.reviewItems(target).contains { $0.group.hasPrefix("~/Documents") })
+    engine.projectFolders = ["~/Documents/Rust"]
+    #expect(engine.reviewItems(target).contains { $0.group == "~/Documents/Rust/Parser" })
+}

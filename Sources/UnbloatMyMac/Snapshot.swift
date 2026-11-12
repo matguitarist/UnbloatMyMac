@@ -102,6 +102,8 @@ enum Snapshot {
                     try? await Task.sleep(for: .seconds(0.6))
                 }
             }
+            // Build files shows a folder the person added, to see the Searched Folders section with a Remove button.
+            model.projectFolders = ["~/Documents/Rust"]
             for (name, id) in [("installers", "oldInstallers"), ("buildfiles", "buildArtifacts")] where only == nil || only?.contains(name) == true {
                 for mode in ["light", "dark"] {
                     NSApp.appearance = NSAppearance(named: mode == "light" ? .aqua : .darkAqua)
@@ -113,6 +115,7 @@ enum Snapshot {
                     try? await Task.sleep(for: .seconds(0.6))
                 }
             }
+            model.projectFolders = []
             if only == nil || only?.contains("setup") == true {
                 model.sidebar = .overview
                 let picked = SetupAnswers([.code: true, .windows: true, .privacy: true, .speed: false])

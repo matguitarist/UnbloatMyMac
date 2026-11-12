@@ -131,6 +131,16 @@ public final class Engine: Sendable {
     public let log: ActivityLog?
     private let journalURL: URL
     private let journal: Mutex<Journal>
+    private let addedProjectFolders = Mutex<[String]>([])
+
+    /// Folders the person added for Project Build Files, on top of the usual ones.
+    public var projectFolders: [String] {
+        get { addedProjectFolders.withLock { $0 } }
+        set { addedProjectFolders.withLock { $0 = newValue } }
+    }
+
+    /// Every folder Project Build Files searches.
+    public var projectSearchRoots: [String] { BuildArtifactFinder.searchRoots(adding: projectFolders) }
 
     public init(backend: any SystemBackend, journalURL: URL, tweaks: [Tweak] = Catalog.tweaks, log: ActivityLog? = nil) {
         self.log = log
@@ -456,7 +466,9 @@ public final class Engine: Sendable {
 
     public func loginItems() throws -> [LoginItem] { try backend.loginItems() }
 
-    public func measure(_ target: CleanupTarget) -> CleanupSize { backend.measure(target) }
+    public func measure(_ target: CleanupTarget) -> CleanupSize {
+        target.listsReviewItems ? ReviewItem.size(of: reviewItems(target)) : backend.measure(target)
+    }
 
     /// Which security checks pass, by id.
     public func securityStatus() -> [String: Bool] {
@@ -480,14 +492,14 @@ public final class Engine: Sendable {
 
     public func deviceSupport() -> [DeviceSupportVersion] { backend.deviceSupport() }
 
-    public func reviewItems(_ target: CleanupTarget) -> [ReviewItem] { backend.reviewItems(target) }
+    public func reviewItems(_ target: CleanupTarget) -> [ReviewItem] { backend.reviewItems(target, projectFolders: projectSearchRoots) }
 
     /// Moves reviewed items to the Trash and notes it in History. Returns the error, if any.
     public func trash(_ items: [ReviewItem], from target: CleanupTarget) -> String? {
         guard !items.isEmpty else { return nil }
         load()
         var message: String?
-        do { try backend.trash(items, from: target) } catch { message = error.localizedDescription }
+        do { try backend.trash(items, from: target, projectFolders: projectSearchRoots) } catch { message = error.localizedDescription }
         journal.withLock { $0.history.append(HistoryEntry(title: String(format: L("Cleaned %@"), target.title), turnedOn: true, error: message)) }
         save()
         return message

@@ -48,9 +48,10 @@ public protocol SystemBackend: Sendable {
     /// Moves these versions to the Trash.
     func trash(deviceSupport versions: [DeviceSupportVersion]) throws
     /// What a reviewed target lists: old installers, or what builds left in projects.
-    func reviewItems(_ target: CleanupTarget) -> [ReviewItem]
+    /// `projectFolders` are the folders Project Build Files searches (`BuildArtifactFinder.searchRoots`).
+    func reviewItems(_ target: CleanupTarget, projectFolders: [String]) -> [ReviewItem]
     /// Moves these items of the target to the Trash, after checking each is still what it was listed as.
-    func trash(_ items: [ReviewItem], from target: CleanupTarget) throws
+    func trash(_ items: [ReviewItem], from target: CleanupTarget, projectFolders: [String]) throws
 
     /// The macOS build, like 27C52.
     func osBuild() -> String
@@ -187,6 +188,9 @@ public final class MockBackend: SystemBackend {
                 BuildArtifactFinder.cargoItem(path: "/Users/me/Developer/Game/target/x86_64-apple-darwin", part: .build("x86_64-apple-darwin"),
                                               project: "/Users/me/Developer/Game", bytes: 22_000_000_000,
                                               lastBuilt: Date(timeIntervalSinceNow: -45 * day), home: "/Users/me"),
+                BuildArtifactFinder.item(path: "/Users/me/Documents/Rust/Parser/target", project: "/Users/me/Documents/Rust/Parser",
+                                         rule: BuildArtifactFinder.rules[1], bytes: 4_700_000_000,
+                                         projectChanged: Date(timeIntervalSinceNow: -80 * day), home: "/Users/me"),
                 BuildArtifactFinder.item(path: "/Users/me/Developer/MyMacApp/.build", project: "/Users/me/Developer/MyMacApp",
                                          rule: BuildArtifactFinder.rules[2], bytes: 1_100_000_000,
                                          projectChanged: Date(timeIntervalSinceNow: -1 * day), home: "/Users/me"),
@@ -307,9 +311,17 @@ public final class MockBackend: SystemBackend {
 
     public func deviceSupport() -> [DeviceSupportVersion] { state.withLock { $0.deviceSupport } }
 
-    public func reviewItems(_ target: CleanupTarget) -> [ReviewItem] { state.withLock { $0.reviewItems[target.id] ?? [] } }
+    /// A Rust project waits in ~/Documents/Rust, found once that folder is added.
+    public func reviewItems(_ target: CleanupTarget, projectFolders: [String]) -> [ReviewItem] {
+        state.withLock { s in
+            let items = s.reviewItems[target.id] ?? []
+            return target.kind == .buildArtifacts
+                ? items.filter { item in projectFolders.contains { item.group.hasPrefix($0 + "/") } }
+                : items
+        }
+    }
 
-    public func trash(_ items: [ReviewItem], from target: CleanupTarget) throws {
+    public func trash(_ items: [ReviewItem], from target: CleanupTarget, projectFolders: [String]) throws {
         let paths = Set(items.map(\.path))
         state.withLock { $0.reviewItems[target.id]?.removeAll { paths.contains($0.path) } }
     }

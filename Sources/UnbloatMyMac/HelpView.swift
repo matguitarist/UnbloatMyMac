@@ -240,6 +240,7 @@ struct HelpView: View {
                 ("⇧⌥⌘L", "Review Xcode Device Support…"),
                 ("⇧⌥⌘I", "Review Old Installers…"),
                 ("⇧⌥⌘B", "Review Project Build Files…"),
+                ("⇧⌥⌘P", "Add Project Folder…"),
                 ("⌥⌘Z", "Undo Everything"),
                 ("⇧⌘E", "Export Tweaks"),
                 ("⇧⌘I", "Import Tweaks"),

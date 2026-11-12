@@ -6,7 +6,8 @@ import UnbloatMyMacKit
 struct ReviewFileList: Identifiable {
     let target: CleanupTarget
     let items: [ReviewItem]
-    var id: String { target.id + items.map(\.path).joined(separator: ",") }
+    /// The target alone, so searching again (after adding a folder) updates the open sheet in place.
+    var id: String { target.id }
 }
 
 /// Lists old installers or project build files by folder, before anything moves to the Trash.
@@ -51,6 +52,13 @@ struct ReviewFilesSheet: View {
             }
             .padding(Space.margin)
             Form {
+                if list.target.kind == .buildArtifacts { foldersSection }
+                if items.isEmpty {
+                    Section {
+                        Text("No build files found in these folders.")
+                            .foregroundStyle(.secondary)
+                    }
+                }
                 ForEach(groups, id: \.self) { group in
                     let rows = items.filter { $0.group == group }
                     Section {
@@ -88,6 +96,34 @@ struct ReviewFilesSheet: View {
         }
         .frame(width: 600)
         .noInitialFocus()
+        .onChange(of: list.items) { _, items in chosen = Set(items.filter(\.suggested).map(\.path)) }
+    }
+
+    /// Where Project Build Files looks, with the folders the person added and a way to add more.
+    private var foldersSection: some View {
+        Section {
+            ForEach(model.searchedProjectFolders, id: \.self) { folder in
+                HStack {
+                    Label { Text(verbatim: folder) } icon: { Image(systemName: "folder") }
+                    Spacer()
+                    if model.projectFolders.contains(folder) {
+                        Button("Remove", systemImage: "minus.circle") { Task { await model.removeProjectFolder(folder) } }
+                            .labelStyle(.iconOnly)
+                            .buttonStyle(.borderless)
+                            .help("Stop looking in \(folder)")
+                            .disabled(model.isBusy)
+                    }
+                }
+            }
+        } header: {
+            HStack {
+                Text("Searched Folders")
+                Spacer()
+                Button("Add Folder…") { model.addProjectFolderWithPanel() }
+                    .help("Look for projects in another folder (Shift-Option-Command-P)")
+                    .disabled(model.isBusy)
+            }
+        }
     }
 
     private func row(_ item: ReviewItem) -> some View {

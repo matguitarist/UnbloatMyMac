@@ -702,6 +702,26 @@
         }
       }
     },
+    "Add Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter le dossier"
+          }
+        }
+      }
+    },
+    "Add Folder…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter un dossier…"
+          }
+        }
+      }
+    },
     "Add Full Windows Preset": {
       "localizations": {
         "fr": {
@@ -718,6 +738,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ajouter un préréglage"
+          }
+        }
+      }
+    },
+    "Add Project Folder…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter un dossier de projets…"
           }
         }
       }
@@ -1328,6 +1358,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choisissez un fichier de réglages enregistré par UnbloatMyMac."
+          }
+        }
+      }
+    },
+    "Choose folders that hold your projects. Project Build Files looks in them, five levels deep.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez les dossiers qui contiennent vos projets. Fichiers de compilation des projets y cherche, sur cinq niveaux."
           }
         }
       }
@@ -2342,6 +2382,16 @@
         }
       }
     },
+    "Look for projects in another folder (Shift-Option-Command-P)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chercher des projets dans un autre dossier (Maj-Option-Commande-P)"
+          }
+        }
+      }
+    },
     "Looks once a day for a new version on GitHub.": {
       "localizations": {
         "fr": {
@@ -2488,6 +2538,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aucun fichier de compilation dans Developer, Projects, Code ou src."
+          }
+        }
+      }
+    },
+    "No build files found in these folders.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun fichier de compilation dans ces dossiers."
           }
         }
       }
@@ -2992,6 +3052,16 @@
         }
       }
     },
+    "Remove": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retirer"
+          }
+        }
+      }
+    },
     "Removing…": {
       "localizations": {
         "fr": {
@@ -3318,6 +3388,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rechercher dans le journal"
+          }
+        }
+      }
+    },
+    "Searched Folders": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dossiers analysés"
           }
         }
       }
@@ -3688,6 +3768,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "État"
+          }
+        }
+      }
+    },
+    "Stop looking in %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ne plus chercher dans %@"
           }
         }
       }

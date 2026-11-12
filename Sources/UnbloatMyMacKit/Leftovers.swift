@@ -13,10 +13,16 @@ public enum LeftoverFinder {
 
     private static let suffixes = [".plist", ".savedState", ".binarycookies"]
 
+    /// Frameworks and tools many apps share, or that live outside Applications: never leftovers.
+    public static let shared = ["org.sparkle-project.", "org.python.", "org.webkit.", "com.github.Electron",
+                                "org.chromium.", "com.google.Keystone", "com.microsoft.autoupdate"]
+
     /// The bundle id in a file or folder name, or nil when the name is not one,
     /// or belongs to Apple. com.spotify.client.plist -> com.spotify.client.
     public static func bundleID(fromName name: String) -> String? {
         var id = name
+        // Temporary files: local.app.binarycookies_tmp_32077.dat belongs to local.app, and is not worth listing.
+        if name.contains(".binarycookies") && !name.hasSuffix(".binarycookies") { return nil }
         for suffix in suffixes where id.hasSuffix(suffix) { id.removeLast(suffix.count) }
         let parts = id.split(separator: ".", omittingEmptySubsequences: false)
         guard parts.count >= 3, parts.allSatisfy({ !$0.isEmpty }) else { return nil }
@@ -26,6 +32,7 @@ public enum LeftoverFinder {
         guard parts[0].allSatisfy(\.isLetter) else { return nil }
         let lower = id.lowercased()
         if lower.hasPrefix("com.apple.") || lower.hasPrefix("group.") { return nil }
+        if shared.contains(where: { lower.hasPrefix($0.lowercased()) }) { return nil }
         return id
     }
 

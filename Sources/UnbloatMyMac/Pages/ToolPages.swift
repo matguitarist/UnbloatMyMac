@@ -120,6 +120,8 @@ private struct LaunchItemRow: View {
 struct StoragePage: View {
     @Environment(AppModel.self) private var model
     @State private var confirm: CleanupTarget?
+    /// Open apps that hold files of the target being confirmed.
+    @State private var openApps: [OpenApp] = []
 
     var body: some View {
         Form {
@@ -146,12 +148,22 @@ struct StoragePage: View {
         .task { if model.sizes.isEmpty { await model.scanStorage() } }
         .confirmationDialog("Clean \(confirm?.title ?? "")?", isPresented: Binding(get: { confirm != nil }, set: { if !$0 { confirm = nil } }),
                             presenting: confirm) { target in
-            Button("Clean", role: .destructive) { Task { await model.clean(target) } }
+            if openApps.isEmpty {
+                Button("Clean", role: .destructive) { Task { await model.clean(target) } }
+            } else {
+                Button("Quit and Clean", role: .destructive) { Task { await model.clean(target, quitting: openApps) } }
+                Button("Clean the Rest") { Task { await model.clean(target) } }
+            }
         } message: { target in
             if case .command = target.kind {
                 Text(target.detail + " " + String(localized: "This cannot be undone."))
-            } else {
+            } else if openApps.isEmpty {
                 Text("These files move to the Trash. You can put them back until you empty it.")
+            } else {
+                let names = openApps.map(\.name).formatted(.list(type: .and))
+                openApps.count == 1
+                    ? Text("\(names) is open and uses some of these files. Quit and Clean asks it to quit first; Clean the Rest leaves its files for later.")
+                    : Text("\(names) are open and use some of these files. Quit and Clean asks them to quit first; Clean the Rest leaves their files for later.")
             }
         }
     }
@@ -190,7 +202,12 @@ struct StoragePage: View {
                     .disabled(size?.isEmpty ?? true || model.isBusy)
                     .help("Pick which leftovers move to the Trash (Option-Command-L)")
             } else {
-                Button("Clean…") { confirm = target }
+                Button("Clean…") {
+                    Task {
+                        openApps = await model.openApps(holding: target)
+                        confirm = target
+                    }
+                }
                     .disabled(size?.isEmpty ?? true || model.isBusy)
                     .help("Clean \(target.title)")
             }

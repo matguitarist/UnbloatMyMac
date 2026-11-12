@@ -35,6 +35,10 @@ public protocol SystemBackend: Sendable {
 
     func measure(_ target: CleanupTarget) -> CleanupSize
     func clean(_ target: CleanupTarget) throws
+    /// Open apps whose caches this target would move. `clean` leaves their caches alone.
+    func openApps(holding target: CleanupTarget) -> [OpenApp]
+    /// Asks the apps to quit, as Quit in their menu does, and waits a little. Returns the ones still open.
+    func quit(_ apps: [OpenApp]) -> [OpenApp]
     /// Folders and settings files that deleted apps left in ~/Library (`LeftoverFinder`).
     func leftovers() -> [Leftover]
     /// Moves these leftovers to the Trash.
@@ -65,6 +69,8 @@ public final class MockBackend: SystemBackend {
         var items: [LaunchItem] = []
         var sizes: [String: CleanupSize] = [:]
         var leftovers: [Leftover] = []
+        var openApps: [OpenApp] = [OpenApp(name: "Slack", bundleID: "com.tinyspeck.slackmacgap", pid: 501),
+                                   OpenApp(name: "Discord", bundleID: "com.hnc.Discord", pid: 502)]
         var restarted: Set<Restart> = []
         var adminPrompts = 0
         var refuse: Set<String> = []
@@ -238,6 +244,18 @@ public final class MockBackend: SystemBackend {
     }
 
     public func leftovers() -> [Leftover] { state.withLock { $0.leftovers } }
+
+    /// Slack and Discord are open and hold web app caches and app caches.
+    public func openApps(holding target: CleanupTarget) -> [OpenApp] {
+        guard ["caches", "chromiumCaches"].contains(target.id) else { return [] }
+        return state.withLock { $0.openApps }
+    }
+
+    public func quit(_ apps: [OpenApp]) -> [OpenApp] {
+        let pids = Set(apps.map(\.pid))
+        state.withLock { $0.openApps.removeAll { pids.contains($0.pid) } }
+        return []
+    }
 
     public func trash(_ leftovers: [Leftover]) throws {
         let paths = Set(leftovers.map(\.path))

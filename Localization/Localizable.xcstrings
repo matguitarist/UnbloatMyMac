@@ -4311,6 +4311,46 @@
           }
         }
       }
+    },
+    "%@ are open and use some of these files. Quit and Clean asks them to quit first; Clean the Rest leaves their files for later.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ sont ouvertes et utilisent certains de ces fichiers. Quitter et nettoyer leur demande d’abord de quitter ; Nettoyer le reste garde leurs fichiers pour plus tard."
+          }
+        }
+      }
+    },
+    "%@ is open and uses some of these files. Quit and Clean asks it to quit first; Clean the Rest leaves its files for later.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ est ouverte et utilise certains de ces fichiers. Quitter et nettoyer lui demande d’abord de quitter ; Nettoyer le reste garde ses fichiers pour plus tard."
+          }
+        }
+      }
+    },
+    "Clean the Rest": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nettoyer le reste"
+          }
+        }
+      }
+    },
+    "Quit and Clean": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitter et nettoyer"
+          }
+        }
+      }
     }
   }
 }

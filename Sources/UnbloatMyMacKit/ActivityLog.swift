@@ -235,6 +235,16 @@ public final class LoggingBackend: SystemBackend {
         }
     }
 
+    public func openApps(holding target: CleanupTarget) -> [OpenApp] { base.openApps(holding: target) }
+
+    public func quit(_ apps: [OpenApp]) -> [OpenApp] {
+        let open = base.quit(apps)
+        let quit = apps.filter { app in !open.contains { $0.pid == app.pid } }
+        if !quit.isEmpty { log.add(.info, .storage, "Quit \(quit.map(\.name).joined(separator: ", ")) to clean their caches") }
+        if !open.isEmpty { log.add(.warning, .storage, "Still open after asking to quit: \(open.map(\.name).joined(separator: ", "))") }
+        return open
+    }
+
     public func leftovers() -> [Leftover] {
         let found = base.leftovers()
         log.add(.debug, .storage, "Found \(found.count) leftovers from deleted apps", detail: found.map(\.path).joined(separator: "\n"))

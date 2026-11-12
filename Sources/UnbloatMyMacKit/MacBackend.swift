@@ -1,3 +1,4 @@
+import AppKit
 import CoreServices
 import Foundation
 
@@ -265,12 +266,57 @@ public final class MacBackend: SystemBackend {
         case .leftovers:
             throw BackendError(L("Review leftovers one by one."))
         default:
-            try trash(items(of: target))
+            // Caches of open apps stay: moving them under a running app breaks it or frees nothing.
+            let open = runningApps()
+            try trash(items(of: target).filter { OpenApp.owner(of: ownerName(of: $0, in: target), among: open) == nil })
         }
     }
 
-    /// What a folder target moves to the Trash.
+    // MARK: Open apps
+
+    public func openApps(holding target: CleanupTarget) -> [OpenApp] {
+        let open = runningApps()
+        guard !open.isEmpty else { return [] }
+        var found: [OpenApp] = []
+        for url in items(of: target) {
+            if let app = OpenApp.owner(of: ownerName(of: url, in: target), among: open), !found.contains(app) { found.append(app) }
+        }
+        return found.sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
+    }
+
+    public func quit(_ apps: [OpenApp]) -> [OpenApp] {
+        let running = apps.compactMap { NSRunningApplication(processIdentifier: $0.pid) }
+        for app in running { app.terminate() }
+        // Apps may ask to save documents first; wait up to ten seconds.
+        for _ in 0..<40 where running.contains(where: { !$0.isTerminated }) { Thread.sleep(forTimeInterval: 0.25) }
+        let open = Set(running.filter { !$0.isTerminated }.map(\.processIdentifier))
+        return apps.filter { open.contains($0.pid) }
+    }
+
+    /// Regular apps that are open now, with every name their cache folders may use.
+    private func runningApps() -> [OpenApp] {
+        NSWorkspace.shared.runningApplications.compactMap { app in
+            guard app.activationPolicy != .prohibited, let id = app.bundleIdentifier,
+                  app.processIdentifier != getpid() else { return nil }
+            let bundle = app.bundleURL.flatMap(Bundle.init(url:))
+            let other = [bundle?.object(forInfoDictionaryKey: "CFBundleName") as? String,
+                         app.executableURL?.lastPathComponent].compactMap { $0 }
+            return OpenApp(name: app.localizedName ?? id, bundleID: id, pid: app.processIdentifier, otherNames: other)
+        }
+    }
+
+    /// The folder name that says which app an item belongs to: the app folder for web app caches, the item itself otherwise.
+    private func ownerName(of url: URL, in target: CleanupTarget) -> String {
+        if case .chromiumCaches = target.kind { return url.deletingLastPathComponent().lastPathComponent }
+        return url.lastPathComponent
+    }
+
+    /// What a folder target moves to the Trash, without the items it keeps.
     private func items(of target: CleanupTarget) -> [URL] {
+        allItems(of: target).filter { !target.keeps($0.lastPathComponent) }
+    }
+
+    private func allItems(of target: CleanupTarget) -> [URL] {
         switch target.kind {
         case .contents(let folders): folders.flatMap { children(of: expand($0)) }
         case .matching(let folder, let prefixes):
@@ -284,11 +330,14 @@ public final class MacBackend: SystemBackend {
     }
 
     private func trash(_ urls: [URL]) throws {
-        var failed = 0
+        var failed: [String] = []
         for url in urls {
-            do { try FileManager.default.trashItem(at: url, resultingItemURL: nil) } catch { failed += 1 }
+            do { try FileManager.default.trashItem(at: url, resultingItemURL: nil) } catch { failed.append(url.lastPathComponent) }
         }
-        if failed > 0 { throw BackendError(String(format: L("%lld of %lld items are in use or protected and stayed where they were."), failed, urls.count)) }
+        if !failed.isEmpty {
+            throw BackendError(String(format: L("%lld of %lld items are in use or protected and stayed where they were."), failed.count, urls.count)
+                               + " " + failed.prefix(5).joined(separator: ", ") + (failed.count > 5 ? "…" : ""))
+        }
     }
 
     // MARK: Leftovers
@@ -435,9 +484,11 @@ public extension Catalog {
     static let cleanup: [CleanupTarget] = [
         // Apps and System
         CleanupTarget(id: "caches", title: "App Caches", detail: "Files apps keep to load faster. They rebuild them as needed.",
-                      symbol: "archivebox", kind: .contents(["~/Library/Caches"])),
+                      symbol: "archivebox", kind: .contents(["~/Library/Caches"]),
+                      // macOS protects Apple's caches and recreates them at once.
+                      keeps: ["com.apple.", "CloudKit", "familycircled"]),
         CleanupTarget(id: "chromiumCaches", title: "Web App Caches",
-                      detail: "Caches that Slack, Discord, VS Code, and other apps built on Chrome keep in Application Support. They rebuild them; quit those apps first.",
+                      detail: "Caches that Slack, Discord, VS Code, and other apps built on Chrome keep in Application Support. They rebuild them.",
                       symbol: "globe", kind: .chromiumCaches("~/Library/Application Support")),
         CleanupTarget(id: "logs", title: "Logs", detail: "Diagnostic logs written by apps.",
                       symbol: "doc.text", kind: .contents(["~/Library/Logs"])),

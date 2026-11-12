@@ -478,10 +478,18 @@ public final class Engine: Sendable {
         return message
     }
 
-    public func clean(_ target: CleanupTarget) -> String? {
+    public func openApps(holding target: CleanupTarget) -> [OpenApp] { backend.openApps(holding: target) }
+
+    /// Cleans a target. Apps in `quitting` are asked to quit first, so their caches can go too.
+    public func clean(_ target: CleanupTarget, quitting apps: [OpenApp] = []) -> String? {
         load()
         var message: String?
+        let stillOpen = apps.isEmpty ? [] : backend.quit(apps)
         do { try backend.clean(target) } catch { message = error.localizedDescription }
+        if !stillOpen.isEmpty {
+            let names = stillOpen.map(\.name).joined(separator: ", ")
+            message = [message, String(format: L("%@ did not quit, so its caches stayed."), names)].compactMap { $0 }.joined(separator: "\n")
+        }
         journal.withLock { $0.history.append(HistoryEntry(title: String(format: L("Cleaned %@"), target.title), turnedOn: true, error: message)) }
         save()
         return message

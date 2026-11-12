@@ -129,7 +129,7 @@ func leftoverRules() {
     #expect(find("com.google.Chrome.plist") == nil)
     #expect(find("com.google.Chrome.helper.plist") == nil)
     // Another app from the same developer: still listed, but flagged.
-    #expect(find("com.microsoft.autoupdate2.plist")?.sameDeveloperInstalled == true)
+    #expect(find("com.microsoft.onenote.mac.plist")?.sameDeveloperInstalled == true)
     // LaunchServices knows the app somewhere else on the Mac.
     #expect(find("com.spotify.client.plist", registered: true) == nil)
     // Touched last week: something still uses it.
@@ -150,4 +150,44 @@ func trashLeftovers() {
     #expect(engine.state().history.last?.title.contains("1") == true)
     let target = Catalog.cleanup.first { $0.id == "leftovers" }!
     #expect(engine.measure(target).items == 4)
+}
+
+@Test("Shared frameworks, tools, and temporary files are never leftovers")
+func leftoverFalsePositives() {
+    // Found on a real Mac: Sparkle's helper serves many apps, Python and Playwright are not apps.
+    #expect(LeftoverFinder.bundleID(fromName: "org.sparkle-project.Sparkle.Autoupdate.plist") == nil)
+    #expect(LeftoverFinder.bundleID(fromName: "org.python.python.plist") == nil)
+    #expect(LeftoverFinder.bundleID(fromName: "org.webkit.Playwright") == nil)
+    #expect(LeftoverFinder.bundleID(fromName: "local.stardew-mod-manager.binarycookies_tmp_32077.dat") == nil)
+    #expect(LeftoverFinder.bundleID(fromName: "com.bhprojects.GameBox") == "com.bhprojects.GameBox")
+}
+
+@Test("Cache folders are matched to open apps by bundle id, name, bundle name, or executable")
+func cacheOwners() {
+    let apps = [OpenApp(name: "Slack", bundleID: "com.tinyspeck.slackmacgap", pid: 1),
+                OpenApp(name: "Visual Studio Code", bundleID: "com.microsoft.VSCode", pid: 2, otherNames: ["Code", "Electron"]),
+                OpenApp(name: "Discord", bundleID: "com.hnc.Discord", pid: 3)]
+    #expect(OpenApp.owner(of: "com.tinyspeck.slackmacgap", among: apps)?.pid == 1)
+    #expect(OpenApp.owner(of: "Slack", among: apps)?.pid == 1)
+    #expect(OpenApp.owner(of: "Code", among: apps)?.pid == 2)
+    #expect(OpenApp.owner(of: "discord", among: apps)?.pid == 3)
+    #expect(OpenApp.owner(of: "Spotify", among: apps) == nil)
+}
+
+@Test("App Caches leaves Apple's protected caches alone, so cleaning never fails on them")
+func protectedCaches() {
+    let caches = Catalog.cleanup.first { $0.id == "caches" }!
+    #expect(caches.keeps("com.apple.Safari") && caches.keeps("CloudKit") && caches.keeps("familycircled"))
+    #expect(!caches.keeps("com.spotify.client") && !caches.keeps("Homebrew"))
+}
+
+@Test("Quit and Clean asks the open apps to quit, then cleans")
+func quitAndClean() {
+    let (engine, _) = makeEngine()
+    let target = Catalog.cleanup.first { $0.id == "chromiumCaches" }!
+    let open = engine.openApps(holding: target)
+    #expect(open.map(\.name) == ["Slack", "Discord"])
+    #expect(engine.clean(target, quitting: open) == nil)
+    #expect(engine.openApps(holding: target).isEmpty)
+    #expect(engine.measure(target).isEmpty)
 }

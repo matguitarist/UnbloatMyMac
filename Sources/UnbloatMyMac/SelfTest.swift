@@ -115,6 +115,12 @@ enum SelfTest {
 
             await model.scanStorage()
             check("storage scan measures every target", model.sizes.count == Catalog.cleanup.count)
+            if let web = Catalog.cleanup.first(where: { $0.id == "chromiumCaches" }) {
+                let open = await model.openApps(holding: web)
+                check("cleaning web app caches names the open apps first", open.map(\.name) == ["Slack", "Discord"])
+                await model.clean(web, quitting: open)
+                check("Quit and Clean quits them and cleans everything", model.sizes["chromiumCaches"]?.isEmpty == true && model.notice == nil)
+            }
 
             check("the Security page reports every check", model.securityStatus.count == Catalog.securityChecks.count)
             check("a security check that fails is reported", model.securityStatus["filevault"] == false)

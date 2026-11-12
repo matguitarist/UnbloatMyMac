@@ -292,10 +292,17 @@ final class AppModel {
         isScanning = false
     }
 
-    func clean(_ target: CleanupTarget) async {
+    /// Open apps whose caches this target would move, asked before cleaning.
+    func openApps(holding target: CleanupTarget) async -> [OpenApp] {
+        let engine = engine
+        return await Task.detached { engine.openApps(holding: target) }.value
+    }
+
+    /// Cleans a target. Apps in `quitting` are asked to quit first; other open apps keep their caches.
+    func clean(_ target: CleanupTarget, quitting apps: [OpenApp] = []) async {
         let engine = engine
         isBusy = true
-        let error = await Task.detached { engine.clean(target) }.value
+        let error = await Task.detached { engine.clean(target, quitting: apps) }.value
         sizes[target.id] = await Task.detached { engine.measure(target) }.value
         await refresh()
         isBusy = false

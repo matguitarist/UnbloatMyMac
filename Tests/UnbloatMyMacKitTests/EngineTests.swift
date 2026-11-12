@@ -283,7 +283,7 @@ func libraryStringsTranslated() throws {
     for g in AppGroup.allCases { all += [g.title, g.summary] }
     all += ["Install Homebrew first.", "Could not change ~/.zshrc.", "Homebrew could not finish.",
             "This app is not in Homebrew. Download it from its website.", "Review leftovers one by one.",
-            "Only leftovers in your Library folder can be moved to the Trash.", "Cleaned leftovers of %lld deleted apps", "Homebrew did not install this app. Move it to the Trash to remove it."]
+            "Only leftovers in your Library folder can be moved to the Trash.", "Cleaned leftovers of %lld deleted apps", "%@ did not quit, so its caches stayed.", "Homebrew did not install this app. Move it to the Trash to remove it."]
     let missing = Set(all).subtracting(keys)
     #expect(missing.isEmpty, "untranslated: \(missing.sorted())")
 }

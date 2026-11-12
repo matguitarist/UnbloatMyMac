@@ -342,9 +342,11 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
     public var group: Group
     /// Shown with an Open Settings button instead of Clean.
     public var settingsPane: String?
+    /// Names (prefixes) left alone: what macOS protects, so it would fail every time.
+    public var keeps: [String]
 
     public init(id: String, title: String, detail: String, symbol: String, kind: Kind, group: Group = .system,
-                settingsPane: String? = nil) {
+                settingsPane: String? = nil, keeps: [String] = []) {
         self.id = id
         self.title = L(title)
         self.detail = L(detail)
@@ -352,10 +354,38 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
         self.kind = kind
         self.group = group
         self.settingsPane = settingsPane
+        self.keeps = keeps
     }
+
+    /// True for an item this target leaves alone.
+    public func keeps(_ name: String) -> Bool { keeps.contains { name.hasPrefix($0) } }
 
     /// Picked item by item in a sheet instead of cleaned in one go.
     public var isReviewed: Bool { kind == .leftovers }
+}
+
+/// An app that is open, so its caches are in use.
+public struct OpenApp: Identifiable, Hashable, Sendable {
+    public var name: String
+    public var bundleID: String
+    public var pid: Int32
+    /// Every name a cache folder might use: the bundle id, the app's name, its bundle name, its executable.
+    public var names: Set<String>
+
+    public init(name: String, bundleID: String, pid: Int32, otherNames: [String] = []) {
+        self.name = name
+        self.bundleID = bundleID
+        self.pid = pid
+        self.names = Set(([name, bundleID] + otherNames).filter { !$0.isEmpty }.map { $0.lowercased() })
+    }
+
+    public var id: Int32 { pid }
+
+    /// The open app whose cache folder has this name: com.tinyspeck.slackmacgap, Slack, discord, Code.
+    public static func owner(of folderName: String, among apps: [OpenApp]) -> OpenApp? {
+        let name = folderName.lowercased()
+        return apps.first { $0.names.contains(name) }
+    }
 }
 
 /// A folder or settings file an app left behind after it was deleted.

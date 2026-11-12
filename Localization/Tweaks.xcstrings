@@ -2,6 +2,16 @@
   "sourceLanguage": "en",
   "version": "1.0",
   "strings": {
+    "%@ did not quit, so its caches stayed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ n’a pas quitté, ses caches sont donc restés."
+          }
+        }
+      }
+    },
     "%lld of %lld items are in use or protected and stayed where they were.": {
       "localizations": {
         "fr": {
@@ -652,12 +662,12 @@
         }
       }
     },
-    "Caches that Slack, Discord, VS Code, and other apps built on Chrome keep in Application Support. They rebuild them; quit those apps first.": {
+    "Caches that Slack, Discord, VS Code, and other apps built on Chrome keep in Application Support. They rebuild them.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Caches que Slack, Discord, VS Code et d’autres apps basées sur Chrome gardent dans Application Support. Elles les recréent ; quittez-les d’abord."
+            "value": "Caches que Slack, Discord, VS Code et d’autres apps basées sur Chrome gardent dans Application Support. Elles les recréent."
           }
         }
       }

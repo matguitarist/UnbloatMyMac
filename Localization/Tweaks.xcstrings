@@ -1232,12 +1232,12 @@
         }
       }
     },
-    "Downloads that npm, Bun, pnpm, Cargo, Go, and Gradle keep outside Library. They download them again when a project needs them.": {
+    "Downloads that npm, Bun, pnpm, Yarn, uv, pip, Cargo, Go, Gradle, NuGet, and pre-commit keep outside Library. They download them again when a project needs them. Homebrew’s and CocoaPods’ are in App Caches.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Téléchargements que npm, Bun, pnpm, Cargo, Go et Gradle gardent hors de Library. Ils les retéléchargent quand un projet en a besoin."
+            "value": "Téléchargements que npm, Bun, pnpm, Yarn, uv, pip, Cargo, Go, Gradle, NuGet et pre-commit gardent hors de Library. Ils les téléchargent à nouveau quand un projet en a besoin. Ceux de Homebrew et CocoaPods sont dans Caches des apps."
           }
         }
       }

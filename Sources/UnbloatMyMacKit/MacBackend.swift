@@ -662,7 +662,7 @@ public extension Catalog {
                       kind: .command(count: "[ -x /usr/bin/xcrun ] && xcode-select -p >/dev/null 2>&1 && xcrun simctl list devices unavailable 2>/dev/null | grep -c '(unavailable'; true",
                                      run: "xcrun simctl delete unavailable", admin: false), group: .developer),
         CleanupTarget(id: "devCaches", title: "Package Manager Caches",
-                      detail: "Downloads that npm, Bun, pnpm, Cargo, Go, and Gradle keep outside Library. They download them again when a project needs them.",
+                      detail: "Downloads that npm, Bun, pnpm, Yarn, uv, pip, Cargo, Go, Gradle, NuGet, and pre-commit keep outside Library. They download them again when a project needs them. Homebrew’s and CocoaPods’ are in App Caches.",
                       symbol: "shippingbox.and.arrow.backward",
                       kind: .contents(Catalog.packageCaches), group: .developer),
         // Privacy Traces
@@ -682,7 +682,8 @@ public extension Catalog {
 
     /// Caches package managers keep in your home folder, outside ~/Library/Caches.
     static let packageCaches = ["~/.npm/_cacache", "~/.bun/install/cache", "~/Library/pnpm/store",
-                                "~/.cargo/registry/cache", "~/go/pkg/mod/cache/download", "~/.gradle/caches"]
+                                "~/.cargo/registry/cache", "~/go/pkg/mod/cache/download", "~/.gradle/caches",
+                                "~/.yarn/berry/cache", "~/.cache/uv", "~/.cache/pip", "~/.nuget/packages", "~/.cache/pre-commit"]
 }
 
 public extension Catalog {

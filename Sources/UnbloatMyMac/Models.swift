@@ -84,6 +84,10 @@ final class AppModel {
     private(set) var launchItems: [LaunchItem] = []
     private(set) var launchItemsDisabledByApp: Set<String> = []
     private(set) var sizes: [String: CleanupSize] = [:]
+    /// Security checks that pass, by id (Security page).
+    private(set) var securityStatus: [String: Bool] = [:]
+    /// The leftovers the Review Leftovers sheet lists, or nil when it is closed.
+    var leftoversToReview: [Leftover]?
     /// Tweaks the app applied that were put back, most often by a macOS update.
     private(set) var reverted: [String] = []
     private(set) var macOSUpdated = false
@@ -227,7 +231,9 @@ final class AppModel {
         let engine = engine
         async let state = Task.detached { engine.state() }.value
         async let items = Task.detached { engine.launchItems() }.value
-        let (s, i) = await (state, items)
+        async let security = Task.detached { engine.securityStatus() }.value
+        let (s, i, checks) = await (state, items, security)
+        securityStatus = checks
         statuses = s.statuses
         applied = s.applied
         history = s.history
@@ -289,6 +295,33 @@ final class AppModel {
         isBusy = true
         let error = await Task.detached { engine.clean(target) }.value
         sizes[target.id] = await Task.detached { engine.measure(target) }.value
+        await refresh()
+        isBusy = false
+        if let error { notice = error }
+    }
+
+    /// Finds the leftovers of deleted apps and opens the sheet that lists them.
+    func reviewLeftovers() async {
+        let engine = engine
+        sidebar = .storage
+        isBusy = true
+        let found = await Task.detached { engine.leftovers() }.value
+        isBusy = false
+        sizes["leftovers"] = CleanupSize(bytes: found.reduce(0) { $0 + $1.bytes }, items: found.count)
+        if found.isEmpty {
+            notice = String(localized: "No leftovers found. Every app with files in your Library is still installed, or used them in the last 30 days.")
+        } else {
+            leftoversToReview = found
+        }
+    }
+
+    func trash(_ leftovers: [Leftover]) async {
+        let engine = engine
+        isBusy = true
+        let error = await Task.detached { engine.trash(leftovers) }.value
+        if let target = Catalog.cleanup.first(where: { $0.kind == .leftovers }) {
+            sizes[target.id] = await Task.detached { engine.measure(target) }.value
+        }
         await refresh()
         isBusy = false
         if let error { notice = error }

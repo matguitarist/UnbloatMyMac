@@ -277,10 +277,13 @@ func libraryStringsTranslated() throws {
     for c in TweakCategory.allCases { all += [c.title, c.summary] }
     for p in Catalog.presets { all += [p.title, p.summary] }
     for c in Catalog.cleanup { all += [c.title, c.detail] }
+    for g in CleanupTarget.Group.allCases { all.append(g.title) }
+    for c in Catalog.securityChecks { all += [c.title, c.good, c.problem] }
     for a in Catalog.apps { all.append(a.detail) }
     for g in AppGroup.allCases { all += [g.title, g.summary] }
     all += ["Install Homebrew first.", "Could not change ~/.zshrc.", "Homebrew could not finish.",
-            "This app is not in Homebrew. Download it from its website.", "Homebrew did not install this app. Move it to the Trash to remove it."]
+            "This app is not in Homebrew. Download it from its website.", "Review leftovers one by one.",
+            "Only leftovers in your Library folder can be moved to the Trash.", "Cleaned leftovers of %lld deleted apps", "Homebrew did not install this app. Move it to the Trash to remove it."]
     let missing = Set(all).subtracting(keys)
     #expect(missing.isEmpty, "untranslated: \(missing.sorted())")
 }

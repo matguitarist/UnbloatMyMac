@@ -106,6 +106,32 @@ enum SelfTest {
             await model.scanStorage()
             check("storage scan measures every target", model.sizes.count == Catalog.cleanup.count)
 
+            check("the Security page reports every check", model.securityStatus.count == Catalog.securityChecks.count)
+            check("a security check that fails is reported", model.securityStatus["filevault"] == false)
+            if let firewall = Catalog.tweak("security.firewall"), let remoteLogin = Catalog.tweak("security.remoteLogin") {
+                model.setSwitch(firewall, true)
+                model.setSwitch(remoteLogin, false)
+                check("turning on the firewall and off Remote Login stages both",
+                      model.staged == ["security.firewall": true, "security.remoteLogin": true])
+                _ = await model.applyStaged()
+                check("the firewall is on and Remote Login is off", model.switchIsOn(firewall) && !model.switchIsOn(remoteLogin))
+                await model.undoEverything()
+                check("undo turns the firewall off and Remote Login on again", !model.switchIsOn(firewall) && model.switchIsOn(remoteLogin))
+                model.notice = nil
+            }
+
+            await model.reviewLeftovers()
+            let leftovers = model.leftoversToReview ?? []
+            check("Review Leftovers lists what deleted apps left", !leftovers.isEmpty)
+            model.leftoversToReview = nil
+            let spotify = leftovers.filter { $0.bundleID == "com.spotify.client" }
+            await model.trash(spotify)
+            check("moving leftovers to the Trash removes them from the list",
+                  model.sizes["leftovers"]?.items == leftovers.count - spotify.count && !spotify.isEmpty)
+            check("leftovers in the Trash are in History and the activity log",
+                  model.history.contains { $0.title.contains("1") && $0.error == nil }
+                  && model.logEntries.contains { $0.source == .storage && $0.message.hasPrefix("Moved \(spotify.count) leftovers") })
+
             await model.refreshApps()
             check("Homebrew is found on the pretend Mac", model.apps.homebrew != nil)
             let recommended = model.missingRecommended

@@ -458,6 +458,26 @@ public final class Engine: Sendable {
 
     public func measure(_ target: CleanupTarget) -> CleanupSize { backend.measure(target) }
 
+    /// Which security checks pass, by id.
+    public func securityStatus() -> [String: Bool] {
+        Dictionary(uniqueKeysWithValues: Catalog.securityChecks.map { ($0.id, backend.check($0.check)) })
+    }
+
+    public func leftovers() -> [Leftover] { backend.leftovers() }
+
+    /// Moves the leftovers to the Trash and notes it in History. Returns the error, if any.
+    public func trash(_ leftovers: [Leftover]) -> String? {
+        guard !leftovers.isEmpty else { return nil }
+        load()
+        var message: String?
+        do { try backend.trash(leftovers) } catch { message = error.localizedDescription }
+        let apps = Set(leftovers.map(\.bundleID)).count
+        journal.withLock { $0.history.append(HistoryEntry(title: String(format: L("Cleaned leftovers of %lld deleted apps"), apps),
+                                                          turnedOn: true, error: message)) }
+        save()
+        return message
+    }
+
     public func clean(_ target: CleanupTarget) -> String? {
         load()
         var message: String?

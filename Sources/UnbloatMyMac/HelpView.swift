@@ -153,6 +153,7 @@ struct HelpView: View {
         case .storage:
             HelpText("**Storage** measures caches, logs, Xcode data, old installers, iPhone and iPad updates, and Time Machine local snapshots. **Clean** moves files to the Trash, so you can still get them back.")
             HelpText("Simulators and local snapshots cannot go to the Trash: they are deleted at once, and the page says so before. Some items open their page in System Settings instead.")
+            HelpText("**Leftovers from Deleted Apps** lists settings and data in your Library named after apps that are no longer installed and that nothing changed in 30 days. **Review…** (⌥⌘L) shows each one with its size; items from a developer who still has an app installed start unchecked. **Privacy Traces** clear the download history macOS keeps and the Recent Items lists.")
 
         case .apps:
             HelpText("Free apps and tools that do a job better than macOS does, grouped by need. A star marks the pick in each group.")
@@ -228,6 +229,7 @@ struct HelpView: View {
                 ("⌘R", "Refresh"),
                 ("⌥⌘I", "Install Recommended Apps…"),
                 ("⌥⌘U", "Check for App Updates"),
+                ("⌥⌘L", "Review Leftovers from Deleted Apps…"),
                 ("⇧⌥⌘U", "Update All Apps"),
                 ("⌥⌘Z", "Undo Everything"),
                 ("⇧⌘E", "Export Tweaks"),

@@ -35,6 +35,10 @@ public protocol SystemBackend: Sendable {
 
     func measure(_ target: CleanupTarget) -> CleanupSize
     func clean(_ target: CleanupTarget) throws
+    /// Folders and settings files that deleted apps left in ~/Library (`LeftoverFinder`).
+    func leftovers() -> [Leftover]
+    /// Moves these leftovers to the Trash.
+    func trash(_ leftovers: [Leftover]) throws
 
     /// The macOS build, like 27C52.
     func osBuild() -> String
@@ -60,6 +64,7 @@ public final class MockBackend: SystemBackend {
         var files: [String: String] = [:]
         var items: [LaunchItem] = []
         var sizes: [String: CleanupSize] = [:]
+        var leftovers: [Leftover] = []
         var restarted: Set<Restart> = []
         var adminPrompts = 0
         var refuse: Set<String> = []
@@ -100,7 +105,30 @@ public final class MockBackend: SystemBackend {
                 "iosUpdates": CleanupSize(bytes: 6_900_000_000, items: 1),
                 "snapshots": CleanupSize(bytes: nil, items: 2),
                 "aiModels": CleanupSize(bytes: 4_800_000_000, items: 6),
+                "savedState": CleanupSize(bytes: 96_000_000, items: 57),
+                "chromiumCaches": CleanupSize(bytes: 2_650_000_000, items: 38),
+                "simulatorCaches": CleanupSize(bytes: 1_200_000_000, items: 4),
+                "devCaches": CleanupSize(bytes: 5_300_000_000, items: 6),
+                "downloadHistory": CleanupSize(bytes: nil, items: 1_284),
+                "recentItems": CleanupSize(bytes: 210_000, items: 6),
             ]
+            let old = Date(timeIntervalSinceNow: -200 * 24 * 3600)
+            let library = "~/Library/"
+            s.leftovers = [
+                Leftover(path: library + "Application Support/com.spotify.client", bundleID: "com.spotify.client",
+                         bytes: 1_420_000_000, modified: old),
+                Leftover(path: library + "Preferences/com.spotify.client.plist", bundleID: "com.spotify.client",
+                         bytes: 12_000, modified: old),
+                Leftover(path: library + "Application Support/com.tinyspeck.slackmacgap", bundleID: "com.tinyspeck.slackmacgap",
+                         bytes: 318_000_000, modified: old),
+                Leftover(path: library + "Saved Application State/com.tinyspeck.slackmacgap.savedState",
+                         bundleID: "com.tinyspeck.slackmacgap", bytes: 48_000, modified: old),
+                Leftover(path: library + "HTTPStorages/us.zoom.xos", bundleID: "us.zoom.xos", bytes: 2_100_000, modified: old),
+                Leftover(path: library + "Preferences/com.microsoft.autoupdate2.plist", bundleID: "com.microsoft.autoupdate2",
+                         bytes: 8_000, modified: old, sameDeveloperInstalled: true),
+            ]
+            // Every security check passes but FileVault, to show how a problem looks.
+            s.passed = Set(Catalog.securityChecks.filter { $0.id != "filevault" }.map(\.check))
             if seeded {
                 s.prefs[PrefKey("NSGlobalDomain", "AppleShowAllExtensions").id] = true
                 s.prefs[PrefKey("com.apple.dock", "show-recents").id] = false
@@ -198,11 +226,22 @@ public final class MockBackend: SystemBackend {
     }
 
     public func measure(_ target: CleanupTarget) -> CleanupSize {
-        state.withLock { $0.sizes[target.id] ?? CleanupSize(bytes: 0, items: 0) }
+        state.withLock { s in
+            if target.kind == .leftovers { return CleanupSize(bytes: s.leftovers.reduce(0) { $0 + $1.bytes }, items: s.leftovers.count) }
+            return s.sizes[target.id] ?? CleanupSize(bytes: 0, items: 0)
+        }
     }
 
     public func clean(_ target: CleanupTarget) throws {
+        guard target.kind != .leftovers else { throw BackendError(L("Review leftovers one by one.")) }
         state.withLock { $0.sizes[target.id] = CleanupSize(bytes: 0, items: 0) }
+    }
+
+    public func leftovers() -> [Leftover] { state.withLock { $0.leftovers } }
+
+    public func trash(_ leftovers: [Leftover]) throws {
+        let paths = Set(leftovers.map(\.path))
+        state.withLock { $0.leftovers.removeAll { paths.contains($0.path) } }
     }
 
     public func osBuild() -> String { state.withLock { $0.build } }

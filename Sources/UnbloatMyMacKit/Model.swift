@@ -120,7 +120,7 @@ public enum Action: Hashable, Sendable {
 }
 
 public enum TweakCategory: String, CaseIterable, Codable, Sendable {
-    case intelligence, privacy, performance, interface, finder, dock, typing, windows
+    case intelligence, privacy, security, performance, interface, finder, dock, typing, windows
 
     public var title: String { L(englishTitle) }
 
@@ -128,6 +128,7 @@ public enum TweakCategory: String, CaseIterable, Codable, Sendable {
         switch self {
         case .intelligence: "Apple Intelligence"
         case .privacy: "Privacy"
+        case .security: "Security"
         case .performance: "Performance"
         case .interface: "Annoyances"
         case .finder: "Finder"
@@ -141,6 +142,7 @@ public enum TweakCategory: String, CaseIterable, Codable, Sendable {
         switch self {
         case .intelligence: "apple.intelligence"
         case .privacy: "hand.raised"
+        case .security: "lock.shield"
         case .performance: "gauge.with.dots.needle.67percent"
         case .interface: "bell.slash"
         case .finder: "folder"
@@ -156,6 +158,7 @@ public enum TweakCategory: String, CaseIterable, Codable, Sendable {
         switch self {
         case .intelligence: "Turn off Writing Tools, Genmoji, Image Playground, ChatGPT, summaries, Siri, and the background services behind them."
         case .privacy: "Stop analytics, personalized ads, and the services that send usage data to Apple."
+        case .security: "Turn on the firewall, close doors other computers could use to get in, and check FileVault, Gatekeeper, and security updates."
         case .performance: "Make windows, the Dock, and Finder feel instant, and stop heavy background analysis."
         case .interface: "Remove pop-ups, prompts, and behaviors that get in the way."
         case .finder: "Show what is really on your disk and keep folders tidy."
@@ -308,10 +311,27 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
     public enum Kind: Hashable, Sendable {
         /// Moves everything inside these folders to the Trash.
         case contents([String])
-        /// Moves items in `folder` whose names start with `prefix` to the Trash.
-        case matching(folder: String, prefix: String)
+        /// Moves items in `folder` whose names start with one of `prefixes` to the Trash.
+        case matching(folder: String, prefixes: [String])
         /// Runs a command; `count` prints a number of items.
         case command(count: String, run: String, admin: Bool)
+        /// Moves the cache folders of Chromium and Electron apps in this folder to the Trash (`ChromiumCaches`).
+        case chromiumCaches(String)
+        /// Folders and settings of apps that are no longer installed. Reviewed item by item, never cleaned in one go.
+        case leftovers
+    }
+
+    /// The section of the Storage page.
+    public enum Group: String, CaseIterable, Sendable {
+        case system, developer, privacy
+
+        public var title: String {
+            switch self {
+            case .system: L("Apps and System")
+            case .developer: L("Developer Files")
+            case .privacy: L("Privacy Traces")
+            }
+        }
     }
 
     public var id: String
@@ -319,15 +339,67 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
     public var detail: String
     public var symbol: String
     public var kind: Kind
+    public var group: Group
     /// Shown with an Open Settings button instead of Clean.
     public var settingsPane: String?
 
-    public init(id: String, title: String, detail: String, symbol: String, kind: Kind, settingsPane: String? = nil) {
+    public init(id: String, title: String, detail: String, symbol: String, kind: Kind, group: Group = .system,
+                settingsPane: String? = nil) {
         self.id = id
         self.title = L(title)
         self.detail = L(detail)
         self.symbol = symbol
         self.kind = kind
+        self.group = group
+        self.settingsPane = settingsPane
+    }
+
+    /// Picked item by item in a sheet instead of cleaned in one go.
+    public var isReviewed: Bool { kind == .leftovers }
+}
+
+/// A folder or settings file an app left behind after it was deleted.
+public struct Leftover: Identifiable, Hashable, Sendable {
+    public var path: String
+    /// The bundle id in the name, like com.spotify.client.
+    public var bundleID: String
+    public var bytes: Int64
+    public var modified: Date
+    /// Another app from the same developer is installed, so this may still be in use. Not picked by default.
+    public var sameDeveloperInstalled: Bool
+
+    public init(path: String, bundleID: String, bytes: Int64, modified: Date, sameDeveloperInstalled: Bool = false) {
+        self.path = path
+        self.bundleID = bundleID
+        self.bytes = bytes
+        self.modified = modified
+        self.sameDeveloperInstalled = sameDeveloperInstalled
+    }
+
+    public var id: String { path }
+    /// The Library folder it is in, like Application Support.
+    public var place: String { (path as NSString).deletingLastPathComponent.components(separatedBy: "/Library/").last ?? "" }
+}
+
+/// A security setting the app reports on but does not change, like FileVault.
+public struct SecurityCheck: Identifiable, Hashable, Sendable {
+    public var id: String
+    public var title: String
+    /// Said when the Mac is protected.
+    public var good: String
+    /// Said when it is not, with what to do.
+    public var problem: String
+    /// Exits 0 when the Mac is protected. Needs no password.
+    public var check: String
+    /// The System Settings pane that changes it, if any.
+    public var settingsPane: String?
+
+    public init(id: String, title: String, good: String, problem: String, check: String, settingsPane: String?) {
+        self.id = id
+        self.title = L(title)
+        self.good = L(good)
+        self.problem = L(problem)
+        self.check = check
         self.settingsPane = settingsPane
     }
 }

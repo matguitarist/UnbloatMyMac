@@ -13,7 +13,8 @@ Every tweak is optional, shown to you before it applies, and can be undone.
 | Category | Examples |
 | --- | --- |
 | **Apple Intelligence** | Writing Tools, Genmoji, Image Playground, Image Wand, ChatGPT, Mail, Notes and Safari summaries, inline predictions, Siri, and the background model services |
-| **Privacy** | Mac Analytics, Siri and dictation sharing, personalized ads, ad services, Look Up and Spotlight web suggestions, Game Center, Screen Time tracking |
+| **Privacy** | Mac Analytics, Siri and dictation sharing, personalized ads, ad services, Look Up and Spotlight web suggestions, Game Center, Screen Time tracking, Handoff, Chrome, Edge, and Firefox telemetry |
+| **Security** | Firewall, stealth mode, Remote Login, Remote Apple Events, AirDrop for contacts only, guest user, wake for network access; a status check for FileVault, Gatekeeper, System Integrity Protection, security responses, and automatic login |
 | **Performance** | Window, Quick Look and Finder animations, instant Dock reveal, faster Mission Control, photo analysis, App Nap, Power Nap, Spotlight indexing |
 | **Annoyances** | Click wallpaper to show desktop, desktop widgets, crash report pop-ups, Time Machine disk prompt, Photos opening for iPhone, screenshot shadows and thumbnail |
 | **Finder** | File extensions, hidden files, path and status bars, folders first, search this folder, no `.DS_Store` on network and USB drives, Library folder |
@@ -29,7 +30,7 @@ Every tweak is optional, shown to you before it applies, and can be undone.
 
 The app is in English and French; pick its language in **Settings > General**.
 
-The **Background Items** page stops third-party updaters and helpers. **Storage** clears caches, Xcode data, old installers, and Time Machine local snapshots. **History** has **Undo Everything**. The **Activity Log** lists every setting, service, command, file, and app the app or the command line tool changed, with the exact command, and exports it for a bug report. **Help > UnbloatMyMac Help** (⌘?) explains every page.
+The **Background Items** page stops third-party updaters and helpers. **Storage** clears caches (including Chrome and Electron app caches and package manager downloads), Xcode and Simulator data, old installers, Time Machine local snapshots, the download history, and Recent Items, and lists leftovers of deleted apps for you to review. **History** has **Undo Everything**. The **Activity Log** lists every setting, service, command, file, and app the app or the command line tool changed, with the exact command, and exports it for a bug report. **Help > UnbloatMyMac Help** (⌘?) explains every page.
 
 Presets: **Recommended**, **Maximum Privacy**, **Performance Boost**, and **Windows Mode**.
 

@@ -222,6 +222,16 @@
         }
       }
     },
+    "AirDrop for Contacts Only": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AirDrop pour les contacts seulement"
+          }
+        }
+      }
+    },
     "All in One": {
       "localizations": {
         "fr": {
@@ -298,6 +308,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Désagréments"
+          }
+        }
+      }
+    },
+    "Any app opens without a malware check. Turn it back on in Terminal with: sudo spctl --global-enable": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "N’importe quelle app s’ouvre sans contrôle antimalware. Réactivez-le dans Terminal avec : sudo spctl --global-enable"
           }
         }
       }
@@ -382,6 +402,56 @@
         }
       }
     },
+    "Applies the next time Chrome opens. Chrome may say it is managed by your organization.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S’applique à la prochaine ouverture de Chrome. Chrome peut indiquer qu’il est géré par votre organisation."
+          }
+        }
+      }
+    },
+    "Applies the next time Edge opens. Edge may say it is managed by your organization.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S’applique à la prochaine ouverture d’Edge. Edge peut indiquer qu’il est géré par votre organisation."
+          }
+        }
+      }
+    },
+    "Applies the next time Firefox opens. Firefox says it is managed by your organization.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S’applique à la prochaine ouverture de Firefox. Firefox indique qu’il est géré par votre organisation."
+          }
+        }
+      }
+    },
+    "Apps and System": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps et système"
+          }
+        }
+      }
+    },
+    "Apps are checked for malware and a known developer before they open.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les apps sont vérifiées (malwares, développeur identifié) avant de s’ouvrir."
+          }
+        }
+      }
+    },
     "Apps in the background keep full speed.": {
       "localizations": {
         "fr": {
@@ -442,6 +512,16 @@
         }
       }
     },
+    "Automatic Login": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connexion automatique"
+          }
+        }
+      }
+    },
     "Background Services": {
       "localizations": {
         "fr": {
@@ -468,6 +548,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Comportement"
+          }
+        }
+      }
+    },
+    "Blocks incoming connections to apps you have not allowed. macOS asks the first time an app wants them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bloque les connexions entrantes vers les apps que vous n’avez pas autorisées. macOS demande la première fois qu’une app en veut."
           }
         }
       }
@@ -532,6 +622,26 @@
         }
       }
     },
+    "Caches that Slack, Discord, VS Code, and other apps built on Chrome keep in Application Support. They rebuild them; quit those apps first.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caches que Slack, Discord, VS Code et d’autres apps basées sur Chrome gardent dans Application Support. Elles les recréent ; quittez-les d’abord."
+          }
+        }
+      }
+    },
+    "Caches the iOS Simulator rebuilds when it starts.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caches que le Simulateur iOS recrée à son lancement."
+          }
+        }
+      }
+    },
     "Call Intelligence": {
       "localizations": {
         "fr": {
@@ -572,12 +682,32 @@
         }
       }
     },
+    "Chrome Usage Reports": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rapports d’utilisation de Chrome"
+          }
+        }
+      }
+    },
     "Cleaned %@": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "%@ nettoyé"
+          }
+        }
+      }
+    },
+    "Cleaned leftovers of %lld deleted apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restes de %lld apps supprimées nettoyés"
           }
         }
       }
@@ -638,6 +768,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ligne de commande"
+          }
+        }
+      }
+    },
+    "Continuing an email or a page on another device stops working.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reprendre un e-mail ou une page sur un autre appareil ne fonctionne plus."
           }
         }
       }
@@ -742,6 +882,16 @@
         }
       }
     },
+    "Developer Files": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fichiers de développement"
+          }
+        }
+      }
+    },
     "Diagnostic logs written by apps.": {
       "localizations": {
         "fr": {
@@ -842,6 +992,26 @@
         }
       }
     },
+    "Download History": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historique des téléchargements"
+          }
+        }
+      }
+    },
+    "Downloads that npm, Bun, pnpm, Cargo, Go, and Gradle keep outside Library. They download them again when a project needs them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Téléchargements que npm, Bun, pnpm, Cargo, Go et Gradle gardent hors de Library. Ils les retéléchargent quand un projet en a besoin."
+          }
+        }
+      }
+    },
     "Drag a window to a screen edge or the top to tile or maximize it.": {
       "localizations": {
         "fr": {
@@ -868,6 +1038,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Disques sur le bureau"
+          }
+        }
+      }
+    },
+    "Edge Diagnostic Data": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Données de diagnostic d’Edge"
           }
         }
       }
@@ -908,6 +1088,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tout le préréglage Recommandé, plus Siri, l’analyse, les services publicitaires et Game Center désactivés."
+          }
+        }
+      }
+    },
+    "Everything in Recommended, plus Siri, analytics, ad services, browser telemetry, and Game Center off, and the firewall on.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout ce qu’il y a dans Recommandé, plus Siri, l’analyse, les services publicitaires, la télémétrie des navigateurs et Game Center désactivés, et le pare-feu activé."
           }
         }
       }
@@ -982,12 +1172,32 @@
         }
       }
     },
+    "FileVault": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "FileVault"
+          }
+        }
+      }
+    },
     "Files apps keep to load faster. They rebuild them as needed.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Fichiers que les apps gardent pour se charger plus vite. Elles les recréent au besoin."
+          }
+        }
+      }
+    },
+    "Find My can no longer locate a lost Mac through someone signed in as a guest.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Localiser ne peut plus retrouver un Mac perdu grâce à quelqu’un connecté en invité."
           }
         }
       }
@@ -1072,6 +1282,26 @@
         }
       }
     },
+    "Firefox Telemetry": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Télémétrie de Firefox"
+          }
+        }
+      }
+    },
+    "Firewall": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pare-feu"
+          }
+        }
+      }
+    },
     "Folders First": {
       "localizations": {
         "fr": {
@@ -1132,6 +1362,16 @@
         }
       }
     },
+    "Gatekeeper": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gatekeeper"
+          }
+        }
+      }
+    },
     "Generated emoji in the emoji picker and Messages.": {
       "localizations": {
         "fr": {
@@ -1158,6 +1398,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Genmoji"
+          }
+        }
+      }
+    },
+    "Guest User": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilisateur invité"
+          }
+        }
+      }
+    },
+    "Handoff": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Handoff"
           }
         }
       }
@@ -1408,6 +1668,56 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modèles de langage, d’image et de photo dans /System/Library/AssetsV2. La protection de l’intégrité du système empêche toute app de les supprimer ; désactiver Apple Intelligence dans Réglages Système les fait supprimer par macOS."
+          }
+        }
+      }
+    },
+    "Leftovers from Deleted Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restes d’apps supprimées"
+          }
+        }
+      }
+    },
+    "Lets anyone use this Mac without a password, in a guest account.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permet à n’importe qui d’utiliser ce Mac sans mot de passe, dans un compte invité."
+          }
+        }
+      }
+    },
+    "Lets apps on other Macs control apps on this one with AppleScript.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permet aux apps d’autres Mac de piloter les apps de celui-ci avec AppleScript."
+          }
+        }
+      }
+    },
+    "Lets other computers sign in to this Mac with SSH.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permet à d’autres ordinateurs de se connecter à ce Mac par SSH."
+          }
+        }
+      }
+    },
+    "Lets other devices wake this Mac over the network to reach shared files and media.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Permet à d’autres appareils de réveiller ce Mac par le réseau pour accéder aux fichiers et médias partagés."
           }
         }
       }
@@ -1702,6 +2012,26 @@
         }
       }
     },
+    "Only leftovers in your Library folder can be moved to the Trash.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seuls les restes de votre dossier Bibliothèque peuvent être placés dans la corbeille."
+          }
+        }
+      }
+    },
+    "Only people in your contacts can see your Mac in AirDrop, not everyone nearby.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seules les personnes de vos contacts voient votre Mac dans AirDrop, pas tout le monde à proximité."
+          }
+        }
+      }
+    },
     "Open-source dictation into any app, transcribed on your Mac with Whisper.": {
       "localizations": {
         "fr": {
@@ -1718,6 +2048,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ouvre et crée des archives 7z, RAR et autres."
+          }
+        }
+      }
+    },
+    "Other Browsers": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autres navigateurs"
+          }
+        }
+      }
+    },
+    "Package Manager Caches": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caches des gestionnaires de paquets"
           }
         }
       }
@@ -1902,6 +2252,16 @@
         }
       }
     },
+    "Privacy Traces": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Traces privées"
+          }
+        }
+      }
+    },
     "Privacy-Preserving Ad Measurement": {
       "localizations": {
         "fr": {
@@ -1952,6 +2312,16 @@
         }
       }
     },
+    "Recent Items": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Éléments récents"
+          }
+        }
+      }
+    },
     "Recommended": {
       "localizations": {
         "fr": {
@@ -1978,6 +2348,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Réduire la transparence"
+          }
+        }
+      }
+    },
+    "Remote Apple Events": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Événements Apple à distance"
+          }
+        }
+      }
+    },
+    "Remote Login": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Session à distance"
           }
         }
       }
@@ -2018,6 +2408,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Renommer l’extension d’un fichier ne demande plus de confirmation."
+          }
+        }
+      }
+    },
+    "Review leftovers one by one.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passez les restes en revue un par un."
           }
         }
       }
@@ -2108,6 +2508,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Enregistrer sur ce Mac"
+          }
+        }
+      }
+    },
+    "Saved Window States": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "États des fenêtres enregistrés"
           }
         }
       }
@@ -2252,6 +2662,46 @@
         }
       }
     },
+    "Security": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sécurité"
+          }
+        }
+      }
+    },
+    "Security Responses": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réponses de sécurité"
+          }
+        }
+      }
+    },
+    "Security fixes and system data files install on their own.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les correctifs de sécurité et les fichiers de données système s’installent d’eux-mêmes."
+          }
+        }
+      }
+    },
+    "Security fixes wait until you install them. Turn on Install Security Responses and system files.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les correctifs de sécurité attendent que vous les installiez. Activez Installer les réponses de sécurité et les fichiers système."
+          }
+        }
+      }
+    },
     "See and block what apps send.": {
       "localizations": {
         "fr": {
@@ -2292,12 +2742,42 @@
         }
       }
     },
+    "Settings and data of apps that are no longer installed and that nothing touched in 30 days. Review them one by one.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réglages et données d’apps qui ne sont plus installées et que rien n’a modifiés depuis 30 jours. Passez-les en revue un par un."
+          }
+        }
+      }
+    },
     "Share Mac Analytics": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Partager l’analyse du Mac"
+          }
+        }
+      }
+    },
+    "Shared files and media are not reachable while the Mac sleeps.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fichiers et médias partagés ne sont plus accessibles pendant la veille du Mac."
+          }
+        }
+      }
+    },
+    "Sharing": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partage"
           }
         }
       }
@@ -2428,6 +2908,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Montre quels dossiers prennent le plus de place, sous forme d’arbre dans le Terminal."
+          }
+        }
+      }
+    },
+    "Sign In": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connexion"
+          }
+        }
+      }
+    },
+    "Simulator Caches": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caches du Simulateur"
           }
         }
       }
@@ -2652,6 +3152,16 @@
         }
       }
     },
+    "Stealth Mode": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode furtif"
+          }
+        }
+      }
+    },
     "Stop analytics, personalized ads, and the services that send usage data to Apple.": {
       "localizations": {
         "fr": {
@@ -2668,6 +3178,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Empêchez macOS de modifier ce que vous tapez."
+          }
+        }
+      }
+    },
+    "Stops Chrome from sending usage statistics, crash reports, and the pages you visit to Google.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empêche Chrome d’envoyer à Google les statistiques d’utilisation, les rapports de plantage et les pages que vous visitez."
+          }
+        }
+      }
+    },
+    "Stops Edge from sending optional diagnostic data and browsing activity to Microsoft.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empêche Edge d’envoyer à Microsoft les données de diagnostic facultatives et l’activité de navigation."
+          }
+        }
+      }
+    },
+    "Stops Firefox from sending usage data to Mozilla and joining studies.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empêche Firefox d’envoyer des données d’utilisation à Mozilla et de participer à des études."
           }
         }
       }
@@ -2768,6 +3308,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Arrête le partage des enregistrements de Siri et de Dictée avec Apple."
+          }
+        }
+      }
+    },
+    "Stops telling your other Apple devices what you are doing, so they can pick it up.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arrête de signaler à vos autres appareils Apple ce que vous faites pour qu’ils puissent le reprendre."
           }
         }
       }
@@ -2932,6 +3482,26 @@
         }
       }
     },
+    "System Integrity Protection": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Protection de l’intégrité du système"
+          }
+        }
+      }
+    },
+    "System files can be changed. Turn protection back on from macOS Recovery with: csrutil enable": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fichiers système peuvent être modifiés. Réactivez la protection depuis la récupération macOS avec : csrutil enable"
+          }
+        }
+      }
+    },
     "Tab Moves Between All Controls": {
       "localizations": {
         "fr": {
@@ -3092,6 +3662,16 @@
         }
       }
     },
+    "The lists behind Apple menu > Recent Items and each app’s Open Recent menu. Favorites in the Finder sidebar stay. Open apps may keep their list until you log out.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les listes du menu Pomme > Éléments récents et du menu Ouvrir l’élément récent de chaque app. Les favoris de la barre latérale du Finder restent. Les apps ouvertes peuvent garder leur liste jusqu’à la déconnexion."
+          }
+        }
+      }
+    },
     "The play key no longer opens Music.": {
       "localizations": {
         "fr": {
@@ -3212,6 +3792,16 @@
         }
       }
     },
+    "Turn on the firewall, close doors other computers could use to get in, and check FileVault, Gatekeeper, and security updates.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activez le pare-feu, fermez les portes que d’autres ordinateurs pourraient utiliser pour entrer, et vérifiez FileVault, Gatekeeper et les mises à jour de sécurité."
+          }
+        }
+      }
+    },
     "Turns off personalized ads in the App Store, Apple News, and Stocks.": {
       "localizations": {
         "fr": {
@@ -3298,6 +3888,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Intelligence visuelle"
+          }
+        }
+      }
+    },
+    "Wake for Network Access": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réactiver pour l’accès au réseau"
+          }
+        }
+      }
+    },
+    "Web App Caches": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Caches des apps web"
+          }
+        }
+      }
+    },
+    "What apps saved to reopen their windows where you left them. Apps open with fresh windows next time.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce que les apps ont enregistré pour rouvrir leurs fenêtres là où vous les aviez laissées. Elles s’ouvriront avec de nouvelles fenêtres la prochaine fois."
           }
         }
       }
@@ -3412,6 +4032,16 @@
         }
       }
     },
+    "Works while the firewall is on.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fonctionne tant que le pare-feu est activé."
+          }
+        }
+      }
+    },
     "Writes ~/Library/KeyBindings/DefaultKeyBinding.dict. Your own file comes back when you turn off every key tweak.": {
       "localizations": {
         "fr": {
@@ -3472,6 +4102,56 @@
         }
       }
     },
+    "Your Mac asks for your password when it starts.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre Mac demande votre mot de passe au démarrage."
+          }
+        }
+      }
+    },
+    "Your Mac does not answer pings and port scans, so it is harder to find on a network.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre Mac ne répond pas aux pings ni aux scans de ports, il est donc plus difficile à repérer sur un réseau."
+          }
+        }
+      }
+    },
+    "Your Mac signs in without a password when it starts. Turn off Automatic Login in Users & Groups.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre Mac ouvre la session sans mot de passe au démarrage. Désactivez la connexion automatique dans Utilisateurs et groupes."
+          }
+        }
+      }
+    },
+    "Your disk is encrypted, so a lost or stolen Mac does not give away your files.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre disque est chiffré : un Mac perdu ou volé ne livre pas vos fichiers."
+          }
+        }
+      }
+    },
+    "Your disk is not encrypted. Anyone who takes your Mac can read your files. Turn on FileVault in Privacy & Security.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre disque n’est pas chiffré. Quiconque prend votre Mac peut lire vos fichiers. Activez FileVault dans Confidentialité et sécurité."
+          }
+        }
+      }
+    },
     "Your pinned apps are kept and come back when you turn this off.": {
       "localizations": {
         "fr": {
@@ -3512,12 +4192,32 @@
         }
       }
     },
+    "macOS keeps a record of every file you downloaded, with the website it came from. Cleared at once; the files you downloaded stay.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS garde une trace de chaque fichier téléchargé, avec le site d’où il vient. Effacé immédiatement ; les fichiers téléchargés restent."
+          }
+        }
+      }
+    },
     "macOS protects this setting. Give UnbloatMyMac Full Disk Access in System Settings > Privacy & Security, then try again.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "macOS protège ce réglage. Donnez à UnbloatMyMac l’accès complet au disque dans Réglages Système > Confidentialité et sécurité, puis réessayez."
+          }
+        }
+      }
+    },
+    "macOS system files are protected, even from apps with your password.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fichiers système de macOS sont protégés, même des apps qui ont votre mot de passe."
           }
         }
       }
@@ -3548,6 +4248,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "demande votre mot de passe"
+          }
+        }
+      }
+    },
+    "ssh to this Mac stops working.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ssh vers ce Mac ne fonctionne plus."
           }
         }
       }

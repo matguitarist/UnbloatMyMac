@@ -7,7 +7,7 @@ public enum Catalog {
 
     public static func tweak(_ id: String) -> Tweak? { tweaks.first { $0.id == id } }
 
-    public static let tweaks: [Tweak] = intelligence + privacy + performance + interface + finder + dock + typing + windows
+    public static let tweaks: [Tweak] = intelligence + privacy + security + performance + interface + finder + dock + typing + windows
 
     // MARK: Apple Intelligence
 
@@ -118,6 +118,95 @@ public enum Catalog {
               in: .privacy, section: "Services", risk: .advanced, restarts: [.logout],
               caveat: "Screen Time reports stay empty.",
               [.agent("com.apple.UsageTrackingAgent")]),
+        Tweak("privacy.handoff", "Handoff", "Stops telling your other Apple devices what you are doing, so they can pick it up.",
+              in: .privacy, section: "Services", restarts: [.logout],
+              caveat: "Continuing an email or a page on another device stops working.",
+              [.set("com.apple.coreservices.useractivityd", "ActivityAdvertisingAllowed", false, currentHost: true),
+               .set("com.apple.coreservices.useractivityd", "ActivityReceivingAllowed", false, currentHost: true)]),
+        Tweak("privacy.chrome", "Chrome Usage Reports", "Stops Chrome from sending usage statistics, crash reports, and the pages you visit to Google.",
+              in: .privacy, section: "Other Browsers", risk: .moderate,
+              caveat: "Applies the next time Chrome opens. Chrome may say it is managed by your organization.",
+              [.set("com.google.Chrome", "MetricsReportingEnabled", false),
+               .set("com.google.Chrome", "UrlKeyedAnonymizedDataCollectionEnabled", false)]),
+        Tweak("privacy.edge", "Edge Diagnostic Data", "Stops Edge from sending optional diagnostic data and browsing activity to Microsoft.",
+              in: .privacy, section: "Other Browsers", risk: .moderate,
+              caveat: "Applies the next time Edge opens. Edge may say it is managed by your organization.",
+              [.set("com.microsoft.Edge", "DiagnosticData", 0),
+               .set("com.microsoft.Edge", "PersonalizationReportingEnabled", false)]),
+        Tweak("privacy.firefox", "Firefox Telemetry", "Stops Firefox from sending usage data to Mozilla and joining studies.",
+              in: .privacy, section: "Other Browsers", risk: .moderate,
+              caveat: "Applies the next time Firefox opens. Firefox says it is managed by your organization.",
+              [.set("org.mozilla.firefox", "EnterprisePoliciesEnabled", true),
+               .set("org.mozilla.firefox", "DisableTelemetry", true),
+               .set("org.mozilla.firefox", "DisableFirefoxStudies", true)]),
+    ]
+
+    // MARK: Security
+
+    static let firewall = "/usr/libexec/ApplicationFirewall/socketfilterfw"
+
+    static let security: [Tweak] = [
+        Tweak("security.firewall", "Firewall", "Blocks incoming connections to apps you have not allowed. macOS asks the first time an app wants them.",
+              in: .security, section: "Firewall",
+              [.command(Command(apply: "\(firewall) --setglobalstate on", revert: "\(firewall) --setglobalstate off",
+                                check: "\(firewall) --getglobalstate | grep -q 'is enabled'", admin: true))]),
+        Tweak("security.stealth", "Stealth Mode", "Your Mac does not answer pings and port scans, so it is harder to find on a network.",
+              in: .security, section: "Firewall", caveat: "Works while the firewall is on.",
+              [.command(Command(apply: "\(firewall) --setstealthmode on", revert: "\(firewall) --setstealthmode off",
+                                check: "\(firewall) --getstealthmode | grep -q 'is on'", admin: true))]),
+        Tweak("security.remoteLogin", "Remote Login", "Lets other computers sign in to this Mac with SSH.",
+              in: .security, section: "Sharing", risk: .moderate,
+              caveat: "ssh to this Mac stops working.",
+              [.command(Command(
+                apply: "{ launchctl disable system/com.openssh.sshd; launchctl bootout system/com.openssh.sshd 2>/dev/null; true; }",
+                revert: "{ launchctl enable system/com.openssh.sshd; launchctl bootstrap system /System/Library/LaunchDaemons/ssh.plist 2>/dev/null; true; }",
+                check: #"! launchctl print-disabled system | grep -q '"com.openssh.sshd" => enabled'"#, admin: true))]),
+        Tweak("security.remoteAppleEvents", "Remote Apple Events", "Lets apps on other Macs control apps on this one with AppleScript.",
+              in: .security, section: "Sharing",
+              [.command(Command(
+                apply: "{ launchctl disable system/com.apple.AEServer; launchctl bootout system/com.apple.AEServer 2>/dev/null; true; }",
+                revert: "{ launchctl enable system/com.apple.AEServer; launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.AEServer.plist 2>/dev/null; true; }",
+                check: #"! launchctl print-disabled system | grep -q '"com.apple.AEServer" => enabled'"#, admin: true))]),
+        Tweak("security.airdrop", "AirDrop for Contacts Only", "Only people in your contacts can see your Mac in AirDrop, not everyone nearby.",
+              in: .security, section: "Sharing", restarts: [.logout],
+              [.set("com.apple.sharingd", "DiscoverableMode", "Contacts Only")]),
+        Tweak("security.guest", "Guest User", "Lets anyone use this Mac without a password, in a guest account.",
+              in: .security, section: "Sign In", risk: .moderate,
+              caveat: "Find My can no longer locate a lost Mac through someone signed in as a guest.",
+              [.command(Command(apply: "sysadminctl -guestAccount off", revert: "sysadminctl -guestAccount on",
+                                check: #"[ "$(defaults read /Library/Preferences/com.apple.loginwindow GuestEnabled 2>/dev/null)" != 1 ]"#,
+                                admin: true))]),
+        Tweak("security.wakeNetwork", "Wake for Network Access", "Lets other devices wake this Mac over the network to reach shared files and media.",
+              in: .security, section: "Sign In",
+              caveat: "Shared files and media are not reachable while the Mac sleeps.",
+              [.command(Command(apply: "pmset -a womp 0", revert: "pmset -a womp 1",
+                                check: "! pmset -g | grep -Eq '^ *womp +1'", admin: true))]),
+    ]
+
+    /// Settings the Security page reports on and leaves to System Settings.
+    public static let securityChecks: [SecurityCheck] = [
+        SecurityCheck(id: "filevault", title: "FileVault",
+                      good: "Your disk is encrypted, so a lost or stolen Mac does not give away your files.",
+                      problem: "Your disk is not encrypted. Anyone who takes your Mac can read your files. Turn on FileVault in Privacy & Security.",
+                      check: "fdesetup status | grep -q 'FileVault is On'", settingsPane: "com.apple.settings.PrivacySecurity.extension"),
+        SecurityCheck(id: "gatekeeper", title: "Gatekeeper",
+                      good: "Apps are checked for malware and a known developer before they open.",
+                      problem: "Any app opens without a malware check. Turn it back on in Terminal with: sudo spctl --global-enable",
+                      check: "spctl --status 2>&1 | grep -q 'assessments enabled'", settingsPane: "com.apple.settings.PrivacySecurity.extension"),
+        SecurityCheck(id: "sip", title: "System Integrity Protection",
+                      good: "macOS system files are protected, even from apps with your password.",
+                      problem: "System files can be changed. Turn protection back on from macOS Recovery with: csrutil enable",
+                      check: "csrutil status | grep -q 'status: enabled'", settingsPane: nil),
+        SecurityCheck(id: "securityUpdates", title: "Security Responses",
+                      good: "Security fixes and system data files install on their own.",
+                      problem: "Security fixes wait until you install them. Turn on Install Security Responses and system files.",
+                      check: #"[ "$(defaults read /Library/Preferences/com.apple.SoftwareUpdate CriticalUpdateInstall 2>/dev/null)" != 0 ]"#,
+                      settingsPane: "com.apple.Software-Update-Settings.extension"),
+        SecurityCheck(id: "autoLogin", title: "Automatic Login",
+                      good: "Your Mac asks for your password when it starts.",
+                      problem: "Your Mac signs in without a password when it starts. Turn off Automatic Login in Users & Groups.",
+                      check: "! defaults read /Library/Preferences/com.apple.loginwindow autoLoginUser >/dev/null 2>&1",
+                      settingsPane: "com.apple.Users-Groups-Settings.extension"),
     ]
 
     // MARK: Performance
@@ -380,12 +469,13 @@ public enum Catalog {
                           "ui.widgets", "ui.timeMachine", "ui.expandPanels", "finder.extensions",
                           "finder.pathBar", "finder.dsStore", "dock.recents"]),
         Preset(id: "privacy", title: "Maximum Privacy", symbol: "hand.raised.fill",
-               summary: "Everything in Recommended, plus Siri, analytics, ad services, and Game Center off.",
+               summary: "Everything in Recommended, plus Siri, analytics, ad services, browser telemetry, and Game Center off, and the firewall on.",
                tweakIDs: ["ai.writingTools", "ai.genmoji", "ai.imagePlayground", "ai.imageWand", "ai.chatgpt",
                           "ai.mailSummary", "ai.notesSummary", "ai.safariSummary", "ai.inlinePredictions", "ai.siri",
                           "privacy.analytics", "privacy.siriImprove", "privacy.ads", "privacy.adServices",
                           "privacy.lookup", "privacy.spotlightWeb", "privacy.gameCenter", "ui.crashDialog",
-                          "ui.tips", "finder.dsStore"]),
+                          "ui.tips", "finder.dsStore", "privacy.chrome", "privacy.edge", "privacy.firefox",
+                          "security.firewall", "security.stealth", "security.remoteAppleEvents", "security.airdrop"]),
         Preset(id: "performance", title: "Performance Boost", symbol: "bolt.fill",
                summary: "No animations, an instant Dock, and no photo analysis in the background.",
                tweakIDs: ["perf.windowAnimations", "perf.resize", "perf.quickLook", "perf.finderAnimations",
@@ -407,6 +497,7 @@ public extension Catalog {
     static let featureTitled: Set<String> = Set(intelligence.map(\.id) + privacy.map(\.id)).subtracting(["privacy.safariFullURL"]).union([
         "perf.windowAnimations", "perf.quickLook", "perf.finderAnimations", "perf.launchAnimation", "perf.photoAnalysis",
         "perf.appNap", "perf.powerNap", "perf.spotlight",
+        "security.remoteLogin", "security.remoteAppleEvents", "security.guest", "security.wakeNetwork",
         "ui.clickWallpaper", "ui.widgets", "ui.crashDialog", "ui.timeMachine", "ui.photosHotplug", "ui.tips",
         "ui.mediaKeys", "ui.screenshotShadow", "ui.screenshotThumbnail",
         "finder.extensionWarning", "dock.recents", "dock.bounce",

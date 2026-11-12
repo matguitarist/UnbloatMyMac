@@ -4041,6 +4041,166 @@
           }
         }
       }
+    },
+    "%@ · last changed %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · modifié le %2$@"
+          }
+        }
+      }
+    },
+    "Another app from this developer is installed and may still use these.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une autre app de ce développeur est installée et les utilise peut-être encore."
+          }
+        }
+      }
+    },
+    "Change %@ in System Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier %@ dans Réglages Système"
+          }
+        }
+      }
+    },
+    "Leftovers from Deleted Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restes d’apps supprimées"
+          }
+        }
+      }
+    },
+    "Move %lld to Trash (%@)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Placer %1$lld éléments dans la corbeille (%2$@)"
+          }
+        }
+      }
+    },
+    "Move to Trash": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Placer dans la corbeille"
+          }
+        }
+      }
+    },
+    "Needs attention": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À vérifier"
+          }
+        }
+      }
+    },
+    "No installed app uses these, and nothing changed them in 30 days. Checked items move to the Trash; put them back from there if an app misses them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune app installée ne les utilise, et rien ne les a modifiés depuis 30 jours. Les éléments cochés vont dans la corbeille ; remettez-les en place depuis là si une app en a besoin."
+          }
+        }
+      }
+    },
+    "No leftovers found. Every app with files in your Library is still installed, or used them in the last 30 days.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun reste trouvé. Chaque app qui a des fichiers dans votre Bibliothèque est encore installée, ou les a utilisés ces 30 derniers jours."
+          }
+        }
+      }
+    },
+    "Pick which leftovers move to the Trash (Option-Command-L)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir les restes à placer dans la corbeille (Option-Commande-L)"
+          }
+        }
+      }
+    },
+    "Review Leftovers from Deleted Apps…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passer en revue les restes d’apps supprimées…"
+          }
+        }
+      }
+    },
+    "Review…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passer en revue…"
+          }
+        }
+      }
+    },
+    "Status": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "État"
+          }
+        }
+      }
+    },
+    "UnbloatMyMac only reports these. Change them in System Settings.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UnbloatMyMac ne fait que les signaler. Modifiez-les dans Réglages Système."
+          }
+        }
+      }
+    },
+    "Unknown": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inconnu"
+          }
+        }
+      }
+    },
+    "**Leftovers from Deleted Apps** lists settings and data in your Library named after apps that are no longer installed and that nothing changed in 30 days. **Review…** (⌥⌘L) shows each one with its size; items from a developer who still has an app installed start unchecked. **Privacy Traces** clear the download history macOS keeps and the Recent Items lists.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Restes d’apps supprimées** liste les réglages et données de votre Bibliothèque qui portent le nom d’apps qui ne sont plus installées et que rien n’a modifiés depuis 30 jours. **Passer en revue…** (⌥⌘L) les montre un par un avec leur taille ; ceux d’un développeur dont une app est encore installée sont décochés. **Traces privées** efface l’historique des téléchargements que garde macOS et les listes d’éléments récents."
+          }
+        }
+      }
     }
   }
 }

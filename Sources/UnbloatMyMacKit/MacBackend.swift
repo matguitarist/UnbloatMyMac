@@ -1,3 +1,4 @@
+import CoreServices
 import Foundation
 
 /// The real Mac: CFPreferences, launchctl, configuration profiles, and the Trash.
@@ -245,34 +246,125 @@ public final class MacBackend: SystemBackend {
     // MARK: Storage
 
     public func measure(_ target: CleanupTarget) -> CleanupSize {
-        switch target.kind {
-        case .contents(let folders):
-            let urls = folders.flatMap { children(of: expand($0)) }
-            return CleanupSize(bytes: urls.reduce(0) { $0 + size(of: $1) }, items: urls.count)
-        case .matching(let folder, let prefix):
-            let urls = children(of: expand(folder)).filter { $0.lastPathComponent.hasPrefix(prefix) }
-            return CleanupSize(bytes: urls.reduce(0) { $0 + size(of: $1) }, items: urls.count)
-        case .command(let count, _, _):
+        if case .command(let count, _, _) = target.kind {
             let number = shell(count).output.split(separator: "\n").last.flatMap { Int($0.trimmingCharacters(in: .whitespaces)) } ?? 0
             return CleanupSize(bytes: nil, items: number)
         }
+        if target.kind == .leftovers {
+            let found = leftovers()
+            return CleanupSize(bytes: found.reduce(0) { $0 + $1.bytes }, items: found.count)
+        }
+        let urls = items(of: target)
+        return CleanupSize(bytes: urls.reduce(0) { $0 + size(of: $1) }, items: urls.count)
     }
 
     public func clean(_ target: CleanupTarget) throws {
-        var urls: [URL] = []
         switch target.kind {
-        case .contents(let folders): urls = folders.flatMap { children(of: expand($0)) }
-        case .matching(let folder, let prefix):
-            urls = children(of: expand(folder)).filter { $0.lastPathComponent.hasPrefix(prefix) }
         case .command(_, let script, let admin):
             try run([script], admin: admin)
-            return
+        case .leftovers:
+            throw BackendError(L("Review leftovers one by one."))
+        default:
+            try trash(items(of: target))
         }
+    }
+
+    /// What a folder target moves to the Trash.
+    private func items(of target: CleanupTarget) -> [URL] {
+        switch target.kind {
+        case .contents(let folders): folders.flatMap { children(of: expand($0)) }
+        case .matching(let folder, let prefixes):
+            children(of: expand(folder)).filter { url in prefixes.contains { url.lastPathComponent.hasPrefix($0) } }
+        case .chromiumCaches(let folder):
+            ChromiumCaches.paths(in: expand(folder)) { path in
+                (try? FileManager.default.contentsOfDirectory(atPath: path)) ?? []
+            }.map { URL(fileURLWithPath: $0) }
+        case .command, .leftovers: []
+        }
+    }
+
+    private func trash(_ urls: [URL]) throws {
         var failed = 0
         for url in urls {
             do { try FileManager.default.trashItem(at: url, resultingItemURL: nil) } catch { failed += 1 }
         }
         if failed > 0 { throw BackendError(String(format: L("%lld of %lld items are in use or protected and stayed where they were."), failed, urls.count)) }
+    }
+
+    // MARK: Leftovers
+
+    public func leftovers() -> [Leftover] {
+        let installed = LeftoverFinder.Installed(bundleIDs: installedBundleIDs())
+        let library = NSHomeDirectory() + "/Library/"
+        var found: [Leftover] = []
+        for folder in LeftoverFinder.folders {
+            for url in children(of: library + folder) {
+                // Cheap checks first: most items belong to an installed app.
+                guard let id = LeftoverFinder.bundleID(fromName: url.lastPathComponent), !installed.hasApp(for: id),
+                      !Self.isRegistered(id) else { continue }
+                let (bytes, modified) = sizeAndNewest(of: url)
+                if let leftover = LeftoverFinder.leftover(path: url.path, installed: installed, registered: Self.isRegistered,
+                                                          bytes: bytes, modified: modified) {
+                    found.append(leftover)
+                }
+            }
+        }
+        return found.sorted { $0.bytes > $1.bytes }
+    }
+
+    public func trash(_ leftovers: [Leftover]) throws {
+        // Only paths in the Library folders the finder looks at, never anything else.
+        let library = NSHomeDirectory() + "/Library/"
+        let allowed = LeftoverFinder.folders.map { library + $0 + "/" }
+        let urls = leftovers.map { URL(fileURLWithPath: expand($0.path)).standardizedFileURL }
+        guard urls.allSatisfy({ url in allowed.contains { url.path.hasPrefix($0) && !url.path.dropFirst($0.count).contains("/") } }) else {
+            throw BackendError(L("Only leftovers in your Library folder can be moved to the Trash."))
+        }
+        try trash(urls)
+    }
+
+    /// Bundle ids of the apps in the Applications folders, two levels deep.
+    private func installedBundleIDs() -> [String] {
+        let home = NSHomeDirectory()
+        var ids: [String] = []
+        func scan(_ folder: String, depth: Int) {
+            for url in children(of: folder) {
+                if url.pathExtension == "app" {
+                    if let id = Bundle(url: url)?.bundleIdentifier { ids.append(id) }
+                } else if depth > 0, (try? url.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true {
+                    scan(url.path, depth: depth - 1)
+                }
+            }
+        }
+        for folder in ["/Applications", home + "/Applications", "/System/Applications", "/Library/Application Support"] {
+            scan(folder, depth: 2)
+        }
+        return ids
+    }
+
+    /// LaunchServices knows an app with this id, wherever it is.
+    private static func isRegistered(_ id: String) -> Bool {
+        guard let urls = LSCopyApplicationURLsForBundleIdentifier(id as CFString, nil)?.takeRetainedValue() as? [URL] else { return false }
+        return !urls.isEmpty
+    }
+
+    /// The space an item takes and the last time anything in it changed.
+    private func sizeAndNewest(of url: URL) -> (Int64, Date) {
+        let keys: [URLResourceKey] = [.totalFileAllocatedSizeKey, .contentModificationDateKey]
+        func values(_ url: URL) -> (Int64, Date) {
+            let v = try? url.resourceValues(forKeys: Set(keys))
+            return (Int64(v?.totalFileAllocatedSize ?? 0), v?.contentModificationDate ?? .distantPast)
+        }
+        var (total, newest) = values(url)
+        if let walker = FileManager.default.enumerator(at: url, includingPropertiesForKeys: keys, options: [],
+                                                       errorHandler: { _, _ in true }) {
+            for case let file as URL in walker {
+                let (bytes, date) = values(file)
+                total += bytes
+                newest = max(newest, date)
+            }
+        }
+        return (total, newest)
     }
 
     private func children(of folder: String) -> [URL] {
@@ -341,22 +433,22 @@ public enum Profile {
 
 public extension Catalog {
     static let cleanup: [CleanupTarget] = [
+        // Apps and System
         CleanupTarget(id: "caches", title: "App Caches", detail: "Files apps keep to load faster. They rebuild them as needed.",
                       symbol: "archivebox", kind: .contents(["~/Library/Caches"])),
+        CleanupTarget(id: "chromiumCaches", title: "Web App Caches",
+                      detail: "Caches that Slack, Discord, VS Code, and other apps built on Chrome keep in Application Support. They rebuild them; quit those apps first.",
+                      symbol: "globe", kind: .chromiumCaches("~/Library/Application Support")),
         CleanupTarget(id: "logs", title: "Logs", detail: "Diagnostic logs written by apps.",
                       symbol: "doc.text", kind: .contents(["~/Library/Logs"])),
-        CleanupTarget(id: "derivedData", title: "Xcode Derived Data", detail: "Build products and indexes. Xcode rebuilds them.",
-                      symbol: "hammer", kind: .contents(["~/Library/Developer/Xcode/DerivedData"])),
-        CleanupTarget(id: "deviceSupport", title: "Xcode Device Support", detail: "Debug symbols for every iPhone, iPad, and Watch version you connected.",
-                      symbol: "iphone", kind: .contents(["~/Library/Developer/Xcode/iOS DeviceSupport",
-                                                         "~/Library/Developer/Xcode/watchOS DeviceSupport",
-                                                         "~/Library/Developer/Xcode/macOS DeviceSupport"])),
-        CleanupTarget(id: "simulators", title: "Unavailable Simulators", detail: "Simulators for runtimes that are no longer installed. Deleted at once.",
-                      symbol: "ipad.and.iphone",
-                      kind: .command(count: "[ -x /usr/bin/xcrun ] && xcode-select -p >/dev/null 2>&1 && xcrun simctl list devices unavailable 2>/dev/null | grep -c '(unavailable'; true",
-                                     run: "xcrun simctl delete unavailable", admin: false)),
+        CleanupTarget(id: "savedState", title: "Saved Window States",
+                      detail: "What apps saved to reopen their windows where you left them. Apps open with fresh windows next time.",
+                      symbol: "macwindow.on.rectangle", kind: .contents(["~/Library/Saved Application State"])),
+        CleanupTarget(id: "leftovers", title: "Leftovers from Deleted Apps",
+                      detail: "Settings and data of apps that are no longer installed and that nothing touched in 30 days. Review them one by one.",
+                      symbol: "shippingbox", kind: .leftovers),
         CleanupTarget(id: "installers", title: "macOS Installers", detail: "Install macOS apps left in Applications.",
-                      symbol: "arrow.down.app", kind: .matching(folder: "/Applications", prefix: "Install macOS")),
+                      symbol: "arrow.down.app", kind: .matching(folder: "/Applications", prefixes: ["Install macOS"])),
         CleanupTarget(id: "iosUpdates", title: "iPhone and iPad Updates", detail: "Software update files Finder downloaded for your devices.",
                       symbol: "arrow.triangle.2.circlepath",
                       kind: .contents(["~/Library/iTunes/iPhone Software Updates", "~/Library/iTunes/iPad Software Updates"])),
@@ -368,7 +460,41 @@ public extension Catalog {
                       symbol: "clock.arrow.circlepath",
                       kind: .command(count: "tmutil listlocalsnapshots / 2>/dev/null | grep -c com.apple; true",
                                      run: "tmutil deletelocalsnapshots /", admin: true)),
+        // Developer Files
+        CleanupTarget(id: "derivedData", title: "Xcode Derived Data", detail: "Build products and indexes. Xcode rebuilds them.",
+                      symbol: "hammer", kind: .contents(["~/Library/Developer/Xcode/DerivedData"]), group: .developer),
+        CleanupTarget(id: "deviceSupport", title: "Xcode Device Support", detail: "Debug symbols for every iPhone, iPad, and Watch version you connected.",
+                      symbol: "iphone", kind: .contents(["~/Library/Developer/Xcode/iOS DeviceSupport",
+                                                         "~/Library/Developer/Xcode/watchOS DeviceSupport",
+                                                         "~/Library/Developer/Xcode/macOS DeviceSupport"]), group: .developer),
+        CleanupTarget(id: "simulatorCaches", title: "Simulator Caches", detail: "Caches the iOS Simulator rebuilds when it starts.",
+                      symbol: "ipad.and.iphone", kind: .contents(["~/Library/Developer/CoreSimulator/Caches"]), group: .developer),
+        CleanupTarget(id: "simulators", title: "Unavailable Simulators", detail: "Simulators for runtimes that are no longer installed. Deleted at once.",
+                      symbol: "xmark.rectangle.portrait",
+                      kind: .command(count: "[ -x /usr/bin/xcrun ] && xcode-select -p >/dev/null 2>&1 && xcrun simctl list devices unavailable 2>/dev/null | grep -c '(unavailable'; true",
+                                     run: "xcrun simctl delete unavailable", admin: false), group: .developer),
+        CleanupTarget(id: "devCaches", title: "Package Manager Caches",
+                      detail: "Downloads that npm, Bun, pnpm, Cargo, Go, and Gradle keep outside Library. They download them again when a project needs them.",
+                      symbol: "shippingbox.and.arrow.backward",
+                      kind: .contents(Catalog.packageCaches), group: .developer),
+        // Privacy Traces
+        CleanupTarget(id: "downloadHistory", title: "Download History",
+                      detail: "macOS keeps a record of every file you downloaded, with the website it came from. Cleared at once; the files you downloaded stay.",
+                      symbol: "arrow.down.circle",
+                      kind: .command(count: "sqlite3 \"$HOME/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2\" 'SELECT COUNT(*) FROM LSQuarantineEvent' 2>/dev/null; true",
+                                     run: "sqlite3 \"$HOME/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2\" 'DELETE FROM LSQuarantineEvent; VACUUM;'",
+                                     admin: false), group: .privacy),
+        CleanupTarget(id: "recentItems", title: "Recent Items",
+                      detail: "The lists behind Apple menu > Recent Items and each app’s Open Recent menu. Favorites in the Finder sidebar stay. Open apps may keep their list until you log out.",
+                      symbol: "clock", kind: .matching(folder: "~/Library/Application Support/com.apple.sharedfilelist",
+                                                      prefixes: ["com.apple.LSSharedFileList.Recent",
+                                                                 "com.apple.LSSharedFileList.ApplicationRecentDocuments"]),
+                      group: .privacy),
     ]
+
+    /// Caches package managers keep in your home folder, outside ~/Library/Caches.
+    static let packageCaches = ["~/.npm/_cacache", "~/.bun/install/cache", "~/Library/pnpm/store",
+                                "~/.cargo/registry/cache", "~/go/pkg/mod/cache/download", "~/.gradle/caches"]
 }
 
 public extension Catalog {

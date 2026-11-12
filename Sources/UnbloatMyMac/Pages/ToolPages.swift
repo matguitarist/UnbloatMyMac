@@ -135,8 +135,10 @@ struct StoragePage: View {
                     }
                 }
             }
-            Section {
-                ForEach(Catalog.cleanup) { target in row(target) }
+            ForEach(CleanupTarget.Group.allCases, id: \.self) { group in
+                Section(group.title) {
+                    ForEach(Catalog.cleanup.filter { $0.group == group }) { target in row(target) }
+                }
             }
         }
         .formStyle(.grouped)
@@ -183,6 +185,10 @@ struct StoragePage: View {
             if let pane = target.settingsPane {
                 Button("Open Settings") { model.openSystemSettings(pane) }
                     .help("macOS removes these when you turn off Apple Intelligence")
+            } else if target.isReviewed {
+                Button("Review…") { Task { await model.reviewLeftovers() } }
+                    .disabled(size?.isEmpty ?? true || model.isBusy)
+                    .help("Pick which leftovers move to the Trash (Option-Command-L)")
             } else {
                 Button("Clean…") { confirm = target }
                     .disabled(size?.isEmpty ?? true || model.isBusy)

@@ -235,6 +235,23 @@ public final class LoggingBackend: SystemBackend {
         }
     }
 
+    public func leftovers() -> [Leftover] {
+        let found = base.leftovers()
+        log.add(.debug, .storage, "Found \(found.count) leftovers from deleted apps", detail: found.map(\.path).joined(separator: "\n"))
+        return found
+    }
+
+    public func trash(_ leftovers: [Leftover]) throws {
+        do {
+            try base.trash(leftovers)
+            log.add(.info, .storage, "Moved \(leftovers.count) leftovers to the Trash", detail: leftovers.map(\.path).joined(separator: "\n"))
+        } catch {
+            log.add(.error, .storage, "Could not move leftovers to the Trash: \(error.localizedDescription)",
+                    detail: leftovers.map(\.path).joined(separator: "\n"))
+            throw error
+        }
+    }
+
     public func osBuild() -> String { base.osBuild() }
 
     public func loginItems() throws -> [LoginItem] {

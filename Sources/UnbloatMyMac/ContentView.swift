@@ -26,6 +26,12 @@ struct ContentView: View {
                 .environment(model)
                 .themed()
         }
+        .sheet(item: Binding(get: { model.leftoversToReview.map(LeftoverList.init) },
+                             set: { model.leftoversToReview = $0?.items })) { list in
+            LeftoversSheet(items: list.items)
+                .environment(model)
+                .themed()
+        }
         .alert("UnbloatMyMac", isPresented: Binding(get: { model.notice != nil }, set: { if !$0 { model.notice = nil } })) {
             Button("OK") { model.notice = nil }
         } message: {

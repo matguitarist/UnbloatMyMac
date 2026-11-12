@@ -237,6 +237,7 @@ struct HelpView: View {
                 ("⌥⌘U", "Check for App Updates"),
                 ("⌥⌘L", "Review Leftovers from Deleted Apps…"),
                 ("⇧⌥⌘U", "Update All Apps"),
+                ("⇧⌥⌘L", "Review Xcode Device Support…"),
                 ("⌥⌘Z", "Undo Everything"),
                 ("⇧⌘E", "Export Tweaks"),
                 ("⇧⌘I", "Import Tweaks"),

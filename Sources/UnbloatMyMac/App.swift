@@ -99,6 +99,9 @@ struct UnbloatMyMacApp: App {
                 Button("Review Leftovers from Deleted Apps…") { Task { await model.reviewLeftovers() } }
                     .keyboardShortcut("l", modifiers: [.command, .option])
                     .disabled(model.isBusy)
+                Button("Review Xcode Device Support…") { Task { await model.reviewDeviceSupport() } }
+                    .keyboardShortcut("l", modifiers: [.command, .option, .shift])
+                    .disabled(model.isBusy)
                 Button("Undo Everything…") { model.sidebar = .history; model.confirmUndoAll = true }
                     .keyboardShortcut("z", modifiers: [.command, .option])
                     .disabled(model.applied.isEmpty && model.launchItemsDisabledByApp.isEmpty)

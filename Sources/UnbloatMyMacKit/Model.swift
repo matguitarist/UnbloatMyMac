@@ -319,6 +319,8 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
         case chromiumCaches(String)
         /// Folders and settings of apps that are no longer installed. Reviewed item by item, never cleaned in one go.
         case leftovers
+        /// Xcode's DeviceSupport versions. Reviewed, with the newest of each device kept by default.
+        case deviceSupport
     }
 
     /// The section of the Storage page.
@@ -361,7 +363,7 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
     public func keeps(_ name: String) -> Bool { keeps.contains { name.hasPrefix($0) } }
 
     /// Picked item by item in a sheet instead of cleaned in one go.
-    public var isReviewed: Bool { kind == .leftovers }
+    public var isReviewed: Bool { kind == .leftovers || kind == .deviceSupport }
 }
 
 /// An app that is open, so its caches are in use.
@@ -437,10 +439,13 @@ public struct SecurityCheck: Identifiable, Hashable, Sendable {
 public struct CleanupSize: Hashable, Sendable {
     public var bytes: Int64?
     public var items: Int
+    /// Items left out on purpose, like the newest Xcode device support version.
+    public var kept: Int
 
-    public init(bytes: Int64?, items: Int) {
+    public init(bytes: Int64?, items: Int, kept: Int = 0) {
         self.bytes = bytes
         self.items = items
+        self.kept = kept
     }
 
     public var isEmpty: Bool { items == 0 && (bytes ?? 0) == 0 }

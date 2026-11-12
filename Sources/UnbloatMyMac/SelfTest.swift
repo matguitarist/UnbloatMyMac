@@ -150,6 +150,17 @@ enum SelfTest {
                 model.notice = nil
             }
 
+            await model.reviewDeviceSupport()
+            let versions = model.deviceSupportToReview ?? []
+            model.deviceSupportToReview = nil
+            let kept = DeviceSupportFinder.newest(versions)
+            check("Xcode Device Support lists every version and keeps the newest of each device",
+                  versions.count == 4 && kept.count == 2 && model.sizes["deviceSupport"]?.items == 2)
+            await model.trash(deviceSupport: versions.filter { !kept.contains($0.path) })
+            check("moving old versions to the Trash leaves only the newest",
+                  model.sizes["deviceSupport"]?.items == 0 && model.sizes["deviceSupport"]?.kept == 2
+                  && model.logEntries.contains { $0.source == .storage && $0.message.hasPrefix("Moved 2 Xcode device support") })
+
             await model.reviewLeftovers()
             let leftovers = model.leftoversToReview ?? []
             check("Review Leftovers lists what deleted apps left", !leftovers.isEmpty)

@@ -262,6 +262,23 @@ public final class LoggingBackend: SystemBackend {
         }
     }
 
+    public func deviceSupport() -> [DeviceSupportVersion] {
+        let found = base.deviceSupport()
+        log.add(.debug, .storage, "Found \(found.count) Xcode device support versions", detail: found.map(\.path).joined(separator: "\n"))
+        return found
+    }
+
+    public func trash(deviceSupport versions: [DeviceSupportVersion]) throws {
+        let paths = versions.map(\.path).joined(separator: "\n")
+        do {
+            try base.trash(deviceSupport: versions)
+            log.add(.info, .storage, "Moved \(versions.count) Xcode device support versions to the Trash", detail: paths)
+        } catch {
+            log.add(.error, .storage, "Could not move Xcode device support versions to the Trash: \(error.localizedDescription)", detail: paths)
+            throw error
+        }
+    }
+
     public func osBuild() -> String { base.osBuild() }
 
     public func loginItems() throws -> [LoginItem] {

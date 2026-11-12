@@ -76,7 +76,7 @@ func storageTargets() {
         let has = Catalog.cleanup.contains { $0.group == group }
         #expect(has, "\(group)")
     }
-    #expect(Catalog.cleanup.filter(\.isReviewed).map(\.id) == ["leftovers"])
+    #expect(Catalog.cleanup.filter(\.isReviewed).map(\.id) == ["leftovers", "deviceSupport"])
     // Recent Items never touches the Finder sidebar's favorites.
     if case .matching(_, let prefixes)? = Catalog.cleanup.first(where: { $0.id == "recentItems" })?.kind {
         let favorites = prefixes.contains { "com.apple.LSSharedFileList.FavoriteItems.sfl4".hasPrefix($0) }
@@ -190,4 +190,41 @@ func quitAndClean() {
     #expect(engine.clean(target, quitting: open) == nil)
     #expect(engine.openApps(holding: target).isEmpty)
     #expect(engine.measure(target).isEmpty)
+}
+
+@Test("Xcode device support names are read with and without a device, and anything else is left alone")
+func deviceSupportNames() {
+    #expect(DeviceSupportFinder.parse("iPhone12,8 27.2 (24B119)")! == ("iPhone12,8", "27.2", "24B119"))
+    #expect(DeviceSupportFinder.parse("17.0 (21A329) arm64e")! == (nil, "17.0", "21A329"))
+    #expect(DeviceSupportFinder.parse("Watch7,3 12.2.1 (23S60)")! == ("Watch7,3", "12.2.1", "23S60"))
+    #expect(DeviceSupportFinder.parse("Logs") == nil)
+    #expect(DeviceSupportFinder.parse("Backup of iPhone 27.2 (24B119)") == nil)
+    #expect(DeviceSupportFinder.platform(ofFolder: "~/Library/Developer/Xcode/watchOS DeviceSupport") == "watchOS")
+}
+
+@Test("The newest device support version of each device is kept, by version and then by build")
+func deviceSupportNewest() {
+    func v(_ device: String?, _ version: String, _ build: String, _ platform: String = "iOS") -> DeviceSupportVersion {
+        DeviceSupportVersion(path: "/\(platform)/\(device ?? "") \(version) (\(build))", platform: platform, device: device,
+                             version: version, build: build, bytes: 1_000, modified: .now)
+    }
+    let versions = [v("iPhone15,2", "27.2", "24B119"), v("iPhone15,2", "27.10", "24K10"), v("iPhone15,2", "27.9", "24J5"),
+                    v("iPhone15,2", "27.10", "24K12"), v("iPhone12,8", "27.2", "24B119"), v("Watch7,3", "12.2", "23S41", "watchOS")]
+    let kept = DeviceSupportFinder.newest(versions)
+    #expect(kept == ["/iOS/iPhone15,2 27.10 (24K12)", "/iOS/iPhone12,8 27.2 (24B119)", "/watchOS/Watch7,3 12.2 (23S41)"])
+    let size = DeviceSupportFinder.size(of: versions)
+    #expect(size.items == 3 && size.kept == 3 && size.bytes == 3_000)
+    #expect(DeviceSupportFinder.grouped(versions).first { $0.group == "iOS · iPhone15,2" }?.versions.first?.build == "24K12")
+}
+
+@Test("Moving device support versions to the Trash notes it in History, and the newest stay")
+func trashDeviceSupport() {
+    let engine = Engine(backend: MockBackend(seeded: true), journalURL: FileManager.default.temporaryDirectory.appending(path: "journal-\(UUID().uuidString).json"))
+    let found = engine.deviceSupport()
+    let kept = DeviceSupportFinder.newest(found)
+    #expect(engine.trash(deviceSupport: found.filter { !kept.contains($0.path) }) == nil)
+    #expect(Set(engine.deviceSupport().map(\.path)) == kept)
+    #expect(engine.state().history.last?.title.contains("2") == true)
+    let target = Catalog.cleanup.first { $0.id == "deviceSupport" }!
+    #expect(engine.measure(target).isEmpty && engine.measure(target).kept == 2)
 }

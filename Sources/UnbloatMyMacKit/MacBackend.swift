@@ -255,6 +255,7 @@ public final class MacBackend: SystemBackend {
             let found = leftovers()
             return CleanupSize(bytes: found.reduce(0) { $0 + $1.bytes }, items: found.count)
         }
+        if target.kind == .deviceSupport { return DeviceSupportFinder.size(of: deviceSupport()) }
         let urls = items(of: target)
         return CleanupSize(bytes: urls.reduce(0) { $0 + size(of: $1) }, items: urls.count)
     }
@@ -263,7 +264,7 @@ public final class MacBackend: SystemBackend {
         switch target.kind {
         case .command(_, let script, let admin):
             try run([script], admin: admin)
-        case .leftovers:
+        case .leftovers, .deviceSupport:
             throw BackendError(L("Review leftovers one by one."))
         default:
             // Caches of open apps stay: moving them under a running app breaks it or frees nothing.
@@ -325,7 +326,7 @@ public final class MacBackend: SystemBackend {
             ChromiumCaches.paths(in: expand(folder)) { path in
                 (try? FileManager.default.contentsOfDirectory(atPath: path)) ?? []
             }.map { URL(fileURLWithPath: $0) }
-        case .command, .leftovers: []
+        case .command, .leftovers, .deviceSupport: []
         }
     }
 
@@ -338,6 +339,30 @@ public final class MacBackend: SystemBackend {
             throw BackendError(String(format: L("%lld of %lld items are in use or protected and stayed where they were."), failed.count, urls.count)
                                + " " + failed.prefix(5).joined(separator: ", ") + (failed.count > 5 ? "…" : ""))
         }
+    }
+
+    // MARK: Xcode device support
+
+    public func deviceSupport() -> [DeviceSupportVersion] {
+        DeviceSupportFinder.folders.flatMap { folder in
+            children(of: expand(folder)).compactMap { url -> DeviceSupportVersion? in
+                guard let parsed = DeviceSupportFinder.parse(url.lastPathComponent) else { return nil }
+                let (bytes, modified) = sizeAndNewest(of: url)
+                return DeviceSupportVersion(path: url.path, platform: DeviceSupportFinder.platform(ofFolder: folder),
+                                            device: parsed.device, version: parsed.version, build: parsed.build,
+                                            bytes: bytes, modified: modified)
+            }
+        }
+    }
+
+    public func trash(deviceSupport versions: [DeviceSupportVersion]) throws {
+        // Only versions directly inside Xcode's DeviceSupport folders.
+        let allowed = DeviceSupportFinder.folders.map { expand($0) + "/" }
+        let urls = versions.map { URL(fileURLWithPath: expand($0.path)).standardizedFileURL }
+        guard urls.allSatisfy({ url in allowed.contains { url.path.hasPrefix($0) && !url.path.dropFirst($0.count).contains("/") } }) else {
+            throw BackendError(L("Only folders in Xcode’s DeviceSupport folders can be moved to the Trash."))
+        }
+        try trash(urls)
     }
 
     // MARK: Leftovers
@@ -514,10 +539,9 @@ public extension Catalog {
         // Developer Files
         CleanupTarget(id: "derivedData", title: "Xcode Derived Data", detail: "Build products and indexes. Xcode rebuilds them.",
                       symbol: "hammer", kind: .contents(["~/Library/Developer/Xcode/DerivedData"]), group: .developer),
-        CleanupTarget(id: "deviceSupport", title: "Xcode Device Support", detail: "Debug symbols for every iPhone, iPad, and Watch version you connected.",
-                      symbol: "iphone", kind: .contents(["~/Library/Developer/Xcode/iOS DeviceSupport",
-                                                         "~/Library/Developer/Xcode/watchOS DeviceSupport",
-                                                         "~/Library/Developer/Xcode/macOS DeviceSupport"]), group: .developer),
+        CleanupTarget(id: "deviceSupport", title: "Xcode Device Support",
+                      detail: "Debug symbols Xcode copies from each iPhone, iPad, and Watch version you connect. The newest for each device stays unless you pick it.",
+                      symbol: "iphone", kind: .deviceSupport, group: .developer),
         CleanupTarget(id: "simulatorCaches", title: "Simulator Caches", detail: "Caches the iOS Simulator rebuilds when it starts.",
                       symbol: "ipad.and.iphone", kind: .contents(["~/Library/Developer/CoreSimulator/Caches"]), group: .developer),
         CleanupTarget(id: "simulators", title: "Unavailable Simulators", detail: "Simulators for runtimes that are no longer installed. Deleted at once.",

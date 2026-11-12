@@ -822,6 +822,16 @@
         }
       }
     },
+    "Cleaned %lld Xcode device support versions": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld versions de prise en charge d’appareils Xcode nettoyées"
+          }
+        }
+      }
+    },
     "Cleaned leftovers of %lld deleted apps": {
       "localizations": {
         "fr": {
@@ -968,6 +978,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Fenêtres de rapport de plantage"
+          }
+        }
+      }
+    },
+    "Debug symbols Xcode copies from each iPhone, iPad, and Watch version you connect. The newest for each device stays unless you pick it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Symboles de débogage qu’Xcode copie depuis chaque version d’iPhone, d’iPad et de Watch que vous connectez. La plus récente de chaque appareil reste, sauf si vous la choisissez."
           }
         }
       }
@@ -2368,6 +2388,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apps ouvertes uniquement"
+          }
+        }
+      }
+    },
+    "Only folders in Xcode’s DeviceSupport folders can be moved to the Trash.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seuls les dossiers des dossiers DeviceSupport d’Xcode peuvent être placés dans la corbeille."
           }
         }
       }

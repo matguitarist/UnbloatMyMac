@@ -172,6 +172,16 @@
         }
       }
     },
+    "%lld old versions found. The newest version of each device stays unless you check it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld anciennes versions trouvées. La plus récente de chaque appareil reste, sauf si vous la cochez."
+          }
+        }
+      }
+    },
     "%lld tweaks were put back": {
       "localizations": {
         "fr": {
@@ -578,6 +588,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 restant"
+          }
+        }
+      }
+    },
+    "1 old version found. The newest version of each device stays unless you check it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 ancienne version trouvée. La plus récente de chaque appareil reste, sauf si vous la cochez."
           }
         }
       }
@@ -1482,6 +1502,16 @@
         }
       }
     },
+    "Copied %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiée le %@"
+          }
+        }
+      }
+    },
     "Copy": {
       "localizations": {
         "fr": {
@@ -2372,6 +2402,26 @@
         }
       }
     },
+    "Newest": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La plus récente"
+          }
+        }
+      }
+    },
+    "Newest kept": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La plus récente est gardée"
+          }
+        }
+      }
+    },
     "No Activity Yet": {
       "localizations": {
         "fr": {
@@ -2402,6 +2452,16 @@
         }
       }
     },
+    "No Xcode device support found. Xcode adds it when you run an app on a connected device.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune prise en charge d’appareils Xcode. Xcode l’ajoute quand vous lancez une app sur un appareil connecté."
+          }
+        }
+      }
+    },
     "No installed app uses these, and nothing changed them in 30 days. Checked items move to the Trash; put them back from there if an app misses them.": {
       "localizations": {
         "fr": {
@@ -2428,6 +2488,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aucun élément d’ouverture."
+          }
+        }
+      }
+    },
+    "No old versions found. Only the newest version of each device is here.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune ancienne version. Seule la plus récente de chaque appareil est là."
           }
         }
       }
@@ -2698,6 +2768,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choisir les restes à placer dans la corbeille (Option-Commande-L)"
+          }
+        }
+      }
+    },
+    "Pick which versions move to the Trash; the newest of each device stays unless you check it (Shift-Option-Command-L)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez les versions à placer dans la corbeille ; la plus récente de chaque appareil reste, sauf si vous la cochez (Maj-Option-Commande-L)"
           }
         }
       }
@@ -3008,6 +3088,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Passer en revue les restes d’apps supprimées…"
+          }
+        }
+      }
+    },
+    "Review Xcode Device Support…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier la prise en charge d’appareils Xcode…"
           }
         }
       }
@@ -4418,6 +4508,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sera activé"
+          }
+        }
+      }
+    },
+    "Xcode copies the newest version again, which takes several minutes, the next time you connect this device.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Xcode copie à nouveau la version la plus récente, ce qui prend plusieurs minutes, la prochaine fois que vous connectez cet appareil."
           }
         }
       }

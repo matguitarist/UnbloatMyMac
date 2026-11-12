@@ -478,6 +478,20 @@ public final class Engine: Sendable {
         return message
     }
 
+    public func deviceSupport() -> [DeviceSupportVersion] { backend.deviceSupport() }
+
+    /// Moves Xcode device support versions to the Trash and notes it in History. Returns the error, if any.
+    public func trash(deviceSupport versions: [DeviceSupportVersion]) -> String? {
+        guard !versions.isEmpty else { return nil }
+        load()
+        var message: String?
+        do { try backend.trash(deviceSupport: versions) } catch { message = error.localizedDescription }
+        journal.withLock { $0.history.append(HistoryEntry(title: String(format: L("Cleaned %lld Xcode device support versions"), versions.count),
+                                                          turnedOn: true, error: message)) }
+        save()
+        return message
+    }
+
     public func openApps(holding target: CleanupTarget) -> [OpenApp] { backend.openApps(holding: target) }
 
     /// Cleans a target. Apps in `quitting` are asked to quit first, so their caches can go too.

@@ -180,7 +180,9 @@ struct StoragePage: View {
             Spacer(minLength: Space.lg)
             Group {
                 if let size {
-                    if size.isEmpty {
+                    if size.isEmpty && size.kept > 0 {
+                        Text("Newest kept")
+                    } else if size.isEmpty {
                         Text("Nothing to clean")
                     } else if let bytes = size.bytes {
                         Text(bytes.bytesText)
@@ -197,6 +199,10 @@ struct StoragePage: View {
             if let pane = target.settingsPane {
                 Button("Open Settings") { model.openSystemSettings(pane) }
                     .help("macOS removes these when you turn off Apple Intelligence")
+            } else if target.kind == .deviceSupport {
+                Button("Review…") { Task { await model.reviewDeviceSupport() } }
+                    .disabled((size.map { $0.isEmpty && $0.kept == 0 } ?? true) || model.isBusy)
+                    .help("Pick which versions move to the Trash; the newest of each device stays unless you check it (Shift-Option-Command-L)")
             } else if target.isReviewed {
                 Button("Review…") { Task { await model.reviewLeftovers() } }
                     .disabled(size?.isEmpty ?? true || model.isBusy)

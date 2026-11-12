@@ -43,6 +43,10 @@ public protocol SystemBackend: Sendable {
     func leftovers() -> [Leftover]
     /// Moves these leftovers to the Trash.
     func trash(_ leftovers: [Leftover]) throws
+    /// Every version in Xcode's DeviceSupport folders (`DeviceSupportFinder`).
+    func deviceSupport() -> [DeviceSupportVersion]
+    /// Moves these versions to the Trash.
+    func trash(deviceSupport versions: [DeviceSupportVersion]) throws
 
     /// The macOS build, like 27C52.
     func osBuild() -> String
@@ -69,6 +73,7 @@ public final class MockBackend: SystemBackend {
         var items: [LaunchItem] = []
         var sizes: [String: CleanupSize] = [:]
         var leftovers: [Leftover] = []
+        var deviceSupport: [DeviceSupportVersion] = []
         var openApps: [OpenApp] = [OpenApp(name: "Slack", bundleID: "com.tinyspeck.slackmacgap", pid: 501),
                                    OpenApp(name: "Discord", bundleID: "com.hnc.Discord", pid: 502)]
         var restarted: Set<Restart> = []
@@ -105,7 +110,6 @@ public final class MockBackend: SystemBackend {
                 "caches": CleanupSize(bytes: 3_870_000_000, items: 214),
                 "logs": CleanupSize(bytes: 182_000_000, items: 41),
                 "derivedData": CleanupSize(bytes: 12_400_000_000, items: 9),
-                "deviceSupport": CleanupSize(bytes: 8_100_000_000, items: 3),
                 "simulators": CleanupSize(bytes: nil, items: 4),
                 "installers": CleanupSize(bytes: 0, items: 0),
                 "iosUpdates": CleanupSize(bytes: 6_900_000_000, items: 1),
@@ -132,6 +136,19 @@ public final class MockBackend: SystemBackend {
                 Leftover(path: library + "HTTPStorages/us.zoom.xos", bundleID: "us.zoom.xos", bytes: 2_100_000, modified: old),
                 Leftover(path: library + "Preferences/com.microsoft.autoupdate2.plist", bundleID: "com.microsoft.autoupdate2",
                          bytes: 8_000, modified: old, sameDeveloperInstalled: true),
+            ]
+            let ios = "~/Library/Developer/Xcode/iOS DeviceSupport/"
+            let day: TimeInterval = 24 * 3600
+            s.deviceSupport = [
+                DeviceSupportVersion(path: ios + "iPhone15,2 27.0 (24A335)", platform: "iOS", device: "iPhone15,2", version: "27.0",
+                                     build: "24A335", bytes: 5_800_000_000, modified: Date(timeIntervalSinceNow: -60 * day)),
+                DeviceSupportVersion(path: ios + "iPhone15,2 27.1.1 (24B91)", platform: "iOS", device: "iPhone15,2", version: "27.1.1",
+                                     build: "24B91", bytes: 5_900_000_000, modified: Date(timeIntervalSinceNow: -30 * day)),
+                DeviceSupportVersion(path: ios + "iPhone15,2 27.2 (24B119)", platform: "iOS", device: "iPhone15,2", version: "27.2",
+                                     build: "24B119", bytes: 6_000_000_000, modified: Date(timeIntervalSinceNow: -3 * day)),
+                DeviceSupportVersion(path: "~/Library/Developer/Xcode/watchOS DeviceSupport/Watch7,3 12.2 (23S41)", platform: "watchOS",
+                                     device: "Watch7,3", version: "12.2", build: "23S41", bytes: 2_100_000_000,
+                                     modified: Date(timeIntervalSinceNow: -10 * day)),
             ]
             // Every security check passes but FileVault, to show how a problem looks.
             s.passed = Set(Catalog.securityChecks.filter { $0.id != "filevault" }.map(\.check))
@@ -234,16 +251,24 @@ public final class MockBackend: SystemBackend {
     public func measure(_ target: CleanupTarget) -> CleanupSize {
         state.withLock { s in
             if target.kind == .leftovers { return CleanupSize(bytes: s.leftovers.reduce(0) { $0 + $1.bytes }, items: s.leftovers.count) }
+            if target.kind == .deviceSupport { return DeviceSupportFinder.size(of: s.deviceSupport) }
             return s.sizes[target.id] ?? CleanupSize(bytes: 0, items: 0)
         }
     }
 
     public func clean(_ target: CleanupTarget) throws {
-        guard target.kind != .leftovers else { throw BackendError(L("Review leftovers one by one.")) }
+        guard !target.isReviewed else { throw BackendError(L("Review leftovers one by one.")) }
         state.withLock { $0.sizes[target.id] = CleanupSize(bytes: 0, items: 0) }
     }
 
     public func leftovers() -> [Leftover] { state.withLock { $0.leftovers } }
+
+    public func deviceSupport() -> [DeviceSupportVersion] { state.withLock { $0.deviceSupport } }
+
+    public func trash(deviceSupport versions: [DeviceSupportVersion]) throws {
+        let paths = Set(versions.map(\.path))
+        state.withLock { $0.deviceSupport.removeAll { paths.contains($0.path) } }
+    }
 
     /// Slack and Discord are open and hold web app caches and app caches.
     public func openApps(holding target: CleanupTarget) -> [OpenApp] {

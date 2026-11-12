@@ -88,6 +88,8 @@ final class AppModel {
     private(set) var securityStatus: [String: Bool] = [:]
     /// The leftovers the Review Leftovers sheet lists, or nil when it is closed.
     var leftoversToReview: [Leftover]?
+    /// The versions the Xcode Device Support sheet lists, or nil when it is closed.
+    var deviceSupportToReview: [DeviceSupportVersion]?
     /// Tweaks the app applied that were put back, most often by a macOS update.
     private(set) var reverted: [String] = []
     private(set) var macOSUpdated = false
@@ -339,6 +341,32 @@ final class AppModel {
         if let target = Catalog.cleanup.first(where: { $0.kind == .leftovers }) {
             sizes[target.id] = await Task.detached { engine.measure(target) }.value
         }
+        await refresh()
+        isBusy = false
+        if let error { notice = error }
+    }
+
+    /// Finds Xcode's device support versions and opens the sheet that lists them.
+    func reviewDeviceSupport() async {
+        let engine = engine
+        sidebar = .storage
+        isBusy = true
+        let found = await Task.detached { engine.deviceSupport() }.value
+        isBusy = false
+        sizes["deviceSupport"] = DeviceSupportFinder.size(of: found)
+        if found.isEmpty {
+            notice = String(localized: "No Xcode device support found. Xcode adds it when you run an app on a connected device.")
+        } else {
+            deviceSupportToReview = found
+        }
+    }
+
+    func trash(deviceSupport versions: [DeviceSupportVersion]) async {
+        let engine = engine
+        isBusy = true
+        let error = await Task.detached { engine.trash(deviceSupport: versions) }.value
+        let left = await Task.detached { engine.deviceSupport() }.value
+        sizes["deviceSupport"] = DeviceSupportFinder.size(of: left)
         await refresh()
         isBusy = false
         if let error { notice = error }

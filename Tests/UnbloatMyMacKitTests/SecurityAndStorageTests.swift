@@ -76,7 +76,7 @@ func storageTargets() {
         let has = Catalog.cleanup.contains { $0.group == group }
         #expect(has, "\(group)")
     }
-    #expect(Catalog.cleanup.filter(\.isReviewed).map(\.id) == ["leftovers", "deviceSupport"])
+    #expect(Catalog.cleanup.filter(\.isReviewed).map(\.id) == ["leftovers", "oldInstallers", "deviceSupport", "buildArtifacts"])
     // Recent Items never touches the Finder sidebar's favorites.
     if case .matching(_, let prefixes)? = Catalog.cleanup.first(where: { $0.id == "recentItems" })?.kind {
         let favorites = prefixes.contains { "com.apple.LSSharedFileList.FavoriteItems.sfl4".hasPrefix($0) }
@@ -246,4 +246,63 @@ func protectedPaths() {
                  "/Users/me/Library/Group Containers/UBF8T346G9.Office"] {
         #expect(reason(path) == nil, "\(path) should be allowed")
     }
+}
+
+@Test("Installers in Downloads: big, a day old, not open, and suggested only when downloaded")
+func installerRules() {
+    let old = Date(timeIntervalSinceNow: -3 * 24 * 3600)
+    func item(_ name: String, bytes: Int64 = 100_000_000, modified: Date = old, downloaded: Bool = true, mounted: Set<String> = []) -> ReviewItem? {
+        InstallerFinder.item(path: "/Users/me/Downloads/" + name, folder: "~/Downloads", bytes: bytes, modified: modified,
+                             downloaded: downloaded, mounted: mounted)
+    }
+    #expect(item("Docker.dmg")?.suggested == true)
+    #expect(item("Zoom.PKG")?.suggested == true)
+    #expect(item("Backup.dmg", downloaded: false)?.suggested == false)
+    #expect(item("Small.dmg", bytes: 5_000_000) == nil)
+    #expect(item("Today.dmg", modified: .now) == nil)
+    #expect(item("Notes.zip") == nil)
+    #expect(item("Open.dmg", mounted: ["/Users/me/Downloads/Open.dmg"]) == nil)
+    let info = "================================================\nimage-path      : /Users/me/Downloads/Open.dmg\nimage-alias     : /Users/me/Downloads/Open.dmg\n"
+    #expect(InstallerFinder.mounted(fromHdiutil: info) == ["/Users/me/Downloads/Open.dmg"])
+}
+
+@Test("Build folders are found only beside their tool's file, and recent projects are not suggested")
+func buildArtifactRules() {
+    let tree: [String: [String]] = [
+        "/D": ["web", "rust", "notes", ".hidden", "app"],
+        "/D/web": ["package.json", "node_modules", "src"],
+        "/D/web/node_modules": ["left-pad"],
+        "/D/web/node_modules/left-pad": ["package.json", "node_modules"],
+        "/D/web/src": ["index.js"],
+        "/D/rust": ["Cargo.toml", "target", "src"],
+        "/D/rust/target": ["debug"],
+        "/D/rust/src": [],
+        // A folder named target without Cargo.toml is somebody's data.
+        "/D/notes": ["target", "build"],
+        "/D/notes/target": ["plan.md"],
+        "/D/notes/build": ["x"],
+        "/D/.hidden": ["package.json", "node_modules"],
+        "/D/.hidden/node_modules": [],
+        "/D/app": ["App.xcodeproj", "DerivedData"],
+        "/D/app/DerivedData": ["Build"],
+    ]
+    let found = BuildArtifactFinder.find(in: "/D") { tree[$0] }
+    #expect(found.map(\.path).sorted() == ["/D/app/DerivedData", "/D/rust/target", "/D/web/node_modules"])
+    let rule = BuildArtifactFinder.rules[0]
+    let recent = BuildArtifactFinder.item(path: "/D/web/node_modules", project: "/Users/me/Developer/web", rule: rule, bytes: 1,
+                                          projectChanged: .now, home: "/Users/me")
+    #expect(!recent.suggested && recent.note != nil && recent.group == "~/Developer/web")
+    let old = BuildArtifactFinder.item(path: "/D/web/node_modules", project: "/D/web", rule: rule, bytes: 1,
+                                       projectChanged: Date(timeIntervalSinceNow: -30 * 24 * 3600))
+    #expect(old.suggested)
+}
+
+@Test("Reviewed items move to the Trash and the row counts what is left")
+func trashReviewItems() {
+    let engine = Engine(backend: MockBackend(seeded: true), journalURL: FileManager.default.temporaryDirectory.appending(path: "journal-\(UUID().uuidString).json"))
+    let target = Catalog.cleanup.first { $0.id == "buildArtifacts" }!
+    let found = engine.reviewItems(target)
+    #expect(engine.trash(found.filter(\.suggested), from: target) == nil)
+    #expect(engine.reviewItems(target).count == 1)
+    #expect(engine.measure(target).isEmpty && engine.measure(target).kept == 1)
 }

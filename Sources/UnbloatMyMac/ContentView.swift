@@ -33,6 +33,11 @@ struct ContentView: View {
                 .environment(model)
                 .themed()
         }
+        .sheet(item: Binding(get: { model.filesToReview }, set: { model.filesToReview = $0 })) { list in
+            ReviewFilesSheet(list: list)
+                .environment(model)
+                .themed()
+        }
         .sheet(item: Binding(get: { model.deviceSupportToReview.map(DeviceSupportList.init) },
                              set: { model.deviceSupportToReview = $0?.versions })) { list in
             DeviceSupportSheet(versions: list.versions)

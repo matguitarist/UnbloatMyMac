@@ -321,6 +321,10 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
         case leftovers
         /// Xcode's DeviceSupport versions. Reviewed, with the newest of each device kept by default.
         case deviceSupport
+        /// Disk images and installer packages left in Downloads (`InstallerFinder`). Reviewed.
+        case installers
+        /// What builds left in your projects (`BuildArtifactFinder`). Reviewed.
+        case buildArtifacts
     }
 
     /// The section of the Storage page.
@@ -363,7 +367,10 @@ public struct CleanupTarget: Identifiable, Hashable, Sendable {
     public func keeps(_ name: String) -> Bool { keeps.contains { name.hasPrefix($0) } }
 
     /// Picked item by item in a sheet instead of cleaned in one go.
-    public var isReviewed: Bool { kind == .leftovers || kind == .deviceSupport }
+    public var isReviewed: Bool { [.leftovers, .deviceSupport, .installers, .buildArtifacts].contains(kind) }
+
+    /// Listed in the shared review sheet as `ReviewItem`s.
+    public var listsReviewItems: Bool { kind == .installers || kind == .buildArtifacts }
 }
 
 /// An app that is open, so its caches are in use.

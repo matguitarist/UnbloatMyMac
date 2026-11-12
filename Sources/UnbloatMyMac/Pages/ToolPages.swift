@@ -199,6 +199,12 @@ struct StoragePage: View {
             if let pane = target.settingsPane {
                 Button("Open Settings") { model.openSystemSettings(pane) }
                     .help("macOS removes these when you turn off Apple Intelligence")
+            } else if target.listsReviewItems {
+                Button("Review…") { Task { await model.reviewFiles(target.id) } }
+                    .disabled((size.map { $0.isEmpty && $0.kept == 0 } ?? true) || model.isBusy)
+                    .help(target.kind == .buildArtifacts
+                          ? "Pick which build folders move to the Trash (Shift-Option-Command-B)"
+                          : "Pick which installers move to the Trash (Shift-Option-Command-I)")
             } else if target.kind == .deviceSupport {
                 Button("Review…") { Task { await model.reviewDeviceSupport() } }
                     .disabled((size.map { $0.isEmpty && $0.kept == 0 } ?? true) || model.isBusy)

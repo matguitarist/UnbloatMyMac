@@ -238,6 +238,8 @@ struct HelpView: View {
                 ("⌥⌘L", "Review Leftovers from Deleted Apps…"),
                 ("⇧⌥⌘U", "Update All Apps"),
                 ("⇧⌥⌘L", "Review Xcode Device Support…"),
+                ("⇧⌥⌘I", "Review Installers in Downloads…"),
+                ("⇧⌥⌘B", "Review Project Build Files…"),
                 ("⌥⌘Z", "Undo Everything"),
                 ("⇧⌘E", "Export Tweaks"),
                 ("⇧⌘I", "Import Tweaks"),

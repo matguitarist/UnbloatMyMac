@@ -161,6 +161,22 @@ enum SelfTest {
                   model.sizes["deviceSupport"]?.items == 0 && model.sizes["deviceSupport"]?.kept == 2
                   && model.logEntries.contains { $0.source == .storage && $0.message.hasPrefix("Moved 2 Xcode device support") })
 
+            await model.reviewFiles("buildArtifacts")
+            let built = model.filesToReview?.items ?? []
+            model.filesToReview = nil
+            check("Project Build Files lists build folders and leaves recent projects unchecked",
+                  built.count == 3 && built.filter(\.suggested).count == 2 && model.sizes["buildArtifacts"]?.kept == 1)
+            if let target = Catalog.cleanup.first(where: { $0.id == "buildArtifacts" }) {
+                await model.trash(built.filter(\.suggested), from: target)
+                check("moving build folders to the Trash leaves the recent project's",
+                      model.sizes["buildArtifacts"]?.items == 0 && model.sizes["buildArtifacts"]?.kept == 1)
+            }
+            await model.reviewFiles("oldInstallers")
+            let installers = model.filesToReview?.items ?? []
+            model.filesToReview = nil
+            check("Installers in Downloads suggests downloaded ones, not a disk image you made",
+                  installers.count == 3 && installers.filter { !$0.suggested }.map(\.name) == ["Old Photos Backup.dmg"])
+
             await model.reviewLeftovers()
             let leftovers = model.leftoversToReview ?? []
             check("Review Leftovers lists what deleted apps left", !leftovers.isEmpty)

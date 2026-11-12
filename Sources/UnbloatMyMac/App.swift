@@ -102,6 +102,12 @@ struct UnbloatMyMacApp: App {
                 Button("Review Xcode Device Support…") { Task { await model.reviewDeviceSupport() } }
                     .keyboardShortcut("l", modifiers: [.command, .option, .shift])
                     .disabled(model.isBusy)
+                Button("Review Installers in Downloads…") { Task { await model.reviewFiles("oldInstallers") } }
+                    .keyboardShortcut("i", modifiers: [.command, .option, .shift])
+                    .disabled(model.isBusy)
+                Button("Review Project Build Files…") { Task { await model.reviewFiles("buildArtifacts") } }
+                    .keyboardShortcut("b", modifiers: [.command, .option, .shift])
+                    .disabled(model.isBusy)
                 Button("Undo Everything…") { model.sidebar = .history; model.confirmUndoAll = true }
                     .keyboardShortcut("z", modifiers: [.command, .option])
                     .disabled(model.applied.isEmpty && model.launchItemsDisabledByApp.isEmpty)

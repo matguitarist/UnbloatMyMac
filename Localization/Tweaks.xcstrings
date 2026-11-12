@@ -22,6 +22,16 @@
         }
       }
     },
+    "%@ makes it again on the next build.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ le recrée à la prochaine compilation."
+          }
+        }
+      }
+    },
     "%lld of %lld items are in use or protected and stayed where they were.": {
       "localizations": {
         "fr": {
@@ -1072,6 +1082,26 @@
         }
       }
     },
+    "Disk image": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Image disque"
+          }
+        }
+      }
+    },
+    "Disk images and installer packages over 20 MB left after you installed the app. Ones you made yourself are listed but not picked.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Images disque et paquets d’installation de plus de 20 Mo restés après l’installation de l’app. Ceux que vous avez créés sont listés mais pas choisis."
+          }
+        }
+      }
+    },
     "Disks, USB drives, and servers show on the desktop, like This PC.": {
       "localizations": {
         "fr": {
@@ -1932,6 +1962,26 @@
         }
       }
     },
+    "Installer package": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paquet d’installation"
+          }
+        }
+      }
+    },
+    "Installers in Downloads": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installateurs dans Téléchargements"
+          }
+        }
+      }
+    },
     "Instant Dock Reveal": {
       "localizations": {
         "fr": {
@@ -2352,6 +2402,16 @@
         }
       }
     },
+    "Not downloaded from the web, so it may be a disk image you made. Look before you pick it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas téléchargée depuis le web : c’est peut-être une image disque que vous avez créée. Vérifiez avant de la choisir."
+          }
+        }
+      }
+    },
     "Not on this version of macOS": {
       "localizations": {
         "fr": {
@@ -2698,6 +2758,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Programmation, scripts ou le Terminal."
+          }
+        }
+      }
+    },
+    "Project Build Files": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fichiers de compilation des projets"
           }
         }
       }
@@ -3572,6 +3642,16 @@
         }
       }
     },
+    "Some items changed since they were listed. Scan again, then review them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Certains éléments ont changé depuis la liste. Analysez à nouveau, puis vérifiez-les."
+          }
+        }
+      }
+    },
     "Spaces and full screen fade instead of slide.": {
       "localizations": {
         "fr": {
@@ -4068,6 +4148,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ce fichier n’a pas été créé par UnbloatMyMac."
+          }
+        }
+      }
+    },
+    "This project changed in the last week. Your next build would be slower.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce projet a changé cette semaine. Votre prochaine compilation serait plus lente."
           }
         }
       }
@@ -4638,6 +4728,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "demande votre mot de passe"
+          }
+        }
+      }
+    },
+    "node_modules, target, .build, and other folders builds leave in your projects in Developer, Projects, Code, or src. Projects you changed in the last week are listed but not picked.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "node_modules, target, .build et les autres dossiers que les compilations laissent dans vos projets de Developer, Projects, Code ou src. Les projets modifiés cette semaine sont listés mais pas choisis."
           }
         }
       }

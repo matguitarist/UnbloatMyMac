@@ -62,6 +62,16 @@
         }
       }
     },
+    "%@ · changed %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · modifié le %2$@"
+          }
+        }
+      }
+    },
     "%@ · last changed %@": {
       "localizations": {
         "fr": {
@@ -1672,6 +1682,16 @@
         }
       }
     },
+    "Each folder sits beside the file of the tool that makes it, which builds it again when you need it. Projects you changed in the last week start unchecked.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque dossier se trouve à côté du fichier de l’outil qui le crée, et qui le recrée quand vous en avez besoin. Les projets modifiés cette semaine sont décochés."
+          }
+        }
+      }
+    },
     "Error": {
       "localizations": {
         "fr": {
@@ -2462,12 +2482,32 @@
         }
       }
     },
+    "No build files found in Developer, Projects, Code, or src.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun fichier de compilation dans Developer, Projects, Code ou src."
+          }
+        }
+      }
+    },
     "No installed app uses these, and nothing changed them in 30 days. Checked items move to the Trash; put them back from there if an app misses them.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Aucune app installée ne les utilise, et rien ne les a modifiés depuis 30 jours. Les éléments cochés vont dans la corbeille ; remettez-les en place depuis là si une app en a besoin."
+          }
+        }
+      }
+    },
+    "No installers found in Downloads. Ones from the last day are left out, since you may still be using them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun installateur dans Téléchargements. Ceux du dernier jour sont écartés, vous les utilisez peut-être encore."
           }
         }
       }
@@ -2758,6 +2798,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Choisissez les réglages un par un."
+          }
+        }
+      }
+    },
+    "Pick which build folders move to the Trash (Shift-Option-Command-B)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez les dossiers de compilation à placer dans la corbeille (Maj-Option-Commande-B)"
+          }
+        }
+      }
+    },
+    "Pick which installers move to the Trash (Shift-Option-Command-I)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez les installateurs à placer dans la corbeille (Maj-Option-Commande-I)"
           }
         }
       }
@@ -3082,12 +3142,32 @@
         }
       }
     },
+    "Review Installers in Downloads…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier les installateurs dans Téléchargements…"
+          }
+        }
+      }
+    },
     "Review Leftovers from Deleted Apps…": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Passer en revue les restes d’apps supprimées…"
+          }
+        }
+      }
+    },
+    "Review Project Build Files…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier les fichiers de compilation des projets…"
           }
         }
       }
@@ -4518,6 +4598,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Xcode copie à nouveau la version la plus récente, ce qui prend plusieurs minutes, la prochaine fois que vous connectez cet appareil."
+          }
+        }
+      }
+    },
+    "You can download these again from where they came from. A disk image that wasn’t downloaded may be one you made, so it starts unchecked.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vous pouvez les télécharger à nouveau depuis leur source. Une image disque qui n’a pas été téléchargée est peut-être la vôtre, elle est donc décochée."
           }
         }
       }

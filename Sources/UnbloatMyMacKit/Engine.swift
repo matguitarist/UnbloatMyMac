@@ -480,6 +480,19 @@ public final class Engine: Sendable {
 
     public func deviceSupport() -> [DeviceSupportVersion] { backend.deviceSupport() }
 
+    public func reviewItems(_ target: CleanupTarget) -> [ReviewItem] { backend.reviewItems(target) }
+
+    /// Moves reviewed items to the Trash and notes it in History. Returns the error, if any.
+    public func trash(_ items: [ReviewItem], from target: CleanupTarget) -> String? {
+        guard !items.isEmpty else { return nil }
+        load()
+        var message: String?
+        do { try backend.trash(items, from: target) } catch { message = error.localizedDescription }
+        journal.withLock { $0.history.append(HistoryEntry(title: String(format: L("Cleaned %@"), target.title), turnedOn: true, error: message)) }
+        save()
+        return message
+    }
+
     /// Moves Xcode device support versions to the Trash and notes it in History. Returns the error, if any.
     public func trash(deviceSupport versions: [DeviceSupportVersion]) -> String? {
         guard !versions.isEmpty else { return nil }

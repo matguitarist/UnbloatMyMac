@@ -47,6 +47,10 @@ public protocol SystemBackend: Sendable {
     func deviceSupport() -> [DeviceSupportVersion]
     /// Moves these versions to the Trash.
     func trash(deviceSupport versions: [DeviceSupportVersion]) throws
+    /// What a reviewed target lists: old installers, or what builds left in projects.
+    func reviewItems(_ target: CleanupTarget) -> [ReviewItem]
+    /// Moves these items of the target to the Trash, after checking each is still what it was listed as.
+    func trash(_ items: [ReviewItem], from target: CleanupTarget) throws
 
     /// The macOS build, like 27C52.
     func osBuild() -> String
@@ -74,6 +78,7 @@ public final class MockBackend: SystemBackend {
         var sizes: [String: CleanupSize] = [:]
         var leftovers: [Leftover] = []
         var deviceSupport: [DeviceSupportVersion] = []
+        var reviewItems: [String: [ReviewItem]] = [:]
         var openApps: [OpenApp] = [OpenApp(name: "Slack", bundleID: "com.tinyspeck.slackmacgap", pid: 501),
                                    OpenApp(name: "Discord", bundleID: "com.hnc.Discord", pid: 502)]
         var restarted: Set<Restart> = []
@@ -149,6 +154,27 @@ public final class MockBackend: SystemBackend {
                 DeviceSupportVersion(path: "~/Library/Developer/Xcode/watchOS DeviceSupport/Watch7,3 12.2 (23S41)", platform: "watchOS",
                                      device: "Watch7,3", version: "12.2", build: "23S41", bytes: 2_100_000_000,
                                      modified: Date(timeIntervalSinceNow: -10 * day)),
+            ]
+            let downloads = "~/Downloads"
+            s.reviewItems["oldInstallers"] = [
+                ReviewItem(path: downloads + "/Docker.dmg", group: downloads, name: "Docker.dmg", detail: L("Disk image"),
+                           bytes: 640_000_000, modified: Date(timeIntervalSinceNow: -40 * day), suggested: true),
+                ReviewItem(path: downloads + "/Install Zoom.pkg", group: downloads, name: "Install Zoom.pkg", detail: L("Installer package"),
+                           bytes: 118_000_000, modified: Date(timeIntervalSinceNow: -90 * day), suggested: true),
+                ReviewItem(path: downloads + "/Old Photos Backup.dmg", group: downloads, name: "Old Photos Backup.dmg", detail: L("Disk image"),
+                           bytes: 2_400_000_000, modified: Date(timeIntervalSinceNow: -400 * day), suggested: false,
+                           note: L("Not downloaded from the web, so it may be a disk image you made. Look before you pick it.")),
+            ]
+            s.reviewItems["buildArtifacts"] = [
+                BuildArtifactFinder.item(path: "/Users/me/Developer/RustTool/target", project: "/Users/me/Developer/RustTool",
+                                         rule: BuildArtifactFinder.rules[1], bytes: 3_200_000_000,
+                                         projectChanged: Date(timeIntervalSinceNow: -60 * day), home: "/Users/me"),
+                BuildArtifactFinder.item(path: "/Users/me/Developer/WebApp/node_modules", project: "/Users/me/Developer/WebApp",
+                                         rule: BuildArtifactFinder.rules[0], bytes: 890_000_000,
+                                         projectChanged: Date(timeIntervalSinceNow: -21 * day), home: "/Users/me"),
+                BuildArtifactFinder.item(path: "/Users/me/Developer/MyMacApp/.build", project: "/Users/me/Developer/MyMacApp",
+                                         rule: BuildArtifactFinder.rules[2], bytes: 1_100_000_000,
+                                         projectChanged: Date(timeIntervalSinceNow: -1 * day), home: "/Users/me"),
             ]
             // Every security check passes but FileVault, to show how a problem looks.
             s.passed = Set(Catalog.securityChecks.filter { $0.id != "filevault" }.map(\.check))
@@ -252,6 +278,7 @@ public final class MockBackend: SystemBackend {
         state.withLock { s in
             if target.kind == .leftovers { return CleanupSize(bytes: s.leftovers.reduce(0) { $0 + $1.bytes }, items: s.leftovers.count) }
             if target.kind == .deviceSupport { return DeviceSupportFinder.size(of: s.deviceSupport) }
+            if target.listsReviewItems { return ReviewItem.size(of: s.reviewItems[target.id] ?? []) }
             return s.sizes[target.id] ?? CleanupSize(bytes: 0, items: 0)
         }
     }
@@ -264,6 +291,13 @@ public final class MockBackend: SystemBackend {
     public func leftovers() -> [Leftover] { state.withLock { $0.leftovers } }
 
     public func deviceSupport() -> [DeviceSupportVersion] { state.withLock { $0.deviceSupport } }
+
+    public func reviewItems(_ target: CleanupTarget) -> [ReviewItem] { state.withLock { $0.reviewItems[target.id] ?? [] } }
+
+    public func trash(_ items: [ReviewItem], from target: CleanupTarget) throws {
+        let paths = Set(items.map(\.path))
+        state.withLock { $0.reviewItems[target.id]?.removeAll { paths.contains($0.path) } }
+    }
 
     public func trash(deviceSupport versions: [DeviceSupportVersion]) throws {
         let paths = Set(versions.map(\.path))

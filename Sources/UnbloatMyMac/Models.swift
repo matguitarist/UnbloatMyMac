@@ -90,6 +90,8 @@ final class AppModel {
     var leftoversToReview: [Leftover]?
     /// The versions the Xcode Device Support sheet lists, or nil when it is closed.
     var deviceSupportToReview: [DeviceSupportVersion]?
+    /// Old installers or project build files the review sheet lists, or nil when it is closed.
+    var filesToReview: ReviewFileList?
     /// Tweaks the app applied that were put back, most often by a macOS update.
     private(set) var reverted: [String] = []
     private(set) var macOSUpdated = false
@@ -367,6 +369,34 @@ final class AppModel {
         let error = await Task.detached { engine.trash(deviceSupport: versions) }.value
         let left = await Task.detached { engine.deviceSupport() }.value
         sizes["deviceSupport"] = DeviceSupportFinder.size(of: left)
+        await refresh()
+        isBusy = false
+        if let error { notice = error }
+    }
+
+    /// Finds a reviewed target's items (old installers, project build files) and opens the sheet that lists them.
+    func reviewFiles(_ id: String) async {
+        guard let target = Catalog.cleanup.first(where: { $0.id == id }) else { return }
+        let engine = engine
+        sidebar = .storage
+        isBusy = true
+        let found = await Task.detached { engine.reviewItems(target) }.value
+        isBusy = false
+        sizes[target.id] = ReviewItem.size(of: found)
+        if found.isEmpty {
+            notice = target.kind == .buildArtifacts
+                ? String(localized: "No build files found in Developer, Projects, Code, or src.")
+                : String(localized: "No installers found in Downloads. Ones from the last day are left out, since you may still be using them.")
+        } else {
+            filesToReview = ReviewFileList(target: target, items: found)
+        }
+    }
+
+    func trash(_ items: [ReviewItem], from target: CleanupTarget) async {
+        let engine = engine
+        isBusy = true
+        let error = await Task.detached { engine.trash(items, from: target) }.value
+        sizes[target.id] = await Task.detached { engine.measure(target) }.value
         await refresh()
         isBusy = false
         if let error { notice = error }

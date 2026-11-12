@@ -121,4 +121,5 @@ func cleaners() throws {
     #expect(cleaners.count >= 6)
     #expect(Catalog.app("mole")?.isRecommended() == true)
     #expect(Catalog.app("appcleaner")?.group == .cleaners)
+    #expect(Catalog.app("peel")?.kind == .cask && Catalog.app("peel")?.isRecommended() == false)
 }

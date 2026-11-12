@@ -312,6 +312,16 @@
         }
       }
     },
+    "An open-source uninstaller that shows why each leftover file belongs to its app, finds what builds left in your projects, and can put back what it moved.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un désinstalleur open source qui montre pourquoi chaque fichier restant appartient à son app, trouve ce que les compilations ont laissé dans vos projets, et peut remettre ce qu’il a déplacé."
+          }
+        }
+      }
+    },
     "An open-source, offline alternative to ChatGPT.": {
       "localizations": {
         "fr": {

@@ -32,6 +32,8 @@ The app is in English and French; pick its language in **Settings > General**.
 
 The **Background Items** page stops third-party updaters and helpers. **Storage** clears caches (including Chrome and Electron app caches and package manager downloads), Xcode and Simulator data, old installers, Time Machine local snapshots, the download history, and Recent Items, and lists leftovers of deleted apps for you to review. **History** has **Undo Everything**. The **Activity Log** lists every setting, service, command, file, and app the app or the command line tool changed, with the exact command, and exports it for a bug report. **Help > UnbloatMyMac Help** (⌘?) explains every page.
 
+**Set Up for Me** asks six questions (Apple Intelligence, Siri, code, Windows habits, privacy, animations) and stages the changes and apps that fit, such as Terminal tools and Apple's Command Line Tools for developers. You review everything before it applies.
+
 Presets: **Recommended**, **Maximum Privacy**, **Performance Boost**, and **Windows Mode**.
 
 <p>

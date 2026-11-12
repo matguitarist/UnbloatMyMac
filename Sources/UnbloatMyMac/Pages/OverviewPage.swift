@@ -63,6 +63,12 @@ struct OverviewPage: View {
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
+                Spacer(minLength: Space.lg)
+                Button("Set Up for Me…", systemImage: "person.crop.circle.badge.questionmark") { model.openSetup() }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .disabled(model.isBusy)
+                    .help("Answer a few questions and get the changes and apps that fit how you use your Mac (Option-Command-S)")
             }
             HStack(spacing: Space.lg) {
                 Stat(value: "\(applied)", total: String(localized: "of \(tweaks.count)"), title: String(localized: "Tweaks applied"), symbol: "checkmark.circle")

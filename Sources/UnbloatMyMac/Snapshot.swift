@@ -8,7 +8,7 @@ import UnbloatMyMacKit
 /// writes <page>-light.png and <page>-dark.png for every sidebar page, and
 /// settings-<tab>-light.png and settings-<tab>-dark.png for every Settings tab, then quits.
 /// Each PNG gets a <page>-<mode>-layout.json with the grid probes (tools/check-layout.swift).
-/// APP_SNAPSHOT_PAGES=all,starred limits the pages. Add "settings" to include Settings, "help" for the Help window, "install" for the Install Recommended sheet, "leftovers" for the Review Leftovers sheet.
+/// APP_SNAPSHOT_PAGES=all,starred limits the pages. Add "settings" to include Settings, "help" for the Help window, "install" for the Install Recommended sheet, "setup" for Set Up for Me, "leftovers" for the Review Leftovers sheet.
 /// Add APP_ACCENT=<id> to see the pages in another accent.
 /// Add APP_SNAPSHOT_MIN=1 to shrink the main window to its smallest size first.
 enum Snapshot {
@@ -90,6 +90,23 @@ enum Snapshot {
                     model.confirmInstall = nil
                     try? await Task.sleep(for: .seconds(0.6))
                 }
+            }
+            if only == nil || only?.contains("setup") == true {
+                model.sidebar = .overview
+                let picked = SetupAnswers([.code: true, .windows: true, .privacy: true, .speed: false])
+                for (name, step) in [("setup", 0), ("setup-summary", SetupQuestion.allCases.count)] {
+                    for mode in ["light", "dark"] {
+                        NSApp.appearance = NSAppearance(named: mode == "light" ? .aqua : .darkAqua)
+                        model.setupSnapshot = (picked, step)
+                        model.openSetup()
+                        try? await Task.sleep(for: .seconds(1))
+                        let main = NSApp.windows.first { $0.canBecomeMain && !$0.isSheet }
+                        capture(to: "\(dir)/\(name)-\(mode).png", window: main?.attachedSheet)
+                        model.showSetup = false
+                        try? await Task.sleep(for: .seconds(0.6))
+                    }
+                }
+                model.setupSnapshot = nil
             }
             if only == nil || only?.contains("leftovers") == true {
                 for mode in ["light", "dark"] {

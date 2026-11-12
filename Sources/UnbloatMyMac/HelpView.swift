@@ -87,6 +87,9 @@ struct HelpView: View {
             HelpSection("Start on the Overview") {
                 HelpText("**Overview** shows how much of each category is applied and offers presets. **Recommended** is a safe start: it turns off what most people never use, and nothing that breaks a feature you rely on.")
             }
+            HelpSection("Set Up for Me") {
+                HelpText("**Set Up for Me…** (⌥⌘S) asks six questions: Apple Intelligence, Siri, code, Windows habits, privacy, and animations. It stages only the changes that fit your answers, never one that turns off a feature you said you use, and offers the apps that go with them, like Terminal tools and Apple's Command Line Tools for developers. You review everything before it applies. It opens by itself the first time.")
+            }
             HelpSection("Three steps") {
                 HelpBullets([
                     "Turn switches off or on. Nothing changes yet: the change waits in the toolbar.",
@@ -225,6 +228,7 @@ struct HelpView: View {
 
         case .shortcuts:
             HelpShortcuts(rows: [
+                ("⌥⌘S", "Set Up for Me…"),
                 ("⌘Return", "Review Changes"),
                 ("⌥⌘Delete", "Discard Changes"),
                 ("⌥⌘1 – ⌥⌘4", "Add a preset"),

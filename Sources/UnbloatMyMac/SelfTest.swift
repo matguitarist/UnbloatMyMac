@@ -70,6 +70,20 @@ enum SelfTest {
                 check("discard forgets staged changes", model.staged.isEmpty)
             }
 
+            do {
+                let developer = SetupAnswers([.intelligence: true, .code: true])
+                let changes = model.setupChanges(developer)
+                model.finishSetup(developer, apps: [], commandLineTools: false)
+                check("Set Up for Me stages its changes and opens Review after",
+                      !changes.isEmpty && model.staged.count == changes.count && model.reviewAfterSetup)
+                check("Set Up for Me keeps Apple Intelligence for someone who uses it",
+                      !model.staged.keys.contains { $0.hasPrefix("ai.") && $0 != "ai.siri" })
+                check("Set Up for Me offers Terminal tools to a developer",
+                      model.setupApps(developer).contains { $0.group == .terminal } && developer.wantsCommandLineTools)
+                model.reviewAfterSetup = false
+                model.discard()
+            }
+
             check("advanced tweaks are hidden by default",
                   model.visibleTweaks(in: .intelligence).allSatisfy { $0.risk < .advanced } || model.showAdvanced)
 

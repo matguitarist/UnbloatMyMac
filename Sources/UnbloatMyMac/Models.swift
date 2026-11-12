@@ -98,6 +98,14 @@ final class AppModel {
     /// Changes waiting for Review: tweak id -> apply (true) or undo (false).
     var staged: [String: Bool] = [:]
     var showReview = false
+    /// The Set Up for Me sheet.
+    var showSetup = false
+    /// Apple's Command Line Tools for Xcode are installed (Set Up for Me offers them to developers).
+    var commandLineToolsInstalled = true
+    /// Set when Set Up for Me staged changes, so Review opens once its sheet closes.
+    var reviewAfterSetup = false
+    /// Snapshot mode only: the answers and step Set Up for Me opens on.
+    var setupSnapshot: (answers: SetupAnswers, step: Int)?
     /// The tweak whose details popover is open.
     var detailsTweak: String?
     var confirmUndoAll = false

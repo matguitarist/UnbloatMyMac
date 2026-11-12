@@ -342,12 +342,32 @@
         }
       }
     },
+    "Analytics, ad services, browser telemetry, and Game Center off, the firewall on, and LuLu to see what apps send.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyses, services publicitaires, télémétrie des navigateurs et Game Center désactivés, coupe-feu activé, et LuLu pour voir ce que les apps envoient."
+          }
+        }
+      }
+    },
     "Animations": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Animations"
+          }
+        }
+      }
+    },
+    "Animations stay as they are.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les animations restent telles quelles."
           }
         }
       }
@@ -442,6 +462,16 @@
         }
       }
     },
+    "Apple Intelligence stays as it is.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence reste tel quel."
+          }
+        }
+      }
+    },
     "Apple's tools to run and fine-tune models with MLX from the command line.": {
       "localizations": {
         "fr": {
@@ -532,6 +562,16 @@
         }
       }
     },
+    "Are you used to Windows?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Êtes-vous habitué à Windows ?"
+          }
+        }
+      }
+    },
     "Autocorrect": {
       "localizations": {
         "fr": {
@@ -578,6 +618,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tâches de fond"
+          }
+        }
+      }
+    },
+    "Balanced": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Équilibrée"
           }
         }
       }
@@ -992,6 +1042,46 @@
         }
       }
     },
+    "Do you like the animations?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aimez-vous les animations ?"
+          }
+        }
+      }
+    },
+    "Do you talk to Siri?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parlez-vous à Siri ?"
+          }
+        }
+      }
+    },
+    "Do you use Apple Intelligence?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utilisez-vous Apple Intelligence ?"
+          }
+        }
+      }
+    },
+    "Do you write code?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Écrivez-vous du code ?"
+          }
+        }
+      }
+    },
     "Dock": {
       "localizations": {
         "fr": {
@@ -1148,6 +1238,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Toutes les fonctions Apple Intelligence s’arrêtent tant que ceci est actif."
+          }
+        }
+      }
+    },
+    "Every choice keeps your apps working. Maximum also stops analytics and turns on the firewall.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque choix laisse vos apps fonctionner. Maximale arrête aussi les analyses et active le coupe-feu."
           }
         }
       }
@@ -1328,6 +1428,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le Finder demande avant que vous changiez l’extension d’un fichier."
+          }
+        }
+      }
+    },
+    "Finder shows hidden files and full paths, quotes and dashes stay as you type them, and Terminal tools are offered.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Finder montre les fichiers cachés et les chemins complets, les guillemets et tirets restent tels que tapés, et des outils pour le Terminal sont proposés."
           }
         }
       }
@@ -1622,12 +1732,82 @@
         }
       }
     },
+    "How private should your Mac be?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quel niveau de confidentialité voulez-vous ?"
+          }
+        }
+      }
+    },
+    "I Am": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oui"
+          }
+        }
+      }
+    },
+    "I Do": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Oui"
+          }
+        }
+      }
+    },
+    "I Don’t": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non"
+          }
+        }
+      }
+    },
+    "I Like Them": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je les aime"
+          }
+        }
+      }
+    },
+    "I Use It": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je l’utilise"
+          }
+        }
+      }
+    },
     "Icons of hidden apps look dimmed.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Les icônes des apps masquées apparaissent estompées."
+          }
+        }
+      }
+    },
+    "If you came from a Windows PC, your Mac can scroll, type, and handle windows the same way.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si vous venez d’un PC Windows, votre Mac peut défiler, taper et gérer les fenêtres de la même façon."
           }
         }
       }
@@ -1738,6 +1918,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les éléments de la corbeille sont supprimés après 30 jours."
+          }
+        }
+      }
+    },
+    "Its features and summaries turn off.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ses fonctions et ses résumés se désactivent."
+          }
+        }
+      }
+    },
+    "I’m Not": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non"
           }
         }
       }
@@ -1932,6 +2132,16 @@
         }
       }
     },
+    "Make It Instant": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout instantané"
+          }
+        }
+      }
+    },
     "Make the Mac behave like a Windows PC: scrolling, function keys, Home and End, maximize, and drives on the desktop.": {
       "localizations": {
         "fr": {
@@ -1958,6 +2168,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Crée et modifie des images avec les modèles Stable Diffusion et Flux, rapide sur Apple silicon."
+          }
+        }
+      }
+    },
+    "Maximum": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maximale"
           }
         }
       }
@@ -2082,6 +2302,16 @@
         }
       }
     },
+    "No personalized ads and nothing you type sent for suggestions.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas de publicités personnalisées, et rien de ce que vous tapez n’est envoyé pour des suggestions."
+          }
+        }
+      }
+    },
     "Not on this version of macOS": {
       "localizations": {
         "fr": {
@@ -2098,6 +2328,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Transcriptions et résumés dans Notes"
+          }
+        }
+      }
+    },
+    "Nothing changes for developers.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien ne change pour les développeurs."
           }
         }
       }
@@ -2398,6 +2638,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mesure publicitaire respectueuse de la vie privée"
+          }
+        }
+      }
+    },
+    "Programming, scripts, or the Terminal.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Programmation, scripts ou le Terminal."
           }
         }
       }
@@ -3148,6 +3398,36 @@
           "stringUnit": {
             "state": "translated",
             "value": "Siri et Spotlight en savent moins sur vos données."
+          }
+        }
+      }
+    },
+    "Siri and its menu bar icon turn off.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri et son icône dans la barre des menus se désactivent."
+          }
+        }
+      }
+    },
+    "Siri stays on. Your recordings still stay off Apple’s servers.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri reste activé. Vos enregistrements ne partent toujours pas chez Apple."
+          }
+        }
+      }
+    },
+    "Siri, “Hey Siri”, and the Siri icon in the menu bar.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siri, « Dis Siri » et l’icône de Siri dans la barre des menus."
           }
         }
       }
@@ -3992,6 +4272,16 @@
         }
       }
     },
+    "Windows Mode: scrolling, function keys, Home and End, maximize, and drives on the desktop.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mode Windows : défilement, touches de fonction, Début et Fin, agrandir et disques sur le bureau."
+          }
+        }
+      }
+    },
     "Windows Scroll Direction": {
       "localizations": {
         "fr": {
@@ -4032,6 +4322,26 @@
         }
       }
     },
+    "Windows zoom, the Dock bounces, and Mission Control slides. Without them, everything shows at once.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fenêtres zooment, le Dock rebondit et Mission Control glisse. Sans elles, tout s’affiche aussitôt."
+          }
+        }
+      }
+    },
+    "Windows, the Dock, and Finder skip their animations, and photo analysis stops running in the background.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fenêtres, le Dock et le Finder sautent leurs animations, et l’analyse des photos s’arrête en arrière-plan."
+          }
+        }
+      }
+    },
     "Works in Mac text fields, not in Terminal or every app. Control-A no longer jumps to the start of the line.": {
       "localizations": {
         "fr": {
@@ -4068,6 +4378,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Outils d’écriture"
+          }
+        }
+      }
+    },
+    "Writing Tools, Genmoji, Image Playground, ChatGPT, and summaries in Mail, Notes, and Safari.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outils d’écriture, Genmoji, Image Playground, ChatGPT et les résumés dans Mail, Notes et Safari."
           }
         }
       }
@@ -4128,6 +4448,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Votre Mac ne répond pas aux pings ni aux scans de ports, il est donc plus difficile à repérer sur un réseau."
+          }
+        }
+      }
+    },
+    "Your Mac keeps working like a Mac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre Mac continue de fonctionner comme un Mac."
           }
         }
       }

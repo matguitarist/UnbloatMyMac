@@ -67,6 +67,10 @@ struct UnbloatMyMacApp: App {
             }
             CommandGroup(replacing: .help) { HelpCommands(model: model) }
             CommandMenu("Changes") {
+                Button("Set Up for Me…") { model.openSetup() }
+                    .keyboardShortcut("s", modifiers: [.command, .option])
+                    .disabled(model.isBusy)
+                Divider()
                 Button("Review Changes…") { model.review() }
                     .keyboardShortcut(.return, modifiers: .command)
                     .disabled(model.staged.isEmpty || model.isBusy)

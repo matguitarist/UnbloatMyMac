@@ -20,6 +20,13 @@ struct ContentView: View {
                 .environment(model)
                 .themed()
         }
+        .sheet(isPresented: $model.showSetup, onDismiss: {
+            if model.reviewAfterSetup { model.reviewAfterSetup = false; model.review() }
+        }) {
+            SetupSheet(answers: model.setupSnapshot?.answers ?? model.savedSetupAnswers, step: model.setupSnapshot?.step ?? 0)
+                .environment(model)
+                .themed()
+        }
         .sheet(item: Binding(get: { model.confirmInstall.map(InstallList.init) },
                              set: { model.confirmInstall = $0?.apps })) { list in
             InstallRecommendedSheet(apps: list.apps)
@@ -55,6 +62,7 @@ struct ContentView: View {
             SeedData.stageIfRequested(model: model)
             await model.reloadLog()
             SelfTest.runIfRequested(model: model)
+            model.offerSetupOnFirstLaunch()
             Snapshot.runIfRequested(model: model, openSettings: openSettings, openWindow: openWindow)
         }
     }

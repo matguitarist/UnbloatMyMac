@@ -2,6 +2,26 @@
   "sourceLanguage": "en",
   "version": "1.0",
   "strings": {
+    "%@ %lld": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ %lld"
+          }
+        }
+      }
+    },
+    "%@ are open and use some of these files. Quit and Clean asks them to quit first; Clean the Rest leaves their files for later.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ sont ouvertes et utilisent certains de ces fichiers. Quitter et nettoyer leur demande d’abord de quitter ; Nettoyer le reste garde leurs fichiers pour plus tard."
+          }
+        }
+      }
+    },
     "%@ can be freed": {
       "localizations": {
         "fr": {
@@ -22,6 +42,16 @@
         }
       }
     },
+    "%@ is open and uses some of these files. Quit and Clean asks it to quit first; Clean the Rest leaves its files for later.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ est ouverte et utilise certains de ces fichiers. Quitter et nettoyer lui demande d’abord de quitter ; Nettoyer le reste garde ses fichiers pour plus tard."
+          }
+        }
+      }
+    },
     "%@ restart, so the screen may flicker.": {
       "localizations": {
         "fr": {
@@ -32,12 +62,42 @@
         }
       }
     },
+    "%@ · last changed %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · modifié le %2$@"
+          }
+        }
+      }
+    },
+    "%lld Lines Selected": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld lignes sélectionnées"
+          }
+        }
+      }
+    },
     "%lld advanced tweaks stop system services and are hidden.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "%lld réglages avancés arrêtent des services système et sont masqués."
+          }
+        }
+      }
+    },
+    "%lld changes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld modifications"
           }
         }
       }
@@ -58,6 +118,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld éléments"
+          }
+        }
+      }
+    },
+    "%lld lines": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld lignes"
           }
         }
       }
@@ -92,6 +162,26 @@
         }
       }
     },
+    "%lld of %lld lines": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld lignes sur %lld"
+          }
+        }
+      }
+    },
+    "%lld tweaks were put back": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld réglages ont été remis"
+          }
+        }
+      }
+    },
     "%lld tweaks you applied are back to how macOS had them. Apply them again?": {
       "localizations": {
         "fr": {
@@ -102,12 +192,362 @@
         }
       }
     },
+    "**Advanced**: stops system services, and some features stop working until you undo it. Hidden unless you turn them on in **Settings > General**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Avancé** : arrête des services système, et certaines fonctions cessent de marcher jusqu’à l’annulation. Masqués sauf si vous les activez dans **Réglages > Général**."
+          }
+        }
+      }
+    },
+    "**Appearance**: light or dark mode, and the accent color.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Apparence** : mode clair ou sombre, et la couleur d’accentuation."
+          }
+        }
+      }
+    },
+    "**Backup**: back up and restore settings, and where the undo journal is kept.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Sauvegarde** : sauvegarder et restaurer les réglages, et l’emplacement du journal d’annulation."
+          }
+        }
+      }
+    },
+    "**Changes > Undo Everything…** (⌥⌘Z). Then delete the app; nothing else stays behind but its folder in ~/Library/Application Support.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Modifications > Tout annuler…** (⌥⌘Z). Supprimez ensuite l’app ; il ne reste que son dossier dans ~/Library/Application Support."
+          }
+        }
+      }
+    },
+    "**Copy** and ⌘C copy the selected lines as text; **Export Log…** saves the whole log, to attach to a bug report.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Copier** et ⌘C copient les lignes sélectionnées en texte ; **Exporter le journal…** enregistre tout le journal, à joindre à un rapport de bug."
+          }
+        }
+      }
+    },
+    "**Debug**, **Info**, **Warning**, and **Error** show or hide each level; the number is how many lines it has. Debug lines are hidden at first.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Débogage**, **Info**, **Avertissement** et **Erreur** affichent ou masquent chaque niveau ; le nombre indique combien de lignes il compte. Les lignes de débogage sont masquées au départ."
+          }
+        }
+      }
+    },
+    "**File > Back Up Settings…** (⇧⌘B) saves the tweaks that are on and UnbloatMyMac’s own settings: advanced tweaks, restarting apps, the accent, the language, and update checks. **File > Restore Settings…** (⇧⌘R) sets those back at once and opens Review for the tweaks. Both are also in **Settings > Backup**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Fichier > Sauvegarder les réglages…** (⇧⌘B) enregistre les réglages appliqués et les préférences d’UnbloatMyMac : réglages avancés, redémarrage des apps, couleur d’accentuation, langue et recherche de mises à jour. **Fichier > Restaurer les réglages…** (⇧⌘R) remet aussitôt ces préférences et ouvre la vérification pour les réglages. Les deux sont aussi dans **Réglages > Sauvegarde**."
+          }
+        }
+      }
+    },
+    "**File > Export Tweaks…** saves the tweaks that are on to a file. On the other Mac, **File > Import Tweaks…** stages the ones that are not on yet, for review.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Fichier > Exporter les réglages…** enregistre les réglages activés dans un fichier. Sur l’autre Mac, **Fichier > Importer les réglages…** prépare ceux qui n’y sont pas encore, pour vérification."
+          }
+        }
+      }
+    },
+    "**General**: the app's language, advanced tweaks, restarting the Dock and Finder after applying, and a notification at login when macOS puts back tweaks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Général** : la langue de l’app, les réglages avancés, le redémarrage du Dock et du Finder après application, et une notification à l’ouverture de session quand macOS remet des réglages."
+          }
+        }
+      }
+    },
+    "**Help > Report a Problem…** opens a new issue on GitHub. Attach the log from **File > Export Activity Log…**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Aide > Signaler un problème…** ouvre un nouveau ticket sur GitHub. Joignez le journal depuis **Fichier > Exporter le journal d’activité…**."
+          }
+        }
+      }
+    },
+    "**History** lists every change with its time, and failures with their reason.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Historique** liste chaque modification avec son heure, et les échecs avec leur raison."
+          }
+        }
+      }
+    },
+    "**Install Recommended Apps** (⌥⌘I) shows every starred app that is missing, each checked; uncheck any you do not want, then click Install.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Installer les apps recommandées** (⌥⌘I) affiche chaque app étoilée manquante, toutes cochées ; décochez celles que vous ne voulez pas, puis cliquez sur Installer."
+          }
+        }
+      }
+    },
+    "**Install** uses Homebrew. If Homebrew is missing, the page shows how to install it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Installer** passe par Homebrew. Si Homebrew manque, la page montre comment l’installer."
+          }
+        }
+      }
+    },
+    "**Leftovers from Deleted Apps** lists settings and data in your Library named after apps that are no longer installed and that nothing changed in 30 days. **Review…** (⌥⌘L) shows each one with its size; items from a developer who still has an app installed start unchecked. **Privacy Traces** clear the download history macOS keeps and the Recent Items lists.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Restes d’apps supprimées** liste les réglages et données de votre Bibliothèque qui portent le nom d’apps qui ne sont plus installées et que rien n’a modifiés depuis 30 jours. **Passer en revue…** (⌥⌘L) les montre un par un avec leur taille ; ceux d’un développeur dont une app est encore installée sont décochés. **Traces privées** efface l’historique des téléchargements que garde macOS et les listes d’éléments récents."
+          }
+        }
+      }
+    },
+    "**Overview** shows how much of each category is applied and offers presets. **Recommended** is a safe start: it turns off what most people never use, and nothing that breaks a feature you rely on.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La **Vue d’ensemble** montre où en est chaque catégorie et propose des préréglages. **Recommandé** est un bon départ : il désactive ce que la plupart des gens n’utilisent jamais, et rien qui casse une fonction dont vous avez besoin."
+          }
+        }
+      }
+    },
+    "**Password**: runs a command as administrator. All of them run together under one password prompt.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Mot de passe** : exécute une commande en administrateur. Elles s’exécutent toutes ensemble, avec une seule demande de mot de passe."
+          }
+        }
+      }
+    },
+    "**Profile**: needs your approval in System Settings.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Profil** : demande votre approbation dans Réglages Système."
+          }
+        }
+      }
+    },
+    "**Recommended**, **Maximum Privacy**, **Performance Boost**, and **Windows Mode** stage a set of tweaks at once. They only stage what is not applied yet, and you still review before anything changes. Find them on the **Overview** and in **Changes > Add Preset**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Recommandé**, **Confidentialité maximale**, **Performances accrues** et **Mode Windows** préparent plusieurs réglages d’un coup. Ils ne préparent que ce qui n’est pas encore appliqué, et vous vérifiez toujours avant tout changement. Ils sont dans la **Vue d’ensemble** et dans **Modifications > Ajouter un préréglage**."
+          }
+        }
+      }
+    },
+    "**Recommended: On** or **Recommended: Off**: where the switch should be. The tag is in color while the switch is on the other side. Matters of taste, like Typing and Windows Mode, have no tag.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Recommandé : activé** ou **Recommandé : désactivé** : la position conseillée de l’interrupteur. L’étiquette est en couleur tant que l’interrupteur est de l’autre côté. Les questions de goût, comme Saisie et Mode Windows, n’en ont pas."
+          }
+        }
+      }
+    },
+    "**Restarts Dock** or **Finder**: the screen may flicker once.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Redémarre Dock** ou **Finder** : l’écran peut clignoter une fois."
+          }
+        }
+      }
+    },
+    "**Review Changes** lists every change with what will happen: a password prompt, a profile to approve, a Dock or Finder restart, or a log out. **Apply Changes** makes them all; **Discard** (⌥⌘Delete) forgets them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Vérifier les modifications** liste chaque modification et ce qui va se passer : une demande de mot de passe, un profil à approuver, un redémarrage du Dock ou du Finder, une déconnexion. **Appliquer les modifications** les effectue toutes ; **Abandonner** (⌥⌘Supprimer) les oublie."
+          }
+        }
+      }
+    },
+    "**Set Up for Me…** (⌥⌘S) asks six questions: Apple Intelligence, Siri, code, Windows habits, privacy, and animations. It stages only the changes that fit your answers, never one that turns off a feature you said you use, and offers the apps that go with them, like Terminal tools and Apple's Command Line Tools for developers. You review everything before it applies. It opens by itself the first time.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Configurer pour moi…** (⌥⌘S) pose six questions : Apple Intelligence, Siri, code, habitudes Windows, confidentialité et animations. Il prépare seulement les modifications adaptées à vos réponses, jamais une qui désactive une fonction que vous utilisez, et propose les apps qui vont avec, comme les outils du Terminal et les outils de ligne de commande d’Apple pour les développeurs. Vous vérifiez tout avant que ça s’applique. Il s’ouvre tout seul la première fois."
+          }
+        }
+      }
+    },
+    "**Stops a service**: a background service is disabled for your account. It fully stops after you log out.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Arrête un service** : un service d’arrière-plan est désactivé pour votre compte. Il s’arrête complètement après déconnexion."
+          }
+        }
+      }
+    },
+    "**Storage** measures caches, logs, Xcode data, old installers, iPhone and iPad updates, and Time Machine local snapshots. **Clean** moves files to the Trash, so you can still get them back.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Stockage** mesure les caches, les journaux, les données Xcode, les anciens installateurs, les mises à jour d’iPhone et d’iPad et les instantanés locaux Time Machine. **Nettoyer** met les fichiers à la Corbeille, pour pouvoir encore les récupérer."
+          }
+        }
+      }
+    },
+    "**UnbloatMyMac > Install Command Line Tool…** adds **unbloatmymac** to /usr/local/bin. It shares the undo journal and the activity log with the app.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**UnbloatMyMac > Installer l’outil en ligne de commande…** ajoute **unbloatmymac** à /usr/local/bin. Il partage l’historique d’annulation et le journal d’activité avec l’app."
+          }
+        }
+      }
+    },
+    "**Undo Everything…** (⌥⌘Z) puts back every setting, starts stopped services again, allows background items again, and removes the profile.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Tout annuler…** (⌥⌘Z) remet chaque préférence, relance les services arrêtés, autorise de nouveau les éléments en arrière-plan et supprime le profil."
+          }
+        }
+      }
+    },
+    "**Updates**: automatic update checks, the version, and **Check Now**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Mises à jour** : la recherche automatique, la version et **Rechercher maintenant**."
+          }
+        }
+      }
+    },
+    "**unbloatmymac apply** or **undo** followed by tweak ids, or **preset recommended**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**unbloatmymac apply** ou **undo** suivi d’identifiants de réglages, ou **preset recommended**."
+          }
+        }
+      }
+    },
+    "**unbloatmymac apps**, **install**, and **uninstall**: recommended apps.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**unbloatmymac apps**, **install** et **uninstall** : les apps recommandées."
+          }
+        }
+      }
+    },
+    "**unbloatmymac backup** and **restore**: the app's settings and the tweaks that are on, like File > Back Up Settings.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**unbloatmymac backup** et **restore** : les préférences de l’app et les réglages appliqués, comme Fichier > Sauvegarder les réglages."
+          }
+        }
+      }
+    },
+    "**unbloatmymac export** and **import**: tweak files, like the File menu.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**unbloatmymac export** et **import** : fichiers de réglages, comme le menu Fichier."
+          }
+        }
+      }
+    },
+    "**unbloatmymac list** and **status**: every tweak and whether it is on.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**unbloatmymac list** et **status** : chaque réglage et s’il est activé."
+          }
+        }
+      }
+    },
+    "**unbloatmymac outdated** and **update** (an app name, or **--all**): update apps Homebrew installed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**unbloatmymac outdated** et **update** (un nom d’app, ou **--all**) : mettre à jour les apps installées par Homebrew."
+          }
+        }
+      }
+    },
+    "**unbloatmymac revert**: undo everything.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**unbloatmymac revert** : tout annuler."
+          }
+        }
+      }
+    },
     "1 advanced tweak stops a system service and is hidden.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "1 réglage avancé arrête un service système et est masqué."
+          }
+        }
+      }
+    },
+    "1 change": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 modification"
           }
         }
       }
@@ -142,6 +582,66 @@
         }
       }
     },
+    "A macOS update can put some settings back. The **Overview** then lists the tweaks that were reset, with **Review and Apply Again** and **Keep as Is**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une mise à jour de macOS peut rétablir certaines préférences. La **Vue d’ensemble** liste alors les réglages rétablis, avec **Vérifier et réappliquer** et **Laisser ainsi**."
+          }
+        }
+      }
+    },
+    "A macOS update reset settings UnbloatMyMac changed. Open UnbloatMyMac to apply them again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une mise à jour de macOS a réinitialisé des réglages modifiés par UnbloatMyMac. Ouvrez UnbloatMyMac pour les appliquer à nouveau."
+          }
+        }
+      }
+    },
+    "A service is still running": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un service tourne encore"
+          }
+        }
+      }
+    },
+    "A setting did not change": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une préférence n’a pas changé"
+          }
+        }
+      }
+    },
+    "A switch named after a macOS feature, like **Genmoji** or **Siri**, shows that feature. Switch it off to turn the feature off. Other switches, like **Show all file extensions**, are on when the tweak is applied.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un interrupteur qui porte le nom d’une fonction de macOS, comme **Genmoji** ou **Siri**, montre cette fonction : désactivez-le pour désactiver la fonction. Les autres, comme **Afficher toutes les extensions**, sont activés quand le réglage est appliqué."
+          }
+        }
+      }
+    },
+    "A tweak came back after a macOS update": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un réglage est revenu après une mise à jour de macOS"
+          }
+        }
+      }
+    },
     "About Homebrew": {
       "localizations": {
         "fr": {
@@ -158,6 +658,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Couleur d’accentuation"
+          }
+        }
+      }
+    },
+    "Activity Log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Journal d’activité"
           }
         }
       }
@@ -188,6 +698,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ajouter"
+          }
+        }
+      }
+    },
+    "Add a preset": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter un préréglage"
           }
         }
       }
@@ -232,6 +752,36 @@
         }
       }
     },
+    "After **Apply Changes**, macOS asks you to approve the profile in **System Settings > General > Device Management**. Until then, the switches say **Approve in System Settings**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Après **Appliquer les modifications**, macOS vous demande d’approuver le profil dans **Réglages Système > Général > Gestion des appareils**. D’ici là, les interrupteurs indiquent **À approuver dans Réglages Système**."
+          }
+        }
+      }
+    },
+    "After a macOS update": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Après une mise à jour de macOS"
+          }
+        }
+      }
+    },
+    "After applying": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Après application"
+          }
+        }
+      }
+    },
     "After log out": {
       "localizations": {
         "fr": {
@@ -252,12 +802,32 @@
         }
       }
     },
+    "All Sources": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toutes les sources"
+          }
+        }
+      }
+    },
     "Allow %@": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Autoriser %@"
+          }
+        }
+      }
+    },
+    "Allow UnbloatMyMac in Login Items to turn this on.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autorisez UnbloatMyMac dans Ouverture pour activer cette option."
           }
         }
       }
@@ -282,12 +852,62 @@
         }
       }
     },
+    "Another app from this developer is installed and may still use these.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une autre app de ce développeur est installée et les utilise peut-être encore."
+          }
+        }
+      }
+    },
+    "Answer a few questions and get the changes and apps that fit how you use your Mac (Option-Command-S)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Répondez à quelques questions pour obtenir les réglages et les apps adaptés à votre usage du Mac (Option-Commande-S)"
+          }
+        }
+      }
+    },
     "Appearance": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Apparence"
+          }
+        }
+      }
+    },
+    "Apple Intelligence": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple Intelligence"
+          }
+        }
+      }
+    },
+    "Apple Intelligence features are turned off with a configuration profile, the same way a company manages its Macs. UnbloatMyMac puts every Apple Intelligence restriction in one profile.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les fonctions d’Apple Intelligence sont désactivées par un profil de configuration, comme une entreprise gère ses Mac. UnbloatMyMac met toutes les restrictions d’Apple Intelligence dans un seul profil."
+          }
+        }
+      }
+    },
+    "Apple Intelligence switches say Approve in System Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les interrupteurs Apple Intelligence indiquent À approuver dans Réglages Système"
           }
         }
       }
@@ -318,6 +938,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ appliqué"
+          }
+        }
+      }
+    },
+    "Apply %lld Changes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appliquer %lld modifications"
+          }
+        }
+      }
+    },
+    "Apply 1 Change": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appliquer 1 modification"
           }
         }
       }
@@ -362,12 +1002,122 @@
         }
       }
     },
+    "Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apps"
+          }
+        }
+      }
+    },
+    "Apps that are only on their website show **Download** and open it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les apps disponibles seulement sur leur site affichent **Télécharger** et l’ouvrent."
+          }
+        }
+      }
+    },
+    "Automatic Updates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mises à jour automatiques"
+          }
+        }
+      }
+    },
+    "Back": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Retour"
+          }
+        }
+      }
+    },
+    "Back Up Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarder les réglages"
+          }
+        }
+      }
+    },
+    "Back Up Settings…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarder les réglages…"
+          }
+        }
+      }
+    },
+    "Back Up…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarder…"
+          }
+        }
+      }
+    },
+    "Back up, or move to another Mac": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarder, ou passer à un autre Mac"
+          }
+        }
+      }
+    },
     "Background Items": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Éléments en arrière-plan"
+          }
+        }
+      }
+    },
+    "Backup": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarde"
+          }
+        }
+      }
+    },
+    "Before UnbloatMyMac changes a setting, it saves the value that was there. Undo puts back that exact value, not a guess.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avant de modifier une préférence, UnbloatMyMac enregistre la valeur qui s’y trouvait. Annuler remet exactement cette valeur, pas une supposition."
+          }
+        }
+      }
+    },
+    "Before any change, the value from before is saved in the undo journal.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avant chaque modification, la valeur d’origine est enregistrée dans le journal d’annulation."
           }
         }
       }
@@ -402,6 +1152,16 @@
         }
       }
     },
+    "Change %@ in System Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier %@ dans Réglages Système"
+          }
+        }
+      }
+    },
     "Change this item in System Settings": {
       "localizations": {
         "fr": {
@@ -418,6 +1178,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Modifications"
+          }
+        }
+      }
+    },
+    "Changes ask for confirmation in a terminal; scripts add **--yes**. **--dry-run** shows what would change, and **--json** prints results for scripts.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les modifications demandent confirmation dans un terminal ; les scripts ajoutent **--yes**. **--dry-run** montre ce qui changerait, et **--json** affiche les résultats pour les scripts."
           }
         }
       }
@@ -442,12 +1212,82 @@
         }
       }
     },
+    "Changing these switches later replaces the profile, and macOS asks again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Changer ces interrupteurs plus tard remplace le profil, et macOS redemande."
+          }
+        }
+      }
+    },
+    "Check All": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout cocher"
+          }
+        }
+      }
+    },
+    "Check Now": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher maintenant"
+          }
+        }
+      }
+    },
+    "Check for App Updates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher les mises à jour des apps"
+          }
+        }
+      }
+    },
     "Check for Updates…": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Rechercher des mises à jour…"
+          }
+        }
+      }
+    },
+    "Check for updates automatically": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher les mises à jour automatiquement"
+          }
+        }
+      }
+    },
+    "Checks at each login, even when UnbloatMyMac is closed, and sends one notification after a macOS update resets your tweaks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifie à chaque ouverture de session, même quand UnbloatMyMac est fermé, et envoie une notification quand une mise à jour de macOS réinitialise vos réglages."
+          }
+        }
+      }
+    },
+    "Choose a settings backup or tweaks file saved by UnbloatMyMac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez une sauvegarde ou un fichier de réglages enregistré par UnbloatMyMac."
           }
         }
       }
@@ -492,12 +1332,182 @@
         }
       }
     },
+    "Clean the Rest": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nettoyer le reste"
+          }
+        }
+      }
+    },
     "Clean…": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Nettoyer…"
+          }
+        }
+      }
+    },
+    "Clear Activity Log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer le journal d’activité"
+          }
+        }
+      }
+    },
+    "Clear Activity Log…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer le journal d’activité…"
+          }
+        }
+      }
+    },
+    "Clear Log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer le journal"
+          }
+        }
+      }
+    },
+    "Clear Log…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer le journal…"
+          }
+        }
+      }
+    },
+    "Clear the activity log?": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer le journal d’activité ?"
+          }
+        }
+      }
+    },
+    "Click **Apply Changes**. To go back, switch the tweak again, or use **Undo Everything** on the **History** page.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cliquez sur **Appliquer les modifications**. Pour revenir en arrière, rebasculez le réglage, ou utilisez **Tout annuler** dans **Historique**."
+          }
+        }
+      }
+    },
+    "Click **Review Changes** (⌘Return) to see every change and what it needs: a password, a profile, a restart.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cliquez sur **Vérifier les modifications** (⌘Retour) pour voir chaque modification et ce qu’elle demande : un mot de passe, un profil, un redémarrage."
+          }
+        }
+      }
+    },
+    "Click **ⓘ** next to a tweak's name to see the exact commands it runs, such as **defaults write**, and how undo puts each one back. **Copy Commands** copies them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cliquez sur **ⓘ** à côté du nom d’un réglage pour voir les commandes exactes qu’il exécute, comme **defaults write**, et comment l’annulation remet chacune en place. **Copier les commandes** les copie."
+          }
+        }
+      }
+    },
+    "Command Line Tool": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outil en ligne de commande"
+          }
+        }
+      }
+    },
+    "Command Line Tools for Xcode": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outils de ligne de commande pour Xcode"
+          }
+        }
+      }
+    },
+    "Command line tool": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Outil en ligne de commande"
+          }
+        }
+      }
+    },
+    "Commands": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Commandes"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuer"
+          }
+        }
+      }
+    },
+    "Copy": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier"
+          }
+        }
+      }
+    },
+    "Copy Command": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier la commande"
+          }
+        }
+      }
+    },
+    "Copy Commands": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier les commandes"
           }
         }
       }
@@ -518,6 +1528,66 @@
           "stringUnit": {
             "state": "translated",
             "value": "Copier la commande d’installation et ouvrir Terminal"
+          }
+        }
+      }
+    },
+    "Copy the selected lines, or every shown line, as text (Command-C)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier les lignes sélectionnées, ou toutes les lignes affichées, en texte (Commande-C)"
+          }
+        }
+      }
+    },
+    "Copy them with Command-C.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiez-les avec Commande-C."
+          }
+        }
+      }
+    },
+    "Debug": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Débogage"
+          }
+        }
+      }
+    },
+    "Delete every line of the activity log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer toutes les lignes du journal d’activité"
+          }
+        }
+      }
+    },
+    "Details": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Détails"
+          }
+        }
+      }
+    },
+    "Details for %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Détails de %@"
           }
         }
       }
@@ -562,6 +1632,36 @@
         }
       }
     },
+    "Each change has a menu. Pick **Leave On** or **Leave Off** to keep a setting as it is, for example when another app already manages it; only the other changes apply.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque modification a un menu. Choisissez **Laisser activé** ou **Laisser désactivé** pour garder un réglage tel quel, par exemple quand une autre app le gère déjà ; seules les autres modifications s’appliquent."
+          }
+        }
+      }
+    },
+    "Error": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erreur"
+          }
+        }
+      }
+    },
+    "Every app installed with Homebrew is up to date.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toutes les apps installées avec Homebrew sont à jour."
+          }
+        }
+      }
+    },
     "Every change is saved with the value from before, so you can undo it.": {
       "localizations": {
         "fr": {
@@ -572,12 +1672,32 @@
         }
       }
     },
+    "Every line is deleted. Your changes and their undo history are kept.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toutes les lignes sont supprimées. Vos modifications et leur historique d’annulation sont conservés."
+          }
+        }
+      }
+    },
     "Every setting goes back to the value it had before, stopped services start again, and the Apple Intelligence profile is removed. You may be asked for your password.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Chaque réglage reprend sa valeur d’avant, les services arrêtés redémarrent et le profil Apple Intelligence est supprimé. Votre mot de passe peut vous être demandé."
+          }
+        }
+      }
+    },
+    "Every setting, service, command, and app UnbloatMyMac changes is written here, from the app and from the command line tool.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque préférence, service, commande et app que UnbloatMyMac modifie est noté ici, depuis l’app comme depuis l’outil en ligne de commande."
           }
         }
       }
@@ -598,6 +1718,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tout ce qu’UnbloatMyMac avait modifié est revenu comme avant."
+          }
+        }
+      }
+    },
+    "Export Activity Log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporter le journal d’activité"
+          }
+        }
+      }
+    },
+    "Export Activity Log…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporter le journal d’activité…"
+          }
+        }
+      }
+    },
+    "Export Log…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporter le journal…"
+          }
+        }
+      }
+    },
+    "Export Tweaks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporter les réglages"
           }
         }
       }
@@ -632,6 +1792,16 @@
         }
       }
     },
+    "Files": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fichiers"
+          }
+        }
+      }
+    },
     "Focus": {
       "localizations": {
         "fr": {
@@ -652,12 +1822,42 @@
         }
       }
     },
+    "Free apps and tools that do a job better than macOS does, grouped by need. A star marks the pick in each group.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des apps et outils gratuits qui font mieux que macOS, regroupés par besoin. Une étoile marque le choix de chaque groupe."
+          }
+        }
+      }
+    },
     "Free, open apps and tools that fill gaps in macOS, installed with Homebrew. Nothing installs until you click.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Des apps et outils gratuits et ouverts qui comblent les manques de macOS, installés avec Homebrew. Rien ne s’installe sans votre clic."
+          }
+        }
+      }
+    },
+    "From": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Depuis"
+          }
+        }
+      }
+    },
+    "From the command line tool": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Depuis l’outil en ligne de commande"
           }
         }
       }
@@ -672,12 +1872,52 @@
         }
       }
     },
+    "Getting Started": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Premiers pas"
+          }
+        }
+      }
+    },
+    "Here’s What Fits You": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voici ce qui vous convient"
+          }
+        }
+      }
+    },
+    "Hide Log Inspector": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masquer l’inspecteur du journal"
+          }
+        }
+      }
+    },
     "History": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Historique"
+          }
+        }
+      }
+    },
+    "Homebrew installs the checked apps. Nothing installs until you click Install. You may be asked for your password.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Homebrew installe les apps cochées. Rien ne s’installe avant que vous cliquiez sur Installer. Votre mot de passe peut vous être demandé."
           }
         }
       }
@@ -702,6 +1942,36 @@
         }
       }
     },
+    "How undo puts it back": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comment l’annulation le remet"
+          }
+        }
+      }
+    },
+    "I want everything back the way it was": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Je veux tout remettre comme avant"
+          }
+        }
+      }
+    },
+    "Import Tweaks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Importer les réglages"
+          }
+        }
+      }
+    },
     "Import Tweaks…": {
       "localizations": {
         "fr": {
@@ -722,12 +1992,62 @@
         }
       }
     },
+    "Info": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info"
+          }
+        }
+      }
+    },
+    "Inspector": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspecteur"
+          }
+        }
+      }
+    },
     "Install": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Installer"
+          }
+        }
+      }
+    },
+    "Install %lld Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer %lld apps"
+          }
+        }
+      }
+    },
+    "Install %lld Recommended…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer %lld recommandées…"
+          }
+        }
+      }
+    },
+    "Install 1 App": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer 1 app"
           }
         }
       }
@@ -748,6 +2068,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Installer les apps recommandées"
+          }
+        }
+      }
+    },
+    "Install Recommended Apps…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installer les apps recommandées…"
           }
         }
       }
@@ -802,6 +2132,16 @@
         }
       }
     },
+    "Installing %lld of %lld: %@…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Installation %lld sur %lld : %@…"
+          }
+        }
+      }
+    },
     "Installing…": {
       "localizations": {
         "fr": {
@@ -812,12 +2152,102 @@
         }
       }
     },
+    "Items for every user (daemons) ask for your password. **Show Login Items…** reads the login items and app background items listed in System Settings; that also needs your password. Turn those on or off in **System Settings > General > Login Items & Extensions**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les éléments pour tous les utilisateurs (daemons) demandent votre mot de passe. **Afficher les éléments d’ouverture…** lit les éléments d’ouverture et les éléments d’arrière-plan listés dans Réglages Système, ce qui demande aussi votre mot de passe. Activez-les ou désactivez-les dans **Réglages Système > Général > Ouverture et extensions**."
+          }
+        }
+      }
+    },
     "Keep as Is": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Laisser ainsi"
+          }
+        }
+      }
+    },
+    "Keyboard Shortcuts": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Raccourcis clavier"
+          }
+        }
+      }
+    },
+    "Language": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Langue"
+          }
+        }
+      }
+    },
+    "Leave Off": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laisser désactivé"
+          }
+        }
+      }
+    },
+    "Leave On": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laisser activé"
+          }
+        }
+      }
+    },
+    "Leftovers from Deleted Apps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restes d’apps supprimées"
+          }
+        }
+      }
+    },
+    "Level": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Niveau"
+          }
+        }
+      }
+    },
+    "Lines": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lignes"
+          }
+        }
+      }
+    },
+    "Lines are in English, like Console, so they read the same in a bug report. The log keeps the latest 5,000 lines in **activity.log**, next to the journal. **Clear Log…** deletes them; it does not undo anything.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les lignes sont en anglais, comme dans Console, pour se lire pareil dans un rapport de bug. Le journal garde les 5 000 dernières lignes dans **activity.log**, à côté de journal.json. **Effacer le journal…** les supprime ; cela n’annule rien."
           }
         }
       }
@@ -862,12 +2292,92 @@
         }
       }
     },
+    "Looks once a day for a new version on GitHub.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cherche une nouvelle version sur GitHub une fois par jour."
+          }
+        }
+      }
+    },
+    "Looks once a day for a new version on GitHub. Last checked %@.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cherche une nouvelle version sur GitHub une fois par jour. Dernière recherche %@."
+          }
+        }
+      }
+    },
+    "Message": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Message"
+          }
+        }
+      }
+    },
     "More for %@": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Plus pour %@"
+          }
+        }
+      }
+    },
+    "Most changes show at once. Some take effect in apps you open from now on, or after you log out; the review says which. To see Dock, Finder, and menu bar changes only after logging out, turn off **Restart the Dock, Finder, and menu bar after applying** in **Settings**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La plupart des modifications sont visibles tout de suite. Certaines s’appliquent aux apps ouvertes ensuite, ou après déconnexion ; la vérification indique lesquelles. Pour ne voir les changements du Dock, du Finder et de la barre des menus qu’après déconnexion, désactivez **Redémarrer le Dock, le Finder et la barre des menus après application** dans **Réglages**."
+          }
+        }
+      }
+    },
+    "Move %lld to Trash (%@)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Placer %1$lld éléments dans la corbeille (%2$@)"
+          }
+        }
+      }
+    },
+    "Move to Trash": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Placer dans la corbeille"
+          }
+        }
+      }
+    },
+    "Needs attention": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À vérifier"
+          }
+        }
+      }
+    },
+    "No Activity Yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune activité"
           }
         }
       }
@@ -888,6 +2398,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Aucune modification"
+          }
+        }
+      }
+    },
+    "No installed app uses these, and nothing changed them in 30 days. Checked items move to the Trash; put them back from there if an app misses them.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune app installée ne les utilise, et rien ne les a modifiés depuis 30 jours. Les éléments cochés vont dans la corbeille ; remettez-les en place depuis là si une app en a besoin."
+          }
+        }
+      }
+    },
+    "No leftovers found. Every app with files in your Library is still installed, or used them in the last 30 days.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun reste trouvé. Chaque app qui a des fichiers dans votre Bibliothèque est encore installée, ou les a utilisés ces 30 derniers jours."
           }
         }
       }
@@ -922,6 +2452,16 @@
         }
       }
     },
+    "Nothing changes yet. You review every change next, and each one can be undone.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien ne change encore. Vous vérifiez chaque modification ensuite, et chacune peut être annulée."
+          }
+        }
+      }
+    },
     "Nothing has changed yet. Each change can be undone later.": {
       "localizations": {
         "fr": {
@@ -932,12 +2472,42 @@
         }
       }
     },
+    "Nothing has changed yet. Pick Leave On or Leave Off for a setting you want to keep. Each change can be undone later.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien n’a encore changé. Choisissez Laisser activé ou Laisser désactivé pour un réglage que vous voulez garder. Chaque modification peut être annulée plus tard."
+          }
+        }
+      }
+    },
+    "Nothing installs until you click.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien ne s’installe tant que vous ne cliquez pas."
+          }
+        }
+      }
+    },
     "Nothing to clean": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Rien à nettoyer"
+          }
+        }
+      }
+    },
+    "Notifications": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notifications"
           }
         }
       }
@@ -992,6 +2562,16 @@
         }
       }
     },
+    "Open **Settings** with ⌘Comma.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrez **Réglages** avec ⌘Virgule."
+          }
+        }
+      }
+    },
     "Open Device Management": {
       "localizations": {
         "fr": {
@@ -1008,6 +2588,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ouvrir les réglages Accès complet au disque"
+          }
+        }
+      }
+    },
+    "Open Login Items": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrir Ouverture"
           }
         }
       }
@@ -1042,6 +2632,16 @@
         }
       }
     },
+    "Open the **Activity Log** and show **Error** lines: each says what macOS refused. Some settings, like Reduce Motion, need **Full Disk Access**: add UnbloatMyMac in **System Settings > Privacy & Security > Full Disk Access**, then apply again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrez le **Journal d’activité** et affichez les lignes **Erreur** : chacune dit ce que macOS a refusé. Certaines préférences, comme Réduire les animations, demandent l’**Accès complet au disque** : ajoutez UnbloatMyMac dans **Réglages Système > Confidentialité et sécurité > Accès complet au disque**, puis appliquez de nouveau."
+          }
+        }
+      }
+    },
     "Overview": {
       "localizations": {
         "fr": {
@@ -1072,12 +2672,42 @@
         }
       }
     },
+    "Pick Leave On or Leave Off to keep this setting as it is": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez Laisser activé ou Laisser désactivé pour garder ce réglage tel quel"
+          }
+        }
+      }
+    },
     "Pick tweaks one by one.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Choisissez les réglages un par un."
+          }
+        }
+      }
+    },
+    "Pick which leftovers move to the Trash (Option-Command-L)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir les restes à placer dans la corbeille (Option-Commande-L)"
+          }
+        }
+      }
+    },
+    "Preferences": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préférences"
           }
         }
       }
@@ -1102,6 +2732,16 @@
         }
       }
     },
+    "Problems": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Problèmes"
+          }
+        }
+      }
+    },
     "Profile": {
       "localizations": {
         "fr": {
@@ -1118,6 +2758,26 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rétablir chaque réglage modifié par UnbloatMyMac (Option-Commande-Z)"
+          }
+        }
+      }
+    },
+    "Question %lld of %lld": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Question %1$lld sur %2$lld"
+          }
+        }
+      }
+    },
+    "Quit and Clean": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitter et nettoyer"
           }
         }
       }
@@ -1162,6 +2822,26 @@
         }
       }
     },
+    "Recommended: Off": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommandé : désactivé"
+          }
+        }
+      }
+    },
+    "Recommended: On": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommandé : activé"
+          }
+        }
+      }
+    },
     "Refresh": {
       "localizations": {
         "fr": {
@@ -1182,12 +2862,42 @@
         }
       }
     },
+    "Report a Problem or Suggest an Idea…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signaler un problème ou proposer une idée…"
+          }
+        }
+      }
+    },
+    "Reporting a problem": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signaler un problème"
+          }
+        }
+      }
+    },
     "Restart %@ to see some changes.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Redémarrez %@ pour voir certaines modifications."
+          }
+        }
+      }
+    },
+    "Restart Now": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redémarrer maintenant"
           }
         }
       }
@@ -1222,6 +2932,36 @@
         }
       }
     },
+    "Restore Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restaurer les réglages"
+          }
+        }
+      }
+    },
+    "Restore Settings…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restaurer les réglages…"
+          }
+        }
+      }
+    },
+    "Restore…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restaurer…"
+          }
+        }
+      }
+    },
     "Review %lld Changes": {
       "localizations": {
         "fr": {
@@ -1242,12 +2982,32 @@
         }
       }
     },
+    "Review Changes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier les modifications"
+          }
+        }
+      }
+    },
     "Review Changes…": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Vérifier les modifications…"
+          }
+        }
+      }
+    },
+    "Review Leftovers from Deleted Apps…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passer en revue les restes d’apps supprimées…"
           }
         }
       }
@@ -1262,12 +3022,62 @@
         }
       }
     },
+    "Reviewing Changes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifier les modifications"
+          }
+        }
+      }
+    },
+    "Review…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passer en revue…"
+          }
+        }
+      }
+    },
     "Running": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Actif"
+          }
+        }
+      }
+    },
+    "Save UnbloatMyMac’s settings and the tweaks that are on, to restore them later or on another Mac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrez les préférences d’UnbloatMyMac et les réglages appliqués, pour les restaurer plus tard ou sur un autre Mac."
+          }
+        }
+      }
+    },
+    "Save the activity log as a text file (Option-Command-E)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrer le journal d’activité dans un fichier texte (Option-Commande-E)"
+          }
+        }
+      }
+    },
+    "Save the activity log as text, to attach to a bug report.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistrez le journal d’activité en texte, à joindre à un rapport de bug."
           }
         }
       }
@@ -1292,6 +3102,16 @@
         }
       }
     },
+    "Saves UnbloatMyMac’s settings, the accent, and the tweaks that are on to one file. Restoring sets them back at once and opens Review for the tweaks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistre les préférences d’UnbloatMyMac, la couleur d’accentuation et les réglages appliqués dans un seul fichier. La restauration les remet aussitôt et ouvre la vérification pour les réglages."
+          }
+        }
+      }
+    },
     "Scan Again": {
       "localizations": {
         "fr": {
@@ -1312,6 +3132,26 @@
         }
       }
     },
+    "Search log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher dans le journal"
+          }
+        }
+      }
+    },
+    "Search the log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher dans le journal"
+          }
+        }
+      }
+    },
     "See and apply your changes (Command-Return)": {
       "localizations": {
         "fr": {
@@ -1322,12 +3162,142 @@
         }
       }
     },
+    "Select a line to see the exact command or value in the inspector. **Copy Command** in the line's menu copies it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionnez une ligne pour voir la commande ou la valeur exacte dans l’inspecteur. **Copier la commande**, dans le menu de la ligne, la copie."
+          }
+        }
+      }
+    },
+    "Select a line to see the exact command, value, or file it wrote.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sélectionnez une ligne pour voir la commande, la valeur ou le fichier exact qu’elle a écrit."
+          }
+        }
+      }
+    },
+    "Services": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Services"
+          }
+        }
+      }
+    },
+    "Set Up for Me": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configurer pour moi"
+          }
+        }
+      }
+    },
+    "Set Up for Me…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configurer pour moi…"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réglages"
+          }
+        }
+      }
+    },
+    "Settings Backup": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sauvegarde des réglages"
+          }
+        }
+      }
+    },
+    "Settings and Language": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réglages de l’app et langue"
+          }
+        }
+      }
+    },
+    "Settings and tweaks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préférences et réglages"
+          }
+        }
+      }
+    },
+    "Settings restored. Every tweak in the backup is already applied.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préférences restaurées. Tous les réglages de la sauvegarde sont déjà appliqués."
+          }
+        }
+      }
+    },
+    "Settings restored. The new language applies after you restart UnbloatMyMac.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Préférences restaurées. La nouvelle langue s’applique après le redémarrage d’UnbloatMyMac."
+          }
+        }
+      }
+    },
+    "Show Activity Log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher le journal d’activité"
+          }
+        }
+      }
+    },
     "Show Advanced Tweaks": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Afficher les réglages avancés"
+          }
+        }
+      }
+    },
+    "Show Log Inspector": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher l’inspecteur du journal"
           }
         }
       }
@@ -1358,6 +3328,96 @@
           "stringUnit": {
             "state": "translated",
             "value": "Afficher dans le Finder"
+          }
+        }
+      }
+    },
+    "Show or hide changes that failed": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher ou masquer les modifications qui ont échoué"
+          }
+        }
+      }
+    },
+    "Show or hide changes that need something from you": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher ou masquer les modifications qui attendent quelque chose de vous"
+          }
+        }
+      }
+    },
+    "Show or hide changes that worked": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher ou masquer les modifications réussies"
+          }
+        }
+      }
+    },
+    "Show or hide routine steps, like restarting the Dock": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher ou masquer les étapes courantes, comme le redémarrage du Dock"
+          }
+        }
+      }
+    },
+    "Show or hide the details of the selected line (Control-Command-I)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher ou masquer le détail de la ligne sélectionnée (Contrôle-Commande-I)"
+          }
+        }
+      }
+    },
+    "Show or hide the log inspector": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher ou masquer l’inspecteur du journal"
+          }
+        }
+      }
+    },
+    "Show the lines about one part of the Mac": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher les lignes d’une partie du Mac"
+          }
+        }
+      }
+    },
+    "Simulators and local snapshots cannot go to the Trash: they are deleted at once, and the page says so before. Some items open their page in System Settings instead.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les simulateurs et les instantanés locaux ne peuvent pas aller à la Corbeille : ils sont supprimés tout de suite, et la page le dit avant. Certains éléments ouvrent plutôt leur page dans Réglages Système."
+          }
+        }
+      }
+    },
+    "Since": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Depuis le"
           }
         }
       }
@@ -1412,6 +3472,26 @@
         }
       }
     },
+    "Something reset settings UnbloatMyMac changed. Open UnbloatMyMac to apply them again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quelque chose a réinitialisé des réglages modifiés par UnbloatMyMac. Ouvrez UnbloatMyMac pour les appliquer à nouveau."
+          }
+        }
+      }
+    },
+    "Source": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source"
+          }
+        }
+      }
+    },
     "Stage this preset’s tweaks. Review them before anything changes.": {
       "localizations": {
         "fr": {
@@ -1422,12 +3502,42 @@
         }
       }
     },
+    "Start on the Overview": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Commencez par la vue d’ensemble"
+          }
+        }
+      }
+    },
+    "Status": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "État"
+          }
+        }
+      }
+    },
     "Stop this item and keep it from starting at login": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Arrêter cet élément et l’empêcher de démarrer à l’ouverture de session"
+          }
+        }
+      }
+    },
+    "Stopped services fully stop after you log out and back in.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les services arrêtés s’arrêtent complètement après une déconnexion puis reconnexion."
           }
         }
       }
@@ -1452,12 +3562,132 @@
         }
       }
     },
+    "Switch a single tweak back and apply to undo it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rebasculez un réglage et appliquez pour l’annuler."
+          }
+        }
+      }
+    },
+    "Switches follow System Settings": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les interrupteurs suivent Réglages Système"
+          }
+        }
+      }
+    },
+    "Switches only stage changes. The toolbar counts them, and the sidebar shows a badge on each category with changes waiting.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les interrupteurs ne font que préparer des modifications. La barre d’outils les compte, et la barre latérale affiche un badge sur chaque catégorie qui en attend."
+          }
+        }
+      }
+    },
+    "Switching them all back on removes the profile, which asks for your password.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les réactiver tous supprime le profil, ce qui demande votre mot de passe."
+          }
+        }
+      }
+    },
+    "System (%@)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Système (%@)"
+          }
+        }
+      }
+    },
     "System Settings opens with a profile. Approve it in General > Device Management to finish the Apple Intelligence changes.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Réglages Système s’ouvre avec un profil. Approuvez-le dans Général > Gestion des appareils pour terminer les modifications Apple Intelligence."
+          }
+        }
+      }
+    },
+    "Tell me when macOS puts back tweaks": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Me prévenir quand macOS remet des réglages"
+          }
+        }
+      }
+    },
+    "Terminal tools like Oh My Posh or zoxide can add their line to ~/.zshrc, inside a block UnbloatMyMac marks and removes again.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les outils du Terminal comme Oh My Posh ou zoxide peuvent ajouter leur ligne à ~/.zshrc, dans un bloc qu’UnbloatMyMac marque et retire ensuite."
+          }
+        }
+      }
+    },
+    "The **Activity Log** lists everything UnbloatMyMac did to your Mac, line by line: each setting it wrote, each service it stopped, each command it ran, each file it changed, and each app it installed, from the app and from the command line tool.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le **Journal d’activité** liste tout ce qu’UnbloatMyMac a fait à votre Mac, ligne par ligne : chaque préférence écrite, chaque service arrêté, chaque commande exécutée, chaque fichier modifié et chaque app installée, depuis l’app comme depuis l’outil en ligne de commande."
+          }
+        }
+      }
+    },
+    "The **Overview** lists tweaks macOS put back. Click **Review and Apply Again**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La **Vue d’ensemble** liste les réglages que macOS a rétablis. Cliquez sur **Vérifier et réappliquer**."
+          }
+        }
+      }
+    },
+    "The **Source** menu shows one part of the Mac, like **Preferences** or **Commands**. Search finds words in the message and the command.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le menu **Source** affiche une partie du Mac, comme **Préférences** ou **Commandes**. La recherche trouve les mots dans le message et dans la commande."
+          }
+        }
+      }
+    },
+    "The background model services are separate tweaks that stop launch agents; they are marked **Advanced**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les services de modèles en arrière-plan sont des réglages à part qui arrêtent des agents ; ils sont marqués **Avancé**."
+          }
+        }
+      }
+    },
+    "The command line tool is removed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’outil en ligne de commande est supprimé."
           }
         }
       }
@@ -1472,12 +3702,62 @@
         }
       }
     },
+    "The log keeps the latest 5,000 lines. Lines are in English, so you can paste them in a bug report.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le journal garde les 5 000 dernières lignes. Elles sont en anglais, pour pouvoir les coller dans un rapport de bug."
+          }
+        }
+      }
+    },
+    "The new language applies after a restart.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La nouvelle langue s’applique après un redémarrage."
+          }
+        }
+      }
+    },
+    "The profile is waiting for you. Open **System Settings > General > Device Management**, double-click the UnbloatMyMac profile, and click **Install**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le profil vous attend. Ouvrez **Réglages Système > Général > Gestion des appareils**, double-cliquez sur le profil UnbloatMyMac, puis cliquez sur **Installer**."
+          }
+        }
+      }
+    },
+    "The saved values are in **journal.json**. **Settings > General > Show in Finder** shows it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les valeurs enregistrées sont dans **journal.json**. **Réglages > Général > Afficher dans le Finder** le montre."
+          }
+        }
+      }
+    },
     "The value of every setting before UnbloatMyMac changed it is kept here, so Undo Everything can put it back.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "La valeur de chaque réglage avant modification est conservée ici, pour que Tout annuler puisse la rétablir."
+          }
+        }
+      }
+    },
+    "These apps install with Homebrew. Install it from Recommended Apps first.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ces apps s’installent avec Homebrew. Installez-le d’abord depuis Apps recommandées."
           }
         }
       }
@@ -1502,6 +3782,16 @@
         }
       }
     },
+    "This Log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce journal"
+          }
+        }
+      }
+    },
     "This cannot be undone.": {
       "localizations": {
         "fr": {
@@ -1512,12 +3802,52 @@
         }
       }
     },
+    "This setting stays as it is": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce réglage reste tel quel"
+          }
+        }
+      }
+    },
+    "Three steps": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trois étapes"
+          }
+        }
+      }
+    },
+    "Time": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heure"
+          }
+        }
+      }
+    },
     "Tools": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Outils"
+          }
+        }
+      }
+    },
+    "Troubleshooting": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dépannage"
           }
         }
       }
@@ -1572,6 +3902,16 @@
         }
       }
     },
+    "Turn switches off or on. Nothing changes yet: the change waits in the toolbar.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activez ou désactivez des interrupteurs. Rien ne change encore : la modification attend dans la barre d’outils."
+          }
+        }
+      }
+    },
     "Turn these on or off in System Settings > General > Login Items & Extensions.": {
       "localizations": {
         "fr": {
@@ -1602,6 +3942,16 @@
         }
       }
     },
+    "Tweak": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réglage"
+          }
+        }
+      }
+    },
     "Tweaks": {
       "localizations": {
         "fr": {
@@ -1612,12 +3962,32 @@
         }
       }
     },
+    "Tweaks and Presets": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réglages et préréglages"
+          }
+        }
+      }
+    },
     "Tweaks applied": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Réglages appliqués"
+          }
+        }
+      }
+    },
+    "Tweaks are grouped in the sidebar: **Apple Intelligence**, **Privacy**, **Security**, **Performance**, **Annoyances**, **Finder**, **Dock & Windows**, **Typing**, and **Windows Mode**. Each says what it does when its switch is on, and tags say what it needs.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les réglages sont regroupés dans la barre latérale : **Apple Intelligence**, **Confidentialité**, **Sécurité**, **Performances**, **Désagréments**, **Finder**, **Dock et fenêtres**, **Saisie** et **Mode Windows**. Chacun dit ce qu’il fait quand son interrupteur est activé, et des étiquettes disent ce qu’il demande."
           }
         }
       }
@@ -1662,6 +4032,76 @@
         }
       }
     },
+    "UnbloatMyMac Help": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aide UnbloatMyMac"
+          }
+        }
+      }
+    },
+    "UnbloatMyMac Settings.unbloat.json": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réglages UnbloatMyMac.unbloat.json"
+          }
+        }
+      }
+    },
+    "UnbloatMyMac is in English and French. It follows your Mac's language unless you pick one in **Settings > General > Language**. The new language applies after **Restart Now**.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UnbloatMyMac est en anglais et en français. Il suit la langue de votre Mac, sauf si vous en choisissez une dans **Réglages > Général > Langue**. La nouvelle langue s’applique après **Redémarrer maintenant**."
+          }
+        }
+      }
+    },
+    "UnbloatMyMac on GitHub": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UnbloatMyMac sur GitHub"
+          }
+        }
+      }
+    },
+    "UnbloatMyMac only reports these. Change them in System Settings.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UnbloatMyMac ne fait que les signaler. Modifiez-les dans Réglages Système."
+          }
+        }
+      }
+    },
+    "UnbloatMyMac turns off what you don't use: Apple Intelligence, telemetry, slow animations, pop-ups, and background updaters. Every tweak is optional, shown to you before it applies, and can be undone.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UnbloatMyMac désactive ce dont vous ne vous servez pas : Apple Intelligence, la télémétrie, les animations lentes, les fenêtres surgissantes et les programmes de mise à jour en arrière-plan. Chaque réglage est facultatif, vous est montré avant d’être appliqué, et peut être annulé."
+          }
+        }
+      }
+    },
+    "Uncheck All": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout décocher"
+          }
+        }
+      }
+    },
     "Undid %@": {
       "localizations": {
         "fr": {
@@ -1698,6 +4138,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Historique d’annulation"
+          }
+        }
+      }
+    },
+    "Undo and History": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annulation et historique"
           }
         }
       }
@@ -1742,1726 +4192,6 @@
         }
       }
     },
-    "Updaters and helpers other apps start at login and keep running. Switch one off to stop it; switch it on to bring it back.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Programmes de mise à jour et assistants que d’autres apps lancent à l’ouverture de session et laissent tourner. Désactivez-en un pour l’arrêter ; réactivez-le pour le ramener."
-          }
-        }
-      }
-    },
-    "What Happens": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ce qui va se passer"
-          }
-        }
-      }
-    },
-    "Will turn off": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sera désactivé"
-          }
-        }
-      }
-    },
-    "Will turn on": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sera activé"
-          }
-        }
-      }
-    },
-    "macOS Was Updated": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS a été mis à jour"
-          }
-        }
-      }
-    },
-    "macOS asks for your password once.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS demande votre mot de passe une seule fois."
-          }
-        }
-      }
-    },
-    "macOS removes these when you turn off Apple Intelligence": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS les supprime quand vous désactivez Apple Intelligence"
-          }
-        }
-      }
-    },
-    "of %lld": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "sur %lld"
-          }
-        }
-      }
-    },
-    "running": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "actifs"
-          }
-        }
-      }
-    },
-    "Activity Log": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Journal d’activité"
-          }
-        }
-      }
-    },
-    "No Activity Yet": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aucune activité"
-          }
-        }
-      }
-    },
-    "Every setting, service, command, and app UnbloatMyMac changes is written here, from the app and from the command line tool.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chaque préférence, service, commande et app que UnbloatMyMac modifie est noté ici, depuis l’app comme depuis l’outil en ligne de commande."
-          }
-        }
-      }
-    },
-    "Search log": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rechercher dans le journal"
-          }
-        }
-      }
-    },
-    "Copy": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copier"
-          }
-        }
-      }
-    },
-    "Copy Command": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copier la commande"
-          }
-        }
-      }
-    },
-    "Copy the selected lines, or every shown line, as text (Command-C)": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copier les lignes sélectionnées, ou toutes les lignes affichées, en texte (Commande-C)"
-          }
-        }
-      }
-    },
-    "Export Log…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Exporter le journal…"
-          }
-        }
-      }
-    },
-    "Save the activity log as a text file (Option-Command-E)": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enregistrer le journal d’activité dans un fichier texte (Option-Commande-E)"
-          }
-        }
-      }
-    },
-    "Clear Log…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Effacer le journal…"
-          }
-        }
-      }
-    },
-    "Clear Log": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Effacer le journal"
-          }
-        }
-      }
-    },
-    "Delete every line of the activity log": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Supprimer toutes les lignes du journal d’activité"
-          }
-        }
-      }
-    },
-    "Inspector": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Inspecteur"
-          }
-        }
-      }
-    },
-    "Show or hide the details of the selected line (Control-Command-I)": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afficher ou masquer le détail de la ligne sélectionnée (Contrôle-Commande-I)"
-          }
-        }
-      }
-    },
-    "%lld lines": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld lignes"
-          }
-        }
-      }
-    },
-    "%lld of %lld lines": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld lignes sur %lld"
-          }
-        }
-      }
-    },
-    "%@ %lld": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ %lld"
-          }
-        }
-      }
-    },
-    "Source": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Source"
-          }
-        }
-      }
-    },
-    "All Sources": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Toutes les sources"
-          }
-        }
-      }
-    },
-    "Show the lines about one part of the Mac": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afficher les lignes d’une partie du Mac"
-          }
-        }
-      }
-    },
-    "Time": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Heure"
-          }
-        }
-      }
-    },
-    "Level": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Niveau"
-          }
-        }
-      }
-    },
-    "Message": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Message"
-          }
-        }
-      }
-    },
-    "From the command line tool": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Depuis l’outil en ligne de commande"
-          }
-        }
-      }
-    },
-    "From": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Depuis"
-          }
-        }
-      }
-    },
-    "Command line tool": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Outil en ligne de commande"
-          }
-        }
-      }
-    },
-    "Tweak": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Réglage"
-          }
-        }
-      }
-    },
-    "Details": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Détails"
-          }
-        }
-      }
-    },
-    "%lld Lines Selected": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld lignes sélectionnées"
-          }
-        }
-      }
-    },
-    "Copy them with Command-C.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiez-les avec Commande-C."
-          }
-        }
-      }
-    },
-    "This Log": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ce journal"
-          }
-        }
-      }
-    },
-    "Lines": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Lignes"
-          }
-        }
-      }
-    },
-    "Since": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Depuis le"
-          }
-        }
-      }
-    },
-    "Problems": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Problèmes"
-          }
-        }
-      }
-    },
-    "Select a line to see the exact command, value, or file it wrote.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sélectionnez une ligne pour voir la commande, la valeur ou le fichier exact qu’elle a écrit."
-          }
-        }
-      }
-    },
-    "The log keeps the latest 5,000 lines. Lines are in English, so you can paste them in a bug report.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Le journal garde les 5 000 dernières lignes. Elles sont en anglais, pour pouvoir les coller dans un rapport de bug."
-          }
-        }
-      }
-    },
-    "Debug": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Débogage"
-          }
-        }
-      }
-    },
-    "Info": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Info"
-          }
-        }
-      }
-    },
-    "Warning": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Avertissement"
-          }
-        }
-      }
-    },
-    "Error": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Erreur"
-          }
-        }
-      }
-    },
-    "Show or hide routine steps, like restarting the Dock": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afficher ou masquer les étapes courantes, comme le redémarrage du Dock"
-          }
-        }
-      }
-    },
-    "Show or hide changes that worked": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afficher ou masquer les modifications réussies"
-          }
-        }
-      }
-    },
-    "Show or hide changes that need something from you": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afficher ou masquer les modifications qui attendent quelque chose de vous"
-          }
-        }
-      }
-    },
-    "Show or hide changes that failed": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afficher ou masquer les modifications qui ont échoué"
-          }
-        }
-      }
-    },
-    "Preferences": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Préférences"
-          }
-        }
-      }
-    },
-    "Services": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Services"
-          }
-        }
-      }
-    },
-    "Commands": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Commandes"
-          }
-        }
-      }
-    },
-    "Files": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fichiers"
-          }
-        }
-      }
-    },
-    "Apps": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apps"
-          }
-        }
-      }
-    },
-    "Clear the activity log?": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Effacer le journal d’activité ?"
-          }
-        }
-      }
-    },
-    "Every line is deleted. Your changes and their undo history are kept.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Toutes les lignes sont supprimées. Vos modifications et leur historique d’annulation sont conservés."
-          }
-        }
-      }
-    },
-    "Save the activity log as text, to attach to a bug report.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enregistrez le journal d’activité en texte, à joindre à un rapport de bug."
-          }
-        }
-      }
-    },
-    "Export Activity Log…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Exporter le journal d’activité…"
-          }
-        }
-      }
-    },
-    "Clear Activity Log…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Effacer le journal d’activité…"
-          }
-        }
-      }
-    },
-    "Show Log Inspector": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afficher l’inspecteur du journal"
-          }
-        }
-      }
-    },
-    "Hide Log Inspector": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Masquer l’inspecteur du journal"
-          }
-        }
-      }
-    },
-    "UnbloatMyMac Help": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aide UnbloatMyMac"
-          }
-        }
-      }
-    },
-    "Show Activity Log": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afficher le journal d’activité"
-          }
-        }
-      }
-    },
-    "What's New": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nouveautés"
-          }
-        }
-      }
-    },
-    "UnbloatMyMac on GitHub": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "UnbloatMyMac sur GitHub"
-          }
-        }
-      }
-    },
-    "Report a Problem or Suggest an Idea…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Signaler un problème ou proposer une idée…"
-          }
-        }
-      }
-    },
-    "Language": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Langue"
-          }
-        }
-      }
-    },
-    "System (%@)": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Système (%@)"
-          }
-        }
-      }
-    },
-    "The new language applies after a restart.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La nouvelle langue s’applique après un redémarrage."
-          }
-        }
-      }
-    },
-    "Restart Now": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Redémarrer maintenant"
-          }
-        }
-      }
-    },
-    "Wait for the changes to finish": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Attendez la fin des modifications"
-          }
-        }
-      }
-    },
-    "Getting Started": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Premiers pas"
-          }
-        }
-      }
-    },
-    "Tweaks and Presets": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Réglages et préréglages"
-          }
-        }
-      }
-    },
-    "Reviewing Changes": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vérifier les modifications"
-          }
-        }
-      }
-    },
-    "Undo and History": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Annulation et historique"
-          }
-        }
-      }
-    },
-    "Command Line Tool": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Outil en ligne de commande"
-          }
-        }
-      }
-    },
-    "Settings and Language": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Réglages de l’app et langue"
-          }
-        }
-      }
-    },
-    "Troubleshooting": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dépannage"
-          }
-        }
-      }
-    },
-    "Keyboard Shortcuts": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Raccourcis clavier"
-          }
-        }
-      }
-    },
-    "UnbloatMyMac turns off what you don't use: Apple Intelligence, telemetry, slow animations, pop-ups, and background updaters. Every tweak is optional, shown to you before it applies, and can be undone.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "UnbloatMyMac désactive ce dont vous ne vous servez pas : Apple Intelligence, la télémétrie, les animations lentes, les fenêtres surgissantes et les programmes de mise à jour en arrière-plan. Chaque réglage est facultatif, vous est montré avant d’être appliqué, et peut être annulé."
-          }
-        }
-      }
-    },
-    "Start on the Overview": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Commencez par la vue d’ensemble"
-          }
-        }
-      }
-    },
-    "**Overview** shows how much of each category is applied and offers presets. **Recommended** is a safe start: it turns off what most people never use, and nothing that breaks a feature you rely on.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La **Vue d’ensemble** montre où en est chaque catégorie et propose des préréglages. **Recommandé** est un bon départ : il désactive ce que la plupart des gens n’utilisent jamais, et rien qui casse une fonction dont vous avez besoin."
-          }
-        }
-      }
-    },
-    "Three steps": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Trois étapes"
-          }
-        }
-      }
-    },
-    "Turn switches off or on. Nothing changes yet: the change waits in the toolbar.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Activez ou désactivez des interrupteurs. Rien ne change encore : la modification attend dans la barre d’outils."
-          }
-        }
-      }
-    },
-    "Click **Review Changes** (⌘Return) to see every change and what it needs: a password, a profile, a restart.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cliquez sur **Vérifier les modifications** (⌘Retour) pour voir chaque modification et ce qu’elle demande : un mot de passe, un profil, un redémarrage."
-          }
-        }
-      }
-    },
-    "Click **Apply Changes**. To go back, switch the tweak again, or use **Undo Everything** on the **History** page.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cliquez sur **Appliquer les modifications**. Pour revenir en arrière, rebasculez le réglage, ou utilisez **Tout annuler** dans **Historique**."
-          }
-        }
-      }
-    },
-    "Switches follow System Settings": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les interrupteurs suivent Réglages Système"
-          }
-        }
-      }
-    },
-    "A switch named after a macOS feature, like **Genmoji** or **Siri**, shows that feature. Switch it off to turn the feature off. Other switches, like **Show all file extensions**, are on when the tweak is applied.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Un interrupteur qui porte le nom d’une fonction de macOS, comme **Genmoji** ou **Siri**, montre cette fonction : désactivez-le pour désactiver la fonction. Les autres, comme **Afficher toutes les extensions**, sont activés quand le réglage est appliqué."
-          }
-        }
-      }
-    },
-    "**Password**: runs a command as administrator. All of them run together under one password prompt.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Mot de passe** : exécute une commande en administrateur. Elles s’exécutent toutes ensemble, avec une seule demande de mot de passe."
-          }
-        }
-      }
-    },
-    "**Profile**: needs your approval in System Settings.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Profil** : demande votre approbation dans Réglages Système."
-          }
-        }
-      }
-    },
-    "**Stops a service**: a background service is disabled for your account. It fully stops after you log out.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Arrête un service** : un service d’arrière-plan est désactivé pour votre compte. Il s’arrête complètement après déconnexion."
-          }
-        }
-      }
-    },
-    "**Restarts Dock** or **Finder**: the screen may flicker once.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Redémarre Dock** ou **Finder** : l’écran peut clignoter une fois."
-          }
-        }
-      }
-    },
-    "**Advanced**: stops system services, and some features stop working until you undo it. Hidden unless you turn them on in **Settings > General**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Avancé** : arrête des services système, et certaines fonctions cessent de marcher jusqu’à l’annulation. Masqués sauf si vous les activez dans **Réglages > Général**."
-          }
-        }
-      }
-    },
-    "**Recommended**, **Maximum Privacy**, **Performance Boost**, and **Windows Mode** stage a set of tweaks at once. They only stage what is not applied yet, and you still review before anything changes. Find them on the **Overview** and in **Changes > Add Preset**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Recommandé**, **Confidentialité maximale**, **Performances accrues** et **Mode Windows** préparent plusieurs réglages d’un coup. Ils ne préparent que ce qui n’est pas encore appliqué, et vous vérifiez toujours avant tout changement. Ils sont dans la **Vue d’ensemble** et dans **Modifications > Ajouter un préréglage**."
-          }
-        }
-      }
-    },
-    "Use the same tweaks on another Mac": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les mêmes réglages sur un autre Mac"
-          }
-        }
-      }
-    },
-    "**File > Export Tweaks…** saves the tweaks that are on to a file. On the other Mac, **File > Import Tweaks…** stages the ones that are not on yet, for review.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Fichier > Exporter les réglages…** enregistre les réglages activés dans un fichier. Sur l’autre Mac, **Fichier > Importer les réglages…** prépare ceux qui n’y sont pas encore, pour vérification."
-          }
-        }
-      }
-    },
-    "Switches only stage changes. The toolbar counts them, and the sidebar shows a badge on each category with changes waiting.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les interrupteurs ne font que préparer des modifications. La barre d’outils les compte, et la barre latérale affiche un badge sur chaque catégorie qui en attend."
-          }
-        }
-      }
-    },
-    "**Review Changes** lists every change with what will happen: a password prompt, a profile to approve, a Dock or Finder restart, or a log out. **Apply Changes** makes them all; **Discard** (⌥⌘Delete) forgets them.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Vérifier les modifications** liste chaque modification et ce qui va se passer : une demande de mot de passe, un profil à approuver, un redémarrage du Dock ou du Finder, une déconnexion. **Appliquer les modifications** les effectue toutes ; **Abandonner** (⌥⌘Supprimer) les oublie."
-          }
-        }
-      }
-    },
-    "After applying": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Après application"
-          }
-        }
-      }
-    },
-    "Most changes show at once. Some take effect in apps you open from now on, or after you log out; the review says which. To see Dock, Finder, and menu bar changes only after logging out, turn off **Restart the Dock, Finder, and menu bar after applying** in **Settings**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La plupart des modifications sont visibles tout de suite. Certaines s’appliquent aux apps ouvertes ensuite, ou après déconnexion ; la vérification indique lesquelles. Pour ne voir les changements du Dock, du Finder et de la barre des menus qu’après déconnexion, désactivez **Redémarrer le Dock, le Finder et la barre des menus après application** dans **Réglages**."
-          }
-        }
-      }
-    },
-    "Apple Intelligence features are turned off with a configuration profile, the same way a company manages its Macs. UnbloatMyMac puts every Apple Intelligence restriction in one profile.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les fonctions d’Apple Intelligence sont désactivées par un profil de configuration, comme une entreprise gère ses Mac. UnbloatMyMac met toutes les restrictions d’Apple Intelligence dans un seul profil."
-          }
-        }
-      }
-    },
-    "After **Apply Changes**, macOS asks you to approve the profile in **System Settings > General > Device Management**. Until then, the switches say **Approve in System Settings**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Après **Appliquer les modifications**, macOS vous demande d’approuver le profil dans **Réglages Système > Général > Gestion des appareils**. D’ici là, les interrupteurs indiquent **À approuver dans Réglages Système**."
-          }
-        }
-      }
-    },
-    "Changing these switches later replaces the profile, and macOS asks again.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Changer ces interrupteurs plus tard remplace le profil, et macOS redemande."
-          }
-        }
-      }
-    },
-    "Switching them all back on removes the profile, which asks for your password.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les réactiver tous supprime le profil, ce qui demande votre mot de passe."
-          }
-        }
-      }
-    },
-    "The background model services are separate tweaks that stop launch agents; they are marked **Advanced**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les services de modèles en arrière-plan sont des réglages à part qui arrêtent des agents ; ils sont marqués **Avancé**."
-          }
-        }
-      }
-    },
-    "Before UnbloatMyMac changes a setting, it saves the value that was there. Undo puts back that exact value, not a guess.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Avant de modifier une préférence, UnbloatMyMac enregistre la valeur qui s’y trouvait. Annuler remet exactement cette valeur, pas une supposition."
-          }
-        }
-      }
-    },
-    "Switch a single tweak back and apply to undo it.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rebasculez un réglage et appliquez pour l’annuler."
-          }
-        }
-      }
-    },
-    "**History** lists every change with its time, and failures with their reason.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Historique** liste chaque modification avec son heure, et les échecs avec leur raison."
-          }
-        }
-      }
-    },
-    "**Undo Everything…** (⌥⌘Z) puts back every setting, starts stopped services again, allows background items again, and removes the profile.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Tout annuler…** (⌥⌘Z) remet chaque préférence, relance les services arrêtés, autorise de nouveau les éléments en arrière-plan et supprime le profil."
-          }
-        }
-      }
-    },
-    "After a macOS update": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Après une mise à jour de macOS"
-          }
-        }
-      }
-    },
-    "A macOS update can put some settings back. The **Overview** then lists the tweaks that were reset, with **Review and Apply Again** and **Keep as Is**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Une mise à jour de macOS peut rétablir certaines préférences. La **Vue d’ensemble** liste alors les réglages rétablis, avec **Vérifier et réappliquer** et **Laisser ainsi**."
-          }
-        }
-      }
-    },
-    "The saved values are in **journal.json**. **Settings > General > Show in Finder** shows it.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les valeurs enregistrées sont dans **journal.json**. **Réglages > Général > Afficher dans le Finder** le montre."
-          }
-        }
-      }
-    },
-    "Updaters and helpers that other apps start at login and keep running, like Google Updater or Adobe's helpers. Switch one off to stop it; switch it on to bring it back.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les programmes de mise à jour et assistants que d’autres apps lancent à l’ouverture de session et laissent tourner, comme Google Updater ou les assistants d’Adobe. Désactivez-en un pour l’arrêter ; réactivez-le pour le faire revenir."
-          }
-        }
-      }
-    },
-    "Items for every user (daemons) ask for your password. **Show Login Items…** reads the login items and app background items listed in System Settings; that also needs your password. Turn those on or off in **System Settings > General > Login Items & Extensions**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les éléments pour tous les utilisateurs (daemons) demandent votre mot de passe. **Afficher les éléments d’ouverture…** lit les éléments d’ouverture et les éléments d’arrière-plan listés dans Réglages Système, ce qui demande aussi votre mot de passe. Activez-les ou désactivez-les dans **Réglages Système > Général > Ouverture et extensions**."
-          }
-        }
-      }
-    },
-    "**Storage** measures caches, logs, Xcode data, old installers, iPhone and iPad updates, and Time Machine local snapshots. **Clean** moves files to the Trash, so you can still get them back.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Stockage** mesure les caches, les journaux, les données Xcode, les anciens installateurs, les mises à jour d’iPhone et d’iPad et les instantanés locaux Time Machine. **Nettoyer** met les fichiers à la Corbeille, pour pouvoir encore les récupérer."
-          }
-        }
-      }
-    },
-    "Simulators and local snapshots cannot go to the Trash: they are deleted at once, and the page says so before. Some items open their page in System Settings instead.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les simulateurs et les instantanés locaux ne peuvent pas aller à la Corbeille : ils sont supprimés tout de suite, et la page le dit avant. Certains éléments ouvrent plutôt leur page dans Réglages Système."
-          }
-        }
-      }
-    },
-    "Free apps and tools that do a job better than macOS does, grouped by need. A star marks the pick in each group.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Des apps et outils gratuits qui font mieux que macOS, regroupés par besoin. Une étoile marque le choix de chaque groupe."
-          }
-        }
-      }
-    },
-    "**Install** uses Homebrew. If Homebrew is missing, the page shows how to install it.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Installer** passe par Homebrew. Si Homebrew manque, la page montre comment l’installer."
-          }
-        }
-      }
-    },
-    "Apps that are only on their website show **Download** and open it.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les apps disponibles seulement sur leur site affichent **Télécharger** et l’ouvrent."
-          }
-        }
-      }
-    },
-    "Terminal tools like Oh My Posh or zoxide can add their line to ~/.zshrc, inside a block UnbloatMyMac marks and removes again.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les outils du Terminal comme Oh My Posh ou zoxide peuvent ajouter leur ligne à ~/.zshrc, dans un bloc qu’UnbloatMyMac marque et retire ensuite."
-          }
-        }
-      }
-    },
-    "Nothing installs until you click.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rien ne s’installe tant que vous ne cliquez pas."
-          }
-        }
-      }
-    },
-    "The **Activity Log** lists everything UnbloatMyMac did to your Mac, line by line: each setting it wrote, each service it stopped, each command it ran, each file it changed, and each app it installed, from the app and from the command line tool.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Le **Journal d’activité** liste tout ce qu’UnbloatMyMac a fait à votre Mac, ligne par ligne : chaque préférence écrite, chaque service arrêté, chaque commande exécutée, chaque fichier modifié et chaque app installée, depuis l’app comme depuis l’outil en ligne de commande."
-          }
-        }
-      }
-    },
-    "**Debug**, **Info**, **Warning**, and **Error** show or hide each level; the number is how many lines it has. Debug lines are hidden at first.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Débogage**, **Info**, **Avertissement** et **Erreur** affichent ou masquent chaque niveau ; le nombre indique combien de lignes il compte. Les lignes de débogage sont masquées au départ."
-          }
-        }
-      }
-    },
-    "The **Source** menu shows one part of the Mac, like **Preferences** or **Commands**. Search finds words in the message and the command.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Le menu **Source** affiche une partie du Mac, comme **Préférences** ou **Commandes**. La recherche trouve les mots dans le message et dans la commande."
-          }
-        }
-      }
-    },
-    "Select a line to see the exact command or value in the inspector. **Copy Command** in the line's menu copies it.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sélectionnez une ligne pour voir la commande ou la valeur exacte dans l’inspecteur. **Copier la commande**, dans le menu de la ligne, la copie."
-          }
-        }
-      }
-    },
-    "**Copy** and ⌘C copy the selected lines as text; **Export Log…** saves the whole log, to attach to a bug report.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Copier** et ⌘C copient les lignes sélectionnées en texte ; **Exporter le journal…** enregistre tout le journal, à joindre à un rapport de bug."
-          }
-        }
-      }
-    },
-    "Lines are in English, like Console, so they read the same in a bug report. The log keeps the latest 5,000 lines in **activity.log**, next to the journal. **Clear Log…** deletes them; it does not undo anything.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les lignes sont en anglais, comme dans Console, pour se lire pareil dans un rapport de bug. Le journal garde les 5 000 dernières lignes dans **activity.log**, à côté de journal.json. **Effacer le journal…** les supprime ; cela n’annule rien."
-          }
-        }
-      }
-    },
-    "**UnbloatMyMac > Install Command Line Tool…** adds **unbloatmymac** to /usr/local/bin. It shares the undo journal and the activity log with the app.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**UnbloatMyMac > Installer l’outil en ligne de commande…** ajoute **unbloatmymac** à /usr/local/bin. Il partage l’historique d’annulation et le journal d’activité avec l’app."
-          }
-        }
-      }
-    },
-    "**unbloatmymac list** and **status**: every tweak and whether it is on.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**unbloatmymac list** et **status** : chaque réglage et s’il est activé."
-          }
-        }
-      }
-    },
-    "**unbloatmymac apply** or **undo** followed by tweak ids, or **preset recommended**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**unbloatmymac apply** ou **undo** suivi d’identifiants de réglages, ou **preset recommended**."
-          }
-        }
-      }
-    },
-    "**unbloatmymac revert**: undo everything.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**unbloatmymac revert** : tout annuler."
-          }
-        }
-      }
-    },
-    "**unbloatmymac export** and **import**: tweak files, like the File menu.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**unbloatmymac export** et **import** : fichiers de réglages, comme le menu Fichier."
-          }
-        }
-      }
-    },
-    "**unbloatmymac apps**, **install**, and **uninstall**: recommended apps.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**unbloatmymac apps**, **install** et **uninstall** : les apps recommandées."
-          }
-        }
-      }
-    },
-    "Changes ask for confirmation in a terminal; scripts add **--yes**. **--dry-run** shows what would change, and **--json** prints results for scripts.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les modifications demandent confirmation dans un terminal ; les scripts ajoutent **--yes**. **--dry-run** montre ce qui changerait, et **--json** affiche les résultats pour les scripts."
-          }
-        }
-      }
-    },
-    "Open **Settings** with ⌘Comma.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ouvrez **Réglages** avec ⌘Virgule."
-          }
-        }
-      }
-    },
-    "**Appearance**: light or dark mode, and the accent color.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Apparence** : mode clair ou sombre, et la couleur d’accentuation."
-          }
-        }
-      }
-    },
-    "UnbloatMyMac is in English and French. It follows your Mac's language unless you pick one in **Settings > General > Language**. The new language applies after **Restart Now**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "UnbloatMyMac est en anglais et en français. Il suit la langue de votre Mac, sauf si vous en choisissez une dans **Réglages > Général > Langue**. La nouvelle langue s’applique après **Redémarrer maintenant**."
-          }
-        }
-      }
-    },
-    "A setting did not change": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Une préférence n’a pas changé"
-          }
-        }
-      }
-    },
-    "Open the **Activity Log** and show **Error** lines: each says what macOS refused. Some settings, like Reduce Motion, need **Full Disk Access**: add UnbloatMyMac in **System Settings > Privacy & Security > Full Disk Access**, then apply again.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ouvrez le **Journal d’activité** et affichez les lignes **Erreur** : chacune dit ce que macOS a refusé. Certaines préférences, comme Réduire les animations, demandent l’**Accès complet au disque** : ajoutez UnbloatMyMac dans **Réglages Système > Confidentialité et sécurité > Accès complet au disque**, puis appliquez de nouveau."
-          }
-        }
-      }
-    },
-    "Apple Intelligence switches say Approve in System Settings": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les interrupteurs Apple Intelligence indiquent À approuver dans Réglages Système"
-          }
-        }
-      }
-    },
-    "The profile is waiting for you. Open **System Settings > General > Device Management**, double-click the UnbloatMyMac profile, and click **Install**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Le profil vous attend. Ouvrez **Réglages Système > Général > Gestion des appareils**, double-cliquez sur le profil UnbloatMyMac, puis cliquez sur **Installer**."
-          }
-        }
-      }
-    },
-    "A service is still running": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Un service tourne encore"
-          }
-        }
-      }
-    },
-    "Stopped services fully stop after you log out and back in.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les services arrêtés s’arrêtent complètement après une déconnexion puis reconnexion."
-          }
-        }
-      }
-    },
-    "A tweak came back after a macOS update": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Un réglage est revenu après une mise à jour de macOS"
-          }
-        }
-      }
-    },
-    "The **Overview** lists tweaks macOS put back. Click **Review and Apply Again**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La **Vue d’ensemble** liste les réglages que macOS a rétablis. Cliquez sur **Vérifier et réappliquer**."
-          }
-        }
-      }
-    },
-    "I want everything back the way it was": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Je veux tout remettre comme avant"
-          }
-        }
-      }
-    },
-    "**Changes > Undo Everything…** (⌥⌘Z). Then delete the app; nothing else stays behind but its folder in ~/Library/Application Support.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Modifications > Tout annuler…** (⌥⌘Z). Supprimez ensuite l’app ; il ne reste que son dossier dans ~/Library/Application Support."
-          }
-        }
-      }
-    },
-    "Reporting a problem": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Signaler un problème"
-          }
-        }
-      }
-    },
-    "**Help > Report a Problem…** opens a new issue on GitHub. Attach the log from **File > Export Activity Log…**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Aide > Signaler un problème…** ouvre un nouveau ticket sur GitHub. Joignez le journal depuis **Fichier > Exporter le journal d’activité…**."
-          }
-        }
-      }
-    },
-    "Review Changes": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vérifier les modifications"
-          }
-        }
-      }
-    },
-    "Add a preset": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ajouter un préréglage"
-          }
-        }
-      }
-    },
-    "Export Tweaks": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Exporter les réglages"
-          }
-        }
-      }
-    },
-    "Import Tweaks": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Importer les réglages"
-          }
-        }
-      }
-    },
-    "Export Activity Log": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Exporter le journal d’activité"
-          }
-        }
-      }
-    },
-    "Clear Activity Log": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Effacer le journal d’activité"
-          }
-        }
-      }
-    },
-    "Show or hide the log inspector": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Afficher ou masquer l’inspecteur du journal"
-          }
-        }
-      }
-    },
-    "Search the log": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rechercher dans le journal"
-          }
-        }
-      }
-    },
-    "Settings": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Réglages"
-          }
-        }
-      }
-    },
-    "**Install Recommended Apps** (⌥⌘I) shows every starred app that is missing, each checked; uncheck any you do not want, then click Install.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Installer les apps recommandées** (⌥⌘I) affiche chaque app étoilée manquante, toutes cochées ; décochez celles que vous ne voulez pas, puis cliquez sur Installer."
-          }
-        }
-      }
-    },
-    "Apple Intelligence": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Apple Intelligence"
-          }
-        }
-      }
-    },
-    "Check All": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tout cocher"
-          }
-        }
-      }
-    },
-    "Homebrew installs the checked apps. Nothing installs until you click Install. You may be asked for your password.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Homebrew installe les apps cochées. Rien ne s’installe avant que vous cliquiez sur Installer. Votre mot de passe peut vous être demandé."
-          }
-        }
-      }
-    },
-    "Install %lld Apps": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installer %lld apps"
-          }
-        }
-      }
-    },
-    "Install %lld Recommended…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installer %lld recommandées…"
-          }
-        }
-      }
-    },
-    "Install 1 App": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installer 1 app"
-          }
-        }
-      }
-    },
-    "Install Recommended Apps…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installer les apps recommandées…"
-          }
-        }
-      }
-    },
-    "The command line tool is removed.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "L’outil en ligne de commande est supprimé."
-          }
-        }
-      }
-    },
-    "Uncheck All": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tout décocher"
-          }
-        }
-      }
-    },
     "Uninstall Command Line Tool…": {
       "localizations": {
         "fr": {
@@ -3472,302 +4202,12 @@
         }
       }
     },
-    "Back Up Settings": {
+    "Unknown": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sauvegarder les réglages"
-          }
-        }
-      }
-    },
-    "Back Up Settings…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sauvegarder les réglages…"
-          }
-        }
-      }
-    },
-    "Back Up…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sauvegarder…"
-          }
-        }
-      }
-    },
-    "Back up, or move to another Mac": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sauvegarder, ou passer à un autre Mac"
-          }
-        }
-      }
-    },
-    "Backup": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sauvegarde"
-          }
-        }
-      }
-    },
-    "Choose a settings backup or tweaks file saved by UnbloatMyMac.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Choisissez une sauvegarde ou un fichier de réglages enregistré par UnbloatMyMac."
-          }
-        }
-      }
-    },
-    "Restore Settings": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Restaurer les réglages"
-          }
-        }
-      }
-    },
-    "Restore Settings…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Restaurer les réglages…"
-          }
-        }
-      }
-    },
-    "Restore…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Restaurer…"
-          }
-        }
-      }
-    },
-    "Save UnbloatMyMac’s settings and the tweaks that are on, to restore them later or on another Mac.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enregistrez les préférences d’UnbloatMyMac et les réglages appliqués, pour les restaurer plus tard ou sur un autre Mac."
-          }
-        }
-      }
-    },
-    "Settings and tweaks": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Préférences et réglages"
-          }
-        }
-      }
-    },
-    "Settings restored. Every tweak in the backup is already applied.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Préférences restaurées. Tous les réglages de la sauvegarde sont déjà appliqués."
-          }
-        }
-      }
-    },
-    "Settings restored. The new language applies after you restart UnbloatMyMac.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Préférences restaurées. La nouvelle langue s’applique après le redémarrage d’UnbloatMyMac."
-          }
-        }
-      }
-    },
-    "UnbloatMyMac Settings.unbloat.json": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Réglages UnbloatMyMac.unbloat.json"
-          }
-        }
-      }
-    },
-    "Saves UnbloatMyMac’s settings, the accent, and the tweaks that are on to one file. Restoring sets them back at once and opens Review for the tweaks.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Enregistre les préférences d’UnbloatMyMac, la couleur d’accentuation et les réglages appliqués dans un seul fichier. La restauration les remet aussitôt et ouvre la vérification pour les réglages."
-          }
-        }
-      }
-    },
-    "**File > Back Up Settings…** (⇧⌘B) saves the tweaks that are on and UnbloatMyMac’s own settings: advanced tweaks, restarting apps, the accent, the language, and update checks. **File > Restore Settings…** (⇧⌘R) sets those back at once and opens Review for the tweaks. Both are also in **Settings > Backup**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Fichier > Sauvegarder les réglages…** (⇧⌘B) enregistre les réglages appliqués et les préférences d’UnbloatMyMac : réglages avancés, redémarrage des apps, couleur d’accentuation, langue et recherche de mises à jour. **Fichier > Restaurer les réglages…** (⇧⌘R) remet aussitôt ces préférences et ouvre la vérification pour les réglages. Les deux sont aussi dans **Réglages > Sauvegarde**."
-          }
-        }
-      }
-    },
-    "Updates": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mises à jour"
-          }
-        }
-      }
-    },
-    "Automatic Updates": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mises à jour automatiques"
-          }
-        }
-      }
-    },
-    "Settings Backup": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sauvegarde des réglages"
-          }
-        }
-      }
-    },
-    "Check for updates automatically": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rechercher les mises à jour automatiquement"
-          }
-        }
-      }
-    },
-    "Updates are off in this build.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les mises à jour sont désactivées dans cette version."
-          }
-        }
-      }
-    },
-    "Looks once a day for a new version on GitHub.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cherche une nouvelle version sur GitHub une fois par jour."
-          }
-        }
-      }
-    },
-    "Looks once a day for a new version on GitHub. Last checked %@.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cherche une nouvelle version sur GitHub une fois par jour. Dernière recherche %@."
-          }
-        }
-      }
-    },
-    "Version %@": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Version %@"
-          }
-        }
-      }
-    },
-    "Check Now": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rechercher maintenant"
-          }
-        }
-      }
-    },
-    "**Backup**: back up and restore settings, and where the undo journal is kept.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Sauvegarde** : sauvegarder et restaurer les réglages, et l’emplacement du journal d’annulation."
-          }
-        }
-      }
-    },
-    "**Updates**: automatic update checks, the version, and **Check Now**.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Mises à jour** : la recherche automatique, la version et **Rechercher maintenant**."
-          }
-        }
-      }
-    },
-    "Check for App Updates": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rechercher les mises à jour des apps"
-          }
-        }
-      }
-    },
-    "Every app installed with Homebrew is up to date.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Toutes les apps installées avec Homebrew sont à jour."
-          }
-        }
-      }
-    },
-    "Installing %lld of %lld: %@…": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Installation %lld sur %lld : %@…"
+            "value": "Inconnu"
           }
         }
       }
@@ -3812,6 +4252,46 @@
         }
       }
     },
+    "Updaters and helpers other apps start at login and keep running. Switch one off to stop it; switch it on to bring it back.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Programmes de mise à jour et assistants que d’autres apps lancent à l’ouverture de session et laissent tourner. Désactivez-en un pour l’arrêter ; réactivez-le pour le ramener."
+          }
+        }
+      }
+    },
+    "Updaters and helpers that other apps start at login and keep running, like Google Updater or Adobe's helpers. Switch one off to stop it; switch it on to bring it back.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les programmes de mise à jour et assistants que d’autres apps lancent à l’ouverture de session et laissent tourner, comme Google Updater ou les assistants d’Adobe. Désactivez-en un pour l’arrêter ; réactivez-le pour le faire revenir."
+          }
+        }
+      }
+    },
+    "Updates": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mises à jour"
+          }
+        }
+      }
+    },
+    "Updates are off in this build.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les mises à jour sont désactivées dans cette version."
+          }
+        }
+      }
+    },
     "Updating %lld of %lld: %@…": {
       "localizations": {
         "fr": {
@@ -3822,182 +4302,42 @@
         }
       }
     },
-    "When Homebrew has a newer version of an app it installed, its row shows **Update**, and **Update N Apps** updates them all. **Changes > Check for App Updates** (⌥⌘U) asks Homebrew for the latest versions first. Apps that update themselves are left to do so.": {
+    "Use the same tweaks on another Mac": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quand Homebrew a une version plus récente d’une app qu’il a installée, sa ligne affiche **Mettre à jour**, et **Mettre à jour N apps** les met toutes à jour. **Modifications > Rechercher les mises à jour des apps** (⌥⌘U) demande d’abord les dernières versions à Homebrew. Les apps qui se mettent à jour seules s’en chargent."
+            "value": "Les mêmes réglages sur un autre Mac"
           }
         }
       }
     },
-    "**unbloatmymac backup** and **restore**: the app's settings and the tweaks that are on, like File > Back Up Settings.": {
+    "Version %@": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "**unbloatmymac backup** et **restore** : les préférences de l’app et les réglages appliqués, comme Fichier > Sauvegarder les réglages."
+            "value": "Version %@"
           }
         }
       }
     },
-    "**unbloatmymac outdated** and **update** (an app name, or **--all**): update apps Homebrew installed.": {
+    "Wait for the changes to finish": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "**unbloatmymac outdated** et **update** (un nom d’app, ou **--all**) : mettre à jour les apps installées par Homebrew."
+            "value": "Attendez la fin des modifications"
           }
         }
       }
     },
-    "%lld tweaks were put back": {
+    "Warning": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%lld réglages ont été remis"
-          }
-        }
-      }
-    },
-    "A macOS update reset settings UnbloatMyMac changed. Open UnbloatMyMac to apply them again.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Une mise à jour de macOS a réinitialisé des réglages modifiés par UnbloatMyMac. Ouvrez UnbloatMyMac pour les appliquer à nouveau."
-          }
-        }
-      }
-    },
-    "Allow UnbloatMyMac in Login Items to turn this on.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Autorisez UnbloatMyMac dans Ouverture pour activer cette option."
-          }
-        }
-      }
-    },
-    "Checks at each login, even when UnbloatMyMac is closed, and sends one notification after a macOS update resets your tweaks.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vérifie à chaque ouverture de session, même quand UnbloatMyMac est fermé, et envoie une notification quand une mise à jour de macOS réinitialise vos réglages."
-          }
-        }
-      }
-    },
-    "Notifications": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Notifications"
-          }
-        }
-      }
-    },
-    "Open Login Items": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ouvrir Ouverture"
-          }
-        }
-      }
-    },
-    "Something reset settings UnbloatMyMac changed. Open UnbloatMyMac to apply them again.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quelque chose a réinitialisé des réglages modifiés par UnbloatMyMac. Ouvrez UnbloatMyMac pour les appliquer à nouveau."
-          }
-        }
-      }
-    },
-    "Tell me when macOS puts back tweaks": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Me prévenir quand macOS remet des réglages"
-          }
-        }
-      }
-    },
-    "macOS put back %lld tweaks": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS a remis %lld réglages"
-          }
-        }
-      }
-    },
-    "**General**: the app's language, advanced tweaks, restarting the Dock and Finder after applying, and a notification at login when macOS puts back tweaks.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Général** : la langue de l’app, les réglages avancés, le redémarrage du Dock et du Finder après application, et une notification à l’ouverture de session quand macOS remet des réglages."
-          }
-        }
-      }
-    },
-    "Before any change, the value from before is saved in the undo journal.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Avant chaque modification, la valeur d’origine est enregistrée dans le journal d’annulation."
-          }
-        }
-      }
-    },
-    "Click **ⓘ** next to a tweak's name to see the exact commands it runs, such as **defaults write**, and how undo puts each one back. **Copy Commands** copies them.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cliquez sur **ⓘ** à côté du nom d’un réglage pour voir les commandes exactes qu’il exécute, comme **defaults write**, et comment l’annulation remet chacune en place. **Copier les commandes** les copie."
-          }
-        }
-      }
-    },
-    "Copy Commands": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copier les commandes"
-          }
-        }
-      }
-    },
-    "Details for %@": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Détails de %@"
-          }
-        }
-      }
-    },
-    "How undo puts it back": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Comment l’annulation le remet"
+            "value": "Avertissement"
           }
         }
       }
@@ -4008,6 +4348,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ce que change %@"
+          }
+        }
+      }
+    },
+    "What Happens": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce qui va se passer"
           }
         }
       }
@@ -4032,322 +4382,132 @@
         }
       }
     },
-    "%@ · last changed %@": {
+    "What's New": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ · modifié le %2$@"
+            "value": "Nouveautés"
           }
         }
       }
     },
-    "Another app from this developer is installed and may still use these.": {
+    "When Homebrew has a newer version of an app it installed, its row shows **Update**, and **Update N Apps** updates them all. **Changes > Check for App Updates** (⌥⌘U) asks Homebrew for the latest versions first. Apps that update themselves are left to do so.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Une autre app de ce développeur est installée et les utilise peut-être encore."
+            "value": "Quand Homebrew a une version plus récente d’une app qu’il a installée, sa ligne affiche **Mettre à jour**, et **Mettre à jour N apps** les met toutes à jour. **Modifications > Rechercher les mises à jour des apps** (⌥⌘U) demande d’abord les dernières versions à Homebrew. Les apps qui se mettent à jour seules s’en chargent."
           }
         }
       }
     },
-    "Change %@ in System Settings": {
+    "Will turn off": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modifier %@ dans Réglages Système"
+            "value": "Sera désactivé"
           }
         }
       }
     },
-    "Leftovers from Deleted Apps": {
+    "Will turn on": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Restes d’apps supprimées"
+            "value": "Sera activé"
           }
         }
       }
     },
-    "Move %lld to Trash (%@)": {
+    "Your Mac Is Already Set Up": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Placer %1$lld éléments dans la corbeille (%2$@)"
+            "value": "Votre Mac est déjà configuré"
           }
         }
       }
     },
-    "Move to Trash": {
+    "Your Setup": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Placer dans la corbeille"
+            "value": "Votre configuration"
           }
         }
       }
     },
-    "Needs attention": {
+    "git, clang, and make, which Homebrew and most code need. Apple’s installer opens.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "À vérifier"
+            "value": "git, clang et make, dont Homebrew et la plupart du code ont besoin. L’installateur d’Apple s’ouvre."
           }
         }
       }
     },
-    "No installed app uses these, and nothing changed them in 30 days. Checked items move to the Trash; put them back from there if an app misses them.": {
+    "macOS Was Updated": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aucune app installée ne les utilise, et rien ne les a modifiés depuis 30 jours. Les éléments cochés vont dans la corbeille ; remettez-les en place depuis là si une app en a besoin."
+            "value": "macOS a été mis à jour"
           }
         }
       }
     },
-    "No leftovers found. Every app with files in your Library is still installed, or used them in the last 30 days.": {
+    "macOS asks for your password once.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aucun reste trouvé. Chaque app qui a des fichiers dans votre Bibliothèque est encore installée, ou les a utilisés ces 30 derniers jours."
+            "value": "macOS demande votre mot de passe une seule fois."
           }
         }
       }
     },
-    "Pick which leftovers move to the Trash (Option-Command-L)": {
+    "macOS put back %lld tweaks": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choisir les restes à placer dans la corbeille (Option-Commande-L)"
+            "value": "macOS a remis %lld réglages"
           }
         }
       }
     },
-    "Review Leftovers from Deleted Apps…": {
+    "macOS removes these when you turn off Apple Intelligence": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Passer en revue les restes d’apps supprimées…"
+            "value": "macOS les supprime quand vous désactivez Apple Intelligence"
           }
         }
       }
     },
-    "Review…": {
+    "of %lld": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Passer en revue…"
+            "value": "sur %lld"
           }
         }
       }
     },
-    "Status": {
+    "running": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "État"
-          }
-        }
-      }
-    },
-    "UnbloatMyMac only reports these. Change them in System Settings.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "UnbloatMyMac ne fait que les signaler. Modifiez-les dans Réglages Système."
-          }
-        }
-      }
-    },
-    "Unknown": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Inconnu"
-          }
-        }
-      }
-    },
-    "**Leftovers from Deleted Apps** lists settings and data in your Library named after apps that are no longer installed and that nothing changed in 30 days. **Review…** (⌥⌘L) shows each one with its size; items from a developer who still has an app installed start unchecked. **Privacy Traces** clear the download history macOS keeps and the Recent Items lists.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Restes d’apps supprimées** liste les réglages et données de votre Bibliothèque qui portent le nom d’apps qui ne sont plus installées et que rien n’a modifiés depuis 30 jours. **Passer en revue…** (⌥⌘L) les montre un par un avec leur taille ; ceux d’un développeur dont une app est encore installée sont décochés. **Traces privées** efface l’historique des téléchargements que garde macOS et les listes d’éléments récents."
-          }
-        }
-      }
-    },
-    "Apply %lld Changes": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appliquer %lld modifications"
-          }
-        }
-      }
-    },
-    "Apply 1 Change": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Appliquer 1 modification"
-          }
-        }
-      }
-    },
-    "Leave Off": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Laisser désactivé"
-          }
-        }
-      }
-    },
-    "Leave On": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Laisser activé"
-          }
-        }
-      }
-    },
-    "Nothing has changed yet. Pick Leave On or Leave Off for a setting you want to keep. Each change can be undone later.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rien n’a encore changé. Choisissez Laisser activé ou Laisser désactivé pour un réglage que vous voulez garder. Chaque modification peut être annulée plus tard."
-          }
-        }
-      }
-    },
-    "Pick Leave On or Leave Off to keep this setting as it is": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Choisissez Laisser activé ou Laisser désactivé pour garder ce réglage tel quel"
-          }
-        }
-      }
-    },
-    "This setting stays as it is": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ce réglage reste tel quel"
-          }
-        }
-      }
-    },
-    "Each change has a menu. Pick **Leave On** or **Leave Off** to keep a setting as it is, for example when another app already manages it; only the other changes apply.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Chaque modification a un menu. Choisissez **Laisser activé** ou **Laisser désactivé** pour garder un réglage tel quel, par exemple quand une autre app le gère déjà ; seules les autres modifications s’appliquent."
-          }
-        }
-      }
-    },
-    "Recommended: On": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recommandé : activé"
-          }
-        }
-      }
-    },
-    "Recommended: Off": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recommandé : désactivé"
-          }
-        }
-      }
-    },
-    "Tweaks are grouped in the sidebar: **Apple Intelligence**, **Privacy**, **Security**, **Performance**, **Annoyances**, **Finder**, **Dock & Windows**, **Typing**, and **Windows Mode**. Each says what it does when its switch is on, and tags say what it needs.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les réglages sont regroupés dans la barre latérale : **Apple Intelligence**, **Confidentialité**, **Sécurité**, **Performances**, **Désagréments**, **Finder**, **Dock et fenêtres**, **Saisie** et **Mode Windows**. Chacun dit ce qu’il fait quand son interrupteur est activé, et des étiquettes disent ce qu’il demande."
-          }
-        }
-      }
-    },
-    "**Recommended: On** or **Recommended: Off**: where the switch should be. The tag is in color while the switch is on the other side. Matters of taste, like Typing and Windows Mode, have no tag.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "**Recommandé : activé** ou **Recommandé : désactivé** : la position conseillée de l’interrupteur. L’étiquette est en couleur tant que l’interrupteur est de l’autre côté. Les questions de goût, comme Saisie et Mode Windows, n’en ont pas."
-          }
-        }
-      }
-    },
-    "%@ are open and use some of these files. Quit and Clean asks them to quit first; Clean the Rest leaves their files for later.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ sont ouvertes et utilisent certains de ces fichiers. Quitter et nettoyer leur demande d’abord de quitter ; Nettoyer le reste garde leurs fichiers pour plus tard."
-          }
-        }
-      }
-    },
-    "%@ is open and uses some of these files. Quit and Clean asks it to quit first; Clean the Rest leaves its files for later.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ est ouverte et utilise certains de ces fichiers. Quitter et nettoyer lui demande d’abord de quitter ; Nettoyer le reste garde ses fichiers pour plus tard."
-          }
-        }
-      }
-    },
-    "Clean the Rest": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nettoyer le reste"
-          }
-        }
-      }
-    },
-    "Quit and Clean": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quitter et nettoyer"
+            "value": "actifs"
           }
         }
       }

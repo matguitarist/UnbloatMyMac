@@ -30,8 +30,23 @@ public struct ReviewItem: Identifiable, Hashable, Sendable {
 
     /// What the Storage row shows: the suggested items, and how many others are listed.
     public static func size(of items: [ReviewItem]) -> CleanupSize {
-        let suggested = items.filter(\.suggested)
-        return CleanupSize(bytes: suggested.reduce(0) { $0 + $1.bytes }, items: suggested.count, kept: items.count - suggested.count)
+        let suggested = outermost(items.filter(\.suggested))
+        return CleanupSize(bytes: suggested.reduce(0) { $0 + $1.bytes }, items: suggested.count,
+                           kept: items.filter { !$0.suggested }.count)
+    }
+
+    /// Without the items inside another one of the list, which goes with it: a Rust project's
+    /// `target/debug/incremental` once `target` itself is picked.
+    public static func outermost(_ items: [ReviewItem]) -> [ReviewItem] {
+        let paths = Set(items.map(\.path))
+        return items.filter { item in
+            var parent = (item.path as NSString).deletingLastPathComponent
+            while parent.count > 1 {
+                if paths.contains(parent) { return false }
+                parent = (parent as NSString).deletingLastPathComponent
+            }
+            return true
+        }
     }
 }
 
@@ -128,6 +143,77 @@ public enum BuildArtifactFinder {
         }
         walk(root, depth: 0)
         return found
+    }
+
+    /// Parts of a Rust project's `target` folder, listed beside it so an active project can still
+    /// lose what it can best spare.
+    public enum CargoPart: Hashable, Sendable {
+        /// `target/<profile>/incremental`: a cache. The next build of that profile compiles the project's own crates once more.
+        case incremental(profile: String)
+        /// `target/<profile>` or `target/<triple>`: a whole build, made again when it is used.
+        case build(String)
+    }
+
+    /// A build folder unused this long is suggested even in an active project.
+    public static let unusedBuild: TimeInterval = 30 * 24 * 3600
+
+    /// The parts of a Cargo `target` folder.
+    public static func cargoParts(in target: String, list: (String) -> [String]?) -> [(path: String, part: CargoPart)] {
+        var parts: [(String, CargoPart)] = []
+        for name in (list(target) ?? []).sorted() where !name.hasPrefix(".") && name != "tmp" {
+            let folder = (target as NSString).appendingPathComponent(name)
+            guard let inside = list(folder) else { continue }
+            parts.append((folder, .build(name)))
+            if inside.contains("incremental") {
+                parts.append(((folder as NSString).appendingPathComponent("incremental"), .incremental(profile: name)))
+            }
+            // A --target build keeps its profiles one level down: target/aarch64-apple-darwin/debug.
+            if isTriple(name) {
+                for profile in inside.sorted() {
+                    let sub = (folder as NSString).appendingPathComponent(profile)
+                    if list(sub)?.contains("incremental") == true {
+                        parts.append(((sub as NSString).appendingPathComponent("incremental"), .incremental(profile: name + "/" + profile)))
+                    }
+                }
+            }
+        }
+        return parts
+    }
+
+    /// aarch64-apple-darwin, wasm32-unknown-unknown: a target triple, not a profile.
+    static func isTriple(_ name: String) -> Bool { name.split(separator: "-").count >= 3 }
+
+    /// The Cargo `target` folder a part sits in, when the path is one `cargoParts` lists.
+    public static func cargoTarget(of path: String, list: (String) -> [String]?) -> String? {
+        var target = (path as NSString).deletingLastPathComponent
+        for _ in 0..<3 {
+            if (target as NSString).lastPathComponent == "target",
+               list((target as NSString).deletingLastPathComponent)?.contains("Cargo.toml") == true {
+                return cargoParts(in: target, list: list).contains { $0.path == path } ? target : nil
+            }
+            target = (target as NSString).deletingLastPathComponent
+        }
+        return nil
+    }
+
+    /// A row for a part of a Rust project's `target`. An incremental cache is always suggested;
+    /// a build folder only when it went unused for a month.
+    public static func cargoItem(path: String, part: CargoPart, project: String, bytes: Int64, lastBuilt: Date,
+                                 home: String = NSHomeDirectory(), now: Date = .now) -> ReviewItem {
+        let group = project.hasPrefix(home + "/") ? "~" + project.dropFirst(home.count) : project
+        let name = String(path.dropFirst(project.count + 1))
+        switch part {
+        case .incremental(let profile):
+            return ReviewItem(path: path, group: group, name: name,
+                              detail: String(format: L("Cargo’s incremental cache. The next %@ build compiles your own crates once more."), profile),
+                              bytes: bytes, modified: lastBuilt, suggested: true)
+        case .build(let folder):
+            let unused = now.timeIntervalSince(lastBuilt) >= unusedBuild
+            let detail = isTriple(folder) ? String(format: L("Builds made with --target %@. Cargo makes them again when you build for it."), folder)
+                : String(format: L("The %@ build. Cargo makes it again when you build it."), folder)
+            return ReviewItem(path: path, group: group, name: name, detail: detail, bytes: bytes, modified: lastBuilt,
+                              suggested: unused, note: unused ? nil : L("Built in the last month. Building it again takes a while."))
+        }
     }
 
     /// A row for an artifact. Suggested unless its project changed in the last week.

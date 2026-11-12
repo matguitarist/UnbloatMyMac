@@ -165,11 +165,14 @@ enum SelfTest {
             let built = model.filesToReview?.items ?? []
             model.filesToReview = nil
             check("Project Build Files lists build folders and leaves recent projects unchecked",
-                  built.count == 3 && built.filter(\.suggested).count == 2 && model.sizes["buildArtifacts"]?.kept == 1)
+                  built.count == 7 && built.filter(\.suggested).count == 4 && model.sizes["buildArtifacts"]?.kept == 3)
+            check("a Rust project in active work offers its incremental cache and an unused --target build",
+                  built.filter { $0.suggested && $0.group == "~/Developer/Game" }.map(\.name).sorted()
+                    == ["target/debug/incremental", "target/x86_64-apple-darwin"])
             if let target = Catalog.cleanup.first(where: { $0.id == "buildArtifacts" }) {
                 await model.trash(built.filter(\.suggested), from: target)
                 check("moving build folders to the Trash leaves the recent project's",
-                      model.sizes["buildArtifacts"]?.items == 0 && model.sizes["buildArtifacts"]?.kept == 1)
+                      model.sizes["buildArtifacts"]?.items == 0 && model.sizes["buildArtifacts"]?.kept == 3)
             }
             await model.reviewFiles("oldInstallers")
             let installers = model.filesToReview?.items ?? []

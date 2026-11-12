@@ -28,12 +28,14 @@ struct ReviewFilesSheet: View {
         for item in items where !seen.contains(item.group) { seen.append(item.group) }
         return seen
     }
-    private var chosenBytes: Int64 { items.filter { chosen.contains($0.path) }.reduce(0) { $0 + $1.bytes } }
+    /// What moves: a part inside a picked folder goes with it, so it is counted once.
+    private var picked: [ReviewItem] { ReviewItem.outermost(items.filter { chosen.contains($0.path) }) }
+    private var chosenBytes: Int64 { picked.reduce(0) { $0 + $1.bytes } }
 
     private var intro: String {
         switch list.target.kind {
         case .buildArtifacts:
-            String(localized: "Each folder sits beside the file of the tool that makes it, which builds it again when you need it. Projects you changed in the last week start unchecked.")
+            String(localized: "Each folder sits beside the file of the tool that makes it, which builds it again when you need it. Projects you changed in the last week start unchecked, but a Rust project’s incremental caches and builds unused for a month are still picked.")
         default:
             String(localized: "You can download these again from where they came from. A disk image that wasn’t downloaded may be one you made, so it starts unchecked.")
         }
@@ -57,7 +59,7 @@ struct ReviewFilesSheet: View {
                         HStack {
                             Text(verbatim: group)
                             Spacer()
-                            Text(rows.reduce(0) { $0 + $1.bytes }.bytesText).monospacedDigit()
+                            Text(ReviewItem.outermost(rows).reduce(0) { $0 + $1.bytes }.bytesText).monospacedDigit()
                         }
                     }
                 }
@@ -73,8 +75,8 @@ struct ReviewFilesSheet: View {
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.cancelAction)
                 Button(chosen.isEmpty ? String(localized: "Move to Trash")
-                       : String(localized: "Move \(chosen.count) to Trash (\(chosenBytes.bytesText))")) {
-                    let picked = items.filter { chosen.contains($0.path) }
+                       : String(localized: "Move \(picked.count) to Trash (\(chosenBytes.bytesText))")) {
+                    let picked = picked
                     dismiss()
                     Task { await model.trash(picked, from: list.target) }
                 }

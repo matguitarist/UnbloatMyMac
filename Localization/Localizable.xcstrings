@@ -1682,12 +1682,12 @@
         }
       }
     },
-    "Each folder sits beside the file of the tool that makes it, which builds it again when you need it. Projects you changed in the last week start unchecked.": {
+    "Each folder sits beside the file of the tool that makes it, which builds it again when you need it. Projects you changed in the last week start unchecked, but a Rust project’s incremental caches and builds unused for a month are still picked.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Chaque dossier se trouve à côté du fichier de l’outil qui le crée, et qui le recrée quand vous en avez besoin. Les projets modifiés cette semaine sont décochés."
+            "value": "Chaque dossier se trouve à côté du fichier de l’outil qui le crée, et qui le recrée quand vous en avez besoin. Les projets modifiés cette semaine sont décochés, mais les caches incrémentaux d’un projet Rust et les compilations inutilisées depuis un mois restent choisis."
           }
         }
       }

@@ -304,6 +304,35 @@ func trashReviewItems() {
     let target = Catalog.cleanup.first { $0.id == "buildArtifacts" }!
     let found = engine.reviewItems(target)
     #expect(engine.trash(found.filter(\.suggested), from: target) == nil)
-    #expect(engine.reviewItems(target).count == 1)
-    #expect(engine.measure(target).isEmpty && engine.measure(target).kept == 1)
+    #expect(engine.reviewItems(target).count == 3)
+    #expect(engine.measure(target).isEmpty && engine.measure(target).kept == 3)
+}
+
+@Test("A Rust target lists each build and incremental cache, and a part inside a picked folder counts once")
+func cargoParts() {
+    let tree: [String: [String]] = [
+        "/P": ["Cargo.toml", "target"],
+        "/P/target": ["CACHEDIR.TAG", "debug", "ship", "aarch64-apple-darwin", "tmp"],
+        "/P/target/debug": ["deps", "incremental"], "/P/target/debug/deps": [], "/P/target/debug/incremental": [],
+        "/P/target/ship": ["deps"], "/P/target/ship/deps": [],
+        "/P/target/aarch64-apple-darwin": ["debug"], "/P/target/aarch64-apple-darwin/debug": ["incremental"],
+        "/P/target/aarch64-apple-darwin/debug/incremental": [], "/P/target/tmp": [],
+    ]
+    let parts = BuildArtifactFinder.cargoParts(in: "/P/target") { tree[$0] }
+    #expect(parts.map(\.path) == ["/P/target/aarch64-apple-darwin", "/P/target/aarch64-apple-darwin/debug/incremental",
+                                  "/P/target/debug", "/P/target/debug/incremental", "/P/target/ship"])
+    #expect(BuildArtifactFinder.cargoTarget(of: "/P/target/debug/incremental") { tree[$0] } == "/P/target")
+    #expect(BuildArtifactFinder.cargoTarget(of: "/P/target/debug/deps") { tree[$0] } == nil)
+
+    let month = Date(timeIntervalSinceNow: -40 * 24 * 3600)
+    let cache = BuildArtifactFinder.cargoItem(path: "/P/target/debug/incremental", part: .incremental(profile: "debug"),
+                                              project: "/P", bytes: 10, lastBuilt: .now)
+    let fresh = BuildArtifactFinder.cargoItem(path: "/P/target/ship", part: .build("ship"), project: "/P", bytes: 20, lastBuilt: .now)
+    let old = BuildArtifactFinder.cargoItem(path: "/P/target/aarch64-apple-darwin", part: .build("aarch64-apple-darwin"),
+                                            project: "/P", bytes: 30, lastBuilt: month)
+    #expect(cache.suggested && !fresh.suggested && old.suggested && cache.name == "target/debug/incremental")
+
+    let whole = ReviewItem(path: "/P/target", group: "/P", name: "target", detail: "", bytes: 100, modified: .now, suggested: true)
+    #expect(ReviewItem.outermost([whole, cache, old]).map(\.path) == ["/P/target"])
+    #expect(ReviewItem.size(of: [whole, cache, fresh]).bytes == 100)
 }

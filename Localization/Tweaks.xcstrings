@@ -722,6 +722,26 @@
         }
       }
     },
+    "Builds made with --target %@. Cargo makes them again when you build for it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compilations faites avec --target %@. Cargo les recrée quand vous compilez pour cette cible."
+          }
+        }
+      }
+    },
+    "Built in the last month. Building it again takes a while.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compilée ce mois-ci. La recompiler prend du temps."
+          }
+        }
+      }
+    },
     "CPU, memory, disk, network, and battery in the menu bar.": {
       "localizations": {
         "fr": {
@@ -798,6 +818,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Met une majuscule au premier mot de chaque phrase."
+          }
+        }
+      }
+    },
+    "Cargo’s incremental cache. The next %@ build compiles your own crates once more.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le cache incrémental de Cargo. La prochaine compilation %@ recompile une fois vos propres crates."
           }
         }
       }
@@ -3898,6 +3928,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Indique à vos autres appareils Apple ce que vous faites, pour qu’ils puissent le reprendre."
+          }
+        }
+      }
+    },
+    "The %@ build. Cargo makes it again when you build it.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La compilation %@. Cargo la recrée quand vous la compilez."
           }
         }
       }

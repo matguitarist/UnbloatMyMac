@@ -389,12 +389,24 @@ public final class MacBackend: SystemBackend {
             }.sorted { $0.bytes > $1.bytes }
         case .buildArtifacts:
             return BuildArtifactFinder.roots.map(expand).filter(isDirectory).flatMap { root in
-                BuildArtifactFinder.find(in: root, list: listFolder).map { found in
-                    BuildArtifactFinder.item(path: found.path, project: found.project, rule: found.rule,
-                                             bytes: size(of: URL(fileURLWithPath: found.path)),
-                                             projectChanged: lastChange(ofProject: found.project))
+                BuildArtifactFinder.find(in: root, list: listFolder).flatMap { found -> [ReviewItem] in
+                    let changed = lastChange(ofProject: found.project)
+                    guard found.rule.folder == "target" else {
+                        return [BuildArtifactFinder.item(path: found.path, project: found.project, rule: found.rule,
+                                                         bytes: size(of: URL(fileURLWithPath: found.path)), projectChanged: changed)]
+                    }
+                    // Rust: each build folder and incremental cache too, measured once; the whole folder is their sum.
+                    let parts = BuildArtifactFinder.cargoParts(in: found.path, list: listFolder).map { part -> ReviewItem in
+                        let (bytes, newest) = sizeAndNewest(of: URL(fileURLWithPath: part.path))
+                        return BuildArtifactFinder.cargoItem(path: part.path, part: part.part, project: found.project,
+                                                             bytes: bytes, lastBuilt: newest)
+                    }
+                    let builds = parts.filter { !$0.path.hasSuffix("/incremental") }
+                    let whole = BuildArtifactFinder.item(path: found.path, project: found.project, rule: found.rule,
+                                                         bytes: builds.reduce(0) { $0 + $1.bytes }, projectChanged: changed)
+                    return [whole] + parts
                 }
-            }.sorted { $0.bytes > $1.bytes }
+            }.sorted { ($0.group, -$0.bytes) < ($1.group, -$1.bytes) }
         default:
             return []
         }
@@ -404,7 +416,7 @@ public final class MacBackend: SystemBackend {
         // Each item must still be what it was listed as: an installer that is not open, or a folder with its tool's file beside it.
         let mounted = InstallerFinder.mounted(fromHdiutil: execute("/usr/bin/hdiutil", ["info"]).output)
         let roots = BuildArtifactFinder.roots.map { expand($0) + "/" }
-        let urls = items.map { URL(fileURLWithPath: expand($0.path)).standardizedFileURL }
+        let urls = ReviewItem.outermost(items).map { URL(fileURLWithPath: expand($0.path)).standardizedFileURL }
         let valid = urls.allSatisfy { url in
             let parent = url.deletingLastPathComponent().path
             switch target.kind {
@@ -413,7 +425,8 @@ public final class MacBackend: SystemBackend {
                     && installer(url, folder: "", mounted: mounted) != nil
             case .buildArtifacts:
                 return roots.contains { url.path.hasPrefix($0) }
-                    && BuildArtifactFinder.rule(for: url.lastPathComponent, siblings: Set(listFolder(parent) ?? [])) != nil
+                    && (BuildArtifactFinder.rule(for: url.lastPathComponent, siblings: Set(listFolder(parent) ?? [])) != nil
+                        || BuildArtifactFinder.cargoTarget(of: url.path, list: listFolder) != nil)
             default:
                 return false
             }

@@ -330,10 +330,22 @@ public final class MacBackend: SystemBackend {
         }
     }
 
+    /// Every move to the Trash goes through here. Each item is checked once more right before it moves:
+    /// gone already is fine, and a protected place stays, on its own path and where its links lead.
     private func trash(_ urls: [URL]) throws {
         var failed: [String] = []
+        var refused: [String] = []
         for url in urls {
+            guard (try? url.checkResourceIsReachable()) == true || FileManager.default.fileExists(atPath: url.path) else { continue }
+            let resolved = url.deletingLastPathComponent().resolvingSymlinksInPath().appending(path: url.lastPathComponent)
+            if ProtectedPaths.reason(for: url.path) != nil || ProtectedPaths.reason(for: resolved.path) != nil {
+                refused.append(url.lastPathComponent)
+                continue
+            }
             do { try FileManager.default.trashItem(at: url, resultingItemURL: nil) } catch { failed.append(url.lastPathComponent) }
+        }
+        if !refused.isEmpty {
+            throw BackendError(String(format: L("%@ is protected, so it stayed where it was."), refused.prefix(5).joined(separator: ", ")))
         }
         if !failed.isEmpty {
             throw BackendError(String(format: L("%lld of %lld items are in use or protected and stayed where they were."), failed.count, urls.count)

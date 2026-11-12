@@ -12,6 +12,16 @@
         }
       }
     },
+    "%@ is protected, so it stayed where it was.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ est protégé, il est donc resté en place."
+          }
+        }
+      }
+    },
     "%lld of %lld items are in use or protected and stayed where they were.": {
       "localizations": {
         "fr": {

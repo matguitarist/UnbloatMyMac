@@ -228,3 +228,22 @@ func trashDeviceSupport() {
     let target = Catalog.cleanup.first { $0.id == "deviceSupport" }!
     #expect(engine.measure(target).isEmpty && engine.measure(target).kept == 2)
 }
+
+@Test("Protected places never move to the Trash, and what the cleanups move is allowed")
+func protectedPaths() {
+    let home = "/Users/me"
+    func reason(_ path: String) -> String? { ProtectedPaths.reason(for: path, home: home) }
+    for path in ["/Users/me", "/Users/me/", "/Users/me/Library", "/Users/me/Library/Caches", "/Users/me/Documents",
+                 "/Users/me/Library/Keychains/login.keychain-db", "/Users/me/Library/Mobile Documents/com~apple~CloudDocs",
+                 "/Users/me/Library/Mail/V10", "/Users/me/.ssh/id_ed25519", "/Users/me/Library/Application Support/MobileSync/Backup",
+                 "/Users/me/Library/Group Containers/group.com.apple.notes", "/Users/me/Pictures/Photos Library.photoslibrary",
+                 "/Users/me/Developer/app/../../Library", "/System/Library/Caches", "/Applications", "/usr/local/bin/tool"] {
+        #expect(reason(path) != nil, "\(path) should be protected")
+    }
+    for path in ["/Users/me/Library/Caches/com.spotify.client", "/Users/me/Library/Application Support/com.spotify.client",
+                 "/Users/me/Downloads/Docker.dmg", "/Users/me/Developer/app/node_modules", "/Users/me/.npm/_cacache/index-v5",
+                 "/Users/me/Library/Developer/Xcode/DerivedData/App-abc", "/Applications/Install macOS Tahoe.app",
+                 "/Users/me/Library/Group Containers/UBF8T346G9.Office"] {
+        #expect(reason(path) == nil, "\(path) should be allowed")
+    }
+}

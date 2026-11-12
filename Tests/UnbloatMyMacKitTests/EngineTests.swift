@@ -287,3 +287,25 @@ func libraryStringsTranslated() throws {
     let missing = Set(all).subtracting(keys)
     #expect(missing.isEmpty, "untranslated: \(missing.sorted())")
 }
+
+@Test("Every description says what happens with the switch on, so on and off never read backwards")
+func descriptionsMatchTheSwitch() {
+    // A feature switch shows the feature: its text describes the feature, never turning it off.
+    let offWords = ["Stops ", "Turns off", "no longer", "Removes ", "Hides ", "stay "]
+    for tweak in Catalog.tweaks where tweak.namesFeature {
+        let reads = offWords.filter { tweak.detail.contains($0) }
+        #expect(reads.isEmpty, "\(tweak.id): \(tweak.detail)")
+    }
+}
+
+@Test("Recommended switches point at the unbloated side, and Windows Mode stays a matter of taste")
+func recommendedSwitches() {
+    #expect(Catalog.tweak("privacy.analytics")?.recommendedSwitch == false)
+    #expect(Catalog.tweak("security.firewall")?.recommendedSwitch == true)
+    #expect(Catalog.tweak("security.remoteLogin")?.recommendedSwitch == false)
+    #expect(Catalog.tweak("finder.extensions")?.recommendedSwitch == true)
+    #expect(Catalog.tweak("win.snap")?.recommendedSwitch == nil)
+    #expect(Catalog.tweak("typing.autocorrect")?.recommendedSwitch == nil)
+    // Advanced tweaks stop system services: no blanket recommendation unless a preset has them.
+    #expect(Catalog.tweak("ai.siriServices")?.recommendedSwitch == nil)
+}

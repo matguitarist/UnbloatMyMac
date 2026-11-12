@@ -62,6 +62,16 @@
         }
       }
     },
+    "A floating thumbnail shows after each screenshot, before it saves.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une vignette flottante s’affiche après chaque capture, avant l’enregistrement."
+          }
+        }
+      }
+    },
     "A free firewall that asks before an app connects to the internet for the first time.": {
       "localizations": {
         "fr": {
@@ -122,12 +132,32 @@
         }
       }
     },
+    "A section of recently used apps in the Dock.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une section des apps récemment utilisées dans le Dock."
+          }
+        }
+      }
+    },
     "A separate scroll direction for the mouse and the trackpad, and no mouse acceleration.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Un sens de défilement distinct pour la souris et le trackpad, et pas d’accélération de la souris."
+          }
+        }
+      }
+    },
+    "A service reads your mail and messages to suggest contacts and events.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un service lit vos e-mails et messages pour suggérer des contacts et des événements."
           }
         }
       }
@@ -218,6 +248,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Agents pour tous les utilisateurs"
+          }
+        }
+      }
+    },
+    "Agents that collect input, location, and app analytics.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les agents qui collectent des données de saisie, de position et d’usage des apps."
           }
         }
       }
@@ -452,22 +492,12 @@
         }
       }
     },
-    "Apps in the background keep full speed.": {
+    "Apps bounce in the Dock to get your attention.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les apps en arrière-plan gardent toute leur vitesse."
-          }
-        }
-      }
-    },
-    "Apps no longer bounce in the Dock to get your attention.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les apps ne rebondissent plus dans le Dock pour attirer votre attention."
+            "value": "Les apps rebondissent dans le Dock pour attirer votre attention."
           }
         }
       }
@@ -482,12 +512,12 @@
         }
       }
     },
-    "Apps that quit unexpectedly no longer show a report window.": {
+    "Apps that quit unexpectedly show a report window.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les apps qui quittent inopinément n’affichent plus de rapport."
+            "value": "Les apps qui quittent inopinément affichent une fenêtre de rapport."
           }
         }
       }
@@ -662,6 +692,26 @@
         }
       }
     },
+    "Call screening, live translation, and call summaries.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le filtrage des appels, la traduction en direct et les résumés d’appels."
+          }
+        }
+      }
+    },
+    "Capitalizes the first word of each sentence.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Met une majuscule au premier mot de chaque phrase."
+          }
+        }
+      }
+    },
     "Chat with your own documents and notes using a local model.": {
       "localizations": {
         "fr": {
@@ -688,6 +738,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Rapports d’utilisation de Chrome"
+          }
+        }
+      }
+    },
+    "Chrome sends usage statistics, crash reports, and the pages you visit to Google.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chrome envoie à Google des statistiques d’utilisation, des rapports de plantage et les pages que vous visitez."
           }
         }
       }
@@ -742,12 +802,12 @@
         }
       }
     },
-    "Clicking the wallpaper no longer hides every window.": {
+    "Clicking the wallpaper hides every window to show the desktop.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cliquer sur le fond d’écran ne masque plus toutes les fenêtres."
+            "value": "Cliquer sur le fond d’écran masque toutes les fenêtres pour afficher le bureau."
           }
         }
       }
@@ -1052,6 +1112,16 @@
         }
       }
     },
+    "Edge sends optional diagnostic data and browsing activity to Microsoft.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edge envoie à Microsoft des données de diagnostic facultatives et votre activité de navigation."
+          }
+        }
+      }
+    },
     "Empty Trash After 30 Days": {
       "localizations": {
         "fr": {
@@ -1242,6 +1312,16 @@
         }
       }
     },
+    "Finder asks before you change a file’s extension.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le Finder demande avant que vous changiez l’extension d’un fichier."
+          }
+        }
+      }
+    },
     "Finder stops leaving hidden files on shared and removable drives.": {
       "localizations": {
         "fr": {
@@ -1252,12 +1332,12 @@
         }
       }
     },
-    "Finder windows and Get Info open without animations.": {
+    "Finder windows and Get Info animate when they open.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les fenêtres du Finder et Lire les informations s’ouvrent sans animation."
+            "value": "Les fenêtres du Finder et Lire les informations s’animent en s’ouvrant."
           }
         }
       }
@@ -1292,12 +1372,32 @@
         }
       }
     },
+    "Firefox sends usage data to Mozilla and joins studies.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Firefox envoie des données d’utilisation à Mozilla et participe à des études."
+          }
+        }
+      }
+    },
     "Firewall": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Pare-feu"
+          }
+        }
+      }
+    },
+    "Fixes misspelled words as you type.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corrige les mots mal orthographiés pendant la saisie."
           }
         }
       }
@@ -1452,22 +1552,12 @@
         }
       }
     },
-    "Hides widgets on the desktop and in Stage Manager.": {
+    "Holding a key shows accents instead of repeating it.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Masque les widgets sur le bureau et dans Stage Manager."
-          }
-        }
-      }
-    },
-    "Holding a key repeats it instead of showing accents.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Maintenir une touche la répète au lieu d’afficher les accents."
+            "value": "Maintenir une touche affiche les accents au lieu de la répéter."
           }
         }
       }
@@ -1558,6 +1648,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Améliorer Siri et Dictée"
+          }
+        }
+      }
+    },
+    "Indexes every disk so Spotlight and Finder can search it. Uses CPU and disk writes.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indexe chaque disque pour que Spotlight et le Finder puissent y chercher. Utilise le processeur et des écritures disque."
           }
         }
       }
@@ -1788,6 +1888,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Suggestions de Recherche"
+          }
+        }
+      }
+    },
+    "Look Up sends the words you select to Apple for suggestions.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recherche envoie à Apple les mots que vous sélectionnez, pour des suggestions."
           }
         }
       }
@@ -2142,6 +2252,16 @@
         }
       }
     },
+    "Personalized ads in the App Store, Apple News, and Stocks.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les publicités personnalisées dans l’App Store, Apple News et Bourse."
+          }
+        }
+      }
+    },
     "Photo and Media Analysis": {
       "localizations": {
         "fr": {
@@ -2162,12 +2282,12 @@
         }
       }
     },
-    "Photos no longer opens when you connect a phone or camera.": {
+    "Photos opens when you connect a phone or camera.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Photos ne s’ouvre plus quand vous branchez un téléphone ou un appareil photo."
+            "value": "Photos s’ouvre quand vous branchez un téléphone ou un appareil photo."
           }
         }
       }
@@ -2202,12 +2322,12 @@
         }
       }
     },
-    "Plugging in a disk no longer asks to use it for backups.": {
+    "Plugging in a disk asks to use it for Time Machine backups.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Brancher un disque ne propose plus de l’utiliser pour les sauvegardes."
+            "value": "Brancher un disque propose de l’utiliser pour les sauvegardes Time Machine."
           }
         }
       }
@@ -2282,12 +2402,12 @@
         }
       }
     },
-    "Quick Look opens instantly, without zooming in.": {
+    "Quick Look zooms in when it opens.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coup d’œil s’ouvre instantanément, sans zoom."
+            "value": "Coup d’œil s’agrandit en s’ouvrant."
           }
         }
       }
@@ -2328,6 +2448,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recommandé"
+          }
+        }
+      }
+    },
+    "Records which apps and websites you use, for Screen Time.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enregistre les apps et sites web que vous utilisez, pour Temps d’écran."
           }
         }
       }
@@ -2388,26 +2518,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Supprime une app avec les réglages et caches qu’elle laisse derrière elle."
-          }
-        }
-      }
-    },
-    "Removes the section of recently used apps.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Retire la section des apps utilisées récemment."
-          }
-        }
-      }
-    },
-    "Renaming a file’s extension no longer asks first.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Renommer l’extension d’un fichier ne demande plus de confirmation."
           }
         }
       }
@@ -2482,12 +2592,32 @@
         }
       }
     },
-    "Safari stops loading the top search result before you pick it.": {
+    "Safari loads the top search result before you pick it.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Safari ne charge plus le premier résultat avant que vous le choisissiez."
+            "value": "Safari charge le premier résultat de recherche avant que vous le choisissiez."
+          }
+        }
+      }
+    },
+    "Safari reports ad clicks to advertisers, anonymously.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safari signale les clics sur les publicités aux annonceurs, de façon anonyme."
+          }
+        }
+      }
+    },
+    "Safari sends what you type in the address bar to Apple and your search engine.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Safari envoie ce que vous tapez dans la barre d’adresse à Apple et à votre moteur de recherche."
           }
         }
       }
@@ -2528,6 +2658,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Effet de réduction Échelle"
+          }
+        }
+      }
+    },
+    "Scans your photo library for faces, scenes, and text.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Analyse votre photothèque à la recherche de visages, de scènes et de texte."
           }
         }
       }
@@ -2578,16 +2718,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Captures d’écran"
-          }
-        }
-      }
-    },
-    "Screenshots save at once, without the floating thumbnail.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les captures s’enregistrent tout de suite, sans vignette flottante."
           }
         }
       }
@@ -2732,12 +2862,32 @@
         }
       }
     },
+    "Sends diagnostics and usage data to Apple and app developers.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Envoie des diagnostics et des données d’utilisation à Apple et aux développeurs d’apps."
+          }
+        }
+      }
+    },
     "Services": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Services"
+          }
+        }
+      }
+    },
+    "Services that index your mail, messages, and photos for Apple Intelligence.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les services qui indexent vos e-mails, messages et photos pour Apple Intelligence."
           }
         }
       }
@@ -2768,6 +2918,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les fichiers et médias partagés ne sont plus accessibles pendant la veille du Mac."
+          }
+        }
+      }
+    },
+    "Shares Siri and dictation recordings with Apple.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partage les enregistrements de Siri et de la dictée avec Apple."
           }
         }
       }
@@ -2992,6 +3152,16 @@
         }
       }
     },
+    "Slows down apps you are not looking at, to save battery.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ralentit les apps que vous ne regardez pas, pour économiser la batterie."
+          }
+        }
+      }
+    },
     "Small free apps that fill gaps in macOS.": {
       "localizations": {
         "fr": {
@@ -3122,6 +3292,16 @@
         }
       }
     },
+    "Spotlight sends what you type to Apple for web suggestions.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spotlight envoie à Apple ce que vous tapez, pour des suggestions web."
+          }
+        }
+      }
+    },
     "Spotlight shows only results from this Mac.": {
       "localizations": {
         "fr": {
@@ -3182,262 +3362,12 @@
         }
       }
     },
-    "Stops Chrome from sending usage statistics, crash reports, and the pages you visit to Google.": {
+    "Straight quotes turn into curly ones, which breaks code you paste.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Empêche Chrome d’envoyer à Google les statistiques d’utilisation, les rapports de plantage et les pages que vous visitez."
-          }
-        }
-      }
-    },
-    "Stops Edge from sending optional diagnostic data and browsing activity to Microsoft.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Empêche Edge d’envoyer à Microsoft les données de diagnostic facultatives et l’activité de navigation."
-          }
-        }
-      }
-    },
-    "Stops Firefox from sending usage data to Mozilla and joining studies.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Empêche Firefox d’envoyer des données d’utilisation à Mozilla et de participer à des études."
-          }
-        }
-      }
-    },
-    "Stops Look Up from sending the words you select to Apple.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Empêche Recherche d’envoyer à Apple les mots que vous sélectionnez."
-          }
-        }
-      }
-    },
-    "Stops Safari from reporting ad clicks to advertisers, even anonymously.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Empêche Safari de signaler les clics publicitaires aux annonceurs, même de façon anonyme."
-          }
-        }
-      }
-    },
-    "Stops Spotlight from sending what you type to Apple for web suggestions.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Empêche Spotlight d’envoyer ce que vous tapez à Apple pour des suggestions web."
-          }
-        }
-      }
-    },
-    "Stops call screening, live translation, and call summaries.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête le filtrage des appels, la traduction en direct et les résumés d’appels."
-          }
-        }
-      }
-    },
-    "Stops indexing every disk. Saves CPU and disk writes.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête l’indexation de tous les disques. Économise processeur et écritures."
-          }
-        }
-      }
-    },
-    "Stops recording which apps and websites you use.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête l’enregistrement des apps et sites que vous utilisez."
-          }
-        }
-      }
-    },
-    "Stops scanning your photo library for faces, scenes, and text.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête l’analyse de votre photothèque à la recherche de visages, de scènes et de texte."
-          }
-        }
-      }
-    },
-    "Stops sending diagnostics and usage data to Apple and app developers.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête l’envoi de diagnostics et de données d’utilisation à Apple et aux développeurs."
-          }
-        }
-      }
-    },
-    "Stops sending what you type in the address bar to Apple and your search engine.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête l’envoi de ce que vous tapez dans la barre d’adresse à Apple et à votre moteur de recherche."
-          }
-        }
-      }
-    },
-    "Stops sharing Siri and dictation recordings with Apple.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête le partage des enregistrements de Siri et de Dictée avec Apple."
-          }
-        }
-      }
-    },
-    "Stops telling your other Apple devices what you are doing, so they can pick it up.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête de signaler à vos autres appareils Apple ce que vous faites pour qu’ils puissent le reprendre."
-          }
-        }
-      }
-    },
-    "Stops the Dock icon from pulsing while an app opens.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "L’icône du Dock ne pulse plus pendant l’ouverture d’une app."
-          }
-        }
-      }
-    },
-    "Stops the Game Center service and its sign-in pop-ups.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête le service Game Center et ses fenêtres de connexion."
-          }
-        }
-      }
-    },
-    "Stops the Siri knowledge, actions, and voice services.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête les services de connaissance, d’actions et de voix de Siri."
-          }
-        }
-      }
-    },
-    "Stops the Tips app from sending notifications.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Empêche l’app Astuces d’envoyer des notifications."
-          }
-        }
-      }
-    },
-    "Stops the ad attribution and promoted content services.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête les services d’attribution publicitaire et de contenu sponsorisé."
-          }
-        }
-      }
-    },
-    "Stops the agent that asks for feedback and collects logs for Apple.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête l’agent qui demande des retours et collecte des journaux pour Apple."
-          }
-        }
-      }
-    },
-    "Stops the agents that collect input, location, and app analytics.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête les agents qui collectent des données de saisie, de localisation et d’apps."
-          }
-        }
-      }
-    },
-    "Stops the service that looks up what is on screen.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête le service qui analyse ce qui est à l’écran."
-          }
-        }
-      }
-    },
-    "Stops the service that reads mail and messages to suggest contacts and events.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête le service qui lit e-mails et messages pour suggérer contacts et événements."
-          }
-        }
-      }
-    },
-    "Stops the services that index your mail, messages, and photos for Apple Intelligence.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête les services qui indexent vos e-mails, messages et photos pour Apple Intelligence."
-          }
-        }
-      }
-    },
-    "Stops the services that run Apple Intelligence models.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Arrête les services qui exécutent les modèles d’Apple Intelligence."
-          }
-        }
-      }
-    },
-    "Straight quotes stay straight, which matters for code.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les guillemets droits restent droits, ce qui compte pour le code."
+            "value": "Les guillemets droits deviennent courbes, ce qui casse le code que vous collez."
           }
         }
       }
@@ -3542,12 +3472,32 @@
         }
       }
     },
+    "Tells your other Apple devices what you are doing, so they can pick it up.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Indique à vos autres appareils Apple ce que vous faites, pour qu’ils puissent le reprendre."
+          }
+        }
+      }
+    },
     "The Dock hides until you move the pointer to it.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "Le Dock se masque jusqu’à ce que vous y ameniez le pointeur."
+          }
+        }
+      }
+    },
+    "The Dock icon pulses while an app opens.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’icône du Dock pulse pendant l’ouverture d’une app."
           }
         }
       }
@@ -3572,6 +3522,16 @@
         }
       }
     },
+    "The Game Center service and its sign-in pop-ups.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le service Game Center et ses fenêtres de connexion."
+          }
+        }
+      }
+    },
     "The Image Playground app and image generation in other apps.": {
       "localizations": {
         "fr": {
@@ -3582,12 +3542,42 @@
         }
       }
     },
-    "The Mac stays fully asleep instead of checking mail and backing up.": {
+    "The Mac wakes while asleep to check mail and back up.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le Mac reste vraiment en veille au lieu de relever le courrier et de sauvegarder."
+            "value": "Le Mac se réveille pendant la veille pour relever le courrier et sauvegarder."
+          }
+        }
+      }
+    },
+    "The Siri knowledge, actions, and voice services that run in the background.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les services de connaissances, d’actions et de voix de Siri qui tournent en arrière-plan."
+          }
+        }
+      }
+    },
+    "The Tips app sends notifications.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’app Astuces envoie des notifications."
+          }
+        }
+      }
+    },
+    "The ad attribution and promoted content services.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les services d’attribution publicitaire et de contenu sponsorisé."
           }
         }
       }
@@ -3612,6 +3602,16 @@
         }
       }
     },
+    "The agent that asks for feedback and collects logs for Apple.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L’agent qui demande votre avis et collecte des journaux pour Apple."
+          }
+        }
+      }
+    },
     "The command failed.": {
       "localizations": {
         "fr": {
@@ -3628,16 +3628,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Le moteur de nombreuses apps d’IA locale, en outils de ligne de commande et en serveur."
-          }
-        }
-      }
-    },
-    "The first word of a sentence is not capitalized for you.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Le premier mot d’une phrase n’est plus mis en majuscule pour vous."
           }
         }
       }
@@ -3672,12 +3662,32 @@
         }
       }
     },
-    "The play key no longer opens Music.": {
+    "The play key opens Music when nothing else is playing.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "La touche lecture n’ouvre plus Musique."
+            "value": "La touche lecture ouvre Musique quand rien d’autre ne joue."
+          }
+        }
+      }
+    },
+    "The service that looks up what is on screen.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le service qui identifie ce qui est à l’écran."
+          }
+        }
+      }
+    },
+    "The services that run Apple Intelligence models.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les services qui font tourner les modèles d’Apple Intelligence."
           }
         }
       }
@@ -3802,16 +3812,6 @@
         }
       }
     },
-    "Turns off personalized ads in the App Store, Apple News, and Stocks.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Désactive les publicités personnalisées dans l’App Store, Apple News et Bourse."
-          }
-        }
-      }
-    },
     "Turns sketches in Notes into generated images.": {
       "localizations": {
         "fr": {
@@ -3822,22 +3822,22 @@
         }
       }
     },
-    "Two hyphens stay two hyphens.": {
+    "Two hyphens turn into a dash.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Deux traits d’union restent deux traits d’union."
+            "value": "Deux traits d’union deviennent un tiret."
           }
         }
       }
     },
-    "Two spaces stay two spaces.": {
+    "Two spaces turn into a period and a space.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Deux espaces restent deux espaces."
+            "value": "Deux espaces deviennent un point et une espace."
           }
         }
       }
@@ -3922,6 +3922,16 @@
         }
       }
     },
+    "Widgets on the desktop and in Stage Manager.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les widgets sur le bureau et dans Stage Manager."
+          }
+        }
+      }
+    },
     "Window Animations": {
       "localizations": {
         "fr": {
@@ -3932,12 +3942,12 @@
         }
       }
     },
-    "Window screenshots without the large shadow around them.": {
+    "Window screenshots have a large shadow around them.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Captures de fenêtre sans la grande ombre autour."
+            "value": "Les captures de fenêtres ont une grande ombre autour."
           }
         }
       }
@@ -3982,12 +3992,12 @@
         }
       }
     },
-    "Windows and sheets open instantly instead of zooming in.": {
+    "Windows and sheets zoom in when they open.": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fenêtres et feuilles s’ouvrent instantanément au lieu de zoomer."
+            "value": "Les fenêtres et les feuilles s’agrandissent en s’ouvrant."
           }
         }
       }
@@ -4008,16 +4018,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Les fenêtres rétrécissent au lieu de l’effet Génie, plus lent."
-          }
-        }
-      }
-    },
-    "Words stay the way you typed them.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les mots restent tels que vous les avez tapés."
           }
         }
       }

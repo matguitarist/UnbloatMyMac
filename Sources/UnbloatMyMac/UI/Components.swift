@@ -126,6 +126,11 @@ struct TweakRow: View {
 
     private func tagList(_ status: TweakStatus) -> [Tag] {
         var list: [Tag] = []
+        if let recommended = tweak.recommendedSwitch {
+            // Accent when the switch is not where it should be, so it stands out.
+            list.append(Tag(text: recommended ? String(localized: "Recommended: On") : String(localized: "Recommended: Off"),
+                            symbol: "hand.thumbsup", style: model.switchIsOn(tweak) == recommended ? nil : Palette.accentText))
+        }
         switch status {
         case .unavailable(let reason): list.append(Tag(text: reason, symbol: "nosign"))
         case .waiting: list.append(Tag(text: String(localized: "Approve in System Settings"), symbol: "hourglass", style: .orange))

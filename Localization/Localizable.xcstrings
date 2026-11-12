@@ -2662,16 +2662,6 @@
         }
       }
     },
-    "Tweaks are grouped in the sidebar: **Apple Intelligence**, **Privacy**, **Performance**, **Annoyances**, **Finder**, **Dock & Windows**, **Typing**, and **Windows Mode**. Each says what it does, and tags say what it needs.": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Les réglages sont regroupés dans la barre latérale : **Apple Intelligence**, **Confidentialité**, **Performances**, **Désagréments**, **Finder**, **Dock et fenêtres**, **Saisie** et **Mode Windows**. Chacun dit ce qu’il fait, et des étiquettes disent ce qu’il demande."
-          }
-        }
-      }
-    },
     "**Password**: runs a command as administrator. All of them run together under one password prompt.": {
       "localizations": {
         "fr": {
@@ -4278,6 +4268,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Chaque modification a un menu. Choisissez **Laisser activé** ou **Laisser désactivé** pour garder un réglage tel quel, par exemple quand une autre app le gère déjà ; seules les autres modifications s’appliquent."
+          }
+        }
+      }
+    },
+    "Recommended: On": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommandé : activé"
+          }
+        }
+      }
+    },
+    "Recommended: Off": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommandé : désactivé"
+          }
+        }
+      }
+    },
+    "Tweaks are grouped in the sidebar: **Apple Intelligence**, **Privacy**, **Security**, **Performance**, **Annoyances**, **Finder**, **Dock & Windows**, **Typing**, and **Windows Mode**. Each says what it does when its switch is on, and tags say what it needs.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les réglages sont regroupés dans la barre latérale : **Apple Intelligence**, **Confidentialité**, **Sécurité**, **Performances**, **Désagréments**, **Finder**, **Dock et fenêtres**, **Saisie** et **Mode Windows**. Chacun dit ce qu’il fait quand son interrupteur est activé, et des étiquettes disent ce qu’il demande."
+          }
+        }
+      }
+    },
+    "**Recommended: On** or **Recommended: Off**: where the switch should be. The tag is in color while the switch is on the other side. Matters of taste, like Typing and Windows Mode, have no tag.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "**Recommandé : activé** ou **Recommandé : désactivé** : la position conseillée de l’interrupteur. L’étiquette est en couleur tant que l’interrupteur est de l’autre côté. Les questions de goût, comme Saisie et Mode Windows, n’en ont pas."
           }
         }
       }

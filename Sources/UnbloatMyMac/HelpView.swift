@@ -99,8 +99,9 @@ struct HelpView: View {
             }
 
         case .tweaks:
-            HelpText("Tweaks are grouped in the sidebar: **Apple Intelligence**, **Privacy**, **Performance**, **Annoyances**, **Finder**, **Dock & Windows**, **Typing**, and **Windows Mode**. Each says what it does, and tags say what it needs.")
+            HelpText("Tweaks are grouped in the sidebar: **Apple Intelligence**, **Privacy**, **Security**, **Performance**, **Annoyances**, **Finder**, **Dock & Windows**, **Typing**, and **Windows Mode**. Each says what it does when its switch is on, and tags say what it needs.")
             HelpBullets([
+                "**Recommended: On** or **Recommended: Off**: where the switch should be. The tag is in color while the switch is on the other side. Matters of taste, like Typing and Windows Mode, have no tag.",
                 "**Password**: runs a command as administrator. All of them run together under one password prompt.",
                 "**Profile**: needs your approval in System Settings.",
                 "**Stops a service**: a background service is disabled for your account. It fully stops after you log out.",

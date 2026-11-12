@@ -7,6 +7,8 @@ struct ReviewSheet: View {
     @Environment(\.dismiss) private var dismiss
     @State private var report: ApplyReport?
     @State private var applying = false
+    /// Changes the person chose to leave as they are. They stay listed so the choice can be changed back.
+    @State private var kept: Set<String> = []
 
     var body: some View {
         VStack(spacing: 0) {
@@ -24,10 +26,13 @@ struct ReviewSheet: View {
 
     private var review: some View {
         let tweaks = model.stagedTweaks
+        let chosen = tweaks.filter { !kept.contains($0.id) }
         return VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: Space.xs) {
                 (tweaks.count == 1 ? Text("Review 1 Change") : Text("Review \(tweaks.count) Changes")).font(.title2.weight(.semibold))
-                Text("Nothing has changed yet. Each change can be undone later.").foregroundStyle(.secondary)
+                Text("Nothing has changed yet. Pick Leave On or Leave Off for a setting you want to keep. Each change can be undone later.")
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             .padding(Space.margin)
             Form {
@@ -36,15 +41,12 @@ struct ReviewSheet: View {
                     if !rows.isEmpty {
                         Section(category.title) {
                             ForEach(rows) { tweak in
-                                LabeledContent(tweak.title) {
-                                    Text(model.switchIsOn(tweak) ? "Turns on" : "Turns off")
-                                        .foregroundStyle(Palette.accentText)
-                                }
+                                choice(tweak)
                             }
                         }
                     }
                 }
-                let notes = self.notes(tweaks)
+                let notes = self.notes(chosen)
                 if !notes.isEmpty {
                     Section("What Happens") {
                         ForEach(notes, id: \.0) { note in
@@ -66,19 +68,34 @@ struct ReviewSheet: View {
                 Button("Cancel") { dismiss() }
                     .keyboardShortcut(.cancelAction)
                     .disabled(applying)
-                Button("Apply Changes") {
+                Button(chosen.count == tweaks.count ? String(localized: "Apply Changes")
+                       : chosen.count == 1 ? String(localized: "Apply 1 Change") : String(localized: "Apply \(chosen.count) Changes")) {
                     applying = true
                     Task {
-                        report = await model.applyStaged()
+                        report = await model.applyStaged(skipping: kept)
                         applying = false
                     }
                 }
                 .keyboardShortcut(.defaultAction)
                 .buttonStyle(.borderedProminent)
-                .disabled(applying || tweaks.isEmpty)
+                .disabled(applying || chosen.isEmpty)
             }
             .padding(Space.margin)
         }
+    }
+
+    /// The change, picked by default, or Leave On or Leave Off. The switch shows how it ends up.
+    private func choice(_ tweak: Tweak) -> some View {
+        let turnsOn = model.switchIsOn(tweak)
+        return Picker(tweak.title, selection: Binding(
+            get: { !kept.contains(tweak.id) },
+            set: { change in if change { kept.remove(tweak.id) } else { kept.insert(tweak.id) } })) {
+            Text(turnsOn ? "Turns on" : "Turns off").tag(true)
+            Text(turnsOn ? "Leave Off" : "Leave On").tag(false)
+        }
+        .pickerStyle(.menu)
+        .help(kept.contains(tweak.id) ? "This setting stays as it is" : "Pick Leave On or Leave Off to keep this setting as it is")
+        .disabled(applying)
     }
 
     private func notes(_ tweaks: [Tweak]) -> [(String, String)] {

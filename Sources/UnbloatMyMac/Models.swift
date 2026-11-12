@@ -247,7 +247,9 @@ final class AppModel {
         hasLoaded = true
     }
 
-    func applyStaged() async -> ApplyReport {
+    /// Applies the staged changes, except the ones Review was told to leave as they are.
+    func applyStaged(skipping kept: Set<String> = []) async -> ApplyReport {
+        for id in kept { staged[id] = nil }
         let changes = staged
         let engine = engine
         let restart = restartApps

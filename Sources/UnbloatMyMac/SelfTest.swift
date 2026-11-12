@@ -52,6 +52,16 @@ enum SelfTest {
             check("the activity log shows the defaults command",
                   model.logEntries.contains { $0.source == .settings && ($0.detail ?? "").hasPrefix("defaults write com.apple.dock") })
 
+            if let snap = Catalog.tweak("win.snap"), let scroll = Catalog.tweak("win.scrollBars") {
+                model.setApplied(snap, true)
+                model.setApplied(scroll, true)
+                let kept = await model.applyStaged(skipping: ["win.snap"])
+                check("Leave in Review keeps that setting and applies the rest",
+                      kept.failures.isEmpty && !model.isApplied(snap) && model.isApplied(scroll) && model.staged.isEmpty)
+                model.setApplied(scroll, false)
+                _ = await model.applyStaged()
+            }
+
             if let preset = Catalog.presets.first(where: { $0.id == "windows" }) {
                 model.stage(preset)
                 let progress = model.presetProgress(preset)

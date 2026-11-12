@@ -4201,6 +4201,86 @@
           }
         }
       }
+    },
+    "Apply %lld Changes": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appliquer %lld modifications"
+          }
+        }
+      }
+    },
+    "Apply 1 Change": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Appliquer 1 modification"
+          }
+        }
+      }
+    },
+    "Leave Off": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laisser désactivé"
+          }
+        }
+      }
+    },
+    "Leave On": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Laisser activé"
+          }
+        }
+      }
+    },
+    "Nothing has changed yet. Pick Leave On or Leave Off for a setting you want to keep. Each change can be undone later.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rien n’a encore changé. Choisissez Laisser activé ou Laisser désactivé pour un réglage que vous voulez garder. Chaque modification peut être annulée plus tard."
+          }
+        }
+      }
+    },
+    "Pick Leave On or Leave Off to keep this setting as it is": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisissez Laisser activé ou Laisser désactivé pour garder ce réglage tel quel"
+          }
+        }
+      }
+    },
+    "This setting stays as it is": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce réglage reste tel quel"
+          }
+        }
+      }
+    },
+    "Each change has a menu. Pick **Leave On** or **Leave Off** to keep a setting as it is, for example when another app already manages it; only the other changes apply.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque modification a un menu. Choisissez **Laisser activé** ou **Laisser désactivé** pour garder un réglage tel quel, par exemple quand une autre app le gère déjà ; seules les autres modifications s’appliquent."
+          }
+        }
+      }
     }
   }
 }

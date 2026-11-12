@@ -121,6 +121,7 @@ struct HelpView: View {
         case .review:
             HelpText("Switches only stage changes. The toolbar counts them, and the sidebar shows a badge on each category with changes waiting.")
             HelpText("**Review Changes** lists every change with what will happen: a password prompt, a profile to approve, a Dock or Finder restart, or a log out. **Apply Changes** makes them all; **Discard** (⌥⌘Delete) forgets them.")
+            HelpText("Each change has a menu. Pick **Leave On** or **Leave Off** to keep a setting as it is, for example when another app already manages it; only the other changes apply.")
             HelpSection("After applying") {
                 HelpText("Most changes show at once. Some take effect in apps you open from now on, or after you log out; the review says which. To see Dock, Finder, and menu bar changes only after logging out, turn off **Restart the Dock, Finder, and menu bar after applying** in **Settings**.")
             }

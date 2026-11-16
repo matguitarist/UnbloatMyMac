@@ -7,6 +7,9 @@ typing, and a Windows Mode, plus Background Items, Storage cleanup, and History.
 Shared rules for my Mac apps (build and check, design rules, skills, git):
 @~/.claude/mac-app-conventions.md
 
+Shared rules for how every project is laid out and named:
+@~/.claude/project-layout.md
+
 ## How changes work (read before adding a tweak)
 
 - Tweaks live in `Sources/UnbloatMyMacKit/Catalog.swift`. An action is a `defaults` value, a launch agent to disable, a profile restriction (Apple Intelligence), a command with its revert and check, or a file.

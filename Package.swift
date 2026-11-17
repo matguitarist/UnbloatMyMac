@@ -7,7 +7,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/sparkle-project/Sparkle", from: "2.6.0"),
         // The Activity Log's viewer, shared by my Mac apps.
-        .package(url: "https://github.com/matguitarist/LogKit", from: "0.5.0"),
+        .package(url: "https://github.com/matguitarist/LogKit", from: "0.6.0"),
     ],
     targets: [
         // Rules and data logic with no SwiftUI, so tests run without the app.

@@ -1,10 +1,11 @@
 import AppKit
+import AppTestKit
 import SwiftUI
 import UnbloatMyMacKit
 
 // UnbloatMyMac
 //   UnbloatMyMac                      the app, changing this Mac
-//   APP_STORE=<file> UnbloatMyMac     a pretend Mac (MockBackend) with its journal in <file> and its log next to it; never touches the system
+//   APP_STORE=<file> UnbloatMyMac     a pretend Mac (MockBackend) with its journal in <file> (in /tmp) and its log next to it; never touches the system
 //   APP_SNAPSHOT=<dir> UnbloatMyMac   save a PNG of every sidebar page and Settings tab in light and dark mode, then quit
 //   APP_SEED=1 UnbloatMyMac           with APP_STORE: a pretend Mac with some tweaks on and some staged (tools/snap.sh)
 //   UnbloatMyMac --selftest           run the self-test on a pretend Mac and quit with 0 or 1 (tools/selftest.sh)
@@ -146,7 +147,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// The self-test's result becomes the exit code, after a normal quit.
     func applicationWillTerminate(_ notification: Notification) {
-        if SelfTest.requested { exit(SelfTest.exitCode) }
+        SelfTest.exitIfRequested()
     }
 }
 
@@ -154,9 +155,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 /// With APP_STORE set, the app runs on a pretend Mac and never changes the system.
 enum Store {
     /// True when APP_STORE points somewhere else (tests, snapshots, self-test).
-    static var isOverridden: Bool {
-        !(ProcessInfo.processInfo.environment["APP_STORE"] ?? "").isEmpty
-    }
+    static var isOverridden: Bool { TestRun.isTestRun() }
 
     static var folder: URL {
         let dir = URL.applicationSupportDirectory.appending(path: "UnbloatMyMac", directoryHint: .isDirectory)
@@ -164,12 +163,8 @@ enum Store {
         return dir
     }
 
-    static var url: URL {
-        if let path = ProcessInfo.processInfo.environment["APP_STORE"], !path.isEmpty {
-            return URL(fileURLWithPath: path)
-        }
-        return folder.appending(path: "journal.json")
-    }
+    /// APP_STORE in /tmp, or the real journal. Exits with 1 when APP_STORE points anywhere else.
+    static var url: URL { TestRun.store() ?? folder.appending(path: "journal.json") }
 
     /// The Activity Log: activity.log next to the journal (next to APP_STORE on a pretend Mac).
     static var logURL: URL {
@@ -182,16 +177,15 @@ enum Store {
 
     static func makeInstaller() -> AppInstaller {
         if isOverridden {
-            let env = ProcessInfo.processInfo.environment
-            return AppInstaller(packages: MockPackageManager(seeded: env["APP_SEED"] == "1", homebrew: env["APP_NO_BREW"] != "1"), log: log)
+            let noBrew = ProcessInfo.processInfo.environment["APP_NO_BREW"] == "1"
+            return AppInstaller(packages: MockPackageManager(seeded: TestRun.isSeeded(), homebrew: !noBrew), log: log)
         }
         return AppInstaller(packages: Homebrew(), log: log)
     }
 
     static func makeEngine() -> Engine {
         if isOverridden {
-            let seeded = ProcessInfo.processInfo.environment["APP_SEED"] == "1"
-            return Engine(backend: MockBackend(seeded: seeded), journalURL: url, log: log)
+            return Engine(backend: MockBackend(seeded: TestRun.isSeeded()), journalURL: url, log: log)
         }
         return Engine(backend: MacBackend(supportFolder: folder), journalURL: url, log: log)
     }

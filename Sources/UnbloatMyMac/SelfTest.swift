@@ -1,28 +1,15 @@
 import AppKit
+import AppTestKit
 import UnbloatMyMacKit
 
 /// Self-test for agents: drives the app model on a pretend Mac (MockBackend),
 /// prints PASS or FAIL per check, and quits with exit code 0 or 1.
 ///   APP_STORE=/tmp/UnbloatMyMac-self.json ~/Applications/UnbloatMyMac.app/Contents/MacOS/UnbloatMyMac --selftest
 /// (tools/selftest.sh does this.) Add a check for every story with logic.
-@MainActor
-enum SelfTest {
-    static var requested: Bool { CommandLine.arguments.contains("--selftest") }
-    /// Read by AppDelegate.applicationWillTerminate.
-    static var exitCode: Int32 = 0
-    private static var failures = 0
-    private static var count = 0
-
+extension SelfTest {
     static func runIfRequested(model: AppModel) {
-        guard requested else { return }
-        // Print each line at once, so a crash keeps the lines before it.
-        setvbuf(stdout, nil, _IOLBF, 0)
-        guard Store.isOverridden, ((model.engine.backend as? LoggingBackend)?.base ?? model.engine.backend) is MockBackend else {
-            print("SELFTEST refused: set APP_STORE to a file in /tmp so the test runs on a pretend Mac")
-            finish(code: 1)
-            return
-        }
-        Task {
+        let pretend = ((model.engine.backend as? LoggingBackend)?.base ?? model.engine.backend) is MockBackend
+        run(refusal: "set APP_STORE to a file in /tmp so the test runs on a pretend Mac", allowed: pretend) {
             await model.refresh()
             guard let genmoji = Catalog.tweak("ai.genmoji"), let recents = Catalog.tweak("dock.recents"),
                   let extensions = Catalog.tweak("finder.extensions") else {
@@ -232,23 +219,6 @@ enum SelfTest {
             check("the exported log has every line", model.logText(model.logEntries).components(separatedBy: "\n").count >= model.logEntries.count)
             model.clearLog()
             check("Clear Log empties the activity log", model.logEntries.isEmpty)
-
-            print(failures == 0 ? "SELFTEST PASS \(count) checks" : "SELFTEST FAIL \(failures) of \(count) checks")
-            finish(code: failures == 0 ? 0 : 1)
         }
-    }
-
-    private static func check(_ name: String, _ ok: Bool, _ detail: String = "") {
-        count += 1
-        if !ok { failures += 1 }
-        print(ok ? "PASS \(name)" : "FAIL \(name)\(detail.isEmpty ? "" : ": \(detail)")")
-    }
-
-    /// Quits through NSApp.terminate, never exit(), and closes sheets first:
-    /// an open sheet refuses terminate, and the run would wait forever.
-    static func finish(code: Int32) {
-        exitCode = code
-        for window in NSApp.windows { if let sheet = window.attachedSheet { window.endSheet(sheet) } }
-        NSApp.terminate(nil)
     }
 }

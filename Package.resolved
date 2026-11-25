@@ -1,13 +1,13 @@
 {
-  "originHash" : "227d823bed734022e910d0d915dc393d859b7351dd24e25359cfe2cf624b579a",
+  "originHash" : "46991be71114a3640ccee974a15a42403d1fe49751551617b82cb4f362f5d69f",
   "pins" : [
     {
       "identity" : "apptestkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/matguitarist/AppTestKit",
       "state" : {
-        "revision" : "665fadb9c69c203a8bb5a47b47db07a8cbccfb9b",
-        "version" : "0.1.1"
+        "revision" : "7038ef7cef0fdd95650f76be2d1db2185b317ac7",
+        "version" : "0.2.0"
       }
     },
     {
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "0f7ee59ae05dc81eed6bef56b4d910fd8b83e97f",
         "version" : "0.6.0"
+      }
+    },
+    {
+      "identity" : "processkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/matguitarist/ProcessKit",
+      "state" : {
+        "revision" : "4664cb8f16dab9f2ccad228dccfad67b729b5d46",
+        "version" : "0.2.1"
       }
     },
     {

@@ -25,15 +25,10 @@ enum Snapshot {
                 model.sidebar = .overview
                 await run.shoot("review", window: { sheet() }, show: { model.showReview = true }, hide: { model.showReview = false })
             }
-            if run.wants("progress") {
+            await run.shoot("apps-progress", when: "progress", show: {
                 model.sidebar = .apps
                 model.showProgressForSnapshot(AppProgress(kind: .install, done: 2, total: 8, current: "Mole"))
-                await run.forEachAppearance { look in
-                    await run.pause()
-                    await run.capture("apps-progress", look)
-                }
-                model.showProgressForSnapshot(nil)
-            }
+            }, hide: { model.showProgressForSnapshot(nil) })
             if run.wants("details"), let tweak = Catalog.tweaks.first(where: { $0.category == .dock }) {
                 model.sidebar = .category(.dock)
                 await run.pause()
@@ -49,21 +44,15 @@ enum Snapshot {
                 await run.shoot(name, window: { sheet() }, show: { await model.reviewFiles(id) }, hide: { model.filesToReview = nil })
             }
             model.projectFolders = []
-            if run.wants("setup") {
-                model.sidebar = .overview
-                let picked = SetupAnswers([.code: true, .windows: true, .privacy: true, .speed: false])
-                for (name, step) in [("setup", 0), ("setup-summary", SetupQuestion.allCases.count)] {
-                    await run.forEachAppearance { look in
-                        model.setupSnapshot = (picked, step)
-                        model.openSetup()
-                        await run.pause(.seconds(1))
-                        await run.capture(name, look, window: sheet())
-                        model.showSetup = false
-                        await run.pause(.seconds(0.6))
-                    }
-                }
-                model.setupSnapshot = nil
+            let picked = SetupAnswers([.code: true, .windows: true, .privacy: true, .speed: false])
+            for (name, step) in [("setup", 0), ("setup-summary", SetupQuestion.allCases.count)] {
+                await run.shoot(name, when: "setup", window: { sheet() }, show: {
+                    model.sidebar = .overview
+                    model.setupSnapshot = (picked, step)
+                    model.openSetup()
+                }, hide: { model.showSetup = false })
             }
+            model.setupSnapshot = nil
             await run.shoot("leftovers", window: { sheet() }, show: { await model.reviewLeftovers() }, hide: { model.leftoversToReview = nil })
             if run.wants("help") {
                 let main = WindowShot.mainWindow()

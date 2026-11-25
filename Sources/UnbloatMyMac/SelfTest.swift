@@ -19,6 +19,9 @@ extension SelfTest {
             }
 
             check("feature switches start on", model.switchIsOn(genmoji))
+            let issue = RepositoryLinks(repository: "matguitarist/UnbloatMyMac").newIssue(app: "UnbloatMyMac").absoluteString
+            check("Help › Report a Problem opens a new GitHub issue with the version and macOS filled in",
+                  issue.hasPrefix("https://github.com/matguitarist/UnbloatMyMac/issues/new?body=") && issue.contains("macOS"), issue)
             model.setSwitch(genmoji, false)
             check("switching a feature off stages the tweak", model.staged["ai.genmoji"] == true)
             model.setSwitch(genmoji, true)

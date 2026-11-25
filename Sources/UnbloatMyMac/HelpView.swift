@@ -335,28 +335,3 @@ private struct HelpShortcuts: View {
     }
 }
 
-/// Help menu items. A view, so it can open windows and reads the model as it changes.
-struct HelpCommands: View {
-    let model: AppModel
-    @Environment(\.openWindow) private var openWindow
-
-    var body: some View {
-        Button("UnbloatMyMac Help") { openWindow(id: HelpView.windowID) }
-            .keyboardShortcut("?", modifiers: .command)
-        Button("Show Activity Log") {
-            model.sidebar = .log
-            openWindow(id: "main")
-        }
-        .keyboardShortcut("l")
-        Divider()
-        Link("What's New", destination: AppLinks.releases)
-        Link("UnbloatMyMac on GitHub", destination: AppLinks.repository)
-        Link("Report a Problem or Suggest an Idea…", destination: AppLinks.newIssue)
-    }
-}
-
-enum AppLinks {
-    static let repository = URL(string: "https://github.com/matguitarist/UnbloatMyMac")!
-    static let releases = URL(string: "https://github.com/matguitarist/UnbloatMyMac/releases")!
-    static let newIssue = URL(string: "https://github.com/matguitarist/UnbloatMyMac/issues/new")!
-}

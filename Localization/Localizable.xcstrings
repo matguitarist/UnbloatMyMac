@@ -12,6 +12,16 @@
         }
       }
     },
+    "%@ Help": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aide %@"
+          }
+        }
+      }
+    },
     "%@ are open and use some of these files. Quit and Clean asks them to quit first; Clean the Rest leaves their files for later.": {
       "localizations": {
         "fr": {
@@ -48,6 +58,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ est ouverte et utilise certains de ces fichiers. Quitter et nettoyer lui demande d’abord de quitter ; Nettoyer le reste garde ses fichiers pour plus tard."
+          }
+        }
+      }
+    },
+    "%@ on GitHub": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ sur GitHub"
           }
         }
       }
@@ -668,6 +688,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Un réglage est revenu après une mise à jour de macOS"
+          }
+        }
+      }
+    },
+    "About %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "À propos d’%@"
           }
         }
       }
@@ -3072,12 +3102,12 @@
         }
       }
     },
-    "Report a Problem or Suggest an Idea…": {
+    "Report a Problem…": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Signaler un problème ou proposer une idée…"
+            "value": "Signaler un problème…"
           }
         }
       }
@@ -3538,6 +3568,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Afficher les réglages avancés"
+          }
+        }
+      }
+    },
+    "Show Log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher le journal"
           }
         }
       }
@@ -4322,16 +4362,6 @@
         }
       }
     },
-    "UnbloatMyMac on GitHub": {
-      "localizations": {
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "UnbloatMyMac sur GitHub"
-          }
-        }
-      }
-    },
     "UnbloatMyMac only reports these. Change them in System Settings.": {
       "localizations": {
         "fr": {
@@ -4642,12 +4672,12 @@
         }
       }
     },
-    "What's New": {
+    "What’s New in %@": {
       "localizations": {
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nouveautés"
+            "value": "Nouveautés d’%@"
           }
         }
       }

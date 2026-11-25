@@ -31,9 +31,12 @@ struct UnbloatMyMacApp: App {
             SidebarCommands()
             ToolbarCommands()
             CommandGroup(replacing: .newItem) {}
+            StandardCommands(app: "UnbloatMyMac", repository: "matguitarist/UnbloatMyMac",
+                             updates: AppUpdates(isAvailable: Updater.shared.isAvailable) { Updater.shared.checkForUpdates() },
+                             help: .window(HelpView.windowID),
+                             log: .page { model.sidebar = .log }, logShortcut: KeyboardShortcut("l"))
+            PageCommands(pages: SidebarItem.allCases, title: \.title) { model.sidebar = $0 }
             CommandGroup(after: .appInfo) {
-                Button("Check for Updates…") { Updater.shared.checkForUpdates() }
-                    .disabled(!Updater.shared.isAvailable)
                 if model.commandLineToolInstalled {
                     Button("Uninstall Command Line Tool…") { Task { await model.uninstallCommandLineTool() } }
                 } else {
@@ -66,7 +69,6 @@ struct UnbloatMyMacApp: App {
                 }
                 .keyboardShortcut("i", modifiers: [.command, .control])
             }
-            CommandGroup(replacing: .help) { HelpCommands(model: model) }
             CommandMenu("Changes") {
                 Button("Set Up for Me…") { model.openSetup() }
                     .keyboardShortcut("s", modifiers: [.command, .option])

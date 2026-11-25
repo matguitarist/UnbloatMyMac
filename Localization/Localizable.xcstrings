@@ -4692,6 +4692,16 @@
         }
       }
     },
+    "Xcode Device Support": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Support des appareils Xcode"
+          }
+        }
+      }
+    },
     "You can download these again from where they came from. A disk image that wasn’t downloaded may be one you made, so it starts unchecked.": {
       "localizations": {
         "fr": {

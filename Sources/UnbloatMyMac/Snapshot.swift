@@ -66,6 +66,8 @@ enum Snapshot {
                 help?.close()
                 await run.pause(.seconds(0.4))
             }
+            await run.shoot("whats-new", window: { WindowShot.mainWindow()?.attachedSheet },
+                           show: { WhatsNewState.shared.shown = .sample }, hide: { WhatsNewState.shared.shown = nil })
             await run.shootSettings(tabs: SettingsTab.allCases.map(\.rawValue), open: { openSettings() },
                                     select: { tab in if let tab = SettingsTab(rawValue: tab) { model.settingsTab = tab } })
             run.finish()

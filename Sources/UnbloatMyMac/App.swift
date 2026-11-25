@@ -21,6 +21,7 @@ struct UnbloatMyMacApp: App {
         Window("UnbloatMyMac", id: "main") {
             ContentView()
                 .environment(model)
+                .whatsNew(app: "UnbloatMyMac", repository: "matguitarist/UnbloatMyMac")
                 .themed()
                 .overlay { if GridOverlay.enabled { GridOverlay() } }
                 .frame(minWidth: 920, minHeight: 560)  // the Activity Log fits with its inspector open

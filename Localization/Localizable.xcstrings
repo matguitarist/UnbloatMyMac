@@ -4831,6 +4831,26 @@
           }
         }
       }
+    },
+    "What’s New in %@ %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveautés d’%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "All Releases": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Toutes les versions"
+          }
+        }
+      }
     }
   }
 }

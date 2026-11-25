@@ -2,7 +2,8 @@ import Foundation
 import Sparkle
 
 /// Automatic updates with Sparkle. The feed is appcast.xml on the latest GitHub release.
-/// Off until Info.plist has a real SUPublicEDKey (tools/sparkle-keys.sh), and never in test runs.
+/// Off until Info.plist has a real SUPublicEDKey, and never in test runs.
+/// Shared by my Mac apps (sync-mac-tools): change it everywhere or nowhere.
 @MainActor
 final class Updater {
     static let shared = Updater()
